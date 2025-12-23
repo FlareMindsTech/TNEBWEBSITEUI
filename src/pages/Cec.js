@@ -3,22 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import './Cec.css';
+import ANANDKUMAR from '../assets/people/ANANDKUMAR.jpg';
+import ARUNACHALAM from '../assets/people/ARUNACHALAM.jpg';
+import BALAMURUGAN from '../assets/people/BALAMURUGAN.jpg';
+import DURGADEVI from '../assets/people/DURGADEVI.jpg';
+import GOMATHI from '../assets/people/GOMATHI.jpg';
+import JAYAMURTHI from '../assets/people/JAYAMURTHI.jpg';
+import JAYAPRAKASH from '../assets/people/JAYAPRAKASH.jpg';
+import Jayanthi from '../assets/people/Jayanthi.jpg';
+import ROSELINEGRACE from '../assets/people/ROSELINEGRACE.jpg';
+import SAMBATHKUMAR from '../assets/people/SAMBATHKUMAR.jpg';
+import SATHIAMURTHY from '../assets/people/SATHIAMURTHY.jpg';
+import SENTHILKUMAR from '../assets/people/SENTHILKUMAR.jpg';
+import VARUNKUMAR from '../assets/people/VARUNKUMAR.jpg';
+import VIJAY from '../assets/people/VIJAY.jpg';
+import VIKRAMAN from '../assets/people/VIKRAMAN.jpg';
 
 const Cec = () => {
   const [currentTime, setCurrentTime] = useState('');
 
-  // Footer slider images
-  const footerImages = [
-    { id: 1, src: "../Images/footer/cea.png", alt: "CEA", link: "http://cea.nic.in/" },
-    { id: 2, src: "../Images/footer/mnre_0.png", alt: "MNRE", link: "https://mnre.gov.in/" },
-    { id: 3, src: "../Images/footer/digitalindia_0-1.png", alt: "Digital India", link: "https://www.digitalindia.gov.in/" },
-    { id: 4, src: "../Images/footer/IPDS-1.gif", alt: "IPDS", link: "http://www.ipds.gov.in/" },
-    { id: 5, src: "../Images/footer/natportal_0.png", alt: "National Portal", link: "https://npp.gov.in/" },
-    { id: 6, src: "../Images/footer/powergrid_1.png", alt: "Power Grid", link: "http://www.powergridindia.com/" },
-    { id: 7, src: "../Images/footer/pfcl.png", alt: "PFC", link: "https://www.pfcindia.com/" },
-    { id: 8, src: "../Images/footer/minofpower_3.png", alt: "Ministry of Power", link: "https://powermin.nic.in/" },
-    { id: 9, src: "../Images/footer/mygov_7.png", alt: "MyGov", link: "https://www.mygov.in/" }
-  ];
+
 
   // CEC Members Data
   const cecMembers = [
@@ -28,7 +32,7 @@ const Cec = () => {
       designation: "Principal Secretary (National & State Affairs)",
       name: "Er. T. Jayanthi",
       qualification: "M.Tech/MBA(HR)/BGL/MIE.,",
-      photo: "../Images/cec/Jayanthi.jpg",
+      photo: Jayanthi,
       contact: "97106 22185"
     },
     {
@@ -37,7 +41,7 @@ const Cec = () => {
       designation: "President",
       name: "Er. N. SENTHIL KUMAR",
       qualification: "EE/Master Plan/TANTRANSCO/HQ CHENNAI",
-      photo: "../Images/cec/SENTHILKUMAR.jpg",
+      photo: SENTHILKUMAR,
       contact: "94980 38894"
     },
     {
@@ -46,7 +50,7 @@ const Cec = () => {
       designation: "Vice President-I",
       name: "Er. M. SATHIAMURTHY",
       qualification: "EE/Master Plan-II/TNPDL/HQ CHENNAI",
-      photo: "../Images/cec/SATHIAMURTHY.jpg",
+      photo: SATHIAMURTHY,
       contact: "94443 55366"
     },
     {
@@ -55,7 +59,7 @@ const Cec = () => {
       designation: "Vice President-II",
       name: "Er. S. SAMBATHKUMAR",
       qualification: "AEE/Civil/TLC/GCC-II/CHENNAI",
-      photo: "../Images/cec/SAMBATHKUMAR.jpg",
+      photo: SAMBATHKUMAR,
       contact: "63833 84748"
     },
     {
@@ -64,7 +68,7 @@ const Cec = () => {
       designation: "General Secretary",
       name: "Er. K. VIJAY",
       qualification: "EA to CE/MTPS-I",
-      photo: "../Images/cec/VIJAY.jpg",
+      photo: VIJAY,
       contact: "94897 74341"
     },
     {
@@ -73,7 +77,7 @@ const Cec = () => {
       designation: "Treasurer",
       name: "Er. J. JAYAPRAKASH",
       qualification: "Senior Manager/IS/Krishnagiri",
-      photo: "../Images/cec/JAYAPRAKASH.jpg",
+      photo: JAYAPRAKASH,
       contact: "94874 65104"
     },
     {
@@ -82,7 +86,7 @@ const Cec = () => {
       designation: "Organising Secretary",
       name: "Er. N. ARUNACHALAM",
       qualification: "AEE/SLDC/ERODE",
-      photo: "../Images/cec/ARUNACHALAM.jpg",
+      photo: ARUNACHALAM,
       contact: "94458 59614"
     },
     {
@@ -91,7 +95,7 @@ const Cec = () => {
       designation: "Secretary (Publication)",
       name: "Er. G. VARUN KUMAR",
       qualification: "AE/ERP/IT/HQ CHENNAI",
-      photo: "../Images/cec/VARUNKUMAR.jpg",
+      photo: VARUNKUMAR,
       contact: "97908 30459"
     },
     {
@@ -100,7 +104,7 @@ const Cec = () => {
       designation: "Secretary (Administration)",
       name: "Er. G. VIKRAMAN",
       qualification: "AEE/O&M/Thennur/Trichy Metro",
-      photo: "../Images/cec/VIKRAMAN.jpg",
+      photo: VIKRAMAN,
       contact: "94421 14221"
     },
     {
@@ -109,7 +113,7 @@ const Cec = () => {
       designation: "Secretary (Minnagam)",
       name: "Er. D. ANAND KUMAR",
       qualification: "AEE/Turbine Maintenance/NCTPS-II",
-      photo: "../Images/cec/ANANDKUMAR.jpg",
+      photo: ANANDKUMAR,
       contact: "98948 12568"
     },
     {
@@ -118,7 +122,7 @@ const Cec = () => {
       designation: "Secretary (Legal)",
       name: "Er. A. DURGA DEVI",
       qualification: "AEE/Schemes/Madurai",
-      photo: "../Images/cec/DURGADEVI.jpg",
+      photo: DURGADEVI,
       contact: "94434 56136"
     },
     {
@@ -127,7 +131,7 @@ const Cec = () => {
       designation: "Secretary (Personnel Affairs)",
       name: "Er. J. ROSELINE GRACE",
       qualification: "AEE/C&I/Kuzhithurai/Kanyakumari",
-      photo: "../Images/cec/ROSELINEGRACE.jpg",
+      photo: ROSELINEGRACE,
       contact: "94896 18015"
     },
     {
@@ -136,7 +140,7 @@ const Cec = () => {
       designation: "Secretary (Internal Affairs)",
       name: "Er. K. GOMATHI",
       qualification: "AE/O&M/West/Kinathukadavu/South/Coimbatore",
-      photo: "../Images/cec/GOMATHI.jpg",
+      photo: GOMATHI,
       contact: "75027 36561"
     },
     {
@@ -145,7 +149,7 @@ const Cec = () => {
       designation: "Secretary/EBF",
       name: "Er. C. R. JAYAMURTHI",
       qualification: "SE/Transmission/765 KVSS/HQ CHENNAI",
-      photo: "../Images/cec/JAYAMURTHI.jpg",
+      photo: JAYAMURTHI,
       contact: "96000 82034"
     },
     {
@@ -154,7 +158,7 @@ const Cec = () => {
       designation: "Treasurer/EBF",
       name: "Er. R. BALAMURUGAN",
       qualification: "AEE/MRT/Metering/Chennai South-I",
-      photo: "../Images/cec/BALAMURUGAN.jpg",
+      photo: BALAMURUGAN,
       contact: "99625 11494"
     }
   ];
@@ -516,44 +520,6 @@ const Cec = () => {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="footer-section">
-        <div className="footer-slider">
-          <div className="container">
-            <div className="slider-circular">
-              {[...footerImages, ...footerImages].map((img, index) => (
-                <div key={index} className="slider-item">
-                  <a href={img.link} target="_blank" rel="noopener noreferrer">
-                    <img 
-                      src={img.src} 
-                      alt={img.alt}
-                      className="img-fluid footer-slider-img"
-                    />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-2 text-left text-white">
-                <FaSmile className="mr-1" />
-                <span className="small">TNEBEA</span>
-              </div>
-              <div className="col-md-6 text-center">
-                <span className="text-white">Copyright © TNEBEA 2025</span>
-              </div>
-              <div className="col-md-4 text-right footer-links">
-                <Link to="/privacy-policy">Privacy Policy</Link>
-                <Link to="/terms">Terms & Conditions</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

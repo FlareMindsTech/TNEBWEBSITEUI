@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 import Navbar from './components/Navbar';
+import logo from './assets/tnebea_logo_cropped2.png'
+
 
 const Home = () => {
   const [currentTime, setCurrentTime] = useState('');
@@ -106,18 +108,7 @@ const Home = () => {
     }
   ];
 
-  // Footer slider images
-  const footerImages = [
-    { id: 1, src: "Images/footer/cea.png", alt: "CEA", link: "http://cea.nic.in/" },
-    { id: 2, src: "Images/footer/mnre_0.png", alt: "MNRE", link: "https://mnre.gov.in/" },
-    { id: 3, src: "Images/footer/digitalindia_0-1.png", alt: "Digital India", link: "https://www.digitalindia.gov.in/" },
-    { id: 4, src: "Images/footer/IPDS-1.gif", alt: "IPDS", link: "http://www.ipds.gov.in/" },
-    { id: 5, src: "Images/footer/natportal_0.png", alt: "National Portal", link: "https://npp.gov.in/" },
-    { id: 6, src: "Images/footer/powergrid_1.png", alt: "Power Grid", link: "http://www.powergridindia.com/" },
-    { id: 7, src: "Images/footer/pfcl.png", alt: "PFC", link: "https://www.pfcindia.com/" },
-    { id: 8, src: "Images/footer/minofpower_3.png", alt: "Ministry of Power", link: "https://powermin.nic.in/" },
-    { id: 9, src: "Images/footer/mygov_7.png", alt: "MyGov", link: "https://www.mygov.in/" }
-  ];
+
 
   // Update current time
   useEffect(() => {
@@ -201,7 +192,7 @@ const Home = () => {
           ].map((sentence, index) => (
             <div key={index} className="sentence-item">
               <div className="circular-icon">
-                <img src="/Images/tnebea_logo_cropped2.png" alt="Icon" />
+                <img src= {logo} alt="Icon" />
               </div>
               <span className="sentence-text">{sentence}</span>
             </div>
@@ -219,7 +210,7 @@ const Home = () => {
                 <div className="logo-container mr-3">
                   <a href="https://tnebeaengineers.in/">
                     <img 
-                      src="/Images/tnebea_logo_cropped2.png" 
+                      src={logo} 
                       alt="TNEBEA Logo" 
                       className="header-logo"
                     />
@@ -390,43 +381,7 @@ const Home = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="footer-section">
-        <div className="footer-slider">
-          <div className="container">
-            <div className="slider-circular">
-              {[...footerImages, ...footerImages].map((img, index) => (
-                <div key={index} className="slider-item">
-                  <a href={img.link} target="_blank" rel="noopener noreferrer">
-                    <img 
-                      src={img.src} 
-                      alt={img.alt}
-                      className="img-fluid"
-                    />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-3 text-left text-white">
-                <FaSmile className="mr-1" />
-                <span className="small">TNEBEA</span>
-              </div>
-              <div className="col-md-6 text-center">
-                <span className="text-white">Copyright © TNEBEA 2024</span>
-              </div>
-              <div className="col-md-3 text-right footer-links">
-                <Link to="/privacy-policy">Privacy Policy</Link>
-                <Link to="/terms-and-conditions">Terms & Conditions</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 };

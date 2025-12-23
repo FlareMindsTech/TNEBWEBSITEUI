@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
