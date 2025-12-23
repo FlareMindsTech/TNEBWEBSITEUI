@@ -1,0 +1,601 @@
+/* Cec.css */
+.cec-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Marquee */
+.top-marquee {
+  background-color: #003366;
+  color: white;
+  padding: 8px 0;
+  font-weight: bold;
+}
+
+.top-marquee marquee {
+  font-size: 0.9rem;
+}
+
+/* Main Header */
+.main-header {
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0;
+}
+
+.header-logo {
+  height: 80px;
+  width: auto;
+  border-radius: 8px;
+}
+
+.header-text h1 {
+  font-family: 'Comfortaa', cursive;
+  font-size: 22px;
+  color: #003366;
+  margin-bottom: 5px;
+}
+
+.sub-heading {
+  font-family: 'Comfortaa', cursive;
+  font-size: 14px;
+  color: #666;
+}
+
+.search-form .input-group {
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.current-time {
+  font-weight: 600;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+/* Main Navigation */
+.main-navbar {
+  background-color: #003366 !important;
+  padding: 0;
+}
+
+.main-navbar .navbar-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-navbar .nav-link {
+  color: white !important;
+  padding: 12px 15px !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.main-navbar .nav-link:hover,
+.main-navbar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.main-navbar .dropdown-menu {
+  background-color: #003366;
+  border: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.main-navbar .dropdown-item {
+  color: white !important;
+  padding: 8px 20px;
+}
+
+.main-navbar .dropdown-item:hover,
+.main-navbar .dropdown-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-navbar .dropdown-item.active {
+  font-weight: bold;
+}
+
+.main-navbar .dropdown-toggle::after {
+  margin-left: 5px;
+}
+
+/* Main Content */
+.cec-content {
+  flex: 1;
+  padding: 40px 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* CEC Header */
+.cec-header {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 3px solid #003366;
+}
+
+.cec-main-title {
+  color: #0033ff;
+  font-weight: bold;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cec-sub-title {
+  color: #0033ff;
+  font-weight: bold;
+  font-size: 2.3rem;
+  margin-bottom: 0;
+}
+
+/* Principal Secretary Section */
+.principal-secretary-section .card {
+  border: 3px solid #003366;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.principal-secretary-section .card-header {
+  background: linear-gradient(135deg, #003366 0%, #0056b3 100%);
+  padding: 20px;
+}
+
+.principal-secretary-section .card-body {
+  padding: 30px;
+}
+
+.member-photo-container {
+  width: 200px;
+  height: 250px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #003366;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.member-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.member-photo:hover {
+  transform: scale(1.05);
+}
+
+.member-name {
+  color: #003366;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.member-qualification {
+  color: #0033ff;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.contact-title {
+  color: #003366;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  color: #0056b3;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* CEC Members Table */
+.cec-members-section .card {
+  border: 3px solid #003366;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.cec-members-section .card-header {
+  background: linear-gradient(135deg, #003366 0%, #0056b3 100%);
+  padding: 20px;
+}
+
+.cec-members-section .table {
+  margin-bottom: 0;
+}
+
+.cec-members-section .table thead th {
+  background-color: #003366;
+  color: white;
+  border-bottom: 2px solid #0056b3;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 15px;
+}
+
+.cec-members-section .table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.cec-members-section .table tbody tr:hover {
+  background-color: rgba(0, 86, 179, 0.05);
+  transform: translateY(-2px);
+}
+
+.cec-members-section .table tbody td {
+  vertical-align: middle;
+  padding: 15px;
+  border-color: #dee2e6;
+}
+
+.cec-members-section .member-info {
+  padding: 5px;
+}
+
+.cec-members-section .member-info .member-name {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #003366;
+}
+
+.cec-members-section .member-info .member-qualification {
+  font-size: 0.9rem;
+  color: #0033ff;
+  line-height: 1.4;
+}
+
+.cec-members-section .member-photo-container {
+  width: 150px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+.cec-members-section .serial-number {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #003366;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Committee Info Cards */
+.committee-info .card {
+  border-radius: 10px;
+  border: 2px solid #003366;
+  transition: transform 0.3s ease;
+}
+
+.committee-info .card:hover {
+  transform: translateY(-5px);
+}
+
+.committee-info .card-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.committee-info .list-unstyled li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.committee-info .list-unstyled li:last-child {
+  border-bottom: none;
+}
+
+.committee-info .list-unstyled strong {
+  color: #003366;
+  min-width: 160px;
+  display: inline-block;
+}
+
+.committee-info .list-unstyled span {
+  color: #666;
+  text-align: right;
+  flex: 1;
+}
+
+/* Contact Queries */
+.contact-queries .alert {
+  border-radius: 10px;
+  border: 2px solid #28a745;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+}
+
+.contact-queries .alert-heading {
+  color: #155724;
+  font-weight: bold;
+}
+
+.contact-queries .contact-info {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #c3e6cb;
+}
+
+/* Footer */
+.footer-section {
+  margin-top: auto;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-slider {
+  padding: 20px 0;
+  background: white;
+  overflow: hidden;
+}
+
+.slider-circular {
+  display: flex;
+  align-items: center;
+  animation: scrollFooter 40s linear infinite;
+  white-space: nowrap;
+}
+
+.slider-item {
+  flex: 0 0 auto;
+  margin: 0 15px;
+}
+
+.footer-slider-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+
+.footer-slider-img:hover {
+  transform: scale(1.1);
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@keyframes scrollFooter {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.footer-bottom {
+  background-color: #0069d9;
+  padding: 15px 0;
+  color: white;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+  .header-text h1 {
+    font-size: 18px;
+  }
+  
+  .main-navbar .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .main-navbar .nav-item {
+    width: 100%;
+  }
+  
+  .cec-main-title {
+    font-size: 2.2rem;
+  }
+  
+  .cec-sub-title {
+    font-size: 1.8rem;
+  }
+  
+  .search-form .input-group {
+    max-width: 100%;
+  }
+  
+  .member-photo-container {
+    width: 180px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .header-text h1 {
+    font-size: 16px;
+  }
+  
+  .header-logo {
+    height: 60px;
+  }
+  
+  .cec-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .cec-sub-title {
+    font-size: 1.5rem;
+  }
+  
+  .principal-secretary-section .card-body {
+    padding: 20px;
+  }
+  
+  .member-name {
+    font-size: 1.4rem;
+  }
+  
+  .member-qualification {
+    font-size: 1rem;
+  }
+  
+  .cec-members-section .table {
+    font-size: 0.9rem;
+  }
+  
+  .cec-members-section .member-photo-container {
+    width: 120px;
+    height: 150px;
+  }
+  
+  .footer-slider {
+    display: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .header-text h1 {
+    font-size: 14px;
+  }
+  
+  .sub-heading {
+    font-size: 12px;
+  }
+  
+  .cec-header {
+    padding: 20px 15px;
+  }
+  
+  .cec-main-title {
+    font-size: 1.5rem;
+  }
+  
+  .cec-sub-title {
+    font-size: 1.2rem;
+  }
+  
+  .cec-members-section .table-responsive {
+    border: none;
+  }
+  
+  .cec-members-section .table thead {
+    display: none;
+  }
+  
+  .cec-members-section .table tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 2px solid #003366;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .cec-members-section .table tbody td {
+    display: block;
+    text-align: center;
+    border: none;
+    padding: 10px;
+  }
+  
+  .cec-members-section .table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #003366;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .cec-members-section .member-photo-container {
+    width: 150px;
+    height: 180px;
+    margin: 10px auto;
+  }
+  
+  .committee-info .list-unstyled li {
+    flex-direction: column;
+  }
+  
+  .committee-info .list-unstyled strong {
+    min-width: auto;
+    margin-bottom: 5px;
+  }
+  
+  .footer-bottom .row > div {
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .footer-links a {
+    margin: 0 10px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .main-navbar,
+  .footer-section,
+  .search-form,
+  .top-marquee,
+  .committee-info,
+  .contact-queries {
+    display: none !important;
+  }
+  
+  .cec-content {
+    padding: 0;
+  }
+  
+  .cec-header {
+    box-shadow: none;
+    border: 2px solid #000;
+  }
+  
+  .principal-secretary-section .card,
+  .cec-members-section .card {
+    box-shadow: none;
+    border: 2px solid #000;
+  }
+  
+  .member-photo {
+    max-width: 150px;
+    max-height: 180px;
+  }
+  
+  .table {
+    page-break-inside: auto;
+  }
+  
+  .table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+}
