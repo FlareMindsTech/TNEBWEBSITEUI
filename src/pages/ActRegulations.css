@@ -201,13 +201,11 @@
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
-  filter: grayscale(100%);
   opacity: 0.8;
 }
 
 .footer-slider-img:hover {
   transform: scale(1.1);
-  filter: grayscale(0%);
   opacity: 1;
 }
 
