@@ -5,8 +5,12 @@ import { Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
+import carouselimage1 from './assets/1765821464_NationalEnergyConservationDay-2025_1.png';
+import logo from './assets/tnebea_logo_cropped2.png';
 import Navbar from './components/Navbar';
-import logo from './assets/tnebea_logo_cropped2.png'
+import carouselimage2 from './assets/1762262319_OS.jpg';
+import carouselimage3 from './assets/1762262223_tr.jpg';
+import carouselimage4 from './assets/1762262032_VP2.jpg';
 
 
 const Home = () => {
@@ -17,25 +21,25 @@ const Home = () => {
   const carouselImages = [
     {
       id: 1,
-      src: "/uploads/carousel/1765821464_NationalEnergyConservationDay-2025_1.png",
+      src: carouselimage1,
       alt: "National Energy Conservation Day 2025",
       caption: null
     },
     {
       id: 2,
-      src: "/uploads/carousel/1762262319_OS.jpg",
+      src: carouselimage2,
       alt: "Swearing in - Organizing Secretary",
       caption: "Swearing in - Organizing Secretary"
     },
     {
       id: 3,
-      src: "/uploads/carousel/1762262223_tr.jpg",
+      src: carouselimage3,
       alt: "Swearing in - Treasurer",
       caption: "Swearing in - Treasurer"
     },
     {
       id: 4,
-      src: "/uploads/carousel/1762262032_VP2.jpg",
+      src: carouselimage4,
       alt: "Swearing in - Vice President 2",
       caption: "Swearing in - Vice President 2"
     }
@@ -181,88 +185,13 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Top Carousel with Sentences */}
-      <div className="sentence-carousel">
-        <div className="sentence-track">
-          {[
-            "Welcome to Tamilnadu Electricity Board Engineers Association",
-            "Serving Engineers Since 1946",
-            "Powering Tamil Nadu's Progress",
-            "Engineering Excellence in Electricity"
-          ].map((sentence, index) => (
-            <div key={index} className="sentence-item">
-              <div className="circular-icon">
-                <img src= {logo} alt="Icon" />
-              </div>
-              <span className="sentence-text">{sentence}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <header className="main-header">
-        <div className="container-fluid">
-          <div className="row align-items-center py-2">
-            {/* Logo and Title */}
-            <div className="col-md-8 col-lg-9">
-              <div className="d-flex align-items-center">
-                <div className="logo-container mr-3">
-                  <a href="https://tnebeaengineers.in/">
-                    <img 
-                      src={logo} 
-                      alt="TNEBEA Logo" 
-                      className="header-logo"
-                    />
-                  </a>
-                </div>
-                <div className="header-text">
-                  <h1 className="text-primary mb-1">
-                    Tamilnadu Electricity Board | Engineers Association
-                  </h1>
-                  <p className="text-secondary sub-heading mb-0">
-                    The association was formed &amp; registered in 1946.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Search and Time */}
-            <div className="col-md-4 col-lg-3">
-              <div className="header-right">
-                <form className="search-form mb-2">
-                  <div className="input-group">
-                    <input 
-                      type="text" 
-                      className="form-control form-control-sm" 
-                      placeholder="Search Portal Content"
-                    />
-                    <div className="input-group-append">
-                      <button className="btn btn-primary btn-sm" type="button">
-                        <FaSearch />
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                <div className="current-time text-secondary">
-                  <small>{currentTime}</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Navigation */}
-      <Navbar />
-
       {/* Main Content Section */}
       <main className="main-content">
         <div className="container-fluid">
           <div className="row">
             {/* Left Side - Carousel (60%) */}
             <div className="col-lg-7 col-md-12">
-              <div className="image-carousel-section">
+              <div className="image-carousel-section" style={{objectFit:'cover'}}>
                 <Carousel>
                   {carouselImages.map((image) => (
                     <Carousel.Item key={image.id}>
@@ -270,6 +199,7 @@ const Home = () => {
                         className="d-block w-100 carousel-image"
                         src={image.src}
                         alt={image.alt}
+                        style={{marginTop:'2%'}}
                       />
                       {image.caption && (
                         <Carousel.Caption>

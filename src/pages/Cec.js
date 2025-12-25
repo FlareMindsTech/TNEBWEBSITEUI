@@ -1,5 +1,5 @@
 // Cec.js
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import './Cec.css';
@@ -20,10 +20,6 @@ import VIJAY from '../assets/people/VIJAY.jpg';
 import VIKRAMAN from '../assets/people/VIKRAMAN.jpg';
 
 const Cec = () => {
-  const [currentTime, setCurrentTime] = useState('');
-
-
-
   // CEC Members Data
   const cecMembers = [
     {
@@ -163,195 +159,8 @@ const Cec = () => {
     }
   ];
 
-  // Update current time
-  useEffect(() => {
-    const updateClock = () => {
-      const now = new Date();
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
-      const day = days[now.getDay()];
-      const date = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      
-      setCurrentTime(`${day}, ${date}-${month}-${year}, ${hours}:${minutes}:${seconds}`);
-    };
-
-    updateClock();
-    const intervalId = setInterval(updateClock, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-
   return (
     <div className="cec-container">
-      {/* Top Marquee */}
-      <div className="top-marquee">
-        <marquee behavior="scroll" direction="left">
-          <strong>Tamil Nadu Electricity Board Engineers Association Site</strong>
-        </marquee>
-      </div>
-
-      {/* Main Header */}
-      <header className="main-header">
-        <div className="container-fluid">
-          <div className="row align-items-center py-2">
-            {/* Logo and Title */}
-            <div className="col-md-8 col-lg-9">
-              <div className="d-flex align-items-center">
-                <div className="logo-container mr-3">
-                  <Link to="/">
-                    <img 
-                      src="../Images/tnebea_logo_cropped2.png" 
-                      alt="TNEBEA Logo" 
-                      className="header-logo"
-                    />
-                  </Link>
-                </div>
-                <div className="header-text">
-                  <h1 className="text-primary mb-1">
-                    Tamilnadu Electricity Board | Engineers Association
-                  </h1>
-                  <p className="text-secondary sub-heading mb-0">
-                    The association was formed &amp; registered in 1946.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Search and Time */}
-            <div className="col-md-4 col-lg-3">
-              <div className="header-right">
-                <form className="search-form mb-2">
-                  <div className="input-group">
-                    <input 
-                      type="text" 
-                      className="form-control form-control-sm" 
-                      placeholder="Search Portal Content"
-                    />
-                    <div className="input-group-append">
-                      <button className="btn btn-primary btn-sm" type="button">
-                        <FaSearch />
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                <div className="current-time text-secondary">
-                  <small>{currentTime}</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Navigation */}
-      <nav className="main-navbar navbar navbar-expand-lg navbar-dark">
-        <div className="container-fluid">
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-toggle="collapse" 
-            data-target="#mainNavbar"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="mainNavbar">
-            <ul className="navbar-nav w-100">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  <FaHome className="mr-1" /> Home
-                </Link>
-              </li>
-              
-              {/* About TNEBEA with Dropdown */}
-              <li className="nav-item dropdown active">
-                <a className="nav-link dropdown-toggle" href="#" id="aboutDropdown">
-                  About TNEBEA
-                </a>
-                <div className="dropdown-menu">
-                  <Link className="dropdown-item active" to="/cec">
-                    CEC
-                  </Link>
-                </div>
-              </li>
-
-              {/* TNEB General Info with Dropdown */}
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="tnebInfoDropdown">
-                  TNEB General Info
-                </a>
-                <div className="dropdown-menu">
-                  <Link className="dropdown-item" to="/act-regulations">
-                    Act & Regulations
-                  </Link>
-                  <Link className="dropdown-item" to="/manuals-and-forms">
-                    TNEB Regulations, Manual & Forms
-                  </Link>
-                  <Link className="dropdown-item" to="/pension-scheme">
-                    CONTRIBUTORY PENSION SCHEME
-                  </Link>
-                  <Link className="dropdown-item" to="/distribution-instructions">
-                    DISTRIBUTION RELATED INSTRUCTIONS – AGRI, DOMESTIC, COMMERCIAL
-                  </Link>
-                </div>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to="/minnagam">Minnagam</Link>
-              </li>
-              
-              <li className="nav-item">
-                <Link className="nav-link" to="/hand-book">Engineers Hand Book</Link>
-              </li>
-
-              {/* Technical Corner with Dropdown */}
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="techDropdown">
-                  Technical Corner
-                </a>
-                <div className="dropdown-menu">
-                  <Link className="dropdown-item" to="/technical-qa">Technical Q&A</Link>
-                  <Link className="dropdown-item" to="/technical-parameters">Technical Parameters</Link>
-                  <Link className="dropdown-item" to="/technical-books">
-                    TECHNICAL BOOKS AND MANUALS
-                  </Link>
-                </div>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to="/news">News</Link>
-              </li>
-              
-              <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact Us</Link>
-              </li>
-              
-              <li className="nav-item">
-                <a className="nav-link" href="http://tneb.tnebnet.org/emp/forms.html" target="_blank" rel="noopener noreferrer">
-                  TNEBEA FORMS
-                </a>
-              </li>
-
-              {/* User Icon with Dropdown */}
-              <li className="nav-item ml-auto dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="userDropdown">
-                  <FaUser />
-                </a>
-                <div className="dropdown-menu dropdown-menu-right">
-                  <Link className="dropdown-item" to="/login">Login</Link>
-                  <Link className="dropdown-item" to="/register">Register</Link>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <main className="cec-content">
         <div className="container">
@@ -404,7 +213,7 @@ const Cec = () => {
                   <table className="table table-bordered table-hover mb-0">
                     <thead className="thead-light">
                       <tr>
-                        <th style={{ width: '60px' }}>S.No</th>
+                        <th style={{ width: '60px' }} className="serial-no-header">S.No</th>
                         <th style={{ width: '200px' }}>Designation</th>
                         <th style={{ width: '300px' }}>Name & Qualification</th>
                         <th style={{ width: '180px' }}>Photo</th>
@@ -414,13 +223,13 @@ const Cec = () => {
                     <tbody>
                       {cecMembers.slice(1).map((member) => (
                         <tr key={member.id}>
-                          <td className="text-center align-middle">
+                          <td data-label="S.No" className="text-center align-middle serial-no-cell">
                             <span className="serial-number">{member.serialNo}</span>
                           </td>
-                          <td className="text-center align-middle">
+                          <td data-label="Designation" className="text-center align-middle designation-cell">
                             <strong>{member.designation}</strong>
                           </td>
-                          <td>
+                          <td data-label="Name & Qualification" className="name-cell">
                             <div className="member-info">
                               <h6 className="member-name mb-1">{member.name}</h6>
                               <p className="member-qualification mb-0">
@@ -428,16 +237,16 @@ const Cec = () => {
                               </p>
                             </div>
                           </td>
-                          <td className="text-center align-middle">
+                          <td data-label="Photo" className="text-center align-middle photo-cell">
                             <div className="member-photo-container">
-                              <img 
-                                src={member.photo} 
+                              <img
+                                src={member.photo}
                                 alt={member.name}
                                 className="member-photo"
                               />
                             </div>
                           </td>
-                          <td className="text-center align-middle">
+                          <td data-label="Contact No." className="text-center align-middle contact-cell">
                             <div className="contact-info">
                               <FaPhone className="mr-1" />
                               <strong>{member.contact}</strong>
