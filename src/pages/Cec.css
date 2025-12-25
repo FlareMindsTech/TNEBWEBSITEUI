@@ -469,7 +469,15 @@
     width: 120px;
     height: 150px;
   }
-  
+
+  .cec-members-section .serial-no-header {
+    display: none;
+  }
+
+  .cec-members-section .serial-no-cell {
+    display: none;
+  }
+
   .footer-slider {
     display: none;
   }
@@ -479,46 +487,47 @@
   .header-text h1 {
     font-size: 14px;
   }
-  
+
   .sub-heading {
     font-size: 12px;
   }
-  
+
   .cec-header {
     padding: 20px 15px;
   }
-  
+
   .cec-main-title {
     font-size: 1.5rem;
   }
-  
+
   .cec-sub-title {
     font-size: 1.2rem;
   }
-  
+
   .cec-members-section .table-responsive {
     border: none;
   }
-  
+
   .cec-members-section .table thead {
     display: none;
   }
-  
+
   .cec-members-section .table tbody tr {
-    display: block;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
     border: 2px solid #003366;
     border-radius: 10px;
     overflow: hidden;
   }
-  
+
   .cec-members-section .table tbody td {
     display: block;
     text-align: center;
     border: none;
     padding: 10px;
   }
-  
+
   .cec-members-section .table tbody td::before {
     content: attr(data-label);
     font-weight: bold;
@@ -526,33 +535,53 @@
     display: block;
     margin-bottom: 5px;
   }
-  
+
+  .cec-members-section .serial-no-cell {
+    display: none;
+  }
+
+  .cec-members-section .photo-cell {
+    order: -1;
+  }
+
+  .cec-members-section .name-cell {
+    order: 1;
+  }
+
+  .cec-members-section .designation-cell {
+    order: 2;
+  }
+
+  .cec-members-section .contact-cell {
+    order: 3;
+  }
+
   .cec-members-section .member-photo-container {
     width: 150px;
     height: 180px;
     margin: 10px auto;
   }
-  
+
   .committee-info .list-unstyled li {
     flex-direction: column;
   }
-  
+
   .committee-info .list-unstyled strong {
     min-width: auto;
     margin-bottom: 5px;
   }
-  
+
   .footer-bottom .row > div {
     text-align: center !important;
     margin-bottom: 10px;
   }
-  
+
   .footer-links {
     display: flex;
     justify-content: center;
     margin-top: 10px;
   }
-  
+
   .footer-links a {
     margin: 0 10px;
   }
