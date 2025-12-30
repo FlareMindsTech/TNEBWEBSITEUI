@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaFilePdf, FaCalendar, FaDownload, FaHome, FaUser } from 'react-icons/fa';
 import './ActRegulations.css';
+import conductregulations from '../assets/documents/TNEBConductRegulations.pdf';
+import disciplineregulations from '../assets/documents/TNEBDARegulations.pdf';
+import leaveregulations from '../assets/documents/TNEBLeaveRegulations.pdf';
+import amendments from '../assets/documents/TNERC-Amendments-to-SC-DC.pdf';
+
+
 
 
 const ActRegulations = () => {
@@ -13,25 +19,25 @@ const ActRegulations = () => {
     {
       id: 1,
       title: "TNEB Conduct Regulations",
-      path: "./documents/TNEBConductRegulations.pdf",
+      path: conductregulations,
       filename: "TNEBConductRegulations.pdf"
     },
     {
       id: 2,
       title: "TNEB Discipline and Appeal Regulations",
-      path: "./documents/TNEBDARegulations.pdf",
+      path: disciplineregulations,
       filename: "TNEBDARegulations.pdf"
     },
     {
       id: 3,
       title: "TNEB Leave Regulations",
-      path: "./documents/TNEBLeaveRegulations.pdf",
+      path: leaveregulations,
       filename: "TNEBLeaveRegulations.pdf"
     },
     {
       id: 4,
       title: "TNERC Amendments to the Tamil Nadu Electricity Supply Code & Distribution code",
-      path: "./documents/TNERC-Amendments-to-SC-DC.pdf",
+      path: amendments,
       filename: "TNERC-Amendments-to-SC-DC.pdf",
       note: "(Notification No. TNERC/SC/7–40, dated 18-12-2019.) (Notification No. TNERC/DC/8–25 dated 18-12-2019.)"
     }
@@ -125,7 +131,7 @@ const ActRegulations = () => {
                     <div className="additional-info mt-4">
                       <div className="alert alert-info">
                         <h6 className="alert-heading">Important Notes:</h6>
-                        <ul className="mb-0 pl-3">
+                        <ul className="mb-0 pl-3" style={{listStyle:'none'}}>
                           <li>All documents are in PDF format</li>
                           <li>Click on document titles to view/download</li>
                           <li>Documents open in new tab/window</li>
