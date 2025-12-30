@@ -1,0 +1,106 @@
+/* ContributoryPensionScheme.css */
+.contributory-pension-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Content */
+.contributory-pension-content {
+  flex: 1;
+  padding: 30px 0;
+  background-color: #f8f9fa;
+}
+
+.container-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Footer */
+.footer-section {
+  margin-top: auto;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-slider {
+  padding: 20px 0;
+  background: white;
+  overflow: hidden;
+}
+
+.slider-circular {
+  display: flex;
+  align-items: center;
+  animation: scrollFooter 40s linear infinite;
+  white-space: nowrap;
+}
+
+.slider-item {
+  flex: 0 0 auto;
+  margin: 0 15px;
+}
+
+.footer-slider-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
+
+.footer-slider-img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+@keyframes scrollFooter {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.footer-bottom {
+  background-color: #0069d9;
+  padding: 15px 0;
+  color: white;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 767.98px) {
+  .footer-slider {
+    display: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footer-bottom .row > div {
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .footer-links a {
+    margin: 0 10px;
+  }
+}
