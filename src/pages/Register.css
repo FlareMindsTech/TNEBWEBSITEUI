@@ -1,0 +1,35 @@
+/* ============================= */
+/* Boutique Style Auth Container */
+/* ============================= */
+.authContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #282c34 0%, #1a1a1a 25%, #61dafb 50%, #282c34 75%, #1a1a1a 100%);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Luxury Background Pattern */
+.boutiqueBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}

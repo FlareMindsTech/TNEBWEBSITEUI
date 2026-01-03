@@ -108,7 +108,7 @@ const Navbar = () => {
               <a className="nav-link dropdown-toggle" href="#" id="userDropdown">
                 <FaUser />
               </a>
-              <div className="dropdown-menu dropdown-menu-right">
+              <div className="dropdown-menu dropdown-menu-right" style={{marginLeft:'100%'}}>
                 <Link className="dropdown-item" to="/login">Login</Link>
                 <Link className="dropdown-item" to="/register">Register</Link>
               </div>
