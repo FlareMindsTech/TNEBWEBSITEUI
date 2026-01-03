@@ -18,8 +18,8 @@ export default function Login() {
     if (!form.email) newErrors.email = "Please fill the Email";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       newErrors.email = "Please enter a valid email address";
-    if (!form.password) newErrors.password = "Please fill the Password";
-    if (!termsAccepted) newErrors.terms = "You must accept the terms and conditions";
+    if (!form.password) newErrors.password = "Please enter the Password";
+    // if (!termsAccepted) newErrors.terms = "You must accept the terms and conditions";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

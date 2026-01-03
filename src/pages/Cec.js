@@ -1,7 +1,9 @@
 // Cec.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import './Cec.css';
 import ANANDKUMAR from '../assets/people/ANANDKUMAR.jpg';
 import ARUNACHALAM from '../assets/people/ARUNACHALAM.jpg';
@@ -20,6 +22,23 @@ import VIJAY from '../assets/people/VIJAY.jpg';
 import VIKRAMAN from '../assets/people/VIKRAMAN.jpg';
 
 const Cec = () => {
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
+
+  const openDialog = (member) => {
+    setSelectedMember(member);
+  };
+
+  const closeDialog = () => {
+    setSelectedMember(null);
+  };
+
   // CEC Members Data
   const cecMembers = [
     {
@@ -171,7 +190,7 @@ const Cec = () => {
 
           {/* Principal Secretary Special Table */}
           <div className="principal-secretary-section mb-5">
-            <div className="card shadow-lg">
+            <div className="card shadow-lg" onClick={() => openDialog(cecMembers[0])} style={{ cursor: 'pointer' }}>
               <div className="card-header bg-primary text-white">
                 <h4 className="mb-0 text-center">Principal Secretary (National & State Affairs)</h4>
               </div>
@@ -179,8 +198,8 @@ const Cec = () => {
                 <div className="row align-items-center">
                   <div className="col-md-3 text-center mb-3 mb-md-0">
                     <div className="member-photo-container">
-                      <img 
-                        src={cecMembers[0].photo} 
+                      <img
+                        src={cecMembers[0].photo}
                         alt={cecMembers[0].name}
                         className="member-photo"
                       />
@@ -222,7 +241,7 @@ const Cec = () => {
                     </thead>
                     <tbody>
                       {cecMembers.slice(1).map((member) => (
-                        <tr key={member.id}>
+                        <tr key={member.id} onClick={() => openDialog(member)} style={{ cursor: 'pointer' }}>
                           <td data-label="S.No" className="text-center align-middle serial-no-cell">
                             <span className="serial-number">{member.serialNo}</span>
                           </td>
@@ -316,7 +335,11 @@ const Cec = () => {
 
           {/* Contact for Queries */}
           <div className="contact-queries mt-4">
-            <div className="alert alert-success">
+            <div
+              className="alert alert-success"
+              style={{ cursor: 'pointer' }}
+              onClick={() => openDialog(cecMembers[4])}
+            >
               <h5 className="alert-heading">For Committee Related Queries</h5>
               <p className="mb-2">
                 Please contact the General Secretary: <strong>Er. K. VIJAY</strong>
@@ -329,6 +352,37 @@ const Cec = () => {
           </div>
         </div>
       </main>
+
+      {/* Member Dialog */}
+      {selectedMember && (
+        <div className="member-dialog-overlay" onClick={closeDialog}>
+          <div
+            className="member-dialog"
+            data-aos="flip-right"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close-button" onClick={closeDialog}>
+              <FaTimes />
+            </button>
+            <div className="dialog-content text-center">
+              <div className="dialog-photo-container mb-3">
+                <img
+                  src={selectedMember.photo}
+                  alt={selectedMember.name}
+                  className="dialog-photo"
+                />
+              </div>
+              <h4 className="dialog-designation mb-2">{selectedMember.designation}</h4>
+              <h5 className="dialog-name mb-2">{selectedMember.name}</h5>
+              <p className="dialog-qualification mb-3">{selectedMember.qualification}</p>
+              <div className="dialog-contact">
+                <FaPhone className="mr-2" />
+                <strong>{selectedMember.contact}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

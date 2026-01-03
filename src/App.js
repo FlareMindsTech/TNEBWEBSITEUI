@@ -20,32 +20,31 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cec" element={<Cec />} />
-          <Route path="/act-regulations" element={<ActRegulations />} />
-          <Route path="/manuals-and-forms-download" element={<ManualsAndFormsDownload />} />
-          <Route path="/contributory-pension-scheme" element={<ContributoryPensionScheme />} />
-          <Route path="/distribution-related-instructions" element={<DistributionRelatedInstructions />} />
-          <Route path="/minnagam" element={<Minnagam />} />
-          <Route path="/hand-book" element={<HandBook />} />
-          <Route path="/technical-qa" element={<TechnicalQa />} />
-          <Route path="/technical-parameters" element={<TechnicalParameters />} />
-          <Route path="/technical-books-and-manuals" element={<TechnicalBooksAndManuals />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forget" element={<ForgotPassword/>} />
+          <Route path="/" element={<><Header /><Home /><Footer /></>} />
+          <Route path="/cec" element={<><Header /><Cec /><Footer /></>} />
+          <Route path="/act-regulations" element={<><Header /><ActRegulations /><Footer /></>} />
+          <Route path="/manuals-and-forms-download" element={<><Header /><ManualsAndFormsDownload /><Footer /></>} />
+          <Route path="/contributory-pension-scheme" element={<><Header /><ContributoryPensionScheme /><Footer /></>} />
+          <Route path="/distribution-related-instructions" element={<><Header /><DistributionRelatedInstructions /><Footer /></>} />
+          <Route path="/minnagam" element={<><Header /><Minnagam /><Footer /></>} />
+          <Route path="/hand-book" element={<><Header /><HandBook /><Footer /></>} />
+          <Route path="/technical-qa" element={<><Header /><TechnicalQa /><Footer /></>} />
+          <Route path="/technical-parameters" element={<><Header /><TechnicalParameters /><Footer /></>} />
+          <Route path="/technical-books-and-manuals" element={<><Header /><TechnicalBooksAndManuals /><Footer /></>} />
+          <Route path="/news" element={<><Header /><News /><Footer /></>} />
+          <Route path="/contactus" element={<><Header /><ContactUs /><Footer /></>} />
+          <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
+          <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
+          <Route path="/forget" element={<><Navbar /><ForgotPassword /><Footer /></>} />
         </Routes>
-        <Footer />
       </div>
     </Router>
   );
