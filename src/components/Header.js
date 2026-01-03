@@ -89,9 +89,9 @@ const Header = () => {
                       placeholder="Search Portal Content"
                     />
                     <div className="input-group-append">
-                      <button className="btn btn-primary btn-sm" type="button">
+                      {/* <button className="btn btn-primary btn-sm" type="button">
                         <FaSearch />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </form>

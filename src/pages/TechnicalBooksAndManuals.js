@@ -2,11 +2,18 @@ import React from 'react';
 
 const TechnicalBooksAndManuals = () => {
   return (
-    <div className="container mt-5">
-      <h1>TECHNICAL BOOKS AND MANUALS</h1>
-      <p>This is the Technical Books and Manuals page. Dummy content for technical books and manuals.</p>
-      <p>Here you can find various technical books and manuals.</p>
-      {/* Add more dummy content as needed */}
+    <div className="container-page">
+      <div className="row">
+        <div className="col-md-12">
+          <br />
+          <br />
+          <a href="/documents/01-Beginning-Vibration-Analysis.pdf" target="_blank">Beginning Vibration Analysis</a>
+          <br />
+          <br />
+          <a href="/documents/02-Reference-Standards-for-Vibration-Monitoring-and-Analysis.pdf" target="_blank">Reference Standards for Vibration Monitoring and Analysis</a>
+          <br />
+        </div>
+      </div>
     </div>
   );
 };

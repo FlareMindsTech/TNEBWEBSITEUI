@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
 import './ContactUs.css';
+import contactImage from '../assets/contactUs-1-1-300x175.jpg'
 
 
 const ContactUs = () => {
@@ -88,7 +89,7 @@ const ContactUs = () => {
               {/* Contact Header Image */}
               <div className="contact-header-image text-center mb-4">
                 <img 
-                  src="../Images/contactUs-1-1-300x175.jpg" 
+                  src= {contactImage}
                   alt="Contact Us" 
                   className="contact-us-img img-fluid rounded"
                 />

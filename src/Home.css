@@ -250,11 +250,21 @@
 .from-board { background-color: #dded2b; color: #001933; }
 .to-board { background-color: #df09d8; }
 .tneb { background-color: #009900; }
-.tangedco { background-color: #2196F3; }
+.tangedco { background-color: #4692d0; }
 .tantransco { background-color: #f44336; }
 .teda { background-color: #99ff33; color: #001933; }
 .tnerc { background-color: #d2691e; }
 .tufidco { background-color: #ff3399; }
+
+/* Uniform styling for quick links to match other dropdown items */
+.dropdown-menu .quick-link {
+  background-color: #003366 !important;
+  color: white !important;
+}
+
+.dropdown-menu .quick-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
 
 /* Important Notices */
 .notice-item {
