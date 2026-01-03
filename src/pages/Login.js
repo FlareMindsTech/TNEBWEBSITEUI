@@ -79,7 +79,7 @@ export default function Login() {
               <label className="form-label fw-semibold floatingLabel" style={{ color: isFocused.email || form.email ? '#61dafb' : '#6c757d' }}>
                 Email address
               </label>
-              <div className="inputGroup">
+              <div className="inputGroup" style={{display:'flex'}}>
                 <span className={`input-group-text inputIcon ${isFocused.email ? 'inputIconFocused' : ''}`}>
                   <FaEnvelope />
                 </span>
@@ -103,7 +103,7 @@ export default function Login() {
               <label className="form-label fw-semibold floatingLabel" style={{ color: isFocused.password || form.password ? '#61dafb' : '#6c757d' }}>
                 Password
               </label>
-              <div className="inputGroup">
+              <div className="inputGroup" style={{display:'flex'}}>
                 <span className={`input-group-text inputIcon ${isFocused.password ? 'inputIconFocused' : ''}`}>
                   <FaLock />
                 </span>

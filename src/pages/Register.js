@@ -10,7 +10,7 @@ import {
   FaExclamationCircle
 } from "react-icons/fa";
 import "./Register.css";
-import { apiFetch } from "../api";
+
 import { toast } from "react-hot-toast";
 
 export default function Register() {
@@ -125,24 +125,14 @@ export default function Register() {
 
     setIsLoading(true);
 
-    try {
-      // Use apiFetch for registration
-      const data = await apiFetch('/api/users/register', {
-        method: "POST",
-        body: form,
-      });
-
-      // apiFetch handles
-      toast.success(data.message || "Registered successfully", {
+    // Simulate API call delay
+    setTimeout(() => {
+      toast.success("Registered successfully", {
         position: "top-center",
       });
       navigate("/login");
-
-    } catch (err) {
-      toast.error(err.message, { position: "top-center" });
-    } finally {
       setIsLoading(false);
-    }
+    }, 2000);
   };
 
   return (
