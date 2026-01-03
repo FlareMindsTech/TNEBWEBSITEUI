@@ -15,6 +15,7 @@ import News from './pages/News';
 import ContactUs from './pages/ContactUs';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Header from './components/Header';
@@ -42,8 +43,7 @@ function App() {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/forget" element={<ForgotPassword/>} />
         </Routes>
         <Footer />
       </div>

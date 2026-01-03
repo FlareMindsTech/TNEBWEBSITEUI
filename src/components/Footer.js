@@ -55,9 +55,9 @@ const Footer = () => {
             <div className="col-md-6 text-center">
               <span className="text-white">Copyright © TNEBEA 2025</span>
             </div>
-            <div className="col-md-3 text-right footer-links">
-              <Link to="/privacy-policy">Privacy Policy</Link>
-              <Link to="/terms-and-conditions">Terms & Conditions</Link>
+            <div className="col-md-3 text-right footer-links" style={{display:'flex', alignItems:'center'}}>
+              <Link to="/privacy-policy" style={{width:'100%'}}>Privacy Policy</Link>
+              <Link to="/terms-and-conditions" style={{width:'100%'}}>Terms & Conditions</Link>
             </div>
           </div>
         </div>
