@@ -470,11 +470,15 @@
     height: 150px;
   }
 
-  .cec-members-section .serial-no-header {
+  .cec-members-section .table thead {
     display: none;
   }
 
   .cec-members-section .serial-no-cell {
+    display: none;
+  }
+
+  .cec-members-section .serial-number {
     display: none;
   }
 
@@ -532,7 +536,7 @@
     content: attr(data-label);
     font-weight: bold;
     color: #003366;
-    display: block;
+    display: none;
     margin-bottom: 5px;
   }
 
@@ -594,36 +598,163 @@
   .search-form,
   .top-marquee,
   .committee-info,
-  .contact-queries {
+  .contact-queries,
+  .member-dialog-overlay {
     display: none !important;
   }
-  
+
   .cec-content {
     padding: 0;
   }
-  
+
   .cec-header {
     box-shadow: none;
     border: 2px solid #000;
   }
-  
+
   .principal-secretary-section .card,
   .cec-members-section .card {
     box-shadow: none;
     border: 2px solid #000;
   }
-  
+
   .member-photo {
     max-width: 150px;
     max-height: 180px;
   }
-  
+
   .table {
     page-break-inside: auto;
   }
-  
+
   .table tr {
     page-break-inside: avoid;
     page-break-after: auto;
+  }
+}
+
+/* Member Dialog Styles */
+.member-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.member-dialog {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: 3px solid #003366;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #003366;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.close-button:hover {
+  color: #0056b3;
+}
+
+.dialog-content {
+  padding: 30px;
+}
+
+.dialog-photo-container {
+  width: 200px;
+  height: 250px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #003366;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dialog-designation {
+  color: #003366;
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.dialog-name {
+  color: #0033ff;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.dialog-qualification {
+  color: #666;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.dialog-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0056b3;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Responsive Dialog */
+@media (max-width: 767.98px) {
+  .member-dialog {
+    width: 80%;
+    margin: 20px;
+  }
+
+  .dialog-content {
+    padding: 20px;
+  }
+
+  .dialog-photo-container {
+    width: 150px;
+    height: 180px;
+  }
+
+  .dialog-designation {
+    font-size: 1.2rem;
+  }
+
+  .dialog-name {
+    font-size: 1.4rem;
+  }
+
+  .dialog-qualification {
+    font-size: 0.9rem;
+  }
+
+  .dialog-contact {
+    font-size: 1rem;
   }
 }
