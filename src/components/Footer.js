@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <div className="container">
+        <div className="container" >
           <div className="row align-items-center">
             <div className="col-md-3 text-left text-white">
               <FaSmile className="mr-1" />
