@@ -1,25 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isTnebOpen, setIsTnebOpen] = useState(false);
+  const [isTechOpen, setIsTechOpen] = useState(false);
+  const [isQuickOpen, setIsQuickOpen] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <nav className="main-navbar navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#mainNavbar"
+          onClick={toggleNavbar}
+          aria-expanded={isOpen}
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
+        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="mainNavbar">
           <ul className="navbar-nav w-100">
             <li className="nav-item active">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/" onClick={() => setIsOpen(false)}>Home</Link>
             </li>
 
             {/* About TNEBEA with Dropdown */}
@@ -35,10 +54,18 @@ const Navbar = () => {
 
             {/* TNEB General Info with Dropdown */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="tnebInfoDropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="tnebInfoDropdown"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (isMobile) setIsTnebOpen(!isTnebOpen);
+                }}
+              >
                 TNEB General Info
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${isMobile && isTnebOpen ? 'show' : ''}`}>
                 <Link className="dropdown-item" to="/act-regulations">Act & Regulations</Link>
                 <Link className="dropdown-item" to="/manuals-and-forms-download">
                   TNEB Regulations Manual & Forms
@@ -62,10 +89,19 @@ const Navbar = () => {
 
             {/* Technical Corner with Dropdown */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="techDropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="techDropdown"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (isMobile) setIsTechOpen(!isTechOpen);
+                }}
+              >
                 Technical Corner
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${isMobile && isTechOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <Link className="dropdown-item" to="/technical-qa">Technical Q&A</Link>
                 <Link className="dropdown-item" to="/technical-parameters">Technical Parameters</Link>
                 <Link className="dropdown-item" to="/technical-books-and-manuals">
@@ -88,10 +124,19 @@ const Navbar = () => {
 
             {/* Quick Links Dropdown */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="quickLinksDropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="quickLinksDropdown"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (isMobile) setIsQuickOpen(!isQuickOpen);
+                }}
+              >
                 Quick links
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${isMobile && isQuickOpen ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <a href="#" className="dropdown-item quick-link from-board">FROM THE BOARD</a>
                 <a href="#" className="dropdown-item quick-link to-board">TO THE BOARD</a>
                 <a href="https://www.tneb.in/" className="dropdown-item quick-link tneb">TNEB LIMITED</a>
@@ -105,10 +150,19 @@ const Navbar = () => {
 
             {/* User Icon with Dropdown */}
             <li className="nav-item ml-auto dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="userDropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (isMobile) setIsUserOpen(!isUserOpen);
+                }}
+              >
                 <FaUser />
               </a>
-              <div className="dropdown-menu dropdown-menu-right" style={{marginLeft:'100%'}}>
+              <div className={`dropdown-menu dropdown-menu-right ${isMobile && isUserOpen ? 'show' : ''}`} style={{marginLeft:'100%'}} onClick={(e) => e.stopPropagation()}>
                 <Link className="dropdown-item" to="/login">Login</Link>
                 <Link className="dropdown-item" to="/register">Register</Link>
               </div>
