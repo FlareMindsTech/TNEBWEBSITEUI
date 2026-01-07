@@ -199,7 +199,7 @@ const Home = () => {
                         className="d-block w-100 carousel-image"
                         src={image.src}
                         alt={image.alt}
-                        style={{marginTop:'2%'}}
+                        style={{marginTop:'2%', objectFit:'contain'}}
                       />
                       {image.caption && (
                         <Carousel.Caption>
@@ -256,9 +256,9 @@ const Home = () => {
           <div className="row mt-4">
             <div className="col-12">
               <div className="card shadow-sm">
-                <div className="card-header bg-primary text-white">
+                <div className="card-header bg-primary text-white" style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center', gap:'10px'}}>
+                  <FaExclamationTriangle className="mr-2" />
                   <h5 className="mb-0">
-                    <FaExclamationTriangle className="mr-2" />
                     Important Notices
                   </h5>
                 </div>

@@ -189,7 +189,7 @@ const Cec = () => {
           </div>
 
           {/* Principal Secretary Special Table */}
-          <div className="principal-secretary-section mb-5">
+          <div className="principal-secretary-section mb-5" style={{maxWidth:'60%', float:'center', marginLeft:'auto', marginRight:'auto'}}>
             <div className="card shadow-lg" onClick={() => openDialog(cecMembers[0])} style={{ cursor: 'pointer' }}>
               <div className="card-header bg-primary text-white">
                 <h4 className="mb-0 text-center">Principal Secretary (National & State Affairs)</h4>
@@ -210,9 +210,9 @@ const Cec = () => {
                     <p className="member-qualification mb-3">{cecMembers[0].qualification}</p>
                     <div className="member-contact">
                       <h5 className="contact-title mb-2">Contact:</h5>
-                      <div className="contact-info">
+                      <div>
                         <FaPhone className="mr-2" />
-                        <span className="contact-number">{cecMembers[0].contact}</span>
+                        <span className="contact-number" style={{color:'#0f65bbff', fontWeight:'bold'}}>{cecMembers[0].contact}</span>
                       </div>
                     </div>
                   </div>
