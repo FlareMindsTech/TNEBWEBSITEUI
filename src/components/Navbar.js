@@ -1,44 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false); // mobile menu
+  const [openDropdown, setOpenDropdown] = useState(null); // track which dropdown is open
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleDropdownOpen = (key) => {
+    setOpenDropdown(key);
+  };
+
+  const handleDropdownClose = () => {
+    setOpenDropdown(null);
+  };
+
   return (
     <nav className="main-navbar navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#mainNavbar"
+          onClick={toggleMenu}
+          aria-expanded={isOpen}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
+        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="mainNavbar">
           <ul className="navbar-nav w-100">
             <li className="nav-item active">
               <Link className="nav-link" to="/">Home</Link>
             </li>
 
             {/* About TNEBEA with Dropdown */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="aboutDropdown">
+            <li
+              className="nav-item dropdown"
+              onMouseEnter={() => handleDropdownOpen('about')}
+              onMouseLeave={handleDropdownClose}
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="aboutDropdown"
+                onClick={(e) => { e.preventDefault(); handleDropdownOpen('about'); }}
+              >
                 About TNEBEA
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${openDropdown === 'about' ? 'show' : ''}`}>
                 <Link className="dropdown-item" to="/cec">CEC</Link>
               </div>
-
             </li>
 
             {/* TNEB General Info with Dropdown */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="tnebInfoDropdown">
+            <li
+              className="nav-item dropdown"
+              onMouseEnter={() => handleDropdownOpen('tnebInfo')}
+              onMouseLeave={handleDropdownClose}
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="tnebInfoDropdown"
+                onClick={(e) => { e.preventDefault(); handleDropdownOpen('tnebInfo'); }}
+              >
                 TNEB General Info
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${openDropdown === 'tnebInfo' ? 'show' : ''}`}>
                 <Link className="dropdown-item" to="/act-regulations">Act & Regulations</Link>
                 <Link className="dropdown-item" to="/manuals-and-forms-download">
                   TNEB Regulations Manual & Forms
@@ -61,11 +93,20 @@ const Navbar = () => {
             </li>
 
             {/* Technical Corner with Dropdown */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="techDropdown">
+            <li
+              className="nav-item dropdown"
+              onMouseEnter={() => handleDropdownOpen('tech')}
+              onMouseLeave={handleDropdownClose}
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="techDropdown"
+                onClick={(e) => { e.preventDefault(); handleDropdownOpen('tech'); }}
+              >
                 Technical Corner
               </a>
-              <div className="dropdown-menu">
+              <div className={`dropdown-menu ${openDropdown === 'tech' ? 'show' : ''}`}>
                 <Link className="dropdown-item" to="/technical-qa">Technical Q&A</Link>
                 <Link className="dropdown-item" to="/technical-parameters">Technical Parameters</Link>
                 <Link className="dropdown-item" to="/technical-books-and-manuals">
@@ -87,28 +128,46 @@ const Navbar = () => {
             </li>
 
             {/* Quick Links Dropdown */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="quickLinksDropdown">
+            <li
+              className="nav-item dropdown"
+              onMouseEnter={() => handleDropdownOpen('quickLinks')}
+              onMouseLeave={handleDropdownClose}
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="quickLinksDropdown"
+                onClick={(e) => { e.preventDefault(); handleDropdownOpen('quickLinks'); }}
+              >
                 Quick links
               </a>
-              <div className="dropdown-menu">
-                <a href="#" className="dropdown-item quick-link from-board">FROM THE BOARD</a>
-                <a href="#" className="dropdown-item quick-link to-board">TO THE BOARD</a>
-                <a href="https://www.tneb.in/" className="dropdown-item quick-link tneb">TNEB LIMITED</a>
-                <a href="https://www.tangedco.gov.in/" className="dropdown-item quick-link tangedco">TANGEDCO</a>
-                <a href="https://www.tantransco.gov.in/" className="dropdown-item quick-link tantransco">TANTRANSCO</a>
-                <a href="https://www.teda.in/" className="dropdown-item quick-link teda">TEDA</a>
-                <a href="https://www.tnerc.gov.in/" className="dropdown-item quick-link tnerc">TNERC</a>
-                <a href="https://www.tufidco.gov.in/" className="dropdown-item quick-link tufidco">TUFIDCO</a>
+              <div className={`dropdown-menu ${openDropdown === 'quickLinks' ? 'show' : ''}`}>
+                <a href="#" className="dropdown-item">FROM THE BOARD</a>
+                <a href="#" className="dropdown-item">TO THE BOARD</a>
+                <a href="https://www.tneb.in/" className="dropdown-item">TNEB LIMITED</a>
+                <a href="https://www.tangedco.gov.in/" className="dropdown-item">TANGEDCO</a>
+                <a href="https://www.tantransco.gov.in/" className="dropdown-item">TANTRANSCO</a>
+                <a href="https://www.teda.in/" className="dropdown-item">TEDA</a>
+                <a href="https://www.tnerc.gov.in/" className="dropdown-item">TNERC</a>
+                <a href="https://www.tufidco.gov.in/" className="dropdown-item">TUFIDCO</a>
               </div>
             </li>
 
             {/* User Icon with Dropdown */}
-            <li className="nav-item ml-auto dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="userDropdown">
+            <li
+              className="nav-item ml-auto dropdown"
+              onMouseEnter={() => handleDropdownOpen('user')}
+              onMouseLeave={handleDropdownClose}
+            >
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                onClick={(e) => { e.preventDefault(); handleDropdownOpen('user'); }}
+              >
                 <FaUser />
               </a>
-              <div className="dropdown-menu dropdown-menu-right" style={{marginLeft:'100%'}}>
+              <div className={`dropdown-menu dropdown-menu-right ${openDropdown === 'user' ? 'show' : ''}`} style={{marginLeft:'100%'}}>
                 <Link className="dropdown-item" to="/login">Login</Link>
                 <Link className="dropdown-item" to="/register">Register</Link>
               </div>
