@@ -1,6 +1,6 @@
 /* ActRegulations.css */
 .act-regulations-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Merriweather', serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -32,14 +32,14 @@
 }
 
 .header-text h1 {
-  font-family: 'Comfortaa', cursive;
+  font-family: 'Merriweather', serif;
   font-size: 22px;
   color: #003366;
   margin-bottom: 5px;
 }
 
 .sub-heading {
-  font-family: 'Comfortaa', cursive;
+  font-family: 'Merriweather', serif;
   font-size: 14px;
   color: #666;
 }
@@ -57,7 +57,7 @@
 
 /* Main Navigation */
 .main-navbar {
-  background-color: #003366 !important;
+  /* background-color: #003366 !important; */
   padding: 0;
 }
 
@@ -82,7 +82,8 @@
 }
 
 .main-navbar .dropdown-menu {
-  background-color: #003366;
+  /* background-color: #003366; */
+  background-color:#5C9EFD;
   border: none;
   border-radius: 0 0 8px 8px;
 }

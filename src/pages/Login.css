@@ -192,11 +192,11 @@
   font-size: 1rem;
 }
 
-.btn:hover:not(:disabled) {
+/* .btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #61dafb 0%, #282c34 50%, #61dafb 100%);
   transform: translateY(-2px);
   box-shadow: 0 12px 35px rgba(97, 218, 251, 0.5);
-}
+} */
 
 .btnLoading {
   pointer-events: none;
