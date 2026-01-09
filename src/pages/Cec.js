@@ -1,7 +1,7 @@
 // Cec.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt, FaTimes, FaCalendarAlt, FaUsers, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaImage, FaMobile, FaInfoCircle, FaPhoneAlt } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './Cec.css';
@@ -225,18 +225,18 @@ const Cec = () => {
           <div className="cec-members-section">
             <div className="card shadow-lg">
               <div className="card-header bg-primary text-white">
-                <h4 className="mb-0 text-center">Central Executive Committee Members</h4>
+                <h4 className="mb-0 text-center"><FaUsers className="mr-2" />Central Executive Committee Members</h4>
               </div>
               <div className="card-body p-0">
                 <div className="table-responsive">
                   <table className="table table-bordered table-hover mb-0">
                     <thead className="thead-light">
                       <tr>
-                        <th style={{ width: '60px' }} className="serial-no-header">S.No</th>
-                        <th style={{ width: '200px' }}>Designation</th>
-                        <th style={{ width: '300px' }}>Name & Qualification</th>
-                        <th style={{ width: '180px' }}>Photo</th>
-                        <th style={{ width: '150px' }}>Contact No.</th>
+                        <th style={{ width: '60px' }} className="serial-no-header"><FaIdCard className="mr-1" />S.No</th>
+                        <th style={{ width: '200px' }}><FaUserTie className="mr-1" />Designation</th>
+                        <th style={{ width: '300px' }}><FaUser className="mr-1" />Name & Qualification</th>
+                        <th style={{ width: '180px' }}><FaImage className="mr-1" />Photo</th>
+                        <th style={{ width: '150px' }}><FaMobile className="mr-1" />Contact No.</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -291,16 +291,20 @@ const Cec = () => {
                   <div className="card-body">
                     <ul className="list-unstyled">
                       <li className="mb-2">
-                        <strong>Term Duration:</strong> 2025-2027 (2 Years)
+                        <FaCalendarAlt className="list-icon" />
+                        <strong>Term Duration:</strong> <span>2025-2027 (2 Years)</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Elected On:</strong> October 2025
+                        <FaClipboardList className="list-icon" />
+                        <strong>Elected On:</strong> <span>October 2025</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Next Election:</strong> October 2027
+                        <FaCalendarAlt className="list-icon" />
+                        <strong>Next Election:</strong> <span>October 2027</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Total Members:</strong> 15
+                        <FaUsers className="list-icon" />
+                        <strong>Total Members:</strong> <span>15</span>
                       </li>
                     </ul>
                   </div>
@@ -315,16 +319,20 @@ const Cec = () => {
                   <div className="card-body">
                     <ul className="list-unstyled">
                       <li className="mb-2">
-                        <strong>Policy Making:</strong> Formulate association policies
+                        <FaClipboardList className="list-icon" />
+                        <strong>Policy Making:</strong> <span>Formulate association policies</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Member Welfare:</strong> Address member concerns
+                        <FaUserTie className="list-icon" />
+                        <strong>Member Welfare:</strong> <span>Address member concerns</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Administration:</strong> Manage association affairs
+                        <FaCog className="list-icon" />
+                        <strong>Administration:</strong> <span>Manage association affairs</span>
                       </li>
                       <li className="mb-2">
-                        <strong>Coordination:</strong> Liaise with TNEB management
+                        <FaHandshake className="list-icon" />
+                        <strong>Coordination:</strong> <span>Liaise with TNEB management</span>
                       </li>
                     </ul>
                   </div>
@@ -336,18 +344,28 @@ const Cec = () => {
           {/* Contact for Queries */}
           <div className="contact-queries mt-4">
             <div
-              className="alert alert-success"
+              className="alert alert-success contact-query-card"
               style={{ cursor: 'pointer' }}
               onClick={() => openDialog(cecMembers[4])}
             >
-              <h5 className="alert-heading">For Committee Related Queries</h5>
-              <p className="mb-2">
-                Please contact the General Secretary: <strong>Er. K. VIJAY</strong>
-              </p>
-              <p className="mb-0">
-                <FaPhone className="mr-2" />
-                <strong>Phone:</strong> 94897 74341
-              </p>
+              <div className="contact-query-header">
+                <div className="contact-query-icon">
+                  <FaInfoCircle />
+                </div>
+                <div>
+                  <h5 className="alert-heading mb-1">For Committee Related Queries</h5>
+                  <p className="contact-query-subtext mb-0">Tap to view details</p>
+                </div>
+              </div>
+              <div className="contact-query-body">
+                <div className="contact-query-label">General Secretary</div>
+                <div className="contact-query-name">Er. K. VIJAY</div>
+                <div className="contact-query-name">EA to CE/MTPS-I</div>
+                <div className="contact-query-phone">
+                  <FaPhoneAlt className="mr-2" />
+                  <strong>94897 74341</strong>
+                </div>
+              </div>
             </div>
           </div>
         </div>
