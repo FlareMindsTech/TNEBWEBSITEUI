@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus, FaUser, FaEnvelope, FaCommentDots, FaPaperPlane, FaMapMarkerAlt, FaPhone, FaBuilding } from 'react-icons/fa'
 import './ContactUs.css'
 
 export default function ContactUs() {
@@ -55,48 +55,71 @@ export default function ContactUs() {
   return (
     <div className="contact-page">
       <div className="container mx-auto px-6 py-16">
-
-
+        <div className="page-header mb-4">
+          <h1 className="page-title">
+            <FaEnvelope className="title-icon" />
+            Contact Us
+          </h1>
+          <p className="page-subtitle">We'd love to hear from you! Get in touch with us.</p>
+        </div>
 
         <div className="contact-grid">
 
           {/* FORM SECTION */}
           <div className="contact-form-section">
+            <h3 className="form-section-title">Send us a Message</h3>
             <form onSubmit={onSubmit} className="space-y-4">
-              <h4 style={{float:'left', color: '#0d6efd'}}>Name</h4>
-              <input
-                required
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={onChange}
-                placeholder="Your name"
-                className="form-input"
-              />
-              <h4 style={{float:'left', color: '#0d6efd'}}>Email</h4>
-              <input
-                required
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={onChange}
-                placeholder="Your email"
-                className="form-input"
-              />
-              <h4 style={{float:'left', color: '#0d6efd'}}>Type a Message</h4>
-              <textarea
-                required
-                name="message"
-                value={form.message}
-                onChange={onChange}
-                rows={6}
-                placeholder="Type Your message"
-                className="form-textarea"
-              />
+              <div className="form-field">
+                <label className="form-label">
+                  <FaUser className="label-icon" />
+                  Name
+                </label>
+                <input
+                  required
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={onChange}
+                  placeholder="Enter your full name"
+                  className="form-input"
+                />
+              </div>
 
-              <button type="submit" className="btn" >
-                <span className="btnText">Send Message</span>
-                <div className="btnShine"></div>
+              <div className="form-field">
+                <label className="form-label">
+                  <FaEnvelope className="label-icon" />
+                  Email
+                </label>
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={onChange}
+                  placeholder="Enter your email address"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-field">
+                <label className="form-label">
+                  <FaCommentDots className="label-icon" />
+                  Message
+                </label>
+                <textarea
+                  required
+                  name="message"
+                  value={form.message}
+                  onChange={onChange}
+                  rows={6}
+                  placeholder="Type your message here..."
+                  className="form-textarea"
+                />
+              </div>
+
+              <button type="submit" className="submit-btn">
+                <FaPaperPlane className="btn-icon" />
+                Send Message
               </button>
 
               {status && (
@@ -107,14 +130,49 @@ export default function ContactUs() {
             </form>
           </div>
           <div className="contact-info-section">
-            <h4>Address</h4>
-            <p>144, Anna Salai, Chennai – 600 002. (Regn.No.217/94) (Recognised in G.O.No.854 dated 06.04.1946)</p>
-            <p>GS TNEBEA</p>
-            <p>+91 94897 74341</p>
-            <p>tnebea@gmail.com</p>
+            <h3 className="info-section-title">Contact Information</h3>
+            
+            <div className="info-item">
+              <div className="info-icon-wrapper">
+                <FaMapMarkerAlt className="info-icon" />
+              </div>
+              <div className="info-content">
+                <h5>Address</h5>
+                <p>144, Anna Salai, Chennai – 600 002.<br/>(Regn.No.217/94)<br/>(Recognised in G.O.No.854 dated 06.04.1946)</p>
+              </div>
+            </div>
 
+            <div className="info-item">
+              <div className="info-icon-wrapper">
+                <FaBuilding className="info-icon" />
+              </div>
+              <div className="info-content">
+                <h5>Organization</h5>
+                <p>GS TNEBEA</p>
+              </div>
+            </div>
 
-            <div className="map-container" style={{ width: "100%", height: "300px", marginTop: "20px" }}>
+            <div className="info-item">
+              <div className="info-icon-wrapper">
+                <FaPhone className="info-icon" />
+              </div>
+              <div className="info-content">
+                <h5>Phone</h5>
+                <p>+91 94897 74341</p>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon-wrapper">
+                <FaEnvelope className="info-icon" />
+              </div>
+              <div className="info-content">
+                <h5>Email</h5>
+                <p>tnebea@gmail.com</p>
+              </div>
+            </div>
+
+            <div className="map-container" style={{ width: "100%", height: "300px", marginTop: "30px" }}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!4v1767466880327!6m8!1m7!1swyXhCUG8lD2rbTGSVGIdFw!2m2!1d13.06383379565387!2d80.26517472916669!3f310.9484141426706!4f-8.443127516870291!5f0.7820865974627469"
                 width="100%"
