@@ -4,19 +4,28 @@ import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false); // mobile menu
-  const [openDropdown, setOpenDropdown] = useState(null); // track which dropdown is open
+  const [isOpen, setIsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const closeTimeoutRef = React.useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const handleDropdownOpen = (key) => {
+    // Clear any pending close timeout
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
     setOpenDropdown(key);
   };
 
   const handleDropdownClose = () => {
-    setOpenDropdown(null);
+    // Add a small delay before closing to prevent flickering
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
   };
 
   return (

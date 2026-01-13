@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #282c34;
+  background: #48a9e6;
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -31,7 +31,7 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 
-    0 25px 60px rgba(97, 218, 251, 0.4),
+    0 25px 60px rgba(72, 169, 230, 0.4),
     0 8px 20px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -44,7 +44,7 @@
 .authCard:hover {
   transform: translateY(-5px);
   box-shadow: 
-    0 35px 80px rgba(97, 218, 251, 0.5),
+    0 35px 80px rgba(72, 169, 230, 0.5),
     0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -73,7 +73,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #61dafb, #282c34, #61dafb);
+  background: #48a9e6;
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
   z-index: 3;
@@ -87,21 +87,17 @@
 .cardHeader {
   text-align: center;
   padding: 2.5rem 2rem 1.5rem;
-  background: linear-gradient(135deg, rgba(97, 218, 251, 0.05), rgba(40, 44, 52, 0.03));
-  border-bottom: 1px solid rgba(97, 218, 251, 0.15);
+  background: linear-gradient(135deg, rgba(72, 169, 230, 0.05), rgba(72, 169, 230, 0.03));
+  border-bottom: 1px solid rgba(72, 169, 230, 0.15);
   position: relative;
 }
 
 .cardTitle {
   font-size: 2.2rem !important;
-  background: linear-gradient(135deg, #61dafb, #282c34, #61dafb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #48a9e6;
   font-weight: 700;
   letter-spacing: -0.5px;
   margin-bottom: 0.5rem;
-  color: white;
 }
 
 /* ============================= */
@@ -117,13 +113,13 @@
   overflow: hidden;
   transition: all 0.3s ease;
   background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(97, 218, 251, 0.1);
+  border: 1px solid rgba(72, 169, 230, 0.1);
 }
 
 .inputGroup:focus-within {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(97, 218, 251, 0.2);
-  border-color: #61dafb;
+  box-shadow: 0 8px 25px rgba(72, 169, 230, 0.2);
+  border-color: #48a9e6;
 }
 
 .inputIcon {
@@ -135,7 +131,7 @@
 }
 
 .inputIconFocused {
-  background: linear-gradient(135deg, #61dafb, #282c34);
+  background: #48a9e6;
   color: white;
 }
 
@@ -161,7 +157,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #61dafb, #282c34);
+  background: #48a9e6;
   transition: width 0.3s ease;
   z-index: 3;
 }
@@ -179,7 +175,7 @@
 }
 
 .btn {
-  background: linear-gradient(135deg, #282c34 0%, #61dafb 50%, #282c34 100%);
+  background: #48a9e6;
   border: none;
   color: #fff;
   font-weight: 600;
@@ -188,7 +184,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(97, 218, 251, 0.4);
+  box-shadow: 0 8px 25px rgba(72, 169, 230, 0.4);
   font-size: 1rem;
 }
 
@@ -244,11 +240,8 @@
 /* Links */
 /* ============================= */
 .authLink {
-  color: #61dafb;
+  color: #48a9e6;
   font-weight: 600;
-  background: linear-gradient(135deg, #61dafb, #282c34);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   position: relative;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -265,7 +258,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #61dafb, #282c34);
+  background: #48a9e6;
   transition: width 0.3s ease;
 }
 
@@ -350,7 +343,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(97, 218, 251, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(72, 169, 230, 0.3), transparent);
 }
 
 .divider span {
@@ -456,16 +449,16 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: rgba(97, 218, 251, 0.05);
+  background-color: rgba(72, 169, 230, 0.05);
   border-radius: 8px;
-  border: 1px solid rgba(97, 218, 251, 0.1);
+  border: 1px solid rgba(72, 169, 230, 0.1);
 }
 
 .termsCheckbox {
   margin-right: 0.75rem;
   width: 20px;
   height: 20px;
-  accent-color: #61dafb;
+  accent-color: #48a9e6;
   cursor: pointer;
 }
 
@@ -476,7 +469,7 @@
 }
 
 .termsLabel a {
-  color: #61dafb;
+  color: #48a9e6;
   font-weight: 600;
   text-decoration: none;
 }
