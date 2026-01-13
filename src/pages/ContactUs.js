@@ -63,7 +63,7 @@ export default function ContactUs() {
           {/* FORM SECTION */}
           <div className="contact-form-section">
             <form onSubmit={onSubmit} className="space-y-4">
-              <h4 style={{float:'left', color: '#0d6efd'}}>Name</h4>
+              <h4 style={{float:'left', color: '#2563eb'}}>Name</h4>
               <input
                 required
                 type="text"
@@ -73,7 +73,7 @@ export default function ContactUs() {
                 placeholder="Your name"
                 className="form-input"
               />
-              <h4 style={{float:'left', color: '#0d6efd'}}>Email</h4>
+              <h4 style={{float:'left', color: '#2563eb'}}>Email</h4>
               <input
                 required
                 type="email"
@@ -83,7 +83,7 @@ export default function ContactUs() {
                 placeholder="Your email"
                 className="form-input"
               />
-              <h4 style={{float:'left', color: '#0d6efd'}}>Type a Message</h4>
+              <h4 style={{float:'left', color: '#2563eb'}}>Type a Message</h4>
               <textarea
                 required
                 name="message"
