@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #282c34 0%, #61dafb 25%, #282c34 50%, #61dafb 75%, #282c34 100%);
+    background: #48a9e6;
     padding: 20px;
     position: relative;
     overflow: hidden;
@@ -32,12 +32,12 @@
   position: absolute;
   width: 3px;
   height: 3px;
-  background: rgba(97, 218, 251, 0.8);
+  background: rgba(72, 169, 230, 0.8);
   border-radius: 50%;
   animation: particleFloat var(--duration) infinite ease-in-out;
   animation-delay: var(--delay);
   bottom: -10px;
-  box-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+  box-shadow: 0 0 10px rgba(72, 169, 230, 0.5);
 }
 
 @keyframes particleFloat {
@@ -72,7 +72,7 @@
 }
 
 .title {
-    color: #0f738e;
+    color: #48a9e6;
     font-size: 28px;
     margin-bottom: 10px;
 }
@@ -98,7 +98,7 @@
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #0f738e;
+    color: #48a9e6;
     z-index: 1;
 }
 
@@ -113,14 +113,14 @@
 
 .input-group input:focus {
     outline: none;
-    border-color: #0f738e;
-    box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.2);
+    border-color: #48a9e6;
+    box-shadow: 0 0 0 2px rgba(72, 169, 230, 0.2);
 }
 
 .submit-btn {
     width: 100%;
     padding: 15px;
-    background-color: #0f738e;
+    background-color: #48a9e6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -131,16 +131,16 @@
 }
 
 .submit-btn:hover {
-    background-color: #4a9eff;
+    background-color: #3592d4;
 }
 
 .submit-btn.loading {
-    background-color: #a0d8ff;
+    background-color: #7abde8;
     cursor: not-allowed;
 }
 
 .success-message h2 {
-    color: #0f738e;
+    color: #48a9e6;
     margin-bottom: 10px;
 }
 
@@ -164,13 +164,13 @@
 }
 
 .footer-link a {
-    color: #0f738e;
+    color: #48a9e6;
     text-decoration: none;
     font-weight: 500;
 }
 
 .link-icon {
-    color: #0f738e;
+    color: #48a9e6;
     font-size: 14px;
 }
 
