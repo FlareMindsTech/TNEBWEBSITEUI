@@ -10,6 +10,7 @@ import PowerGrid from '../assets/powergrid_1.png';
 import Pfcl from '../assets/pfcl.png';
 import Minofpower from '../assets/minofpower_3.png';
 import Mygov from '../assets/mygov_7.png';
+import { motion } from 'framer-motion';
 
 
 const Footer = () => {
@@ -26,26 +27,63 @@ const Footer = () => {
     { id: 9, src: Mygov, alt: "MyGov", link: "https://www.mygov.in/" }
   ];
 
+  const currentYear = new Date().getFullYear();
+
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.08 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 24 }
+    }
+  };
+
   return (
     <footer className="footer-section">
       <div className="footer-slider">
         <div className="container">
-          <div className="slider-circular">
+          <motion.div
+            className="slider-circular"
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+          >
             {[...footerImages, ...footerImages].map((img, index) => (
-              <div key={index} className="slider-item">
+              <motion.div
+                key={index}
+                className="slider-item"
+                variants={itemVariants}
+                whileHover={{ scale: 1.06, rotate: 0.6 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 <a href={img.link} target="_blank" rel="noopener noreferrer">
-                  <img
+                  <motion.img
                     src={img.src}
                     alt={img.alt}
                     className="img-fluid footer-slider-img"
+                    initial={{ opacity: 0.85 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
                   />
                 </a>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
-      <div className="footer-bottom">
+      <motion.div
+        className="footer-bottom"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <div className="container" >
           <div className="row align-items-center">
             <div className="col-md-3 text-left text-white">
@@ -53,7 +91,7 @@ const Footer = () => {
               <span className="small">TNEBEA</span>
             </div>
             <div className="col-md-6 text-center">
-              <span className="text-white">Copyright © TNEBEA 2025</span>
+              <span className="text-white">Copyright © TNEBEA {currentYear}</span>
             </div>
             <div className="col-md-3 text-right footer-links" style={{display:'flex', alignItems:'center'}}>
               <Link to="/privacy-policy" style={{width:'100%'}}>Privacy Policy</Link>
@@ -61,7 +99,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };

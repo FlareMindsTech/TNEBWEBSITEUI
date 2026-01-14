@@ -13,7 +13,7 @@
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #48A9E6;
+  color: #1b5baf;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@
 
 .title-icon {
   font-size: 2.2rem;
-  color: #48A9E6;
+  color: #1b5baf;
 }
 
 .page-subtitle {
@@ -46,7 +46,7 @@
   font-size: 3.5rem;
   font-weight: 800;
   text-align: center;
-  background: linear-gradient(90deg, #48A9E6, #48A9E6, #48A9E6);
+  background: linear-gradient(90deg, #1b5baf, #1b5baf, #1b5baf);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -108,7 +108,7 @@
 .form-section-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #48A9E6;
+  color: #1b5baf;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -129,7 +129,7 @@
 
 .label-icon {
   font-size: 1.1rem;
-  color: #48A9E6;
+  color: #1b5baf;
 }
 
 .form-group {
@@ -164,7 +164,7 @@
 .form-input:hover,
 .form-select:hover,
 .form-textarea:hover {
-  border-color: #48A9E6;
+  border-color: #1b5baf;
   box-shadow: 0 4px 12px rgba(72, 169, 230, 0.15);
 }
 
@@ -172,7 +172,7 @@
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #48A9E6;
+  border-color: #1b5baf;
   box-shadow: 0 0 0 4px rgba(72, 169, 230, 0.1);
   background-color: #ffffff;
 }
@@ -183,7 +183,7 @@
 
 .submit-btn {
   width: 100%;
-  background: linear-gradient(135deg, #48A9E6 0%, #357abd 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
   color: white;
   padding: 14px 28px;
   border-radius: 10px;
@@ -203,7 +203,7 @@
 .submit-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(72, 169, 230, 0.4);
-  background: linear-gradient(135deg, #357abd 0%, #48A9E6 100%);
+  background: linear-gradient(135deg, #2c7be5 0%, #1b5baf 100%);
 }
 
 .submit-btn:active {
@@ -267,7 +267,7 @@
 }
 
 .form-btn {
-  background: #48A9E6;
+  background: #1b5baf;
   color: white;
   padding: 18px 35px;
   border-radius: 12px;
@@ -341,12 +341,12 @@
 
 .add-service input:focus {
   outline: none;
-  border-color: #48a9e6;
+  border-color: #1b5baf;
   box-shadow: 0 0 0 4px rgba(72, 169, 230, 0.25);
 }
 
 .plus-btn {
-  background: #48a9e6;
+  background: #1b5baf;
   border: none;
   color: #fff;
   padding: 14px 18px;
@@ -358,13 +358,13 @@
 }
 
 .plus-btn:hover {
-  background: #3592d4;
+  background: #2c7be5;
   transform: scale(1.1) translateY(-2px);
   box-shadow: 0 12px 30px rgba(72, 169, 230, 0.4);
 }
 
 .contact-info-section {
-  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 50%, #48A9E6 100%);
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 50%, #1b5baf 100%);
   color: #ffffff;
   padding: 1.0rem;
   border-radius: 16px;
@@ -484,7 +484,7 @@
 
 .add-service input:focus {
   outline: none;
-  border-color: #48A9E6;
+  border-color: #1b5baf;
   box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
   background-color: white;
 }

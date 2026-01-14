@@ -8,7 +8,7 @@
 
 /* Top Marquee */
 .top-marquee {
-  background-color: #003366;
+  background-color: #1b5baf;
   color: white;
   padding: 8px 0;
   font-weight: bold;
@@ -34,7 +34,7 @@
 .header-text h1 {
   font-family: 'Merriweather', serif;
   font-size: 22px;
-  color: #003366;
+  color: #1b5baf;
   margin-bottom: 5px;
 }
 
@@ -119,11 +119,11 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   /* border: 3px solid #003366; */
-  border:3px solid #48a9e6;
+  border:3px solid #1b5baf;
 }
 
 .cec-main-title {
-  color: #0033ff;
+  color: #1b5baf;
   font-weight: bold;
   font-size: 2.8rem;
   margin-bottom: 15px;
@@ -131,7 +131,7 @@
 }
 
 .cec-sub-title {
-  color: #0033ff;
+  color: #1b5baf;
   font-weight: bold;
   font-size: 2.3rem;
   margin-bottom: 0;
@@ -140,7 +140,7 @@
 /* Principal Secretary Section */
 .principal-secretary-section .card {
   /* border: 3px solid #003366; */
-   border:3px solid #48a9e6;
+   border:3px solid #1b5baf;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -160,7 +160,7 @@
   margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;
-  border: 3px solid #003366;
+  border: 3px solid #1b5baf;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -176,20 +176,20 @@
 }
 
 .member-name {
-  color: #003366;
+  color: #1b5baf;
   font-weight: bold;
   font-size: 1.8rem;
 }
 
 .member-qualification {
-  color: #0033ff;
+  color: #1b5baf;
   font-style: italic;
   font-size: 1.1rem;
   line-height: 1.5;
 }
 
 .contact-title {
-  color: #003366;
+  color: #1b5baf;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -197,7 +197,7 @@
 .contact-info {
   /* display: flex; */
   align-items: center;
-  color: #0056b3;
+  color: #2c7be5;
   font-weight: bold;
   font-size: 1.1rem;
 }
@@ -205,7 +205,7 @@
 /* CEC Members Table */
 .cec-members-section .card {
   /* border: 3px solid #003366; */
-  border: 3px solid #48a9e6;
+  border: 3px solid #1b5baf;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.08);
@@ -243,9 +243,9 @@
 
 .cec-members-section .table thead th {
   /* background-color: #003366; */
-  background-color: #48a9e6;
+  background-color: #1b5baf;
   color: white;
-  border-bottom: 2px solid #48a9e6;
+  border-bottom: 2px solid #1b5baf;
   font-weight: 600;
   text-align: center;
   vertical-align: middle;
@@ -268,7 +268,7 @@
 }
 
 .cec-members-section .table tbody tr:hover {
-  background-color: rgba(0, 86, 179, 0.07);
+  background-color: rgba(27, 91, 175, 0.07);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
@@ -288,7 +288,7 @@
 .cec-members-section .member-info .member-name {
   font-size: 1.1rem;
   margin-bottom: 6px;
-  color: #003366;
+  color: #1b5baf;
   font-weight: 600;
   letter-spacing: 0.2px;
   font-family: 'Merriweather', serif;
@@ -296,19 +296,19 @@
 }
 
 .cec-members-section .table tbody tr:hover .member-info .member-name {
-  color: #0056b3;
+  color: #2c7be5;
 }
 
 .cec-members-section .member-info .member-qualification {
   font-size: 0.9rem;
-  color: #0033ff;
+  color: #1b5baf;
   line-height: 1.5;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .cec-members-section .table tbody tr:hover .member-info .member-qualification {
-  color: #0056b3;
+  color: #2c7be5;
 }
 
 .cec-members-section .member-photo-container {
@@ -332,7 +332,7 @@
 /* Committee Info Cards */
 .committee-info .card {
   border-radius: 12px;
-  border: 2px solid #003366;
+  border: 2px solid #1b5baf;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.06);
   overflow: hidden;
@@ -401,7 +401,7 @@
 }
 
 .committee-info .list-unstyled strong {
-  color: #003366;
+  color: #1b5baf;
   min-width: 160px;
   display: inline-block;
   font-weight: 600;

@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #48a9e6;
+    background: #1b5baf;
     padding: 20px;
     position: relative;
     overflow: hidden;
@@ -72,7 +72,7 @@
 }
 
 .title {
-    color: #48a9e6;
+    color: #1b5baf;
     font-size: 28px;
     margin-bottom: 10px;
 }
@@ -98,7 +98,7 @@
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #48a9e6;
+    color: #1b5baf;
     z-index: 1;
 }
 
@@ -113,14 +113,14 @@
 
 .input-group input:focus {
     outline: none;
-    border-color: #48a9e6;
+    border-color: #1b5baf;
     box-shadow: 0 0 0 2px rgba(72, 169, 230, 0.2);
 }
 
 .submit-btn {
     width: 100%;
     padding: 15px;
-    background-color: #48a9e6;
+    background-color: #1b5baf;
     color: white;
     border: none;
     border-radius: 8px;
@@ -131,7 +131,7 @@
 }
 
 .submit-btn:hover {
-    background-color: #3592d4;
+    background-color: #2c7be5;
 }
 
 .submit-btn.loading {
@@ -140,7 +140,7 @@
 }
 
 .success-message h2 {
-    color: #48a9e6;
+    color: #1b5baf;
     margin-bottom: 10px;
 }
 
@@ -164,13 +164,13 @@
 }
 
 .footer-link a {
-    color: #48a9e6;
+    color: #1b5baf;
     text-decoration: none;
     font-weight: 500;
 }
 
 .link-icon {
-    color: #48a9e6;
+    color: #1b5baf;
     font-size: 14px;
 }
 

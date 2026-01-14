@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #48a9e6;
+  background: #1b5baf;
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -31,7 +31,7 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 
-    0 25px 60px rgba(72, 169, 230, 0.4),
+    0 25px 60px rgba(27, 91, 175, 0.4),
     0 8px 20px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.1);
@@ -44,7 +44,7 @@
 .authCard:hover {
   transform: translateY(-5px);
   box-shadow: 
-    0 35px 80px rgba(72, 169, 230, 0.5),
+    0 35px 80px rgba(27, 91, 175, 0.5),
     0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -73,7 +73,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: #48a9e6;
+  background: #1b5baf;
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
   z-index: 3;
@@ -87,14 +87,14 @@
 .cardHeader {
   text-align: center;
   padding: 2.5rem 2rem 1.5rem;
-  background: linear-gradient(135deg, rgba(72, 169, 230, 0.05), rgba(72, 169, 230, 0.03));
-  border-bottom: 1px solid rgba(72, 169, 230, 0.15);
+  background: linear-gradient(135deg, rgba(27, 91, 175, 0.05), rgba(27, 91, 175, 0.03));
+  border-bottom: 1px solid rgba(27, 91, 175, 0.15);
   position: relative;
 }
 
 .cardTitle {
   font-size: 2.2rem !important;
-  color: #48a9e6;
+  color: #1b5baf;
   font-weight: 700;
   letter-spacing: -0.5px;
   margin-bottom: 0.5rem;
@@ -113,13 +113,13 @@
   overflow: hidden;
   transition: all 0.3s ease;
   background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(72, 169, 230, 0.1);
+  border: 1px solid rgba(27, 91, 175, 0.1);
 }
 
 .inputGroup:focus-within {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(72, 169, 230, 0.2);
-  border-color: #48a9e6;
+  box-shadow: 0 8px 25px rgba(27, 91, 175, 0.2);
+  border-color: #1b5baf;
 }
 
 .inputIcon {
@@ -131,7 +131,7 @@
 }
 
 .inputIconFocused {
-  background: #48a9e6;
+  background: #1b5baf;
   color: white;
 }
 
@@ -157,7 +157,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: #48a9e6;
+  background: #1b5baf;
   transition: width 0.3s ease;
   z-index: 3;
 }
@@ -175,7 +175,7 @@
 }
 
 .btn {
-  background: #48a9e6;
+  background: #1b5baf;
   border: none;
   color: #fff;
   font-weight: 600;
@@ -184,7 +184,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(72, 169, 230, 0.4);
+  box-shadow: 0 8px 25px rgba(27, 91, 175, 0.4);
   font-size: 1rem;
 }
 
@@ -240,7 +240,7 @@
 /* Links */
 /* ============================= */
 .authLink {
-  color: #48a9e6;
+  color: #1b5baf;
   font-weight: 600;
   position: relative;
   text-decoration: none;
@@ -258,7 +258,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: #48a9e6;
+  background: #1b5baf;
   transition: width 0.3s ease;
 }
 
@@ -343,7 +343,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(72, 169, 230, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(27, 91, 175, 0.3), transparent);
 }
 
 .divider span {
@@ -449,16 +449,16 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: rgba(72, 169, 230, 0.05);
+  background-color: rgba(27, 91, 175, 0.05);
   border-radius: 8px;
-  border: 1px solid rgba(72, 169, 230, 0.1);
+  border: 1px solid rgba(27, 91, 175, 0.1);
 }
 
 .termsCheckbox {
   margin-right: 0.75rem;
   width: 20px;
   height: 20px;
-  accent-color: #48a9e6;
+  accent-color: #1b5baf;
   cursor: pointer;
 }
 
@@ -469,7 +469,7 @@
 }
 
 .termsLabel a {
-  color: #48a9e6;
+  color: #1b5baf;
   font-weight: 600;
   text-decoration: none;
 }
