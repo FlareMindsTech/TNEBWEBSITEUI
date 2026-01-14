@@ -1,9 +1,6 @@
 // Cec.js
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaSearch, FaHome, FaUser, FaSmile, FaPhone, FaEnvelope, FaMapMarkerAlt, FaTimes, FaCalendarAlt, FaUsers, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaImage, FaMobile, FaInfoCircle, FaPhoneAlt } from 'react-icons/fa';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React, { useState } from 'react';
+import { FaUser, FaPhone, FaTimes, FaCalendarAlt, FaUsers, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaImage, FaMobile, FaInfoCircle, FaPhoneAlt } from 'react-icons/fa';
 import './Cec.css';
 import ANANDKUMAR from '../assets/people/ANANDKUMAR.jpg';
 import ARUNACHALAM from '../assets/people/ARUNACHALAM.jpg';
@@ -23,13 +20,6 @@ import VIKRAMAN from '../assets/people/VIKRAMAN.jpg';
 
 const Cec = () => {
   const [selectedMember, setSelectedMember] = useState(null);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
 
   const openDialog = (member) => {
     setSelectedMember(member);
@@ -376,7 +366,6 @@ const Cec = () => {
         <div className="member-dialog-overlay" onClick={closeDialog}>
           <div
             className="member-dialog"
-            data-aos="flip-right"
             onClick={(e) => e.stopPropagation()}
           >
             <button className="close-button" onClick={closeDialog}>

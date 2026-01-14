@@ -1,190 +1,500 @@
-import React, { useState } from 'react';
-import { FaUser } from 'react-icons/fa';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
-
+import "./Navbar.css";
+import Logo from "../assets/tnebea_logo_cropped2.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const closeTimeoutRef = React.useRef(null);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const closeTimeoutRef = useRef(null);
 
   const handleDropdownOpen = (key) => {
-    // Clear any pending close timeout
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
     setOpenDropdown(key);
   };
 
   const handleDropdownClose = () => {
-    // Add a small delay before closing to prevent flickering
-    closeTimeoutRef.current = setTimeout(() => {
-      setOpenDropdown(null);
-    }, 150);
+    closeTimeoutRef.current = setTimeout(() => setOpenDropdown(null), 200);
+  };
+
+  const handleUserMenuToggle = () => {
+    setUserMenuOpen(!userMenuOpen);
+  };
+
+  const closeAllMenus = () => {
+    setIsOpen(false);
+    setOpenDropdown(null);
+    setUserMenuOpen(false);
+  };
+
+  const dropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -10,
+      scale: 0.95,
+      transition: { duration: 0.15 }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 0.2, 
+        ease: "easeOut",
+        staggerChildren: 0.05,
+        when: "beforeChildren"
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -10, 
+      transition: { duration: 0.15 } 
+    }
+  };
+
+  const itemVariants = {
+    hidden: { x: -10, opacity: 0 },
+    visible: { x: 0, opacity: 1 },
+    exit: { x: -10, opacity: 0 }
+  };
+
+  const userDropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -5, 
+      scale: 0.95,
+      transformOrigin: "top right"
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 0.2,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -5, 
+      transition: { duration: 0.15 } 
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const navItemVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
-    <nav className="main-navbar navbar navbar-expand-lg navbar-dark">
-      <div className="container-fluid">
-        <button
-          className="navbar-toggler"
-          type="button"
-          onClick={toggleMenu}
-          aria-expanded={isOpen}
+    <motion.nav 
+      className="main-navbar navbar navbar-expand-lg"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <div className="container-fluid px-4">
+        {/* Logo */}
+        <motion.div 
+          className="navbar-brand d-flex align-items-center logo-wrapper"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          <div className="logo-container me-2">
+            <img src={Logo} alt="TNEBEA" className="logo-img" />
+            <div className="logo-sparkle"></div>
+            <div className="logo-sparkle delay-1"></div>
+            <div className="logo-sparkle delay-2"></div>
+          </div>
+          {/* <span className="logo-text d-none d-lg-inline">TNEBEA</span> */}
+        </motion.div>
 
-        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="mainNavbar">
-          <ul className="navbar-nav w-100">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/" onClick={() => setIsOpen(false)}>Home</Link>
-            </li>
+        {/* Mobile Toggle Button */}
+        <motion.button 
+          className="navbar-toggler" 
+          type="button" 
+          onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.9 }}
+        >
+          {isOpen ? (
+            <FaTimes className="navbar-toggler-icon" />
+          ) : (
+            <FaBars className="navbar-toggler-icon" />
+          )}
+        </motion.button>
 
-            {/* About TNEBEA with Dropdown */}
-            <li
-              className="nav-item dropdown"
-              onMouseEnter={() => handleDropdownOpen('about')}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="mobile-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeAllMenus}
+            />
+          )}
+        </AnimatePresence>
+
+        <motion.div 
+          className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <ul className="navbar-nav w-100 align-items-center">
+            
+            {/* 1. Home */}
+            <motion.li className="nav-item" variants={navItemVariants}>
+              <Link 
+                className="nav-link nav-hover-effect" 
+                to="/"
+                onClick={closeAllMenus}
+              >
+                Home
+              </Link>
+            </motion.li>
+
+            {/* 2. About TNEBEA Dropdown */}
+            <motion.li 
+              className="nav-item dropdown" 
+              variants={navItemVariants}
+              onMouseEnter={() => handleDropdownOpen('about')} 
               onMouseLeave={handleDropdownClose}
             >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="aboutDropdown"
-                onClick={(e) => { e.preventDefault(); handleDropdownOpen('about'); }}
-              >
-                About TNEBEA
-              </a>
-              <div className={`dropdown-menu ${openDropdown === 'about' ? 'show' : ''}`}>
-                <Link className="dropdown-item" to="/cec">CEC</Link>
-              </div>
-            </li>
+              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer text-light">
+                About TNEBEA 
+                <motion.span
+                  animate={{ rotate: openDropdown === 'about' ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FaCaretDown />
+                </motion.span>
+              </span>
+              <AnimatePresence>
+                {openDropdown === 'about' && (
+                  <motion.div 
+                    variants={dropdownVariants} 
+                    initial="hidden" 
+                    animate="visible" 
+                    exit="exit" 
+                    className="dropdown-menu show"
+                  >
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/cec" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">👥</span>
+                        CEC
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      {/* <Link className="dropdown-item" to="/history" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📜</span>
+                        History
+                      </Link> */}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
 
-            {/* TNEB General Info with Dropdown */}
-            <li
-              className="nav-item dropdown"
-              onMouseEnter={() => handleDropdownOpen('tnebInfo')}
+            {/* 3. TNEB General Info Dropdown */}
+            <motion.li 
+              className="nav-item dropdown" 
+              variants={navItemVariants}
+              onMouseEnter={() => handleDropdownOpen('tnebInfo')} 
               onMouseLeave={handleDropdownClose}
             >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="tnebInfoDropdown"
-                onClick={(e) => { e.preventDefault(); handleDropdownOpen('tnebInfo'); }}
-              >
-                TNEB General Info
-              </a>
-              <div className={`dropdown-menu ${openDropdown === 'tnebInfo' ? 'show' : ''}`}>
-                <Link className="dropdown-item" to="/act-regulations">Act & Regulations</Link>
-                <Link className="dropdown-item" to="/manuals-and-forms-download">
-                  TNEB Regulations Manual & Forms
-                </Link>
-                <Link className="dropdown-item" to="/contributory-pension-scheme">
-                  CONTRIBUTORY PENSION SCHEME
-                </Link>
-                <Link className="dropdown-item" to="/distribution-related-instructions">
-                  DISTRIBUTION RELATED INSTRUCTIONS - AGRI DOMESTIC COMMERCIAL
-                </Link>
-              </div>
-            </li>
+              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+                General Info
+                <motion.span
+                  animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FaCaretDown />
+                </motion.span>
+              </span>
+              <AnimatePresence>
+                {openDropdown === 'tnebInfo' && (
+                  <motion.div 
+                    variants={dropdownVariants} 
+                    initial="hidden" 
+                    animate="visible" 
+                    exit="exit" 
+                    className="dropdown-menu show"
+                  >
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/act-regulations" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">⚖️</span>
+                        Act & Regulations
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📄</span>
+                        Manuals & Forms
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">👴</span>
+                        Pension Scheme (CPS)
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📋</span>
+                        Distribution Instructions
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/minnagam">Minnagam</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/hand-book">Engineers Hand Book</Link>
-            </li>
-
-            {/* Technical Corner with Dropdown */}
-            <li
-              className="nav-item dropdown"
-              onMouseEnter={() => handleDropdownOpen('tech')}
+            {/* 4. Technical Corner Dropdown */}
+            <motion.li 
+              className="nav-item dropdown" 
+              variants={navItemVariants}
+              onMouseEnter={() => handleDropdownOpen('tech')} 
               onMouseLeave={handleDropdownClose}
             >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="techDropdown"
-                onClick={(e) => { e.preventDefault(); handleDropdownOpen('tech'); }}
+              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+                Technical
+                <motion.span
+                  animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FaCaretDown />
+                </motion.span>
+              </span>
+              <AnimatePresence>
+                {openDropdown === 'tech' && (
+                  <motion.div 
+                    variants={dropdownVariants} 
+                    initial="hidden" 
+                    animate="visible" 
+                    exit="exit" 
+                    className="dropdown-menu show"
+                  >
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/technical-qa" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">❓</span>
+                        Technical Q&A
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/technical-parameters" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📊</span>
+                        Technical Parameters
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📚</span>
+                        Books & Manuals
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
+
+            {/* 5. Direct Links */}
+            <motion.li className="nav-item" variants={navItemVariants}>
+              <Link 
+                className="nav-link nav-hover-effect" 
+                to="/minnagam"
+                onClick={closeAllMenus}
               >
-                Technical Corner
-              </a>
-              <div className={`dropdown-menu ${openDropdown === 'tech' ? 'show' : ''}`}>
-                <Link className="dropdown-item" to="/technical-qa">Technical Q&A</Link>
-                <Link className="dropdown-item" to="/technical-parameters">Technical Parameters</Link>
-                <Link className="dropdown-item" to="/technical-books-and-manuals">
-                  TECHNICAL BOOKS AND MANUALS
-                </Link>
-              </div>
-            </li>
+                Minnagam
+              </Link>
+            </motion.li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/news">News</Link>
-            </li>
+            <motion.li className="nav-item" variants={navItemVariants}>
+              <Link 
+                className="nav-link nav-hover-effect" 
+                to="/hand-book"
+                onClick={closeAllMenus}
+              >
+                Hand Book
+              </Link>
+            </motion.li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/contactus">Contact</Link>
-            </li>
+            <motion.li className="nav-item" variants={navItemVariants}>
+              <Link 
+                className="nav-link nav-hover-effect" 
+                to="/news"
+                onClick={closeAllMenus}
+              >
+                News
+              </Link>
+            </motion.li>
 
-            <li className="nav-item">
-              <a className="nav-link" href="http://tneb.tnebnet.org/emp/forms.html">TNEBEA FORMS</a>
-            </li>
-
-            {/* Quick Links Dropdown */}
-            <li
-              className="nav-item dropdown"
-              onMouseEnter={() => handleDropdownOpen('quickLinks')}
+            {/* 6. Quick Links Dropdown */}
+            <motion.li 
+              className="nav-item dropdown" 
+              variants={navItemVariants}
+              onMouseEnter={() => handleDropdownOpen('quickLinks')} 
               onMouseLeave={handleDropdownClose}
             >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="quickLinksDropdown"
-                onClick={(e) => { e.preventDefault(); handleDropdownOpen('quickLinks'); }}
-              >
-                Quick links
-              </a>
-              <div className={`dropdown-menu ${openDropdown === 'quickLinks' ? 'show' : ''}`}>
-                <a href="#" className="dropdown-item">FROM THE BOARD</a>
-                <a href="#" className="dropdown-item">TO THE BOARD</a>
-                <a href="https://www.tneb.in/" className="dropdown-item">TNEB LIMITED</a>
-                <a href="https://www.tangedco.gov.in/" className="dropdown-item">TANGEDCO</a>
-                <a href="https://www.tantransco.gov.in/" className="dropdown-item">TANTRANSCO</a>
-                <a href="https://www.teda.in/" className="dropdown-item">TEDA</a>
-                <a href="https://www.tnerc.gov.in/" className="dropdown-item">TNERC</a>
-                <a href="https://www.tufidco.gov.in/" className="dropdown-item">TUFIDCO</a>
-              </div>
-            </li>
+              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+                Quick Links
+                <motion.span
+                  animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FaCaretDown />
+                </motion.span>
+              </span>
+              <AnimatePresence>
+                {openDropdown === 'quickLinks' && (
+                  <motion.div 
+                    variants={dropdownVariants} 
+                    initial="hidden" 
+                    animate="visible" 
+                    exit="exit" 
+                    className="dropdown-menu show"
+                  >
+                    <motion.div variants={itemVariants}>
+                      <a 
+                        className="dropdown-item" 
+                        href="https://www.tangedco.gov.in/" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeAllMenus}
+                      >
+                        <span className="dropdown-icon">⚡</span>
+                        TANGEDCO
+                      </a>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <a 
+                        className="dropdown-item" 
+                        href="https://www.tantransco.gov.in/" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeAllMenus}
+                      >
+                        <span className="dropdown-icon">🔌</span>
+                        TANTRANSCO
+                      </a>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <a 
+                        className="dropdown-item" 
+                        href="https://www.tnerc.gov.in/" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeAllMenus}
+                      >
+                        <span className="dropdown-icon">🏛️</span>
+                        TNERC
+                      </a>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
 
-            {/* User Icon with Dropdown */}
-            <li
-              className="nav-item ml-auto dropdown"
-              onMouseEnter={() => handleDropdownOpen('user')}
-              onMouseLeave={handleDropdownClose}
-            >
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="userDropdown"
-                onClick={(e) => { e.preventDefault(); handleDropdownOpen('user'); }}
+            {/* 7. Contact */}
+            <motion.li className="nav-item" variants={navItemVariants}>
+              <Link 
+                className="nav-link nav-hover-effect" 
+                to="/contactus"
+                onClick={closeAllMenus}
               >
-                <FaUser />
-              </a>
-              <div className={`dropdown-menu dropdown-menu-right ${openDropdown === 'user' ? 'show' : ''}`} style={{marginLeft:'100%'}}>
-                <Link className="dropdown-item" to="/login">Login</Link>
-                <Link className="dropdown-item" to="/register">Register</Link>
+                Contact
+              </Link>
+            </motion.li>
+
+            {/* 8. User Profile (Right Side) */}
+            <motion.li 
+              className="nav-item ms-lg-auto" 
+              variants={navItemVariants}
+            >
+              <div className="user-menu-container">
+                <motion.div 
+                  className="user-profile-icon"
+                  onClick={handleUserMenuToggle}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{
+                    boxShadow: userMenuOpen 
+                      ? "0 0 20px rgba(27, 91, 175, 0.5)" 
+                      : "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  }}
+                >
+                  <FaUser />
+                  <motion.div 
+                    className="pulse-dot"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  />
+                </motion.div>
+                
+                <AnimatePresence>
+                  {userMenuOpen && (
+                    <motion.div 
+                      variants={userDropdownVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="user-dropdown-menu"
+                      onMouseLeave={() => setUserMenuOpen(false)}
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <Link 
+                          className="user-dropdown-item" 
+                          to="/login"
+                          onClick={closeAllMenus}
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span className="user-menu-icon">🔑</span>
+                          <span>Login</span>
+                        </Link>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.15 }}
+                      >
+                        <Link 
+                          className="user-dropdown-item" 
+                          to="/register"
+                          onClick={closeAllMenus}
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span className="user-menu-icon">📝</span>
+                          <span>Register</span>
+                        </Link>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </li>
+            </motion.li>
+
           </ul>
-        </div>
+        </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

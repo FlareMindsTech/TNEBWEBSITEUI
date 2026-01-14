@@ -8,7 +8,7 @@
 
 /* Top Marquee */
 .top-marquee {
-  background-color: #003366;
+  background-color: #1b5baf;
   color: white;
   padding: 8px 0;
   font-weight: bold;
@@ -34,7 +34,7 @@
 .header-text h1 {
   font-family: 'Merriweather', serif;
   font-size: 22px;
-  color: #003366;
+  color: #1b5baf;
   margin-bottom: 5px;
 }
 
@@ -83,7 +83,7 @@
 
 .main-navbar .dropdown-menu {
   /* background-color: #003366; */
-  background-color:#5C9EFD;
+  background-color:#1b5baf;
   border: none;
   border-radius: 0 0 8px 8px;
 }
@@ -122,7 +122,7 @@
 
 .page-header h1 {
   font-size: 2rem;
-  color: #003366;
+  color: #1b5baf;
 }
 
 .documents-container {
@@ -132,17 +132,17 @@
 .document-item {
   background: white;
   transition: all 0.3s ease;
-  border-left: 4px solid #003366 !important;
+  border-left: 4px solid #1b5baf !important;
 }
 
 .document-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateX(5px);
-  border-left-color: #0056b3 !important;
+  border-left-color: #2c7be5 !important;
 }
 
 .document-item h6 a:hover {
-  color: #0056b3 !important;
+  color: #2c7be5 !important;
   text-decoration: underline;
 }
 
@@ -216,7 +216,7 @@
 }
 
 .footer-bottom {
-  background-color: #48a9e6;
+  background-color: #1b5baf;
   padding: 15px 0;
   color: white;
 }

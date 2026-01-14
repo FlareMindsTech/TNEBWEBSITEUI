@@ -9,9 +9,8 @@ import {
   FaEyeSlash,
   FaExclamationCircle
 } from "react-icons/fa";
+import Swal from 'sweetalert2';
 import "./Register.css";
-
-import { toast } from "react-hot-toast";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -127,11 +126,17 @@ export default function Register() {
 
     // Simulate API call delay
     setTimeout(() => {
-      toast.success("Registered successfully", {
-        position: "top-center",
+      Swal.fire({
+        icon: 'success',
+        title: 'Registered successfully',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
       });
-      navigate("/login");
       setIsLoading(false);
+      navigate("/login");
     }, 2000);
   };
 

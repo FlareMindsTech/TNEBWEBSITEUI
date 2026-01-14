@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap");
+
+/* Vertical Carousel for Events */
+.carousel-events-wrapper {
+  background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(21, 69, 138, 0.25);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 380px;
+}
+
+.carousel-events-header {
+  background: linear-gradient(135deg, #15458a 0%, #0f466d 100%);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+  font-weight: 700;
+  font-size: 16px;
+  font-family: "Work Sans", sans-serif;
+}
+
+.header-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.vertical-carousel-container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.carousel-event-item {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  padding: 0 16px;
+  opacity: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  will-change: transform, opacity;
+  animation: carousel-animate-vertical 15s linear infinite;
+}
+
+.carousel-event-item:nth-child(1) {
+  animation-delay: calc(3s * 0);
+}
+
+.carousel-event-item:nth-child(2) {
+  animation-delay: calc(3s * 1);
+}
+
+.carousel-event-item:nth-child(3) {
+  animation-delay: calc(3s * 2);
+}
+
+.carousel-event-item:nth-child(4) {
+  animation-delay: calc(3s * 3);
+}
+
+.carousel-event-item:nth-child(5) {
+  animation-delay: calc(3s * 4);
+}
+
+.event-date-circle {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 75px;
+  height: 75px;
+  padding: 10px;
+  position: relative;
+  margin-right: -35px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.event-date-day {
+  font-size: 22px;
+  font-weight: 700;
+  color: #15458a;
+  line-height: 1;
+  font-family: "Work Sans", sans-serif;
+}
+
+.event-date-month {
+  font-size: 12px;
+  color: #2a6cc7;
+  font-weight: 600;
+  margin-top: 2px;
+  text-transform: uppercase;
+  font-family: "Work Sans", sans-serif;
+}
+
+.event-info-box {
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px 20px 16px 60px;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-info-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.event-info-title {
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #15458a;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.event-info-title:hover {
+  color: #2a6cc7;
+  text-decoration: underline;
+}
+
+.badge-new {
+  background: #28a745;
+  color: white;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: "Work Sans", sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.carousel-footer {
+  padding: 16px;
+  text-align: center;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-more-updates {
+  display: inline-block;
+  padding: 10px 24px;
+  background: white;
+  color: #15458a;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  font-family: "Work Sans", sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-more-updates:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes carousel-animate-vertical {
+  0% {
+    transform: translateY(calc(100% + 10px));
+    opacity: 0;
+  }
+  5%, 25% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  30%, 100% {
+    transform: translateY(calc(-100% - 10px));
+    opacity: 0;
+  }
+}

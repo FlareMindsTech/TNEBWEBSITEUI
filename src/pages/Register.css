@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #282c34 0%, #1a1a1a 25%, #61dafb 50%, #282c34 75%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
   padding: 20px;
   position: relative;
   overflow: hidden;

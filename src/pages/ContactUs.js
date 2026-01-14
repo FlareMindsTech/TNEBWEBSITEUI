@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
-import { FaPlus, FaUser, FaEnvelope, FaCommentDots, FaPaperPlane, FaMapMarkerAlt, FaPhone, FaBuilding } from 'react-icons/fa'
+import { FaUser, FaEnvelope, FaCommentDots, FaPaperPlane, FaMapMarkerAlt, FaPhone, FaBuilding } from 'react-icons/fa'
 import './ContactUs.css'
 
 export default function ContactUs() {
@@ -10,12 +10,6 @@ export default function ContactUs() {
     service: '',
     message: '',
   })
-  const [services, setServices] = useState([
-    'Web Development',
-    'SEO Optimization',
-    'Social Media Marketing',
-  ])
-  const [newService, setNewService] = useState('')
   const [status, setStatus] = useState('')
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
