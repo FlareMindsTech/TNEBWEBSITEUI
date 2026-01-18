@@ -4,10 +4,13 @@ import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 import Logo from "../assets/tnebea_logo_cropped2.png";
+import AuthModal from './AuthModal';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [authTab, setAuthTab] = useState('login');
   const closeTimeoutRef = useRef(null);
 
   const handleDropdownOpen = (key) => {
@@ -460,8 +463,8 @@ const Navbar = () => {
                       >
                         <Link 
                           className="user-dropdown-item" 
-                          to="/login"
-                          onClick={closeAllMenus}
+                          to="#"
+                          onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }}
                           whileHover={{ x: 5 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -476,8 +479,8 @@ const Navbar = () => {
                       >
                         <Link 
                           className="user-dropdown-item" 
-                          to="/register"
-                          onClick={closeAllMenus}
+                          to="#"
+                          onClick={(e) => { e.preventDefault(); setAuthTab('register'); setShowAuth(true); }}
                           whileHover={{ x: 5 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -494,6 +497,7 @@ const Navbar = () => {
           </ul>
         </motion.div>
       </div>
+      <AuthModal show={showAuth} onClose={() => setShowAuth(false)} defaultTab={authTab} />
     </motion.nav>
   );
 };
