@@ -4,6 +4,14 @@
 .home-container {
   font-family: 'Merriweather', serif;
   overflow-x: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.main-content {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Important Notices Background Effect */
@@ -19,12 +27,13 @@
   overflow: hidden;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
   box-shadow: 0 8px 32px rgba(27, 91, 175, 0.12);
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  will-change: transform, box-shadow;
 }
 
 .important-notices-card:hover {
   box-shadow: 0 12px 48px rgba(27, 91, 175, 0.18);
-  transform: translateY(-4px);
+  transform: translate3d(0, -4px, 0);
 }
 
 /* Animated Background */
@@ -37,14 +46,13 @@
   bottom: 0;
   background: linear-gradient(45deg, 
     rgba(27, 91, 175, 0.05) 0%,
-    rgba(44, 123, 229, 0.03) 25%,
-    rgba(27, 91, 175, 0.02) 50%,
-    rgba(44, 123, 229, 0.03) 75%,
+    rgba(44, 123, 229, 0.03) 50%,
     rgba(27, 91, 175, 0.05) 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 8s ease infinite;
+  background-size: 300% 300%;
+  animation: gradientShift 12s ease infinite;
   pointer-events: none;
   z-index: 0;
+  will-change: background-position;
 }
 
 .important-notices-card::after {
@@ -55,10 +63,11 @@
   width: 600px;
   height: 600px;
   background: radial-gradient(circle, rgba(44, 123, 229, 0.08) 0%, transparent 70%);
-  animation: float 6s ease-in-out infinite;
+  animation: float 10s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
   border-radius: 50%;
+  will-change: transform;
 }
 
 .important-notices-card .card-header {
@@ -98,20 +107,12 @@
 
 @keyframes float {
   0%, 100% { 
-    transform: translateY(0px) translateX(0px);
+    transform: translate3d(0, 0, 0);
     opacity: 0.05;
   }
-  25% { 
-    transform: translateY(-20px) translateX(20px);
-    opacity: 0.08;
-  }
   50% { 
-    transform: translateY(-40px) translateX(-10px);
+    transform: translate3d(-10px, -30px, 0);
     opacity: 0.06;
-  }
-  75% { 
-    transform: translateY(-20px) translateX(-30px);
-    opacity: 0.07;
   }
 }
 
@@ -129,7 +130,8 @@
 /* Particle Effect for Notice Items */
 .notice-item {
   position: relative;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  will-change: transform;
 }
 
 .notice-item::before {

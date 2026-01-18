@@ -23,11 +23,12 @@
   align-items: center;
   position: relative;
   padding: 30px 0 0 0;
-  transition: transform 400ms, box-shadow 400ms, opacity 400ms;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease, opacity 0.6s ease;
   opacity: 0.5;
   box-shadow: none;
   margin: 0 auto;
   margin-top: 50%;
+  will-change: transform, box-shadow, opacity;
 }
 
 .quote-icon {
@@ -107,7 +108,7 @@
 .swiper-slide-active .carousel-card {
   box-shadow: 0 8px 30px rgba(21, 69, 138, 0.35);
   opacity: 1;
-  transform: scale(1.35);
+  transform: scale3d(1.35, 1.35, 1);
 }
 
 .swiper-button-next,
@@ -154,7 +155,7 @@
   .swiper-pagination-bullet-active {
     opacity: 1;
     background: #2a6cc7;
-    transform: scale(1.2);
+    transform: scale3d(1.2, 1.2, 1);
   }
 
   .carousel-title-text {
