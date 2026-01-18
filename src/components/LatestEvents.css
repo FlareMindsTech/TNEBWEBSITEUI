@@ -50,7 +50,6 @@
   flex-direction: column;
 }
 
-/* Pause auto-scroll on hover for better readability */
 .vertical-carousel:hover .carousel-event-item {
   animation-play-state: paused;
 }
@@ -62,7 +61,6 @@
   width: 100%;
   padding: 0 16px;
   opacity: 0;
-  /* Removed expensive filter for smoother animation */
   will-change: transform, opacity;
   animation: carousel-animate-vertical 18s linear infinite;
 }
