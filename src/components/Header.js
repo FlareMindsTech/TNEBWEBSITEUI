@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import WireSparkBackground from './WireSparkBackground';
 import logo from '../assets/tnebea_logo_cropped2.png';
+import { SidebarContext } from '../context/SidebarContext';
 
 const Header = () => {
+  const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
 
   // Update current time
@@ -38,8 +40,12 @@ const Header = () => {
       <motion.div 
         className="sentence-carousel"
         initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        animate={{ 
+          opacity: isSidebarOpen ? 0 : 1, 
+          y: isSidebarOpen ? -20 : 0,
+          display: isSidebarOpen ? 'none' : 'block'
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <div className="sentence-track">
           {[
@@ -104,8 +110,13 @@ const Header = () => {
         className="main-header" 
         style={{ position: 'relative' }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        animate={{ 
+          opacity: isSidebarOpen ? 0 : 1,
+          height: isSidebarOpen ? 0 : 'auto',
+          overflow: isSidebarOpen ? 'hidden' : 'visible',
+          marginBottom: isSidebarOpen ? 0 : 'auto'
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <WireSparkBackground />
         <div className="container-fluid" style={{ position: 'relative', zIndex: 1 }}>
