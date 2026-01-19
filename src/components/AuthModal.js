@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { motion } from 'framer-motion';
+import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes } from 'react-icons/fa';
+import './AuthModal.css';
 
 const theme = {
   primary: '#15458a',
@@ -12,6 +15,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (show) setTab(defaultTab);
+  }, [defaultTab, show]);
+
   const switchTab = (next) => setTab(next);
 
   const handleLogin = (e) => {
@@ -20,7 +27,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     setTimeout(() => {
       setLoading(false);
       onClose();
-    }, 1200);
+    }, 900);
   };
 
   const handleRegister = (e) => {
@@ -29,96 +36,153 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     setTimeout(() => {
       setLoading(false);
       onClose();
-    }, 1500);
+    }, 1200);
   };
 
+  const renderInput = (icon, props) => (
+    <div className="auth-input-wrapper">
+      <span className="auth-input-icon">{icon}</span>
+      <Form.Control className="auth-input" {...props} />
+    </div>
+  );
+
   return (
-    <Modal show={show} onHide={onClose} centered backdrop="static">
-      <div style={{ position: 'absolute', top: 8, right: 12 }}>
-        <Button variant="light" size="sm" onClick={onClose} style={{ borderRadius: 8 }}>
-          Close
-        </Button>
-      </div>
-      <Modal.Header style={{ borderBottom: 'none', background: `linear-gradient(135deg, ${theme.primary}, ${theme.accent})`, color: '#fff' }}>
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 12 }}>
-          <Button
-            variant={tab === 'login' ? 'light' : 'outline-light'}
+    <Modal
+      show={show}
+      onHide={onClose}
+      centered
+      backdrop="static"
+      dialogClassName="auth-modal-dialog"
+      contentClassName="auth-modal"
+    >
+      <button 
+        type="button"
+        className="auth-close" 
+        onClick={onClose} 
+        aria-label="Close auth modal"
+        style={{ position: 'absolute', top: '14px', right: '14px', zIndex: 1000 }}
+      >
+        <FaTimes />
+      </button>
+
+      <div className="auth-bg" aria-hidden />
+
+      <div className="auth-header">
+        <motion.div
+          className="auth-tabs"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          <button
+            className={`auth-tab ${tab === 'login' ? 'active' : ''}`}
             onClick={() => switchTab('login')}
-            style={{ fontWeight: 700, borderRadius: 20 }}
           >
-            Sign In
-          </Button>
-          <Button
-            variant={tab === 'register' ? 'light' : 'outline-light'}
+            <FaUserLock />
+            <span>Login</span>
+          </button>
+          <button
+            className={`auth-tab ${tab === 'register' ? 'active' : ''}`}
             onClick={() => switchTab('register')}
-            style={{ fontWeight: 700, borderRadius: 20 }}
           >
-            Register
-          </Button>
-        </div>
-      </Modal.Header>
-      <Modal.Body style={{ padding: '1rem 1.25rem' }}>
+            <FaUserPlus />
+            <span>Sign Up</span>
+          </button>
+        </motion.div>
+        <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
+      </div>
+
+      <Modal.Body className="auth-body">
         {tab === 'login' ? (
-          <Form onSubmit={handleLogin}>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ color: theme.primary, fontWeight: 600 }}>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label style={{ color: theme.primary, fontWeight: 600 }}>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter password"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-              />
-            </Form.Group>
-            <div className="d-grid">
-              <Button type="submit" style={{ background: theme.primary, borderColor: theme.primary }} disabled={loading}>
-                {loading ? 'Signing in…' : 'Sign In'}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <Form onSubmit={handleLogin}>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                {renderInput(<FaEnvelope />, {
+                  type: 'email',
+                  placeholder: 'name@example.com',
+                  value: loginForm.email,
+                  onChange: (e) => setLoginForm({ ...loginForm, email: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: 'password',
+                  placeholder: 'Enter password',
+                  value: loginForm.password,
+                  onChange: (e) => setLoginForm({ ...loginForm, password: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+
+              <div className="auth-actions">
+                <Form.Check type="checkbox" label="Remember me" />
+                <a href="#" className="auth-link" onClick={(e) => e.preventDefault()}>Forgot password?</a>
+              </div>
+
+              <Button
+                type="submit"
+                className="auth-primary-btn"
+                disabled={loading}
+              >
+                {loading ? 'Signing in…' : 'Login securely'}
               </Button>
-            </div>
-          </Form>
+            </Form>
+          </motion.div>
         ) : (
-          <Form onSubmit={handleRegister}>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ color: theme.primary, fontWeight: 600 }}>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Full name"
-                value={registerForm.name}
-                onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ color: theme.primary, fontWeight: 600 }}>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                value={registerForm.email}
-                onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <Form.Label style={{ color: theme.primary, fontWeight: 600 }}>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Create password"
-                value={registerForm.password}
-                onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-              />
-            </Form.Group>
-            <div className="d-grid">
-              <Button type="submit" style={{ background: theme.accent, borderColor: theme.accent }} disabled={loading}>
-                {loading ? 'Registering…' : 'Register'}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <Form onSubmit={handleRegister}>
+              <Form.Group className="mb-3">
+                <Form.Label>Full name</Form.Label>
+                {renderInput(<FaUser />, {
+                  type: 'text',
+                  placeholder: 'Enter your name',
+                  value: registerForm.name,
+                  onChange: (e) => setRegisterForm({ ...registerForm, name: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                {renderInput(<FaEnvelope />, {
+                  type: 'email',
+                  placeholder: 'name@example.com',
+                  value: registerForm.email,
+                  onChange: (e) => setRegisterForm({ ...registerForm, email: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+              <Form.Group className="mb-4">
+                <Form.Label>Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: 'password',
+                  placeholder: 'Create a strong password',
+                  value: registerForm.password,
+                  onChange: (e) => setRegisterForm({ ...registerForm, password: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+
+              <Button
+                type="submit"
+                className="auth-primary-btn accent"
+                disabled={loading}
+              >
+                {loading ? 'Creating account…' : 'Create account'}
               </Button>
-            </div>
-          </Form>
+              <p className="auth-footnote">By signing up you accept our terms and privacy notice.</p>
+            </Form>
+          </motion.div>
         )}
       </Modal.Body>
     </Modal>

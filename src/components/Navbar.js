@@ -1,12 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
+import { SidebarContext } from '../context/SidebarContext';
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isSidebarOpen, openSidebar, closeSidebar } = useContext(SidebarContext);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
@@ -27,7 +29,8 @@ const Navbar = () => {
   };
 
   const closeAllMenus = () => {
-    setIsOpen(false);
+    closeSidebar();
+
     setOpenDropdown(null);
     setUserMenuOpen(false);
   };
@@ -128,10 +131,10 @@ const Navbar = () => {
         <motion.button 
           className="navbar-toggler" 
           type="button" 
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => openSidebar()}
           whileTap={{ scale: 0.9 }}
         >
-          {isOpen ? (
+          {isSidebarOpen ? (
             <FaTimes className="navbar-toggler-icon" />
           ) : (
             <FaBars className="navbar-toggler-icon" />
@@ -139,7 +142,7 @@ const Navbar = () => {
         </motion.button>
 
         <AnimatePresence>
-          {isOpen && (
+          {isSidebarOpen && (
             <motion.div
               className="mobile-backdrop"
               initial={{ opacity: 0 }}
@@ -150,8 +153,269 @@ const Navbar = () => {
           )}
         </AnimatePresence>
 
+        <AnimatePresence>
+          {isSidebarOpen && (
+            <motion.div
+              className="mobile-sidebar"
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="sidebar-header">
+                <h6 className="mb-0">Menu</h6>
+                <motion.button
+                  className="sidebar-close"
+                  onClick={closeAllMenus}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaTimes />
+                </motion.button>
+              </div>
+
+              <nav className="sidebar-nav">
+                <ul className="navbar-nav flex-column">
+                  
+                  {/* 1. Home */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <Link 
+                      className="nav-link" 
+                      to="/"
+                      onClick={closeAllMenus}
+                    >
+                      🏠 Home
+                    </Link>
+                  </motion.li>
+
+                  {/* 2. About TNEBEA Dropdown */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <div
+                      className="nav-link sidebar-toggle"
+                      onClick={() => setOpenDropdown(openDropdown === 'about' ? null : 'about')}
+                    >
+                      <span>👥 About TNEBEA</span>
+                      <motion.span
+                        animate={{ rotate: openDropdown === 'about' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaCaretDown />
+                      </motion.span>
+                    </div>
+                    <AnimatePresence>
+                      {openDropdown === 'about' && (
+                        <motion.div 
+                          className="sidebar-submenu"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
+                            👥 CEC
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.li>
+
+                  {/* 3. TNEB General Info Dropdown */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <div
+                      className="nav-link sidebar-toggle"
+                      onClick={() => setOpenDropdown(openDropdown === 'tnebInfo' ? null : 'tnebInfo')}
+                    >
+                      <span>ℹ️ General Info</span>
+                      <motion.span
+                        animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaCaretDown />
+                      </motion.span>
+                    </div>
+                    <AnimatePresence>
+                      {openDropdown === 'tnebInfo' && (
+                        <motion.div 
+                          className="sidebar-submenu"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Link className="sidebar-item" to="/act-regulations" onClick={closeAllMenus}>
+                            ⚖️ Act & Regulations
+                          </Link>
+                          <Link className="sidebar-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
+                            📄 Manuals & Forms
+                          </Link>
+                          <Link className="sidebar-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
+                            👴 Pension Scheme (CPS)
+                          </Link>
+                          <Link className="sidebar-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
+                            📋 Distribution Instructions
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.li>
+
+                  {/* 4. Technical Corner Dropdown */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <div
+                      className="nav-link sidebar-toggle"
+                      onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
+                    >
+                      <span>⚙️ Technical</span>
+                      <motion.span
+                        animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaCaretDown />
+                      </motion.span>
+                    </div>
+                    <AnimatePresence>
+                      {openDropdown === 'tech' && (
+                        <motion.div 
+                          className="sidebar-submenu"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Link className="sidebar-item" to="/technical-qa" onClick={closeAllMenus}>
+                            ❓ Technical Q&A
+                          </Link>
+                          <Link className="sidebar-item" to="/technical-parameters" onClick={closeAllMenus}>
+                            📊 Technical Parameters
+                          </Link>
+                          <Link className="sidebar-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
+                            📚 Books & Manuals
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.li>
+
+                  {/* 5. Direct Links */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <Link 
+                      className="nav-link" 
+                      to="/minnagam"
+                      onClick={closeAllMenus}
+                    >
+                      📱 Minnagam
+                    </Link>
+                  </motion.li>
+
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <Link 
+                      className="nav-link" 
+                      to="/hand-book"
+                      onClick={closeAllMenus}
+                    >
+                      📖 Hand Book
+                    </Link>
+                  </motion.li>
+
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <Link 
+                      className="nav-link" 
+                      to="/news"
+                      onClick={closeAllMenus}
+                    >
+                      📰 News
+                    </Link>
+                  </motion.li>
+
+                  {/* 6. Quick Links Dropdown */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <div
+                      className="nav-link sidebar-toggle"
+                      onClick={() => setOpenDropdown(openDropdown === 'quickLinks' ? null : 'quickLinks')}
+                    >
+                      <span>🔗 Quick Links</span>
+                      <motion.span
+                        animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaCaretDown />
+                      </motion.span>
+                    </div>
+                    <AnimatePresence>
+                      {openDropdown === 'quickLinks' && (
+                        <motion.div 
+                          className="sidebar-submenu"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <a 
+                            className="sidebar-item" 
+                            href="https://www.tangedco.gov.in/" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={closeAllMenus}
+                          >
+                            ⚡ TANGEDCO
+                          </a>
+                          <a 
+                            className="sidebar-item" 
+                            href="https://www.tantransco.gov.in/" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={closeAllMenus}
+                          >
+                            🔌 TANTRANSCO
+                          </a>
+                          <a 
+                            className="sidebar-item" 
+                            href="https://www.tnerc.gov.in/" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={closeAllMenus}
+                          >
+                            🏛️ TNERC
+                          </a>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.li>
+
+                  {/* 7. Contact */}
+                  <motion.li className="nav-item" variants={navItemVariants}>
+                    <Link 
+                      className="nav-link" 
+                      to="/contactus"
+                      onClick={closeAllMenus}
+                    >
+                      ☎️ Contact
+                    </Link>
+                  </motion.li>
+
+                </ul>
+              </nav>
+
+              <div className="sidebar-footer">
+                <motion.div 
+                  className="sidebar-auth-button"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <button 
+                    className="btn btn-light w-100"
+                    onClick={() => { setAuthTab('login'); setShowAuth(true); closeAllMenus(); }}
+                  >
+                    <FaUser className="me-2" />
+                    Login / Register
+                  </button>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <motion.div 
-          className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}
+          className={`collapse navbar-collapse d-none d-lg-flex`}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -334,7 +598,7 @@ const Navbar = () => {
               </Link>
             </motion.li>
 
-            <motion.li className="nav-item" variants={navItemVariants}>
+            {/* <motion.li className="nav-item" variants={navItemVariants}>
               <Link 
                 className="nav-link nav-hover-effect" 
                 to="/news"
@@ -342,7 +606,7 @@ const Navbar = () => {
               >
                 News
               </Link>
-            </motion.li>
+            </motion.li> */}
 
             {/* 6. Quick Links Dropdown */}
             <motion.li 
@@ -352,7 +616,7 @@ const Navbar = () => {
               onMouseLeave={handleDropdownClose}
             >
               <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
-                Quick Links
+                TNEBEA Forms
                 <motion.span
                   animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
                   transition={{ duration: 0.3 }}

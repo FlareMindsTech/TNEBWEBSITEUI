@@ -22,6 +22,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ClickSpark from './components/ClickSpark';
+import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
 import logo from './assets/tnebea_logo_cropped2.png';
 
@@ -58,12 +59,13 @@ function App() {
 
   return (
     <Router>
-      <ClickSpark
-        sparkRadius={50}
-        sparkCount={10}
-        extraScale={1.3}
-      >
-        <div className="App">
+      <SidebarProvider>
+        <ClickSpark
+          sparkRadius={50}
+          sparkCount={10}
+          extraScale={1.3}
+        >
+          <div className="App">
           {showSplash && (
             <div className="splash-screen">
               <div className="splash-logo-circle">
@@ -96,7 +98,8 @@ function App() {
           </Routes>
         </div>
       </div>
-      </ClickSpark>
+        </ClickSpark>
+      </SidebarProvider>
     </Router>
   );
 }
