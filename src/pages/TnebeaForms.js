@@ -102,7 +102,6 @@ const TnebeaForms = () => {
       >
         <div className="hero-overlay" />
 
-        {/* Enhanced Decorations */}
         <div className="hero-decor">
           {[...Array(5)].map((_, i) => (
             <motion.div
