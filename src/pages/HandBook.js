@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
+import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle, FaBolt } from 'react-icons/fa';
 import './HandBook.css';
 
 const EditionCard = ({ edition, index }) => {
@@ -112,30 +112,25 @@ const HandBook = () => {
         className="handbook-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.8 }}
       >
-        <motion.div
-          className="hero-content"
-          initial={{ y: -40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
-          <motion.div
-            className="hero-book"
-            animate={{ rotateY: [0, 20, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
+        <div className="electricity-container">
+          <motion.div className="arc-wire left-wire" />
+          <motion.div className="arc-wire right-wire" />
+          <motion.div className="power-center" animate={{ boxShadow: ["0 0 20px rgba(255,193,7,0.3)", "0 0 40px rgba(255,193,7,0.8)", "0 0 20px rgba(255,193,7,0.3)"] }} transition={{ duration: 2, repeat: Infinity }} />
+        </div>
+        <motion.div className="hero-formal-content" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }}>
+          {/* <div className="formal-header-badge">Government Project</div> */}
+          <motion.div className="hero-book-formal" animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity }}>
             <FaBook />
           </motion.div>
-          <h1 className="hero-title">Power Engineer's Handbook</h1>
-          <p className="hero-subtitle">Author and Copyrights Reserved by TNEBEA</p>
-          <motion.div
-            className="hero-status"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.5, type: "spring" }}
-          >
-            <FaStar /> Reprinted & Ready to Issue
+          <h1 className="hero-title-formal">Power Engineer's Handbook</h1>
+          <div className="formal-divider"></div>
+          <p className="hero-subtitle-formal">Tamil Nadu Generation and Distribution Corporation Limited (TNEB)</p>
+          <p className="hero-description-formal">Official Technical Reference & Engineering Standards Publication</p>
+          <motion.div className="formal-status-badge" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.6, type: "spring" }}>
+            <motion.span  animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} />
+            Published & Approved
           </motion.div>
         </motion.div>
       </motion.section>
