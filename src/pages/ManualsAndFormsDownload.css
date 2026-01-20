@@ -1,11 +1,11 @@
-.cps-container {
+.manuals-container {
   font-family: 'Merriweather', serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 40px 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-.cps-header {
+.manuals-header {
   background: #1b5baf;
   color: white;
   padding: 40px 0;
@@ -17,7 +17,7 @@
   box-shadow: 0 10px 30px rgba(27, 91, 175, 0.3);
 }
 
-.cps-header::before {
+.manuals-header::before {
   content: '';
   position: absolute;
   top: -50%;
@@ -33,7 +33,7 @@
   100% { transform: rotate(360deg); }
 }
 
-.cps-header h1 {
+.manuals-header h1 {
   font-size: 2.5rem;
   font-weight: bold;
   color: white !important;
@@ -43,7 +43,7 @@
   text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-.cps-header p {
+.manuals-header p {
   color: rgba(255,255,255,0.95);
   font-size: 1.1rem;
   margin-top: 10px;
@@ -51,20 +51,20 @@
   z-index: 1;
 }
 
-.cps-content {
+.manuals-content {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-.cps-documents-grid {
+.documents-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 25px;
-  margin-top: 30px;
+  margin-bottom: 40px;
 }
 
-.cps-document-card {
+.document-card {
   background: white;
   border-radius: 12px;
   padding: 25px;
@@ -76,7 +76,7 @@
   overflow: hidden;
 }
 
-.cps-document-card::before {
+.document-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -88,33 +88,33 @@
   z-index: 0;
 }
 
-.cps-document-card:hover::before {
+.document-card:hover::before {
   left: 100%;
 }
 
-.cps-document-card:hover {
+.document-card:hover {
   box-shadow: 0 12px 35px rgba(27, 91, 175, 0.25);
   transform: translateY(-8px) scale(1.02);
   border-left-color: #2c7be5;
 }
 
-.cps-card-content {
+.document-card-content {
   position: relative;
   z-index: 1;
 }
 
-.cps-card-icon {
+.document-card-icon {
   font-size: 2.5rem;
   margin-bottom: 15px;
   transition: all 0.3s ease;
 }
 
-.cps-document-card:hover .cps-card-icon {
+.document-card:hover .document-card-icon {
   transform: rotate(10deg) scale(1.2);
   color: #2c7be5;
 }
 
-.cps-card-title {
+.document-card-title {
   font-size: 1.1rem;
   font-weight: 600;
   color: #1b5baf;
@@ -123,11 +123,11 @@
   transition: all 0.3s ease;
 }
 
-.cps-document-card:hover .cps-card-title {
+.document-card:hover .document-card-title {
   color: #2c7be5;
 }
 
-.cps-card-title::after {
+.document-card-title::after {
   content: '';
   display: block;
   width: 0;
@@ -137,11 +137,28 @@
   margin-top: 8px;
 }
 
-.cps-document-card:hover .cps-card-title::after {
+.document-card:hover .document-card-title::after {
   width: 100%;
 }
 
-.cps-card-action {
+.document-card-note {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 12px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #17a2b8;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.document-card-note:hover {
+  background: #e3f2fd;
+  border-left-color: #1b5baf;
+}
+
+.document-card-action {
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid #eee;
@@ -153,16 +170,34 @@
   transition: all 0.3s ease;
 }
 
-.cps-document-card:hover .cps-card-action {
+.document-card:hover .document-card-action {
   color: #2c7be5;
   transform: translateX(5px);
 }
 
-.cps-document-count {
+.document-card-action svg {
+  transition: all 0.3s ease;
+}
+
+.document-card:hover .document-card-action svg {
+  transform: translateX(5px);
+}
+
+.unavailable-badge {
+  display: inline-block;
+  background: #ff9800;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.document-count {
   text-align: center;
   color: #666;
   font-size: 1.1rem;
-  margin-top: 30px;
   margin-bottom: 30px;
   padding: 15px;
   background: white;
@@ -170,103 +205,130 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.cps-document-count strong {
+.document-count strong {
   color: #1b5baf;
   font-size: 1.3rem;
 }
 
+/* Empty State */
+.empty-document {
+  opacity: 0.7;
+  background: #f8f9fa;
+}
+
+.empty-document:hover {
+  transform: none !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;
+}
+
+.empty-document .document-card-action {
+  color: #999;
+}
+
+.empty-document:hover .document-card-action {
+  color: #999;
+  transform: none;
+}
 
 /* Responsive Design */
 @media (max-width: 992px) {
-  .cps-header h1 {
+  .manuals-header h1 {
     font-size: 2rem;
   }
 
-  .cps-documents-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  .documents-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
   }
 
-  .cps-content {
+  .manuals-content {
     padding: 0 15px;
   }
 }
 
 @media (max-width: 768px) {
-  .cps-header {
+  .manuals-header {
     padding: 30px 0;
     margin-bottom: 30px;
     border-radius: 0 0 15px 15px;
   }
 
-  .cps-header h1 {
+  .manuals-header h1 {
     font-size: 1.75rem;
   }
 
-  .cps-header p {
+  .manuals-header p {
     font-size: 1rem;
   }
 
-  .cps-documents-grid {
+  .documents-grid {
     grid-template-columns: 1fr;
     gap: 15px;
   }
 
-  .cps-document-card {
+  .document-card {
     padding: 20px;
   }
 
-  .cps-card-icon {
+  .document-card-icon {
     font-size: 2rem;
   }
 
-  .cps-card-title {
+  .document-card-title {
     font-size: 1rem;
+  }
+
+  .manuals-container {
+    padding: 20px 0;
   }
 }
 
 @media (max-width: 480px) {
-  .cps-header h1 {
+  .manuals-header h1 {
     font-size: 1.5rem;
   }
 
-  .cps-header p {
+  .manuals-header p {
     font-size: 0.95rem;
   }
 
-  .cps-document-card {
+  .document-card {
     padding: 15px;
     border-left-width: 4px;
   }
 
-  .cps-card-icon {
+  .document-card-icon {
     font-size: 1.75rem;
   }
 
-  .cps-card-title {
+  .document-card-title {
     font-size: 0.95rem;
+  }
+
+  .document-card-note {
+    font-size: 0.85rem;
   }
 }
 
+/* Print Styles */
 @media print {
-  .cps-header {
+  .manuals-header {
     display: none;
   }
 
-  .cps-document-card {
+  .document-card {
     page-break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ddd;
     margin-bottom: 15px;
   }
 
-  .cps-document-card:hover {
+  .document-card:hover {
     transform: none;
     box-shadow: none;
   }
 
-  .cps-card-action {
+  .document-card-action {
     display: none;
   }
 }
-
