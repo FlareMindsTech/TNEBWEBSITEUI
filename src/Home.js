@@ -111,7 +111,9 @@ const Home = () => {
     }
   ];
 
-
+  const handleViewAllNotices = () => {
+    window.open('https://tnebeaengineers.in/uploads/notices/', '_blank', 'noopener,noreferrer');
+  };
 
   // Update current time
   useEffect(() => {
@@ -254,14 +256,14 @@ const Home = () => {
           {/* Important Notices Section */}
           <div className="row mt-4">
             <div className="col-12">
-              <div className="card shadow-sm">
-                <div className="card-header bg-primary text-white" style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center', gap:'10px'}}>
+              <div className="card shadow-sm important-notices-card">
+                <div className="card-header important-notices-header text-white" style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center', gap:'10px'}}>
                   <FaExclamationTriangle className="mr-2" />
                   <h5 className="mb-0">
                     Important Notices
                   </h5>
                 </div>
-                <div className="card-body">
+                <div className="card-body important-notices-body">
                   <div className="row">
                     {importantNotices.map((notice) => (
                       <div key={notice.id} className="col-md-6 col-lg-4 mb-3">
@@ -298,10 +300,10 @@ const Home = () => {
                     ))}
                   </div>
                   <div className="text-center mt-3">
-                    <a href="#" className="btn btn-outline-primary btn-sm">
+                    <button type="button" className="btn-view-notices" onClick={handleViewAllNotices}>
                       <FaList className="mr-1" />
                       View All Notices
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

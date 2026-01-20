@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft } from 'react-icons/fa';
 import './AuthModal.css';
 
 const theme = {
@@ -13,6 +13,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [tab, setTab] = useState(defaultTab);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
+  const [forgotForm, setForgotForm] = useState({ email: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,6 +38,17 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       setLoading(false);
       onClose();
     }, 1200);
+  };
+
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      alert('Reset link sent to ' + forgotForm.email);
+      setTab('login');
+      setForgotForm({ email: '' });
+    }, 900);
   };
 
   const renderInput = (icon, props) => (
@@ -68,6 +80,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       <div className="auth-bg" aria-hidden />
 
       <div className="auth-header">
+        <div className="auth-ribbon">
+          <FaUserLock />
+          <span>Secure Access</span>
+        </div>
         <motion.div
           className="auth-tabs"
           initial={{ opacity: 0, y: -10 }}
@@ -90,6 +106,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           </button>
         </motion.div>
         <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
+        <div className="auth-chips">
+          <span className="auth-chip">No OTP delays</span>
+          <span className="auth-chip">Fast sign-in</span>
+          <span className="auth-chip">Privacy-first</span>
+        </div>
       </div>
 
       <Modal.Body className="auth-body">
@@ -123,7 +144,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
               <div className="auth-actions">
                 <Form.Check type="checkbox" label="Remember me" />
-                <a href="#" className="auth-link" onClick={(e) => e.preventDefault()}>Forgot password?</a>
+                <a href="#" className="auth-link" onClick={(e) => { e.preventDefault(); setTab('forgot'); }}>Forgot password?</a>
               </div>
 
               <Button
@@ -135,7 +156,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
               </Button>
             </Form>
           </motion.div>
-        ) : (
+        ) : tab === 'register' ? (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -183,7 +204,43 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
               <p className="auth-footnote">By signing up you accept our terms and privacy notice.</p>
             </Form>
           </motion.div>
-        )}
+        ) : tab === 'forgot' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <Form onSubmit={handleForgotPassword}>
+              <button 
+                type="button"
+                className="auth-back-btn"
+                onClick={() => setTab('login')}
+              >
+                <FaArrowLeft /> Back to Login
+              </button>
+              <Form.Group className="mb-3">
+                <Form.Label>Email Address</Form.Label>
+                <p className="auth-helper-text">Enter your registered email to receive a password reset link.</p>
+                {renderInput(<FaEnvelope />, {
+                  type: 'email',
+                  placeholder: 'name@example.com',
+                  value: forgotForm.email,
+                  onChange: (e) => setForgotForm({ ...forgotForm, email: e.target.value }),
+                  required: true
+                })}
+              </Form.Group>
+
+              <Button
+                type="submit"
+                className="auth-primary-btn"
+                disabled={loading}
+              >
+                {loading ? 'Sending reset link…' : 'Send Reset Link'}
+              </Button>
+              <p className="auth-footnote">We'll send you a link to reset your password within minutes.</p>
+            </Form>
+          </motion.div>
+        ) : null}
       </Modal.Body>
     </Modal>
   );
