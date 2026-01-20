@@ -337,7 +337,7 @@ const Navbar = () => {
 
                     
                     <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/contactus" onClick={closeAllMenus}>
+                      <Link className="nav-link" to="/tnebea-forms" onClick={closeAllMenus}>
                         📝TNEBEA Forms
                       </Link>
                     </motion.li>
@@ -498,7 +498,7 @@ const Navbar = () => {
             </motion.li> */}
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/contactus" onClick={closeAllMenus}>TNEBEA Forms</Link>
+              <Link className="nav-link nav-hover-effect" to="/tnebea-forms" onClick={closeAllMenus}>TNEBEA Forms</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>

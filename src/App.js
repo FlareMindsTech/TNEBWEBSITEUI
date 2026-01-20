@@ -16,11 +16,10 @@ import ContactUs from './pages/ContactUs';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsAndConditions from './pages/TermsAndConditions';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import TnebeaForms from './pages/TnebeaForms';
 import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
@@ -95,6 +94,7 @@ function App() {
             <Route path="/login" element={<><Navbar /><Login /><Footer /></>} />
             <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
             <Route path="/forget" element={<><Navbar /><ForgotPassword /><Footer /></>} />
+            <Route path="/tnebea-forms" element={<><Navbar /><TnebeaForms /><Footer /></>} />
           </Routes>
         </div>
       </div>
