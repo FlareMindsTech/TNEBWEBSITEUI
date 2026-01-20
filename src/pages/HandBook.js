@@ -1,42 +1,251 @@
-import React from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
+import './HandBook.css';
+
+const EditionCard = ({ edition, index }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <motion.div
+      className="edition-card-wrapper"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1, duration: 0.6 }}
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+    >
+      <motion.div
+        className="edition-card"
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="edition-front">
+          <div className="edition-icon">📖</div>
+          <h3 className="edition-title">{edition.title}</h3>
+          <p className="edition-year">{edition.year}</p>
+        </div>
+        <div className="edition-back">
+          <p className="edition-description">{edition.description}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const PricingOption = ({ option, index }) => {
+  return (
+    <motion.div
+      className={`pricing-option ${option.featured ? 'featured' : ''}`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.15, duration: 0.6 }}
+      whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(27, 91, 175, 0.3)" }}
+    >
+      {option.featured && (
+        <motion.div
+          className="price-badge"
+          initial={{ rotate: -5 }}
+          animate={{ rotate: 5 }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+        >
+          POPULAR
+        </motion.div>
+      )}
+      <h3 className="price-category">{option.category}</h3>
+      <div className="price-wrapper">
+        <span className="currency"><FaRupeeSign /></span>
+        <span className="amount">{option.price}</span>
+      </div>
+      <ul className="price-details">
+        {option.details.map((detail, idx) => (
+          <li key={idx}><FaCheckCircle /> {detail}</li>
+        ))}
+      </ul>
+      <p className="price-note">{option.note}</p>
+    </motion.div>
+  );
+};
 
 const HandBook = () => {
+  const editions = [
+    { title: "Technical Diary", year: "1947", description: "The beginning of TNEBEA's publishing legacy" },
+    { title: "1st Edition", year: "1957", description: "First comprehensive Power Engineers Handbook" },
+    { title: "2nd Edition", year: "1959", description: "Updated with new technical insights" },
+    { title: "3rd Edition", year: "1964", description: "Further expanded scope and content" },
+    { title: "4th Edition", year: "1968", description: "Modern engineering standards included" },
+    { title: "5th Edition", year: "1976", description: "Major revision and enhancement" },
+    { title: "6th Edition", year: "2002", description: "Latest enlarged and revised edition" },
+    { title: "Reprint", year: "2011", description: "Reprinted to meet growing demand" }
+  ];
+
+  const pricingOptions = [
+    {
+      category: "TNEBEA Members",
+      price: "1,500",
+      featured: true,
+      details: [
+        "Contact Branch Secretary",
+        "Quote your LM Number",
+        "Request via Branch Secretary"
+      ],
+      note: "Exclusive member rate"
+    },
+    {
+      category: "Non-Members",
+      price: "3,000",
+      featured: false,
+      details: [
+        "Demand Draft Rs. 3,500",
+        "Includes postal charges",
+        "Drawn on any bank"
+      ],
+      note: "Subject to actual postal charges"
+    }
+  ];
+
   return (
-    <main>
-      <div className="container my-5">
-        <h1 className="text-center text-success font-weight-bold">POWER ENGINEER'S HANDBOOK</h1>
-        <h5 className="text-center font-weight-bold">Author and Copyrights reserved by TNEBEA</h5>
-        <hr />
-        <ul className="mt-4" style={{ fontSize: '1.2rem' }}>
-          <li><b>Another feather in the "TNEBEA-ions Cap – is our prestigious publication – POWER ENGINEER's HANDBOOK, which enjoys an equal history of TNEBEA is a seldom of utilization by DISCOM and Energy Utility Executives and students of all over India.</b></li>
-          <li><b>This book is the precious product of the Association symbolizing the untiring efforts of its members to share their unparalleled expertise and rich experience with the engineering community at large.</b></li>
-          <li><b>The recognition of all practicing Engineers around the world stands witness to the greatness of this treasure.</b></li>
-          <li><b>TNEBEA had brought out a "Technical Diary" in 1947.</b></li>
-          <li><b>FIRST Edition of POWER ENGINEERS Handbook was Published in 1957.</b></li>
-          <li><b>SECOND Edition in 1959, THIRD Edition in 1964, FOURTH Edition in 1968, and FIFTH Edition in 1976. There were 2 reprints in 1984 & 1989.</b></li>
-          <li><b>The present SIXTH Enlarged and revised edition were published in 2002 and reprinted in 2011.</b></li>
-        </ul>
-        <hr />
-        <h2 className="text-center text-dark font-weight-bold mt-5">POWER ENGINEERS HANDBOOK IS REPRINTED AND READY TO ISSUE!!! <span className="badge badge-danger">New</span></h2>
-        <h5 className="text-center">FOR MEMBERS – RS.1500/- AND FOR NON-MEMBERS – RS.3000/-</h5>
-        <div className="mt-4">
-          <p className="font-weight-bold">The cost of the Power Engineers Hand Book is as follows</p>
-          <p><b>FOR MEMBERS OF TNEBEA : RS.1500/- (Rupees One thousand and five hundred only).</b></p>
-          <p><b>FOR NON MEMBERS OF TNEBEA : RS.3000/- (Rupees Three Thousand Only).</b></p>
-          <p>For members, pls contact ur respective branch secretaries/regional secretaries and kindly pay the amount to them along with a request letter quoting LM Number addressing to The Treasurer/TNEBEA through the branch secretaries.</p>
-          <p>For Non-members, send the Demand Draft of Rs.3500/- (Rupees three thousand five hundred only), which includes service and postal charges (subject to actual charges) from any nationalized bank drawn in favour of TNEB ENGINEERS ASSOCIATION payable at Chennai along with a request letter.</p>
-          <p className="font-weight-bold">The precious copy of the book is available only at the below-mentioned address.<br />For your Copy...Contact</p>
-          <p className="font-weight-bold">THE TREASURER</p>
-          <address className="ml-3">
-            <b>T.N.E.B. Engineers' Association</b><br />
-            144, Anna Salai, Chennai – 600 002.<br />
-            (Regn.No.217/94) (Recognised in G.O.No.854 dated 06.04.1946)<br />
-            <b>Mobile:</b> 94874 65104 <br />
-            <span>Digital request letter for your hard copy should reach at: <a href="mailto:tnebea@gmail.com" className="text-success">tnebea@gmail.com</a></span>
-          </address>
-        </div>
+    <div className="handbook-container">
+      <motion.section
+        className="handbook-hero"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className="hero-content"
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          <motion.div
+            className="hero-book"
+            animate={{ rotateY: [0, 20, -20, 0] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            <FaBook />
+          </motion.div>
+          <h1 className="hero-title">Power Engineer's Handbook</h1>
+          <p className="hero-subtitle">Author and Copyrights Reserved by TNEBEA</p>
+          <motion.div
+            className="hero-status"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.7, duration: 0.5, type: "spring" }}
+          >
+            <FaStar /> Reprinted & Ready to Issue
+          </motion.div>
+        </motion.div>
+      </motion.section>
+
+      <div className="handbook-main">
+        <motion.section
+          className="about-section"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="section-heading">About This Publication</h2>
+          <div className="about-text">
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              A prestigious publication that embodies the TNEBEA-ions Cap – utilized by DISCOM and Energy Utility Executives and students across India.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              This book represents the precious product of the Association, symbolizing the untiring efforts of its members to share unparalleled expertise and rich experience with the engineering community.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              The global recognition of practicing Engineers stands witness to the greatness of this treasure.
+            </motion.p>
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="editions-section"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="section-heading">Publication Timeline</h2>
+          <div className="editions-grid">
+            {editions.map((edition, index) => (
+              <EditionCard key={index} edition={edition} index={index} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="pricing-section"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="section-heading">Get Your Copy</h2>
+          <div className="pricing-container">
+            {pricingOptions.map((option, index) => (
+              <PricingOption key={index} option={option} index={index} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="contact-section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="section-heading">Contact The Treasurer</h2>
+          <div className="contact-box">
+            <div className="contact-info">
+              <div className="info-item">
+                <FaMapMarkerAlt className="info-icon" />
+                <div>
+                  <h4><FaMapMarkerAlt /> Address</h4>
+                  <p>T.N.E.B. Engineers' Association<br />144, Anna Salai, Chennai – 600 002<br />(Regn.No.217/94)</p>
+                </div>
+              </div>
+              <div className="info-item">
+                <FaPhone className="info-icon" />
+                <div>
+                  <h4><FaPhone /> Mobile</h4>
+                  <a href="tel:9487465104">94874 65104</a>
+                </div>
+              </div>
+              <div className="info-item">
+                <FaEnvelope className="info-icon" />
+                <div>
+                  <h4><FaEnvelope /> Email</h4>
+                  <a href="mailto:tnebea@gmail.com">tnebea@gmail.com</a>
+                </div>
+              </div>
+            </div>
+            <div className="contact-note">
+              📧 Send digital request letter to the email address for your hard copy
+            </div>
+          </div>
+        </motion.section>
       </div>
-    </main>
+    </div>
   );
 };
 
