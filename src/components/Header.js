@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaSearch } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaSearch, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import WireSparkBackground from './WireSparkBackground';
@@ -10,6 +10,7 @@ import { SidebarContext } from '../context/SidebarContext';
 const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
+  const [headerSearch, setHeaderSearch] = useState('');
 
   // Update current time
   useEffect(() => {
@@ -33,6 +34,13 @@ const Header = () => {
     const intervalId = setInterval(updateClock, 1000);
     return () => clearInterval(intervalId);
   }, []);
+
+  const handleHeaderSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!headerSearch.trim()) return;
+  };
+
+  const handleHeaderSearchClear = () => setHeaderSearch('');
 
   return (
     <>
@@ -193,22 +201,85 @@ const Header = () => {
               <div className="header-right">
                 <motion.form 
                   className="search-form mb-2"
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={handleHeaderSearchSubmit}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.8 }}
                 >
-                  <div className="input-group">
+                  <motion.div 
+                    className="input-group"
+                    style={{
+                      position: 'relative',
+                      display: 'flex',
+                      alignItems: 'center',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      borderRadius: '25px',
+                      padding: '8px 16px',
+                      border: '2px solid rgba(27, 91, 175, 0.2)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                      transition: 'all 0.3s ease'
+                    }}
+                    whileHover={{
+                      boxShadow: '0 6px 20px rgba(27, 91, 175, 0.15)',
+                      borderColor: 'rgba(27, 91, 175, 0.4)',
+                      y: -2
+                    }}
+                    whileFocus={{
+                      boxShadow: '0 8px 25px rgba(27, 91, 175, 0.25)',
+                      borderColor: '#1b5baf'
+                    }}
+                  >
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <FaSearch style={{ color: '#1b5baf', fontSize: '14px', marginRight: '10px' }} />
+                    </motion.div>
                     <motion.input
                       type="text"
-                      className="form-control form-control-sm"
-                      placeholder="Search"
+                      className="form-control"
+                      placeholder="Search resources..."
+                      value={headerSearch}
+                      onChange={(e) => setHeaderSearch(e.target.value)}
+                      style={{
+                        border: 'none',
+                        background: 'transparent',
+                        outline: 'none',
+                        fontSize: '14px',
+                        flex: 1,
+                        padding: 0,
+                        boxShadow: 'none',
+                        color: '#333'
+                      }}
                       whileFocus={{
-                        boxShadow: "0 0 15px rgba(27, 91, 175, 0.3)",
-                        borderColor: "#1b5baf",
+                        scale: 1.01,
                         transition: { duration: 0.2 }
                       }}
                     />
-                  </div>
+                    {headerSearch && (
+                      <motion.button
+                        type="button"
+                        onClick={handleHeaderSearchClear}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        whileHover={{ scale: 1.2, rotate: 90 }}
+                        whileTap={{ scale: 0.9 }}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: '4px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          color: '#999',
+                          marginLeft: '8px'
+                        }}
+                      >
+                        <FaTimes style={{ fontSize: '12px' }} />
+                      </motion.button>
+                    )}
+                  </motion.div>
                 </motion.form>
                 <motion.div 
                   className="current-time time-fancy"
