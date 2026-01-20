@@ -7,58 +7,172 @@
 
 /* Hero Section */
 .handbook-hero {
-  background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
-  padding: 70px 20px;
+  background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 50%, #0f1e2e 100%);
+  padding: 80px 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(27, 91, 175, 0.3);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 0 100px rgba(21, 96, 100, 0.1);
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 3px solid #ffc107;
 }
 
-.handbook-hero::before {
-  content: '';
+/* Electricity Container */
+.electricity-container {
   position: absolute;
-  top: -50%;
-  left: -20%;
-  width: 60%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  animation: thunderFlash 4s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes thunderFlash {
-  0%, 100% {
-    opacity: 0.12;
-    filter: brightness(1);
-  }
-  25% {
-    opacity: 0.4;
-    filter: brightness(1.3);
+/* Arc Wires */
+.arc-wire {
+  position: absolute;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffc107, #ffb300, transparent);
+  filter: drop-shadow(0 0 8px #ffc107) drop-shadow(0 0 15px #ff9800);
+  top: 50%;
+}
+
+.left-wire {
+  left: 0;
+  width: 35%;
+  animation: arcFlash 3s ease-in-out infinite;
+}
+
+.right-wire {
+  right: 0;
+  width: 35%;
+  animation: arcFlash 3s ease-in-out infinite 1.5s;
+}
+
+@keyframes arcFlash {
+  0% {
+    opacity: 0;
+    box-shadow: none;
   }
   50% {
-    opacity: 0.12;
-    filter: brightness(1);
+    opacity: 1;
+    box-shadow: 0 0 15px #ffc107, 0 0 30px #ff9800, 0 0 50px rgba(255, 193, 7, 0.4);
   }
-  75% {
-    opacity: 0.35;
-    filter: brightness(1.25);
+  100% {
+    opacity: 0;
+    box-shadow: none;
   }
 }
 
-.handbook-hero::after {
-  content: '';
+/* Power Center Point */
+.power-center {
   position: absolute;
-  bottom: -40%;
-  right: -10%;
-  width: 50%;
-  height: 180%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 65%);
+  width: 20px;
+  height: 20px;
+  background: #ffc107;
   border-radius: 50%;
-  pointer-events: none;
-  animation: thunderFlash 4s ease-in-out infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  filter: drop-shadow(0 0 20px #ffc107);
 }
+
+
+.hero-formal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* .formal-header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  color: #1a3a52;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+} */
+
+.hero-book-formal {
+  font-size: 5.5rem;
+  color: white;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 15px rgba(255, 193, 7, 0.3));
+}
+
+.hero-title-formal {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 20px 0 15px 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.formal-divider {
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffc107, transparent);
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+.hero-subtitle-formal {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin: 12px 0;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.hero-description-formal {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 8px 0 25px 0;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.formal-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 2px solid #ffc107;
+  color: #ffc107;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* .pulse-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #ffc107;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffc107;
+} */
+
+.particle:nth-child(1) { top: 20%; left: 15%; }
+.particle:nth-child(2) { top: 40%; left: 25%; }
+.particle:nth-child(3) { top: 60%; left: 75%; }
+.particle:nth-child(4) { top: 30%; left: 85%; }
+.particle:nth-child(5) { top: 70%; left: 50%; }
+.particle:nth-child(6) { top: 50%; left: 65%; }
 
 .hero-content {
   position: relative;
@@ -69,8 +183,8 @@
 
 .hero-book {
   font-size: 5rem;
-  color: white;
   margin-bottom: 30px;
+  color: white;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
 
@@ -421,15 +535,35 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .handbook-hero {
-    padding: 60px 16px;
+    padding: 50px 16px;
+    min-height: 380px;
   }
 
-  .hero-title {
-    font-size: 2.5rem;
+  .formal-header-badge {
+    font-size: 0.85rem;
+    padding: 8px 20px;
   }
 
-  .hero-subtitle {
-    font-size: 1.1rem;
+  .hero-book-formal {
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+
+  .hero-title-formal {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle-formal {
+    font-size: 1rem;
+  }
+
+  .hero-description-formal {
+    font-size: 0.9rem;
+  }
+
+  .formal-status-badge {
+    font-size: 0.85rem;
+    padding: 10px 20px;
   }
 
   .section-heading {
@@ -460,18 +594,45 @@
 
 @media (max-width: 480px) {
   .handbook-hero {
-    padding: 45px 14px;
+    padding: 40px 14px;
+    min-height: 350px;
   }
-  .hero-book {
+
+  .formal-header-badge {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    margin-bottom: 15px;
+  }
+
+  .hero-book-formal {
     font-size: 3.5rem;
+    margin-bottom: 15px;
   }
 
-  .hero-title {
-    font-size: 2rem;
+  .hero-title-formal {
+    font-size: 1.8rem;
+    margin: 15px 0 10px 0;
   }
 
-  .hero-subtitle {
-    font-size: 1rem;
+  .hero-subtitle-formal {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+
+  .hero-description-formal {
+    font-size: 0.8rem;
+    margin: 6px 0 20px 0;
+  }
+
+  .formal-status-badge {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    gap: 8px;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
   }
 
   .section-heading {
