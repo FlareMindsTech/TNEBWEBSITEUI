@@ -1,6 +1,6 @@
 // Cec.js
 import React, { useState } from 'react';
-import { FaUser, FaPhone, FaTimes, FaCalendarAlt, FaUsers, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaImage, FaMobile, FaInfoCircle, FaPhoneAlt } from 'react-icons/fa';
+import { FaUser, FaPhone, FaTimes, FaCalendarAlt, FaUsers, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaImage, FaMobile, FaInfoCircle, FaPhoneAlt, FaLinkedin, FaTwitter, FaEnvelope, FaStar, FaCrown } from 'react-icons/fa';
 import './Cec.css';
 import ANANDKUMAR from '../assets/people/ANANDKUMAR.jpg';
 import ARUNACHALAM from '../assets/people/ARUNACHALAM.jpg';
@@ -174,99 +174,117 @@ const Cec = () => {
       <main className="cec-content">
         <div className="container">
           <div className="cec-header text-center mb-5">
+            <div className="header-icon-container">
+              <FaUsers className="header-icon" />
+            </div>
             <h1 className="cec-main-title">TNEB ENGINEERS' ASSOCIATION</h1>
+            <div className="header-divider"></div>
             <h2 className="cec-sub-title">CENTRAL EXECUTIVE COMMITTEE – 2025-2027</h2>
+            <p className="header-description">Dedicated Leadership for Professional Excellence</p>
           </div>
 
-          {/* Principal Secretary Special Table */}
-          <div className="principal-secretary-section mb-5" style={{maxWidth:'60%', float:'center', marginLeft:'auto', marginRight:'auto'}}>
-            <div className="card shadow-lg" onClick={() => openDialog(cecMembers[0])} style={{ cursor: 'pointer' }}>
-              <div className="card-header bg-primary text-white">
-                <h4 className="mb-0 text-center">Principal Secretary (National & State Affairs)</h4>
-              </div>
-              <div className="card-body">
-                <div className="row align-items-center">
-                  <div className="col-md-3 text-center mb-3 mb-md-0">
-                    <div className="member-photo-container">
-                      <img
-                        src={cecMembers[0].photo}
-                        alt={cecMembers[0].name}
-                        className="member-photo"
-                      />
-                    </div>
+          {/* Principal Secretary Special Card */}
+          <div className="principal-secretary-section mb-5">
+            <div className="ps-card-wrapper">
+              <div className="ps-card" onClick={() => openDialog(cecMembers[0])}>
+                <div className="ps-card-badge">
+                  <FaCrown className="ps-badge-icon" />
+                </div>
+                
+                <div className="ps-card-header">
+                  <h3 className="ps-designation">
+                    <FaStar className="ps-designation-icon" />
+                    Principal Secretary
+                  </h3>
+                  <p className="ps-subtitle">National & State Affairs</p>
+                </div>
+
+                <div className="ps-card-content">
+                  <div className="ps-photo-wrapper">
+                    <img
+                      src={cecMembers[0].photo}
+                      alt={cecMembers[0].name}
+                      className="ps-photo"
+                    />
                   </div>
-                  <div className="col-md-9">
-                    <h3 className="member-name mb-2">{cecMembers[0].name}</h3>
-                    <p className="member-qualification mb-3">{cecMembers[0].qualification}</p>
-                    <div className="member-contact">
-                      <h5 className="contact-title mb-2">Contact:</h5>
-                      <div>
-                        <FaPhone className="mr-2" />
-                        <span className="contact-number" style={{color:'#0f65bbff', fontWeight:'bold'}}>{cecMembers[0].contact}</span>
+
+                  <div className="ps-info-section">
+                    <h4 className="ps-member-name">{cecMembers[0].name}</h4>
+                    <p className="ps-qualification">{cecMembers[0].qualification}</p>
+
+                    <div className="ps-contact-group">
+                      <div className="ps-contact-item">
+                        <FaPhone className="ps-contact-icon" />
+                        <span>{cecMembers[0].contact}</span>
                       </div>
                     </div>
+
+                    <button className="ps-view-button">
+                      View Full Profile
+                    </button>
                   </div>
+                </div>
+
+                <div className="ps-card-footer">
+                  <div className="ps-footer-badge">Leadership</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* CEC Members Table */}
+          {/* CEC Members Flip Cards Section */}
           <div className="cec-members-section">
-            <div className="card shadow-lg">
-              <div className="card-header bg-primary text-white">
-                <h4 className="mb-0 text-center"><FaUsers className="mr-2" />Central Executive Committee Members</h4>
-              </div>
-              <div className="card-body p-0">
-                <div className="table-responsive">
-                  <table className="table table-bordered table-hover mb-0">
-                    <thead className="thead-light">
-                      <tr>
-                        <th style={{ width: '60px' }} className="serial-no-header"><FaIdCard className="mr-1" />S.No</th>
-                        <th style={{ width: '200px' }}><FaUserTie className="mr-1" />Designation</th>
-                        <th style={{ width: '300px' }}><FaUser className="mr-1" />Name & Qualification</th>
-                        <th style={{ width: '180px' }}><FaImage className="mr-1" />Photo</th>
-                        <th style={{ width: '150px' }}><FaMobile className="mr-1" />Contact No.</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cecMembers.slice(1).map((member) => (
-                        <tr key={member.id} onClick={() => openDialog(member)} style={{ cursor: 'pointer' }}>
-                          <td data-label="S.No" className="text-center align-middle serial-no-cell">
-                            <span className="serial-number">{member.serialNo}</span>
-                          </td>
-                          <td data-label="Designation" className="text-center align-middle designation-cell">
-                            <strong>{member.designation}</strong>
-                          </td>
-                          <td data-label="Name & Qualification" className="name-cell">
-                            <div className="member-info">
-                              <h6 className="member-name mb-1">{member.name}</h6>
-                              <p className="member-qualification mb-0">
-                                <em>{member.qualification}</em>
-                              </p>
-                            </div>
-                          </td>
-                          <td data-label="Photo" className="text-center align-middle photo-cell">
-                            <div className="member-photo-container">
-                              <img
-                                src={member.photo}
-                                alt={member.name}
-                                className="member-photo"
-                              />
-                            </div>
-                          </td>
-                          <td data-label="Contact No." className="text-center align-middle contact-cell">
-                            <div className="contact-info">
-                              <FaPhone className="mr-1" />
-                              <strong>{member.contact}</strong>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+            <div className="section-header mb-5">
+              <h3 className="section-title text-center">
+                <FaUsers className="mr-3" />Central Executive Committee Members
+              </h3>
+              <p className="section-subtitle text-center">Hover to reveal member details</p>
+            </div>
+
+            <div className="flip-cards-container">
+              {cecMembers.slice(1).map((member) => (
+                <div key={member.id} className="flip-card-wrapper">
+                  <div className="flip-card">
+                    {/* Front of card */}
+                    <div className="flip-card-front">
+                      <div className="card-serial-badge">{member.serialNo}</div>
+                      <div className="flip-card-image">
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="card-photo"
+                        />
+                      </div>
+                      <div className="flip-card-info">
+                        <h4 className="card-member-name">{member.name.split(' ').pop()}</h4>
+                        <p className="card-designation">{member.designation}</p>
+                      </div>
+                    </div>
+
+                    {/* Back of card */}
+                    <div className="flip-card-back">
+                      <div className="back-content">
+                        <h5 className="back-name">{member.name}</h5>
+                        <div className="back-designation">{member.designation}</div>
+                        <div className="back-qualification">
+                          <FaIdCard className="mr-2" />
+                          {member.qualification}
+                        </div>
+                        <div className="back-contact">
+                          <FaPhone className="contact-icon" />
+                          <span>{member.contact}</span>
+                        </div>
+                        <button 
+                          className="details-button"
+                          onClick={() => openDialog(member)}
+                        >
+                          View Full Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
 
