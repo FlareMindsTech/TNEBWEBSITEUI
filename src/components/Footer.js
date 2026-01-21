@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaSmile } from 'react-icons/fa';
+import Logo from '../assets/tnebea_logo_cropped2.png';
 import IPDSImage from '../assets/IPDS-1.gif';
 import Cea from '../assets/cea.png';
 import Mnre from '../assets/mnre_0.png';
@@ -84,18 +84,20 @@ const Footer = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        <div className="container" >
-          <div className="row align-items-center">
-            <div className="col-md-3 text-left text-white">
-              <FaSmile className="mr-1" />
-              <span className="small">TNEBEA</span>
+        <div className="container">
+          <div className="footer-bottom-content">
+            <div className="footer-brand">
+              {/* <div className="footer-logo">
+                <img src={Logo} alt="TNEBEA Logo" className="footer-logo-img bg-light rounded" />
+              </div> */}
+              <span className="footer-brand-text">TNEBEA</span>
             </div>
-            <div className="col-md-6 text-center">
-              <span className="text-white">Copyright © TNEBEA {currentYear}</span>
+            <div className="footer-copyright">
+              <span>Copyright © TNEBEA {currentYear}</span>
             </div>
-            <div className="col-md-3 text-right footer-links" style={{display:'flex', alignItems:'center'}}>
-              <Link to="/privacy-policy" style={{width:'100%'}}>Privacy Policy</Link>
-              <Link to="/terms-and-conditions" style={{width:'100%'}}>Terms & Conditions</Link>
+            <div className="footer-links">
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </div>
           </div>
         </div>

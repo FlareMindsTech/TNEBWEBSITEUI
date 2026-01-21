@@ -140,6 +140,14 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
   margin-bottom: 40px;
+  justify-items: center;
+}
+
+.params-grid:has(.spec-card:only-child) {
+  grid-template-columns: 1fr;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .spec-card {
@@ -147,6 +155,8 @@
   height: 360px;
   cursor: pointer;
   perspective: 1000px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .spec-card-inner {

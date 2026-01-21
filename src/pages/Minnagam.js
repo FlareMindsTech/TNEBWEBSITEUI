@@ -117,7 +117,7 @@ const Minnagam = () => {
           transition={{ delay: 0.3, duration: 0.8 }}
         >
           <FaHotel className="hero-icon" />
-          <h1 className="hero-title">MINNAGAM</h1>
+          <h1 className="hero-title1">MINNAGAM</h1>
           <div className="hero-subtitle">
             <FaMapMarkerAlt className="location-icon" />
             <span>APR Mansion, Royapettah High Road, Chennai</span>
