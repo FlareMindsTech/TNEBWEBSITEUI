@@ -1,4 +1,3 @@
-/* Color Variables */
 :root {
   --primary-color: #1b5baf;
   --primary-dark: #15458a;
@@ -737,7 +736,7 @@
   left: 0;
   top: 0;
   width: 280px;
-  height: 100vh;
+  height: 91vh;
   background: var(--primary-gradient);
   background-attachment: fixed;
   z-index: 999;

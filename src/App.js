@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Cec from './pages/Cec';
 import ActRegulations from './pages/ActRegulations';
@@ -19,11 +19,14 @@ import ForgotPassword from './pages/ForgotPassword';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 import TnebeaForms from './pages/TnebeaForms';
 import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
 import logo from './assets/tnebea_logo_cropped2.png';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -58,6 +61,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <SidebarProvider>
         <ClickSpark
           sparkRadius={50}
@@ -95,6 +99,8 @@ function App() {
             <Route path="/register" element={<><Navbar /><Register /><Footer /></>} />
             <Route path="/forget" element={<><Navbar /><ForgotPassword /><Footer /></>} />
             <Route path="/tnebea-forms" element={<><Navbar /><TnebeaForms /><Footer /></>} />
+            <Route path="/privacy-policy" element={<><Header /><PrivacyPolicy /><Footer /></>} />
+            <Route path="/terms-and-conditions" element={<><Header /><TermsAndConditions /><Footer /></>} />
           </Routes>
         </div>
       </div>

@@ -111,7 +111,6 @@
     0 0 80px rgba(255, 215, 0, 0.6);
   animation: electricSpark 3s ease-in-out infinite;
   pointer-events: none;
-  filter: brightness(1.5);
 }
 
 @keyframes electricSpark {
@@ -152,13 +151,18 @@
   50% { transform: translateY(-10px); }
 }
 
-.hero-title {
+.hero-title1 {
   font-size: 3.5rem;
   font-weight: 800;
   color: white;
   margin: 0 0 15px 0;
   letter-spacing: 2px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 .hero-subtitle {

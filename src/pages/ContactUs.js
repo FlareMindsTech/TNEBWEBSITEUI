@@ -51,7 +51,7 @@ export default function ContactUs() {
       <div className="container mx-auto px-6 py-16">
         <div className="page-header mb-4">
           <h1 className="page-title">
-            <FaEnvelope className="title-icon" />
+            <FaEnvelope className="title-icon text-light" />
             Contact Us
           </h1>
           <p className="page-subtitle">We'd love to hear from you! Get in touch with us.</p>

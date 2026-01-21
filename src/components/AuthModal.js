@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
 import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft } from 'react-icons/fa';
 import './AuthModal.css';
 
@@ -24,30 +25,79 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!loginForm.email || !loginForm.password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Form',
+        text: 'Please fill in all fields',
+        confirmButtonColor: theme.primary
+      });
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      onClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: `Welcome back, ${loginForm.email}!`,
+        confirmButtonColor: theme.primary
+      }).then(() => {
+        setLoginForm({ email: '', password: '' });
+        onClose();
+      });
     }, 900);
   };
 
   const handleRegister = (e) => {
     e.preventDefault();
+    if (!registerForm.name || !registerForm.email || !registerForm.password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Form',
+        text: 'Please fill in all fields',
+        confirmButtonColor: theme.primary
+      });
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      onClose();
+      Swal.fire({
+        icon: 'success',
+        title: 'Account Created',
+        text: `Welcome, ${registerForm.name}! Your account is ready.`,
+        confirmButtonColor: theme.primary
+      }).then(() => {
+        setRegisterForm({ name: '', email: '', password: '' });
+        setTab('login');
+      });
     }, 1200);
   };
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
+    if (!forgotForm.email) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Email Required',
+        text: 'Please enter your email address',
+        confirmButtonColor: theme.primary
+      });
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      alert('Reset link sent to ' + forgotForm.email);
-      setTab('login');
-      setForgotForm({ email: '' });
+      Swal.fire({
+        icon: 'success',
+        title: 'Reset Link Sent',
+        text: `A password reset link has been sent to ${forgotForm.email}. Check your inbox and spam folder.`,
+        confirmButtonColor: theme.primary
+      }).then(() => {
+        setTab('login');
+        setForgotForm({ email: '' });
+      });
     }, 900);
   };
 
