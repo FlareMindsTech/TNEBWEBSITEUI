@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExclamationTriangle, FaList, FaSmile } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExclamationTriangle, FaList, FaSmile, FaFileContract, FaFileAlt, FaBook, FaClipboardList, FaFileSignature } from 'react-icons/fa';
 import { Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,6 +7,7 @@ import './Home.css';
 import carouselimage1 from './assets/1765821464_NationalEnergyConservationDay-2025_1.png';
 import logo from './assets/tnebea_logo_cropped2.png';
 import Navbar from './components/Navbar';
+import LatestEvents from './components/LatestEvents';
 import carouselimage2 from './assets/1762262319_OS.jpg';
 import carouselimage3 from './assets/1762262223_tr.jpg';
 import carouselimage4 from './assets/1762262032_VP2.jpg';
@@ -14,7 +15,6 @@ import carouselimage4 from './assets/1762262032_VP2.jpg';
 
 const Home = () => {
   const [currentTime, setCurrentTime] = useState('');
-  const marqueeRef = useRef(null);
 
   // Carousel images data
   const carouselImages = [
@@ -79,35 +79,50 @@ const Home = () => {
       title: "EA D 31 dt 10.12.25 Extend the SLS benifits to the employees uniformly",
       link: "uploads/notices/1765991771_EAD31dt10.12.25ExtendtheSLSbenifitstotheemployeesuniformly.pdf",
       date: "17 Dec 2025",
-      size: "1,656.5 KB"
+      size: "1,656.5 KB",
+      icon: FaFileContract,
+      color: "#2563eb",
+      type: "Benefits"
     },
     {
       id: 2,
       title: "EA D 34 work Allocation and staff pattern",
       link: "uploads/notices/1765991634_EAD34workAllocationandstaffpattern.pdf",
       date: "17 Dec 2025",
-      size: "3,684.2 KB"
+      size: "3,684.2 KB",
+      icon: FaFileAlt,
+      color: "#7c3aed",
+      type: "Allocation"
     },
     {
       id: 3,
       title: "EA D 35 dt - 16.12.25 CMD MEET",
       link: "uploads/notices/1765991527_EAD35dt-16.12.25CMDMEET.pdf",
       date: "17 Dec 2025",
-      size: "1,379.7 KB"
+      size: "1,379.7 KB",
+      icon: FaFileSignature,
+      color: "#059669",
+      type: "Meeting"
     },
     {
       id: 4,
       title: "TNEBEA CEC/ EBF Election Result 2025-2027",
       link: "uploads/notices/1761625929_TNEBEAElectionResult2025.pdf",
       date: "28 Oct 2025",
-      size: "2,854.3 KB"
+      size: "2,854.3 KB",
+      icon: FaBook,
+      color: "#dc2626",
+      type: "Results"
     },
     {
       id: 5,
       title: "LM MASTER LIST",
       link: "uploads/notices/1758385146_LMMASTERLIST072025.pdf",
       date: "20 Sep 2025",
-      size: "3,242.5 KB"
+      size: "3,242.5 KB",
+      icon: FaClipboardList,
+      color: "#ea580c",
+      type: "List"
     }
   ];
 
@@ -138,59 +153,13 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // Marquee effect for events (robust: uses mutable refs and cleans up listeners/clone)
-  useEffect(() => {
-    if (!marqueeRef.current) return;
-
-    const content = marqueeRef.current;
-    const container = content.parentNode;
-
-    // Clone the content for continuous scrolling
-    const clone = content.cloneNode(true);
-    container.appendChild(clone);
-
-    // mutable holders so event handlers can update values without re-declaring
-    const state = { position: 0, speed: 0.5 };
-    let animationId = null;
-
-    const animate = () => {
-      state.position -= state.speed;
-      if (state.position <= -content.offsetHeight) {
-        state.position = 0;
-      }
-      content.style.transform = `translateY(${state.position}px)`;
-      clone.style.transform = `translateY(${state.position + content.offsetHeight}px)`;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    // Start animation
-    animate();
-
-    // Pause on hover handlers
-    const handleMouseEnter = () => { state.speed = 0; };
-    const handleMouseLeave = () => { state.speed = 0.5; };
-
-    container.addEventListener('mouseenter', handleMouseEnter);
-    container.addEventListener('mouseleave', handleMouseLeave);
-
-    // Cleanup: stop animation, remove listeners and clone
-    return () => {
-      if (animationId) cancelAnimationFrame(animationId);
-      container.removeEventListener('mouseenter', handleMouseEnter);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
-      // reset transforms
-      content.style.transform = '';
-    };
-  }, []);
-
   return (
     <div className="home-container">
       {/* Main Content Section */}
       <main className="main-content">
         <div className="container-fluid">
           <div className="row">
-            {/* Left Side - Carousel (60%) */}
+            {/* Left Side - Carousel */}
             <div className="col-lg-7 col-md-12">
               <div className="image-carousel-section" style={{objectFit:'cover'}}>
                 <Carousel>
@@ -213,44 +182,8 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Side - Latest Events (40%) */}
-            <div className="col-lg-5 col-md-12">
-              <div className="latest-events-section">
-                <div className="card shadow-sm">
-                  <div className="card-header bg-primary text-white">
-                    <h6 className="mb-0">
-                      <FaBullhorn className="mr-2" />
-                      Latest Events / Updates
-                    </h6>
-                  </div>
-                  <div className="card-body marquee-container">
-                    <div ref={marqueeRef} className="marquee-content">
-                      {latestEvents.map((event) => (
-                        <div key={event.id} className="event-item">
-                          <div className="event-date">
-                            <div className="day">{event.day}</div>
-                            <div className="month">{event.month}</div>
-                          </div>
-                          <div className="event-details">
-                            <a href={event.link} target="_blank" rel="noopener noreferrer">
-                              <span className="event-title">{event.title}</span>
-                            </a>
-                            {event.isNew && (
-                              <span className="badge badge-success ml-2">New</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="card-footer text-center">
-                    <a href="#" className="btn btn-outline-primary btn-sm">
-                      More Updates
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Right Side - Latest Events*/}
+            <LatestEvents events={latestEvents} />
           </div>
 
           {/* Important Notices Section */}
@@ -264,40 +197,47 @@ const Home = () => {
                   </h5>
                 </div>
                 <div className="card-body important-notices-body">
-                  <div className="row">
-                    {importantNotices.map((notice) => (
-                      <div key={notice.id} className="col-md-6 col-lg-4 mb-3">
-                        <div className="notice-item p-3 border rounded h-100">
-                          <div className="d-flex align-items-start">
-                            <div className="mr-3">
-                              <FaFilePdf className="text-primary fa-2x" />
+                  <div className="notices-grid">
+                    {importantNotices.map((notice, index) => {
+                      const IconComponent = notice.icon;
+                      return (
+                        <div key={notice.id} className="notice-card-wrapper" style={{'--card-index': index}}>
+                          <div className="notice-card" style={{'--notice-color': notice.color}}>
+                            <div className="notice-card-glow"></div>
+                            <div className="notice-card-header">
+                              <div className="notice-icon-wrapper" style={{background: `linear-gradient(135deg, ${notice.color}, ${notice.color}dd)`}}>
+                                <IconComponent className="notice-icon" />
+                              </div>
+                              <span className="notice-type-badge" style={{background: `${notice.color}20`, color: notice.color}}>
+                                {notice.type}
+                              </span>
                             </div>
-                            <div className="flex-grow-1">
-                              <h6 className="mb-1">
+                            <div className="notice-card-body">
+                              <h6 className="notice-card-title">
                                 <a 
                                   href={notice.link}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-decoration-none text-dark"
+                                  className="notice-link"
                                 >
                                   {notice.title}
                                 </a>
                               </h6>
-                              <div className="d-flex justify-content-between align-items-center mt-2">
-                                <small className="text-muted">
-                                  <FaCalendar className="mr-1" />
-                                  {notice.date}
-                                </small>
-                                <small className="text-muted">
-                                  <FaDownload className="mr-1" />
-                                  {notice.size}
-                                </small>
+                            </div>
+                            <div className="notice-card-footer">
+                              <div className="notice-meta-item">
+                                <FaCalendar className="notice-meta-icon" />
+                                <span>{notice.date}</span>
+                              </div>
+                              <div className="notice-meta-item">
+                                <FaDownload className="notice-meta-icon" />
+                                <span>{notice.size}</span>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                   <div className="text-center mt-3">
                     <button type="button" className="btn-view-notices" onClick={handleViewAllNotices}>
