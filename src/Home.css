@@ -945,6 +945,37 @@
     height: 250px;
   }
   
+  /* Important Notices mobile tweaks */
+  .important-notices-body {
+    padding: 20px 16px !important;
+  }
+
+  .notices-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .notice-card {
+    padding: 18px;
+    border-radius: 16px;
+    min-height: auto;
+    gap: 12px;
+  }
+
+  .notice-card-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .notice-card-title {
+    font-size: 14px;
+  }
+
+  .notice-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .footer-slider {
     display: none;
   }
@@ -984,6 +1015,20 @@
   
   .footer-links a {
     margin: 0 10px;
+  }
+
+  /* Compact notice cards on very small screens */
+  .notice-card {
+    padding: 16px;
+  }
+
+  .notice-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .notice-card-footer {
+    gap: 8px;
   }
 }
 
