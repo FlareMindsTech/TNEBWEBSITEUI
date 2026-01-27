@@ -670,7 +670,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--notice-color);
+  /* background: var(--notice-color); */
   transition: width 0.3s ease;
 }
 
@@ -885,6 +885,9 @@
   
   .circular-icon {
     width: 30px;
+
+
+
     height: 30px;
   }
   
