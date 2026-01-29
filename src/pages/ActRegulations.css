@@ -489,6 +489,26 @@
     gap: 8px;
     align-items: flex-start !important;
   }
+
+  .document-meta small {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .documents-container .card-header .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+
+  .documents-container .card-header h5 {
+    font-size: 1rem;
+  }
+
+  .documents-container .card-header .btn {
+    width: 100%;
+  }
   
   .footer-slider {
     display: none;
@@ -518,6 +538,21 @@
   
   .document-item {
     padding: 15px !important;
+  }
+
+  .document-item .d-flex.align-items-start {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+
+  .document-icon {
+    min-width: auto;
+  }
+
+  .document-icon svg {
+    width: 28px;
+    height: 28px;
   }
   
   .document-item h6 a,
