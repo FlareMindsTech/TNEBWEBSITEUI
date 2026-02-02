@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUser, FaCaretDown, FaBars, FaTimes, FaSearch } from 'react-icons/fa';
+import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 import Logo from "../assets/tnebea_logo_cropped2.png";
@@ -13,7 +13,7 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [authTab, setAuthTab] = useState('login');
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
 
   const handleDropdownOpen = (key) => {
@@ -283,7 +283,7 @@ const Navbar = () => {
 
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/minnagam" onClick={closeAllMenus}>
-                        📱 Minnagam
+                        📱 Minthiran
                       </Link>
                     </motion.li>
 
@@ -299,7 +299,7 @@ const Navbar = () => {
                       </Link>
                     </motion.li> */}
 
-                    {/* <motion.li className="nav-item" variants={navItemVariants}>
+                    <motion.li className="nav-item" variants={navItemVariants}>
                       <div
                         className="nav-link sidebar-toggle"
                         onClick={() => setOpenDropdown(openDropdown === 'quickLinks' ? null : 'quickLinks')}
@@ -321,19 +321,19 @@ const Navbar = () => {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <a className="sidebar-item" href="https://www.tangedco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
-                              ⚡ TANGEDCO
+                            <a className="sidebar-item" href="/important-notices" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                              Important Notices
                             </a>
-                            <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🔌 TANTRANSCO
-                            </a>
-                            <a className="sidebar-item" href="https://www.tnerc.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
-                              🏛️ TNERC
+                            </a> */}
+                            <a className="sidebar-item" href="/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                              🏛️ Board Proceedings
                             </a>
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </motion.li> */}
+                    </motion.li>
 
                     
                     <motion.li className="nav-item" variants={navItemVariants}>
@@ -369,7 +369,7 @@ const Navbar = () => {
           initial="hidden"
           animate="visible"
         >
-          <ul className="navbar-nav w-100 align-items-center">
+          <ul className="navbar-nav align-items-center flex-grow-1">
             <motion.li className="nav-item" variants={navItemVariants}>
               <Link className="nav-link nav-hover-effect" to="/" onClick={closeAllMenus}>Home</Link>
             </motion.li>
@@ -461,13 +461,12 @@ const Navbar = () => {
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minnagam</Link>
+              <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minthiran</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
               <Link className="nav-link nav-hover-effect" to="/hand-book" onClick={closeAllMenus}>Hand Book</Link>
             </motion.li>
-{/* 
             <motion.li 
               className="nav-item dropdown" 
               variants={navItemVariants}
@@ -475,7 +474,7 @@ const Navbar = () => {
               onMouseLeave={handleDropdownClose}
             >
               <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
-                TNEBEA Forms
+                Quick Links
                 <motion.span animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }} transition={{ duration: 0.3 }}>
                   <FaCaretDown />
                 </motion.span>
@@ -484,18 +483,19 @@ const Navbar = () => {
                 {openDropdown === 'quickLinks' && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
-                      <a className="dropdown-item" href="https://www.tangedco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><span className="dropdown-icon">⚡</span> TANGEDCO</a>
+                      <a className="dropdown-item" href="/important-notices"  onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📌</span> Important Notices
+                      </a>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <a className="dropdown-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><span className="dropdown-icon">🔌</span> TANTRANSCO</a>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <a className="dropdown-item" href="https://www.tnerc.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><span className="dropdown-icon">🏛️</span> TNERC</a>
+                      <a className="dropdown-item" href="/"  onClick={closeAllMenus}>
+                        <span className="dropdown-icon">🏛️</span> Board Proceedings
+                      </a>
                     </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.li> */}
+            </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
               <Link className="nav-link nav-hover-effect" to="/tnebea-forms" onClick={closeAllMenus}>TNEBEA Forms</Link>
@@ -505,38 +505,38 @@ const Navbar = () => {
               <Link className="nav-link nav-hover-effect" to="/contactus" onClick={closeAllMenus}>Contact</Link>
             </motion.li>
 
-            <motion.li className="nav-item ms-lg-auto" variants={navItemVariants}>
-              <div className="user-menu-container">
-                <motion.div 
-                  className="user-profile-icon"
-                  onClick={handleUserMenuToggle}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{ boxShadow: userMenuOpen ? "0 0 20px rgba(27, 91, 175, 0.5)" : "0 4px 12px rgba(0, 0, 0, 0.1)" }}
-                >
-                  <FaUser />
-                  <motion.div className="pulse-dot" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
-                </motion.div>
-                
-                <AnimatePresence>
-                  {userMenuOpen && (
-                    <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
-                      <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                        <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                          <span className="user-menu-icon">🔑</span><span>Login</span>
-                        </Link>
-                      </motion.div>
-                      <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}>
-                        <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('register'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                          <span className="user-menu-icon">📝</span><span>Register</span>
-                        </Link>
-                      </motion.div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.li>
           </ul>
+          <div className="ms-lg-3" style={{ position: 'relative' }}>
+            <div className="user-menu-container">
+              <motion.div 
+                className="user-profile-icon"
+                onClick={handleUserMenuToggle}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ boxShadow: userMenuOpen ? "0 0 20px rgba(27, 91, 175, 0.5)" : "0 4px 12px rgba(0, 0, 0, 0.1)" }}
+              >
+                <FaUser />
+                <motion.div className="pulse-dot" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
+              </motion.div>
+              
+              <AnimatePresence>
+                {userMenuOpen && (
+                  <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
+                    <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                        <span className="user-menu-icon">🔑</span><span>Login</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}>
+                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('register'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                        <span className="user-menu-icon">📝</span><span>Register</span>
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </motion.div>
       </div>
       <AuthModal show={showAuth} onClose={() => setShowAuth(false)} defaultTab={authTab} />

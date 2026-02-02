@@ -27,6 +27,7 @@ import './App.css';
 import logo from './assets/tnebea_logo_cropped2.png';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import Importantnotices from "./components/Importantnotices";
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -101,6 +102,7 @@ function App() {
             <Route path="/tnebea-forms" element={<><Navbar /><TnebeaForms /><Footer /></>} />
             <Route path="/privacy-policy" element={<><Header /><PrivacyPolicy /><Footer /></>} />
             <Route path="/terms-and-conditions" element={<><Header /><TermsAndConditions /><Footer /></>} />
+            <Route path="/important-notices" element={<><Header /><Importantnotices /><Footer /></>} />
           </Routes>
         </div>
       </div>
