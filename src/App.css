@@ -114,3 +114,17 @@ body.no-scroll {
     transform: rotate(360deg);
   }
 }
+
+
+/* @media (max-width: 480px) {
+    .app-content {
+        padding: 60px 16px 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .app-content {
+        padding: 80px 20px 40px;
+        min-height: 400px;
+    }
+  } */
