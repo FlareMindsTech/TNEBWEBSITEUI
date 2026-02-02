@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
-import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt } from 'react-icons/fa';
 import './AuthModal.css';
 
 const theme = {
@@ -16,10 +16,83 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
   const [forgotForm, setForgotForm] = useState({ email: '' });
   const [loading, setLoading] = useState(false);
+  const [systemLocation, setSystemLocation] = useState('Location permission not granted');
+  const [locationStatus, setLocationStatus] = useState('idle');
+  const [locationHint, setLocationHint] = useState('Permission required');
 
   useEffect(() => {
     if (show) setTab(defaultTab);
   }, [defaultTab, show]);
+
+  const requestSystemLocation = () => {
+    if (!navigator.geolocation) {
+      setSystemLocation('Geolocation not supported');
+      setLocationStatus('error');
+      setLocationHint('Browser does not support location');
+      return;
+    }
+    setLocationStatus('loading');
+    setLocationHint('Requesting permission...');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setSystemLocation(`Lat ${latitude.toFixed(4)}, Lng ${longitude.toFixed(4)}`);
+        setLocationStatus('granted');
+        setLocationHint('Location enabled');
+      },
+      (error) => {
+        setLocationStatus('error');
+        if (error.code === error.PERMISSION_DENIED) {
+          setSystemLocation('Location permission denied');
+          setLocationHint('Allow location in browser address bar');
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          setSystemLocation('Location unavailable');
+          setLocationHint('Try again or check GPS');
+        } else {
+          setSystemLocation('Location request timed out');
+          setLocationHint('Please try again');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+    );
+  };
+
+  useEffect(() => {
+    if (show && tab === 'login' && locationStatus === 'idle') {
+      requestSystemLocation();
+    }
+  }, [show, tab, locationStatus]);
+
+  useEffect(() => {
+    if (!navigator.permissions || !navigator.permissions.query) return;
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((status) => {
+        if (status.state === 'granted') {
+          setLocationStatus('granted');
+          setLocationHint('Location enabled');
+        } else if (status.state === 'denied') {
+          setLocationStatus('error');
+          setSystemLocation('Location permission denied');
+          setLocationHint('Allow location in browser address bar');
+        }
+        status.onchange = () => {
+          if (status.state === 'granted') {
+            setLocationStatus('granted');
+            setLocationHint('Location enabled');
+            requestSystemLocation();
+          } else if (status.state === 'denied') {
+            setLocationStatus('error');
+            setSystemLocation('Location permission denied');
+            setLocationHint('Allow location in browser address bar');
+          } else {
+            setLocationStatus('idle');
+            setLocationHint('Permission required');
+          }
+        };
+      })
+      .catch(() => {});
+  }, []);
 
   const switchTab = (next) => setTab(next);
 
@@ -40,7 +113,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       Swal.fire({
         icon: 'success',
         title: 'Login Successful',
-        text: `Welcome back, ${loginForm.email}!`,
+        text: `Welcome back, ${loginForm.email}! Location: ${systemLocation}`,
         confirmButtonColor: theme.primary
       }).then(() => {
         setLoginForm({ email: '', password: '' });
@@ -108,6 +181,17 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     </div>
   );
 
+  const renderSystemLocation = (value) => (
+    <div className="auth-input-wrapper">
+      <span className="auth-input-icon"><FaMapMarkerAlt /></span>
+      <Form.Control
+        className="auth-input"
+        value={value}
+        readOnly
+      />
+    </div>
+  );
+
   return (
     <Modal
       show={show}
@@ -155,12 +239,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             <span>Sign Up</span>
           </button>
         </motion.div>
-        <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
+        {/* <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
         <div className="auth-chips">
           <span className="auth-chip">No OTP delays</span>
           <span className="auth-chip">Fast sign-in</span>
           <span className="auth-chip">Privacy-first</span>
-        </div>
+        </div> */}
       </div>
 
       <Modal.Body className="auth-body">
@@ -172,10 +256,26 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           >
             <Form onSubmit={handleLogin}>
               <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>📍 Location (System)</Form.Label>
+                {renderSystemLocation(systemLocation)}
+                <div className="d-flex align-items-center gap-2 mt-2">
+                  <Button
+                    type="button"
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={requestSystemLocation}
+                    disabled={locationStatus === 'loading'}
+                  >
+                    {locationStatus === 'loading' ? 'Enabling…' : 'Enable location'}
+                  </Button>
+                  <span className="auth-helper-text">{locationHint}</span>
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Email or LM.NO</Form.Label>
                 {renderInput(<FaEnvelope />, {
-                  type: 'email',
-                  placeholder: 'name@example.com',
+                  type: 'text',
+                  placeholder: 'Enter your email or LM.NO',
                   value: loginForm.email,
                   onChange: (e) => setLoginForm({ ...loginForm, email: e.target.value }),
                   required: true
@@ -185,13 +285,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 <Form.Label>Password</Form.Label>
                 {renderInput(<FaLock />, {
                   type: 'password',
-                  placeholder: 'Enter password',
+                  placeholder: 'Enter your password',
                   value: loginForm.password,
                   onChange: (e) => setLoginForm({ ...loginForm, password: e.target.value }),
                   required: true
                 })}
               </Form.Group>
-
               <div className="auth-actions">
                 <Form.Check type="checkbox" label="Remember me" />
                 <a href="#" className="auth-link" onClick={(e) => { e.preventDefault(); setTab('forgot'); }}>Forgot password?</a>
@@ -214,10 +313,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           >
             <Form onSubmit={handleRegister}>
               <Form.Group className="mb-3">
-                <Form.Label>Full name</Form.Label>
+                <Form.Label>Full Name</Form.Label>
                 {renderInput(<FaUser />, {
                   type: 'text',
-                  placeholder: 'Enter your name',
+                  placeholder: 'Enter your full name',
                   value: registerForm.name,
                   onChange: (e) => setRegisterForm({ ...registerForm, name: e.target.value }),
                   required: true
@@ -233,11 +332,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                   required: true
                 })}
               </Form.Group>
-              <Form.Group className="mb-4">
+              <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 {renderInput(<FaLock />, {
                   type: 'password',
-                  placeholder: 'Create a strong password',
+                  placeholder: 'Create a password',
                   value: registerForm.password,
                   onChange: (e) => setRegisterForm({ ...registerForm, password: e.target.value }),
                   required: true
@@ -246,10 +345,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
               <Button
                 type="submit"
-                className="auth-primary-btn accent"
+                className="auth-primary-btn"
                 disabled={loading}
               >
-                {loading ? 'Creating account…' : 'Create account'}
+                {loading ? 'Creating account…' : 'Create Account'}
               </Button>
               <p className="auth-footnote">By signing up you accept our terms and privacy notice.</p>
             </Form>

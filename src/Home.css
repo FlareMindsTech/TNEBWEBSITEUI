@@ -28,53 +28,6 @@
   outline: none;
 }
 
-/* Top Sentence Carousel */
-.sentence-carousel {
-  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 50%, #15458a 100%);
-  padding: 10px 0;
-  overflow: hidden;
-  position: relative;
-}
-
-.sentence-track {
-  display: flex;
-  animation: slideLeft 30s linear infinite;
-  white-space: nowrap;
-}
-
-.sentence-item {
-  display: flex;
-  align-items: center;
-  margin: 0 30px;
-  color: white;
-  font-weight: 500;
-  font-size: 1.1rem;
-}
-
-.circular-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  overflow: hidden;
-  border: 2px solid #1b5baf;
-}
-
-.circular-icon img {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-}
-
-@keyframes slideLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
 /* Main Header */
 .main-header {
   background-color: white;
@@ -82,10 +35,35 @@
   padding: 15px 0;
 }
 
-.header-logo {
-  height: 80px;
-  width: auto;
-  border-radius: 8px;
+/* Info Bar (Date, Time, Weather) */
+.info-bar {
+  padding: 8px 0;
+}
+
+.time-display {
+  background: rgba(27, 91, 175, 0.05);
+  padding: 6px 12px;
+  border-radius: 15px;
+  border: 1px solid rgba(27, 91, 175, 0.1);
+}
+
+.weather-display {
+  transition: transform 0.3s ease;
+}
+
+.weather-display:hover {
+  transform: translateY(-2px);
+}
+
+/* Search Bar Container */
+.search-bar-container {
+  position: relative;
+  z-index: 999;
+}
+
+.search-bar-container .form-control:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .header-text h1 {
@@ -924,16 +902,21 @@
 }
 
 @media (max-width: 767.98px) {
-  .sentence-carousel {
-    display: none;
-  }
-  
   .header-text h1 {
     font-size: 16px;
   }
-  
-  .header-logo {
-    height: 60px;
+
+  .info-bar {
+    flex-direction: column;
+    gap: 10px !important;
+  }
+
+  .time-display, .weather-display {
+    font-size: 0.85rem;
+  }
+
+  .search-bar-container {
+    padding: 10px 0;
   }
   
   .carousel-image {
