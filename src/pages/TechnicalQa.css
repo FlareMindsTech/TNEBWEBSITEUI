@@ -9,7 +9,7 @@
 .qa-hero {
   background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
   color: white;
-  padding: 80px 40px;
+  padding: 30px 15px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -55,18 +55,18 @@
 }
 
 .qa-hero h1 {
-  font-size: 3.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  margin: 0 0 20px 0;
+  margin: 0 0 13px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .qa-hero-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   animation: bounce 2s infinite;
 }
 
@@ -76,8 +76,8 @@
 }
 
 .qa-hero p {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
+  font-size: 1rem;
+  margin-bottom: 20px;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 300;
 }

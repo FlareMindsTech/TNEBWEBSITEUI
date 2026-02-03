@@ -90,6 +90,23 @@
   line-height: 1.4;
 }
 
+/* Carousel Section */
+.image-carousel-section {
+  margin-bottom: 20px;
+}
+
+.carousel-image {
+  height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 4px;
+}
+
 .swiper {
   width: 100%;
   height: 100%;

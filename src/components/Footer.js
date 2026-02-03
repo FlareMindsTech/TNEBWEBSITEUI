@@ -1,6 +1,4 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../assets/tnebea_logo_cropped2.png';
 import IPDSImage from '../assets/IPDS-1.gif';
 import Cea from '../assets/cea.png';
 import Mnre from '../assets/mnre_0.png';
@@ -11,7 +9,7 @@ import Pfcl from '../assets/pfcl.png';
 import Minofpower from '../assets/minofpower_3.png';
 import Mygov from '../assets/mygov_7.png';
 import { motion } from 'framer-motion';
-
+import "./Footer.css"
 
 const Footer = () => {
   // Footer slider images

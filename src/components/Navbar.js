@@ -483,14 +483,14 @@ const Navbar = () => {
                 {openDropdown === 'quickLinks' && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
-                      <a className="dropdown-item" href="/important-notices"  onClick={closeAllMenus}>
+                      <Link className="dropdown-item" to="/important-notices"  onClick={closeAllMenus}>
                         <span className="dropdown-icon">📌</span> Important Notices
-                      </a>
+                      </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <a className="dropdown-item" href="/"  onClick={closeAllMenus}>
+                      <Link className="dropdown-item" to="/board-proceedings"  onClick={closeAllMenus}>
                         <span className="dropdown-icon">🏛️</span> Board Proceedings
-                      </a>
+                      </Link>
                     </motion.div>
                   </motion.div>
                 )}

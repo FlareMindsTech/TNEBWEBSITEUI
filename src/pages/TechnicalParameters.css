@@ -9,7 +9,7 @@
   background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
   position: relative;
   overflow: hidden;
-  padding: 80px 40px;
+  padding: 30px 15px;
   text-align: center;
 }
 
@@ -52,10 +52,12 @@
 }
 
 .params-hero-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  color: #00d4ff;
+  font-size: 2.6rem;
+  margin-bottom: 0;
+  color: #00ff95;
   animation: spin 4s linear infinite;
+  vertical-align: middle;
+  margin-right: 12px;
 }
 
 @keyframes spin {
@@ -64,15 +66,19 @@
 }
 
 .params-hero h1 {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin: 0 0 10px 0;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 .params-hero p {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
 }

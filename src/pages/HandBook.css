@@ -8,15 +8,17 @@
 /* Hero Section */
 .handbook-hero {
   background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 50%, #0f1e2e 100%);
-  padding: 80px 20px;
+  padding: 30px 15px;
   text-align: center;
   position: relative;
   overflow: hidden;
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 0 100px rgba(21, 96, 100, 0.1);
-  min-height: 480px;
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom-left-radius: 40px;
+  border-bottom-Right-radius: 40px;
   border-bottom: 3px solid #ffc107;
 }
 
@@ -104,19 +106,25 @@
 } */
 
 .hero-book-formal {
-  font-size: 5.5rem;
+  font-size: 1.8rem;
   color: white;
-  margin-bottom: 25px;
+  margin-bottom: 0;
+  display: inline;
+  margin-right: 10px;
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 15px rgba(255, 193, 7, 0.3));
+  vertical-align: middle;
 }
 
 .hero-title-formal {
-  font-size: 3.2rem;
+  font-size: 2rem;
   font-weight: 900;
   color: #ffffff;
-  margin: 20px 0 15px 0;
+  margin: 15px 0 12px 0;
   letter-spacing: -0.5px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .formal-divider {
@@ -128,17 +136,17 @@
 }
 
 .hero-subtitle-formal {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #e0e0e0;
-  margin: 12px 0;
+  margin: 10px 0;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
 
 .hero-description-formal {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: rgba(255, 255, 255, 0.8);
-  margin: 8px 0 25px 0;
+  margin: 8px 0 20px 0;
   font-weight: 400;
   letter-spacing: 0.2px;
 }
