@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
-import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt, FaPhoneAlt, FaIdBadge, FaIdCard, FaUserTie } from 'react-icons/fa';
 import './AuthModal.css';
+import { Link } from 'react-router-dom';
 
 const theme = {
   primary: '#15458a',
@@ -12,8 +13,8 @@ const theme = {
 
 export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [tab, setTab] = useState(defaultTab);
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
+  const [loginForm, setLoginForm] = useState({ phoneorlmno: '', password: '' });
+  const [registerForm, setRegisterForm] = useState({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
   const [forgotForm, setForgotForm] = useState({ email: '' });
   const [loading, setLoading] = useState(false);
   const [systemLocation, setSystemLocation] = useState('Location permission not granted');
@@ -21,7 +22,18 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [locationHint, setLocationHint] = useState('Permission required');
 
   useEffect(() => {
-    if (show) setTab(defaultTab);
+    if (show) {
+      setTab(defaultTab);
+      if (defaultTab === 'login') {
+        setLoginForm({ phoneorlmno: '', password: '' });
+      }
+      if (defaultTab === 'register') {
+        setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
+      }
+      if (defaultTab === 'forgot') {
+        setForgotForm({ email: '' });
+      }
+    }
   }, [defaultTab, show]);
 
   const requestSystemLocation = () => {
@@ -94,11 +106,22 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       .catch(() => {});
   }, []);
 
-  const switchTab = (next) => setTab(next);
+  const switchTab = (next) => {
+    setTab(next);
+    if (next === 'login') {
+      setLoginForm({ phoneorlmno: '', password: '' });
+    }
+    if (next === 'register') {
+      setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
+    }
+    if (next === 'forgot') {
+      setForgotForm({ email: '' });
+    }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!loginForm.email || !loginForm.password) {
+    if (!loginForm.phoneorlmno || !loginForm.password) {
       Swal.fire({
         icon: 'warning',
         title: 'Incomplete Form',
@@ -113,10 +136,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       Swal.fire({
         icon: 'success',
         title: 'Login Successful',
-        text: `Welcome back, ${loginForm.email}! Location: ${systemLocation}`,
+        text: `Welcome back, ${loginForm.phoneorlmno}! Location: ${systemLocation}`,
         confirmButtonColor: theme.primary
       }).then(() => {
-        setLoginForm({ email: '', password: '' });
+        setLoginForm({ phoneorlmno: '', password: '' });
         onClose();
       });
     }, 900);
@@ -142,7 +165,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         text: `Welcome, ${registerForm.name}! Your account is ready.`,
         confirmButtonColor: theme.primary
       }).then(() => {
-        setRegisterForm({ name: '', email: '', password: '' });
+        setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
         setTab('login');
       });
     }, 1200);
@@ -177,7 +200,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const renderInput = (icon, props) => (
     <div className="auth-input-wrapper">
       <span className="auth-input-icon">{icon}</span>
-      <Form.Control className="auth-input" {...props} />
+      <Form.Control className="auth-input" {...props} value={props.value ?? ''} />
     </div>
   );
 
@@ -250,6 +273,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       <Modal.Body className="auth-body">
         {tab === 'login' ? (
           <motion.div
+            key="auth-login"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
@@ -272,12 +296,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 </div>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Email or LM.NO</Form.Label>
-                {renderInput(<FaEnvelope />, {
+                <Form.Label>Phone or LM.NO</Form.Label>
+                {renderInput(<FaPhoneAlt />, {
                   type: 'text',
-                  placeholder: 'Enter your email or LM.NO',
-                  value: loginForm.email,
-                  onChange: (e) => setLoginForm({ ...loginForm, email: e.target.value }),
+                  placeholder: 'Enter your phone or LM.NO',
+                  value: loginForm.phoneorlmno,
+                  onChange: (e) => setLoginForm({ ...loginForm, phoneorlmno: e.target.value }),
                   required: true
                 })}
               </Form.Group>
@@ -293,7 +317,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
               </Form.Group>
               <div className="auth-actions">
                 <Form.Check type="checkbox" label="Remember me" />
-                <a href="#" className="auth-link" onClick={(e) => { e.preventDefault(); setTab('forgot'); }}>Forgot password?</a>
+                <Link to="" className="auth-link" onClick={(e) => { e.preventDefault(); setTab('forgot'); }}>Forgot password?</Link>
               </div>
 
               <Button
@@ -307,14 +331,34 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           </motion.div>
         ) : tab === 'register' ? (
           <motion.div
+            key="auth-register"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
+            <div className="auth-register-banner">
+              <div className="auth-register-icon">
+                <FaUserPlus />
+              </div>
+              <div>
+                <p className="auth-register-title">Create your TNEBEA access</p>
+                <p className="auth-register-subtitle">Fill the details.</p>
+              </div>
+            </div>
             <Form onSubmit={handleRegister}>
               <Form.Group className="mb-3">
+                <Form.Label>Life Member</Form.Label>
+                {renderInput(<FaIdBadge />, {
+                  type: 'text',
+                  placeholder: 'Enter your life membership number',
+                  value: registerForm.lm,
+                  onChange: (e) => setRegisterForm({ ...registerForm, lm: e.target.value }),
+                  required: true
+                })}
+                </Form.Group>
+              <Form.Group className="mb-3">
                 <Form.Label>Full Name</Form.Label>
-                {renderInput(<FaUser />, {
+                {renderInput(<FaUserTie />, {
                   type: 'text',
                   placeholder: 'Enter your full name',
                   value: registerForm.name,
@@ -322,6 +366,16 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                   required: true
                 })}
               </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>EMP ID</Form.Label>
+                {renderInput(<FaIdCard />, {
+                  type: 'text',
+                  placeholder: 'Enter your Employee id',
+                  value: registerForm.empid,
+                  onChange: (e) => setRegisterForm({ ...registerForm, empid: e.target.value }),
+                  required: true
+                })}
+                </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 {renderInput(<FaEnvelope />, {
@@ -332,6 +386,16 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                   required: true
                 })}
               </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Phone Number</Form.Label>
+                {renderInput(<FaPhoneAlt />, {
+                  type: 'number',
+                  placeholder: '+0876543210',
+                  value: registerForm.phone,
+                  onChange: (e) => setRegisterForm({ ...registerForm, phone: e.target.value }),
+                  required: true
+                })}
+                </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 {renderInput(<FaLock />, {
@@ -355,6 +419,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           </motion.div>
         ) : tab === 'forgot' ? (
           <motion.div
+            key="auth-forgot"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}

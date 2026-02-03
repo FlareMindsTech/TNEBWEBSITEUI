@@ -113,8 +113,10 @@ const TechnicalParameters = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <FaCog className="params-hero-icon" />
-          <h1>Technical Parameters</h1>
+          <h1>
+            <FaCog className="params-hero-icon" />
+            Technical Parameters
+          </h1>
           <p>Industry standards and technical specifications</p>
         </motion.div>
       </motion.div>

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 import carouselimage1 from './assets/1765821464_NationalEnergyConservationDay-2025_1.png';
-import logo from './assets/tnebea_logo_cropped2.png';
-import Navbar from './components/Navbar';
 import LatestEvents from './components/LatestEvents';
 import carouselimage2 from './assets/1762262319_OS.jpg';
 import carouselimage3 from './assets/1762262223_tr.jpg';

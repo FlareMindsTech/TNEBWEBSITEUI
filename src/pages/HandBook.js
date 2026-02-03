@@ -121,17 +121,12 @@ const HandBook = () => {
         </div>
         <motion.div className="hero-formal-content" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }}>
           {/* <div className="formal-header-badge">Government Project</div> */}
-          <motion.div className="hero-book-formal" animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity }}>
-            <FaBook />
-          </motion.div>
-          <h1 className="hero-title-formal">Power Engineer's Handbook</h1>
-          <div className="formal-divider"></div>
-          <p className="hero-subtitle-formal">Tamil Nadu Generation and Distribution Corporation Limited (TNEB)</p>
-          <p className="hero-description-formal">Official Technical Reference & Engineering Standards Publication</p>
-          <motion.div className="formal-status-badge" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.6, type: "spring" }}>
-            <motion.span  animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} />
-            Published & Approved
-          </motion.div>
+          <h1 className="hero-title-formal">
+            <span className="hero-book-formal">
+              <FaBook />
+            </span>
+            Power Engineer's Handbook
+          </h1>
         </motion.div>
       </motion.section>
 

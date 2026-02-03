@@ -1,5 +1,154 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap");
 
+/* Latest Events Section */
+.latest-events-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.latest-events-section .card {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.latest-events-section .card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.latest-events-section .card-header {
+  border-radius: 12px 12px 0 0 !important;
+  padding: 15px 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  font-family: 'Merriweather', serif;
+}
+
+.latest-events-section .card-header h6 {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-size: 1.05rem;
+}
+
+.latest-events-section .card-body {
+  padding: 20px;
+  background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%);
+}
+
+.latest-events-section .card-footer {
+  border-radius: 0 0 12px 12px !important;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  padding: 12px 20px;
+}
+
+.marquee-container {
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+  flex-grow: 1;
+  border-radius: 8px;
+}
+
+.marquee-content {
+  position: absolute;
+  width: 100%;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 8px;
+  background: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.event-item:hover {
+  background: #f8f9fa;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.event-item:last-child {
+  margin-bottom: 0;
+}
+
+.event-date {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 8px;
+  margin-right: 18px;
+  min-width: 65px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.event-item:hover .event-date {
+  border-color: #adb5bd;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-date .day {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.2;
+  font-family: 'Merriweather', serif;
+}
+
+.event-date .month {
+  font-size: 0.85rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.event-details {
+  flex: 1;
+  padding-right: 10px;
+}
+
+.event-details a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.event-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #48a9e6;
+  text-decoration: none;
+  line-height: 1.5;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.event-details a:hover .event-title {
+  color: #3592d4;
+  text-decoration: none;
+}
+
+.event-details .badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  vertical-align: middle;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 /* Vertical Carousel for Events */
 .carousel-events-wrapper {
   background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%);
@@ -47,6 +196,27 @@
   gap: 15px;
   animation: scroll-up 20s linear infinite;
   will-change: transform;
+}
+
+/* Responsive Design */
+@media (max-width: 767.98px) {
+  .latest-events-section .card {
+    height: auto;
+  }
+  
+  .marquee-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .event-date {
+    min-width: 50px;
+  }
+  
+  .event-date .day {
+    font-size: 1.2rem;
+  }
 }
 
 .vertical-carousel:hover {

@@ -110,23 +110,6 @@ const TechnicalQa = () => {
           >
             Expert technical references and comprehensive guides for TNEB engineers
           </motion.p>
-          <motion.div
-            className="qa-timeline-dots"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            {documents.map((_, idx) => (
-              <motion.div
-                key={idx}
-                className="qa-dot"
-                animate={{
-                  scale: openIndex === idx ? 1.2 : 1,
-                  backgroundColor: openIndex === idx ? '#1b5baf' : '#cbd5e0'
-                }}
-              />
-            ))}
-          </motion.div>
         </div>
       </motion.div>
 
