@@ -96,19 +96,31 @@
 /* Responsive */
 @media (max-width: 768px) {
   .footer-bottom-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
+    flex-direction: row;
+    text-align: left;
+    gap: 15px;
+    font-size: 0.4rem;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .footer-copyright {
-    order: 2;
+    order: 0;
+    flex: 1;
+    text-align: center;
+    font-size: 0.1em;
   }
 
   .footer-links {
-    order: 3;
-    flex-wrap: wrap;
-    justify-content: center;
+    order: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    margin-left: 10px;
+    font-size: 0.65rem;
   }
 
   .slider-circular {
@@ -126,25 +138,36 @@
 }
 
 @media (max-width: 576px) {
-  .footer-links {
-    flex-direction: column;
+  .footer-bottom-content {
+    flex-direction: row;
     gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copyright {
+    flex: 1;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
   }
 
   .footer-links a {
-    width: 100%;
-    text-align: center;
-    margin: 0 10px;
+    width: auto;
+    text-align: left;
+    margin: 0 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
   
   .footer-bottom .row > div {
     text-align: center !important;
-    margin-bottom: 10px;
-  }
-  
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    margin-bottom: 0;
   }
 }
