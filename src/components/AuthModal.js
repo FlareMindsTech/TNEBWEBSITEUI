@@ -131,18 +131,23 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       return;
     }
     setLoading(true);
+    Swal.fire({
+      title: 'Processing',
+      html: '<p style="font-size: 1rem; color: #1b5baf; font-weight: 600;">Process undergoing...</p>',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonText: 'OK',
+      confirmButtonColor: theme.primary,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
     setTimeout(() => {
       setLoading(false);
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: `Welcome back, ${loginForm.phoneorlmno}! Location: ${systemLocation}`,
-        confirmButtonColor: theme.primary
-      }).then(() => {
-        setLoginForm({ phoneorlmno: '', password: '' });
-        onClose();
-      });
-    }, 900);
+      setLoginForm({ phoneorlmno: '', password: '' });
+      Swal.close();
+      onClose();
+    }, 2400);
   };
 
   const handleRegister = (e) => {
@@ -157,18 +162,23 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       return;
     }
     setLoading(true);
+    Swal.fire({
+      title: 'Processing',
+      html: '<p style="font-size: 1rem; color: #1b5baf; font-weight: 600;">Process undergoing...</p>',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonText: 'OK',
+      confirmButtonColor: theme.primary,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
     setTimeout(() => {
       setLoading(false);
-      Swal.fire({
-        icon: 'success',
-        title: 'Account Created',
-        text: `Welcome, ${registerForm.name}! Your account is ready.`,
-        confirmButtonColor: theme.primary
-      }).then(() => {
-        setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
-        setTab('login');
-      });
-    }, 1200);
+      setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
+      Swal.close();
+      setTab('login');
+    }, 3000);
   };
 
   const handleForgotPassword = (e) => {
@@ -183,18 +193,23 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       return;
     }
     setLoading(true);
+    Swal.fire({
+      title: 'Processing',
+      html: '<p style="font-size: 1rem; color: #1b5baf; font-weight: 600;">Process undergoing...</p>',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonText: 'OK',
+      confirmButtonColor: theme.primary,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
     setTimeout(() => {
       setLoading(false);
-      Swal.fire({
-        icon: 'success',
-        title: 'Reset Link Sent',
-        text: `A password reset link has been sent to ${forgotForm.email}. Check your inbox and spam folder.`,
-        confirmButtonColor: theme.primary
-      }).then(() => {
-        setTab('login');
-        setForgotForm({ email: '' });
-      });
-    }, 900);
+      Swal.close();
+      setTab('login');
+      setForgotForm({ email: '' });
+    }, 1600);
   };
 
   const renderInput = (icon, props) => (
