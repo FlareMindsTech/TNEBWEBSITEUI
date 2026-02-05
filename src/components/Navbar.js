@@ -201,6 +201,12 @@ const Navbar = () => {
                             <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
                               👥 CEC
                             </Link>
+                            <Link className="sidebar-item" to="/regional" onClick={closeAllMenus}>
+                              👥 Regional
+                            </Link>
+                            <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
+                              👥 Publicsecretary
+                            </Link>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -282,8 +288,14 @@ const Navbar = () => {
                     </motion.li>
 
                     <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/minnagam" onClick={closeAllMenus}>
-                        📱 Minthiran
+                      <Link className="nav-link" to="/Minnagam" onClick={closeAllMenus}>
+                        📱 Minnagam
+                      </Link>
+                    </motion.li>
+
+                     <motion.li className="nav-item" variants={navItemVariants}>
+                      <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
+                        💻 Minthiran
                       </Link>
                     </motion.li>
 
@@ -327,8 +339,11 @@ const Navbar = () => {
                             {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🔌 TANTRANSCO
                             </a> */}
-                            <a className="sidebar-item" href="/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <a className="sidebar-item" href="/board-proceedings" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🏛️ Board Proceedings
+                            </a>
+                            <a className="sidebar-item" href="/photo-gallery" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                              📸 Photogallery
                             </a>
                           </motion.div>
                         )}
@@ -368,6 +383,7 @@ const Navbar = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          style={{ paddingRight: "1.0rem" }}
         >
           <ul className="navbar-nav align-items-center flex-grow-1">
             <motion.li className="nav-item" variants={navItemVariants}>
@@ -381,7 +397,7 @@ const Navbar = () => {
               onMouseLeave={handleDropdownClose}
             >
               <span className="nav-link d-flex align-items-center gap-1 cursor-pointer text-light">
-                About TNEBEA 
+                About 
                 <motion.span animate={{ rotate: openDropdown === 'about' ? 180 : 0 }} transition={{ duration: 0.3 }}>
                   <FaCaretDown />
                 </motion.span>
@@ -392,6 +408,16 @@ const Navbar = () => {
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/cec" onClick={closeAllMenus}>
                         <span className="dropdown-icon">👥</span> CEC
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/regional" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">👥</span> Regional
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">👥</span> Public Secretary
                       </Link>
                     </motion.div>
                   </motion.div>
@@ -461,7 +487,11 @@ const Navbar = () => {
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minthiran</Link>
+              <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minnagam</Link>
+            </motion.li>
+
+             <motion.li className="nav-item" variants={navItemVariants}>
+              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>Minthiran</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
@@ -492,13 +522,18 @@ const Navbar = () => {
                         <span className="dropdown-icon">🏛️</span> Board Proceedings
                       </Link>
                     </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/photo-gallery"  onClick={closeAllMenus}>
+                        <span className="dropdown-icon">📸</span> Photo Gallery
+                      </Link>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/tnebea-forms" onClick={closeAllMenus}>TNEBEA Forms</Link>
+              <Link className="nav-link nav-hover-effect" to="/tnebea-forms" onClick={closeAllMenus}>Forms</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>

@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Cec from './pages/Cec';
+import Regional from './pages/Regional';
+import Publicsecretary from './pages/Publicsecretary';
 import ActRegulations from './pages/ActRegulations';
 import ManualsAndFormsDownload from './pages/ManualsAndFormsDownload';
 import ContributoryPensionScheme from './pages/ContributoryPensionScheme';
 import DistributionRelatedInstructions from './pages/DistributionRelatedInstructions';
-// import Minnagam from './pages/Minnagam';
+import Minnagam from './pages/Minnagam';
 import Minthiran from './pages/Minthiran';
 import HandBook from './pages/HandBook';
 import TechnicalQa from './pages/TechnicalQa';
@@ -26,6 +28,7 @@ import './App.css';
 import logo from './assets/tnebea_logo_cropped2.png';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import BoardProceedings from "./pages/BoardProceedings";
+import Photogallery from './pages/Photogallery';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 
@@ -85,11 +88,14 @@ function App() {
           <Routes>
             <Route path="/" element={<><Header /><Home /><Footer /></>} />
             <Route path="/cec" element={<><Header /><Cec /><Footer /></>} />
+            <Route path="/regional" element={<><Header /><Regional /><Footer /></>} />
+            <Route path="/public-secretary" element={<><Header /><Publicsecretary /><Footer /></>} />
             <Route path="/act-regulations" element={<><Header /><ActRegulations /><Footer /></>} />
             <Route path="/manuals-and-forms-download" element={<><Header /><ManualsAndFormsDownload /><Footer /></>} />
             <Route path="/contributory-pension-scheme" element={<><Header /><ContributoryPensionScheme /><Footer /></>} />
             <Route path="/distribution-related-instructions" element={<><Header /><DistributionRelatedInstructions /><Footer /></>} />
-            <Route path="/minnagam" element={<><Header /><Minthiran /><Footer /></>} />
+            <Route path="/Minnagam" element={<><Header /><Minnagam /><Footer /></>} />
+            <Route path="/Minthiran" element={<><Header /><Minthiran /><Footer /></>} />
             <Route path="/hand-book" element={<><Header /><HandBook /><Footer /></>} />
             <Route path="/technical-qa" element={<><Header /><TechnicalQa /><Footer /></>} />
             <Route path="/technical-parameters" element={<><Header /><TechnicalParameters /><Footer /></>} />
@@ -102,6 +108,7 @@ function App() {
             <Route path="/terms-and-conditions" element={<><Header /><TermsAndConditions /><Footer /></>} />
             <Route path="/important-notices" element={<><Header /><Importantnotices /><Footer /></>} />
             <Route path="/board-proceedings" element={<><Header /><BoardProceedings /><Footer /></>} />
+            <Route path="/photo-gallery" element={<><Header /><Photogallery /><Footer /></>} />
           </Routes>
         </div>
       </div>
