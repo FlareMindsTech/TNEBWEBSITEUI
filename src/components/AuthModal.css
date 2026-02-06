@@ -94,6 +94,16 @@
   backdrop-filter: blur(4px);
 }
 
+.auth-tabs.auth-tabs-single {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+}
+
+.auth-tabs.auth-tabs-single .auth-tab {
+  width: 100%;
+  max-width: 220px;
+}
+
 .auth-tab {
   border: none;
   background: transparent;
