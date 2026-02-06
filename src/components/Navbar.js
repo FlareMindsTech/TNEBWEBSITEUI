@@ -369,7 +369,7 @@ const Navbar = () => {
                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="btn btn-light w-100" onClick={() => { setAuthTab('login'); setShowAuth(true); closeAllMenus(); }}>
                       <FaUser className="me-2" />
-                      Login / Register
+                      Login
                     </button>
                   </motion.div>
                 </div>
@@ -560,11 +560,6 @@ const Navbar = () => {
                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
                       <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
                         <span className="user-menu-icon">🔑</span><span>Login</span>
-                      </Link>
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}>
-                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('register'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                        <span className="user-menu-icon">📝</span><span>Register</span>
                       </Link>
                     </motion.div>
                   </motion.div>
