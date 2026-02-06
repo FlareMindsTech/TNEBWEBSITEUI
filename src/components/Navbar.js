@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
-import Logo from "../assets/tnebea_logo_cropped2.png";
+// import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
 import { SidebarContext } from '../context/SidebarContext';
 
@@ -113,7 +113,7 @@ const Navbar = () => {
     >
       <div className="container-fluid px-4">
         {/* Logo */}
-        <motion.div 
+        {/* <motion.div 
           className="navbar-brand d-flex align-items-center logo-wrapper"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -124,7 +124,7 @@ const Navbar = () => {
             <div className="logo-sparkle delay-1"></div>
             <div className="logo-sparkle delay-2"></div>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Mobile Toggle Button */}
         <motion.button 
@@ -295,7 +295,7 @@ const Navbar = () => {
 
                      <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                        💻 Minthiran
+                        💻 e-Minthiran
                       </Link>
                     </motion.li>
 
@@ -491,7 +491,7 @@ const Navbar = () => {
             </motion.li>
 
              <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>Minthiran</Link>
+              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>e-Minthiran</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
