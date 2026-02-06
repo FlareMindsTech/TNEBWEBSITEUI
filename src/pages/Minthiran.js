@@ -1,8 +1,10 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Minthiran = () => {
   return (
-    <div>Minthiran</div>
+    <div className='mt-3 text-primary fw-bold'>Work undergoing</div>
   )
 }
 
