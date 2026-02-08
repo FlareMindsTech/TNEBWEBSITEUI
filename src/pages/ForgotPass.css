@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1b5baf;
+    background: radial-gradient(ellipse at center, #d70f18 0%, #000000 100%, #EEAF37 100%);
     padding: 20px;
     position: relative;
     overflow: hidden;

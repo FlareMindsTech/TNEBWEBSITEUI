@@ -74,8 +74,8 @@
 }
 
 .important-notices-header {
-  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 60%, #15458a 100%) !important;
-  box-shadow: 0 6px 16px rgba(27, 91, 175, 0.25);
+  background: linear-gradient(135deg, #d70f18 0%, #8b0000 60%, #EEAF37 100%) !important;
+  box-shadow: 0 6px 16px rgba(215, 15, 24, 0.25);
   letter-spacing: 0.4px;
 }
 
@@ -257,7 +257,7 @@
 }
 
 .notice-item h6 a:hover {
-  color: #1b5baf !important;
+  color: #d70f18 !important;
 }
 
 .notice-item .fa-2x {
@@ -267,7 +267,7 @@
 
 .notice-item:hover .fa-2x {
   transform: scale(1.08) rotate(-2deg);
-  color: #1b5baf;
+  color: #d70f18;
 }
 
 .notice-item small {
@@ -288,14 +288,14 @@
   align-items: center;
   gap: 8px;
   padding: 10px 24px;
-  background: #1b5baf;
+  background: #d70f18;
   color: #fff;
   border: none;
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.3px;
-  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.2);
+  box-shadow: 0 4px 12px rgba(215, 15, 24, 0.2);
   transition: background 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
