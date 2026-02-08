@@ -6,7 +6,7 @@
 }
 
 .cps-header {
-  background: #1b5baf;
+  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
   color: white;
   padding: 40px 0;
   text-align: center;
@@ -14,7 +14,7 @@
   overflow: hidden;
   margin-bottom: 50px;
   border-radius: 0 0 20px 20px;
-  box-shadow: 0 10px 30px rgba(27, 91, 175, 0.3);
+  box-shadow: 0 10px 30px rgba(215, 15, 24, 0.4);
 }
 
 .cps-header::before {

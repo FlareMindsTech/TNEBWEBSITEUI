@@ -7,19 +7,19 @@
 
 /* Hero Section */
 .handbook-hero {
-  background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 50%, #0f1e2e 100%);
+  background: linear-gradient(135deg, #8b0000 0%, #d70f18 50%, #4a0000 100%);
   padding: 30px 15px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 0 100px rgba(21, 96, 100, 0.1);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7), inset 0 0 100px rgba(215, 15, 24, 0.1);
   min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom-left-radius: 40px;
   border-bottom-Right-radius: 40px;
-  border-bottom: 3px solid #ffc107;
+  border-bottom: 3px solid #EEAF37;
 }
 
 /* Electricity Container */
