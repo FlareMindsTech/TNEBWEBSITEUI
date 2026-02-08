@@ -15,7 +15,7 @@ const LatestEvents = ({ events }) => {
       <div className="carousel-events-wrapper mt-3">
         <div className="carousel-events-header">
           <FaBullhorn className="header-icon1" />
-          <h6> Latest Events / Updates</h6>
+          <h6> Latest News / Updates</h6>
         </div>
         
         {/* Auto-scrolling Events Cards */}
@@ -23,10 +23,10 @@ const LatestEvents = ({ events }) => {
           <div className="vertical-carousel">
             {events.concat(events).map((event, index) => (
               <div key={`${event.id}-${index}`} className="carousel-event-item">
-                <div className="event-date-circle">
+                {/* <div className="event-date-circle">
                   <span className="event-date-day">{event.day}</span>
                   <span className="event-date-month">{event.month}</span>
-                </div>
+                </div> */}
                 <div className="event-info-box">
                   <div className="event-info-content">
                     <a href={event.link} target="_blank" rel="noopener noreferrer" className="event-info-title">
