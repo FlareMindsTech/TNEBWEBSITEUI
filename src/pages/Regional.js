@@ -1,8 +1,9 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const  Regional= () => {
   return (
-    <div>Regional</div>
+    <div className='mt-3 text-primary fw-bold'>Work undergoing</div>
   )
 }
 

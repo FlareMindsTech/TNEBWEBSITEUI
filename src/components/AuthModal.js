@@ -121,33 +121,13 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!loginForm.phoneorlmno || !loginForm.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Incomplete Form',
-        text: 'Please fill in all fields',
-        confirmButtonColor: theme.primary
-      });
-      return;
-    }
-    setLoading(true);
     Swal.fire({
-      title: 'Processing',
-      html: '<p style="font-size: 1rem; color: #1b5baf; font-weight: 600;">Process undergoing...</p>',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
+      icon: 'info',
+      title: 'Work undergoing',
+      text: 'Please try again later.',
       confirmButtonText: 'OK',
-      confirmButtonColor: theme.primary,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      confirmButtonColor: theme.primary
     });
-    setTimeout(() => {
-      setLoading(false);
-      setLoginForm({ phoneorlmno: '', password: '' });
-      Swal.close();
-      onClose();
-    }, 2400);
   };
 
   const handleRegister = (e) => {
@@ -183,33 +163,13 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
-    if (!forgotForm.email) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Email Required',
-        text: 'Please enter your email address',
-        confirmButtonColor: theme.primary
-      });
-      return;
-    }
-    setLoading(true);
     Swal.fire({
-      title: 'Processing',
-      html: '<p style="font-size: 1rem; color: #1b5baf; font-weight: 600;">Process undergoing...</p>',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
+      icon: 'info',
+      title: 'Work undergoing',
+      text: 'Please try again later.',
       confirmButtonText: 'OK',
-      confirmButtonColor: theme.primary,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      confirmButtonColor: theme.primary
     });
-    setTimeout(() => {
-      setLoading(false);
-      Swal.close();
-      setTab('login');
-      setForgotForm({ email: '' });
-    }, 1600);
   };
 
   const renderInput = (icon, props) => (
@@ -257,7 +217,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           <span>Secure Access</span>
         </div>
         <motion.div
-          className="auth-tabs"
+          className="auth-tabs auth-tabs-single"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
@@ -269,6 +229,8 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             <FaUserLock />
             <span>Login</span>
           </button>
+          {/* Register tab hidden for now */}
+          {/*
           <button
             className={`auth-tab ${tab === 'register' ? 'active' : ''}`}
             onClick={() => switchTab('register')}
@@ -276,6 +238,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             <FaUserPlus />
             <span>Sign Up</span>
           </button>
+          */}
         </motion.div>
         {/* <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
         <div className="auth-chips">
@@ -345,93 +308,8 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             </Form>
           </motion.div>
         ) : tab === 'register' ? (
-          <motion.div
-            key="auth-register"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="auth-register-banner">
-              <div className="auth-register-icon">
-                <FaUserPlus />
-              </div>
-              <div>
-                <p className="auth-register-title">Create your TNEBEA access</p>
-                <p className="auth-register-subtitle">Fill the details.</p>
-              </div>
-            </div>
-            <Form onSubmit={handleRegister}>
-              <Form.Group className="mb-3">
-                <Form.Label>Life Member</Form.Label>
-                {renderInput(<FaIdBadge />, {
-                  type: 'text',
-                  placeholder: 'Enter your life membership number',
-                  value: registerForm.lm,
-                  onChange: (e) => setRegisterForm({ ...registerForm, lm: e.target.value }),
-                  required: true
-                })}
-                </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Full Name</Form.Label>
-                {renderInput(<FaUserTie />, {
-                  type: 'text',
-                  placeholder: 'Enter your full name',
-                  value: registerForm.name,
-                  onChange: (e) => setRegisterForm({ ...registerForm, name: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>EMP ID</Form.Label>
-                {renderInput(<FaIdCard />, {
-                  type: 'text',
-                  placeholder: 'Enter your Employee id',
-                  value: registerForm.empid,
-                  onChange: (e) => setRegisterForm({ ...registerForm, empid: e.target.value }),
-                  required: true
-                })}
-                </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                {renderInput(<FaEnvelope />, {
-                  type: 'email',
-                  placeholder: 'name@example.com',
-                  value: registerForm.email,
-                  onChange: (e) => setRegisterForm({ ...registerForm, email: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Phone Number</Form.Label>
-                {renderInput(<FaPhoneAlt />, {
-                  type: 'number',
-                  placeholder: '+0876543210',
-                  value: registerForm.phone,
-                  onChange: (e) => setRegisterForm({ ...registerForm, phone: e.target.value }),
-                  required: true
-                })}
-                </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                {renderInput(<FaLock />, {
-                  type: 'password',
-                  placeholder: 'Create a password',
-                  value: registerForm.password,
-                  onChange: (e) => setRegisterForm({ ...registerForm, password: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-
-              <Button
-                type="submit"
-                className="auth-primary-btn"
-                disabled={loading}
-              >
-                {loading ? 'Creating account…' : 'Create Account'}
-              </Button>
-              <p className="auth-footnote">By signing up you accept our terms and privacy notice.</p>
-            </Form>
-          </motion.div>
+          /* Register UI is temporarily disabled */
+          null
         ) : tab === 'forgot' ? (
           <motion.div
             key="auth-forgot"
