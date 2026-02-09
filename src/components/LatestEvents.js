@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FaBullhorn } from 'react-icons/fa';
 import './LatestEvents.css';
 
-const LatestEvents = ({ events }) => {
+const LatestEvents = ({ events, loading = false }) => {
 
   return (
     <motion.div
@@ -21,24 +21,42 @@ const LatestEvents = ({ events }) => {
         {/* Auto-scrolling Events Cards */}
         <div className="vertical-carousel-container">
           <div className="vertical-carousel">
-            {events.concat(events).map((event, index) => (
-              <div key={`${event.id}-${index}`} className="carousel-event-item">
-                {/* <div className="event-date-circle">
-                  <span className="event-date-day">{event.day}</span>
-                  <span className="event-date-month">{event.month}</span>
-                </div> */}
+            {loading ? (
+              <div className="carousel-event-item">
                 <div className="event-info-box">
                   <div className="event-info-content">
-                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="event-info-title">
-                      {event.title}
-                    </a>
-                    {event.isNew && (
-                      <span className="badge-new">New</span>
-                    )}
+                    <span className="event-info-title">Loading updates...</span>
                   </div>
                 </div>
               </div>
-            ))}
+            ) : events.length === 0 ? (
+              <div className="carousel-event-item">
+                <div className="event-info-box">
+                  <div className="event-info-content">
+                    <span className="event-info-title">No updates available</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              events.concat(events).map((event, index) => (
+                <div key={`${event.id}-${index}`} className="carousel-event-item">
+                  <div className="event-info-box">
+                    <div className="event-info-content">
+                      {event.link ? (
+                        <a href={event.link} target="_blank" rel="noopener noreferrer" className="event-info-title">
+                          {event.title}
+                        </a>
+                      ) : (
+                        <span className="event-info-title">{event.title}</span>
+                      )}
+                      {event.isNew && (
+                        <span className="badge-new">New</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

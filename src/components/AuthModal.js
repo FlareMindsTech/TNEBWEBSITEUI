@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt, FaPhoneAlt, FaIdBadge, FaIdCard, FaUserTie } from 'react-icons/fa';
 import './AuthModal.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../api';
 
 const theme = {
   primary: '#15458a',
@@ -12,20 +13,18 @@ const theme = {
 };
 
 export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
+  const navigate = useNavigate();
   const [tab, setTab] = useState(defaultTab);
-  const [loginForm, setLoginForm] = useState({ phoneorlmno: '', password: '' });
+  const [loginForm, setLoginForm] = useState({ phoneorlmno: '', password: '', city: '' });
   const [registerForm, setRegisterForm] = useState({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
   const [forgotForm, setForgotForm] = useState({ email: '' });
   const [loading, setLoading] = useState(false);
-  const [systemLocation, setSystemLocation] = useState('Location permission not granted');
-  const [locationStatus, setLocationStatus] = useState('idle');
-  const [locationHint, setLocationHint] = useState('Permission required');
 
   useEffect(() => {
     if (show) {
       setTab(defaultTab);
       if (defaultTab === 'login') {
-        setLoginForm({ phoneorlmno: '', password: '' });
+        setLoginForm({ phoneorlmno: '', password: '', city: '' });
       }
       if (defaultTab === 'register') {
         setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
@@ -36,80 +35,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     }
   }, [defaultTab, show]);
 
-  const requestSystemLocation = () => {
-    if (!navigator.geolocation) {
-      setSystemLocation('Geolocation not supported');
-      setLocationStatus('error');
-      setLocationHint('Browser does not support location');
-      return;
-    }
-    setLocationStatus('loading');
-    setLocationHint('Requesting permission...');
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setSystemLocation(`Lat ${latitude.toFixed(4)}, Lng ${longitude.toFixed(4)}`);
-        setLocationStatus('granted');
-        setLocationHint('Location enabled');
-      },
-      (error) => {
-        setLocationStatus('error');
-        if (error.code === error.PERMISSION_DENIED) {
-          setSystemLocation('Location permission denied');
-          setLocationHint('Allow location in browser address bar');
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          setSystemLocation('Location unavailable');
-          setLocationHint('Try again or check GPS');
-        } else {
-          setSystemLocation('Location request timed out');
-          setLocationHint('Please try again');
-        }
-      },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-    );
-  };
 
-  useEffect(() => {
-    if (show && tab === 'login' && locationStatus === 'idle') {
-      requestSystemLocation();
-    }
-  }, [show, tab, locationStatus]);
-
-  useEffect(() => {
-    if (!navigator.permissions || !navigator.permissions.query) return;
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((status) => {
-        if (status.state === 'granted') {
-          setLocationStatus('granted');
-          setLocationHint('Location enabled');
-        } else if (status.state === 'denied') {
-          setLocationStatus('error');
-          setSystemLocation('Location permission denied');
-          setLocationHint('Allow location in browser address bar');
-        }
-        status.onchange = () => {
-          if (status.state === 'granted') {
-            setLocationStatus('granted');
-            setLocationHint('Location enabled');
-            requestSystemLocation();
-          } else if (status.state === 'denied') {
-            setLocationStatus('error');
-            setSystemLocation('Location permission denied');
-            setLocationHint('Allow location in browser address bar');
-          } else {
-            setLocationStatus('idle');
-            setLocationHint('Permission required');
-          }
-        };
-      })
-      .catch(() => {});
-  }, []);
 
   const switchTab = (next) => {
     setTab(next);
     if (next === 'login') {
-      setLoginForm({ phoneorlmno: '', password: '' });
+      setLoginForm({ phoneorlmno: '', password: '', city: '' });
     }
     if (next === 'register') {
       setRegisterForm({ lm: '', name: '', empid: '', email: '', phone: '', password: '' });
@@ -119,15 +50,51 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      icon: 'info',
-      title: 'Work undergoing',
-      text: 'Please try again later.',
-      confirmButtonText: 'OK',
-      confirmButtonColor: theme.primary
-    });
+    
+    if (!loginForm.city || !loginForm.phoneorlmno || !loginForm.password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Form',
+        text: 'Please fill in all fields',
+        confirmButtonColor: theme.primary
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      
+      const response = await loginUser({
+        identifier: loginForm.phoneorlmno,
+        password: loginForm.password,
+        city: loginForm.city
+      });
+
+      setLoading(false);
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: `Welcome back, ${response.user?.name || 'User'}!`,
+        confirmButtonColor: theme.primary,
+        timer: 2000
+      }).then(() => {
+        onClose();
+        // Optionally redirect to dashboard or home
+        // navigate('/dashboard');
+      });
+      
+    } catch (error) {
+      setLoading(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.message || 'Invalid credentials. Please try again.',
+        confirmButtonColor: theme.primary
+      });
+    }
   };
 
   const handleRegister = (e) => {
@@ -179,16 +146,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     </div>
   );
 
-  const renderSystemLocation = (value) => (
-    <div className="auth-input-wrapper">
-      <span className="auth-input-icon"><FaMapMarkerAlt /></span>
-      <Form.Control
-        className="auth-input"
-        value={value}
-        readOnly
-      />
-    </div>
-  );
+
 
   return (
     <Modal
@@ -258,20 +216,14 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           >
             <Form onSubmit={handleLogin}>
               <Form.Group className="mb-3">
-                <Form.Label>📍 Location (System)</Form.Label>
-                {renderSystemLocation(systemLocation)}
-                <div className="d-flex align-items-center gap-2 mt-2">
-                  <Button
-                    type="button"
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={requestSystemLocation}
-                    disabled={locationStatus === 'loading'}
-                  >
-                    {locationStatus === 'loading' ? 'Enabling…' : 'Enable location'}
-                  </Button>
-                  <span className="auth-helper-text">{locationHint}</span>
-                </div>
+                <Form.Label>City</Form.Label>
+                {renderInput(<FaMapMarkerAlt />, {
+                  type: 'text',
+                  placeholder: 'Enter your city (e.g., Chennai, Coimbatore)',
+                  value: loginForm.city,
+                  onChange: (e) => setLoginForm({ ...loginForm, city: e.target.value }),
+                  required: true
+                })}
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Phone or LM.NO</Form.Label>
