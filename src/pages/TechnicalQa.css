@@ -1,7 +1,7 @@
 .qa-container {
   font-family: 'Merriweather', serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
+  background: white;
   padding: 0;
   overflow: hidden;
 }
