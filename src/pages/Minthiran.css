@@ -1,0 +1,250 @@
+.act-regulations-container {
+  background: #ffffff;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  color: white;
+  padding: 30px 15px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(30px);
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(30px); }
+}
+
+.page-header h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0 13px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.page-header .lead {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+}
+
+.year-section {
+  margin-bottom: 3rem;
+}
+
+.year-title {
+  background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(215, 15, 24, 0.3);
+}
+
+.magazines-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px 0;
+}
+
+.flipbook-card {
+  perspective: 1500px;
+  cursor: pointer;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flipbook-cover {
+  position: relative;
+  width: 200px;
+  height: 280px;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotateY(-5deg);
+}
+
+.flipbook-card:hover .flipbook-cover {
+  transform: rotateY(0deg) translateY(-10px);
+}
+
+.flipbook-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, #EEAF37, #d70f18, #8b0000);
+  border-radius: 4px 0 0 4px;
+  transform: rotateY(-90deg);
+  transform-origin: left;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.flipbook-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+  border-radius: 8px;
+  box-shadow:
+    0 10px 40px rgba(215, 15, 24, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.flipbook-front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+  background-size: 20px 20px;
+  opacity: 0.3;
+}
+
+.magazine-date {
+  position: relative;
+  z-index: 1;
+}
+
+.magazine-date .month {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #EEAF37;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.magazine-date .year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #8b0000 0%, #d70f18 100%);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #EEAF37;
+  margin-top: 5px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.magazine-title {
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.magazine-title h5 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.magazine-title p {
+  font-size: 0.9rem;
+  margin: 5px 0 0;
+  opacity: 0.9;
+}
+
+.flipbook-icon {
+  font-size: 3rem;
+  text-align: center;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.flipbook-shadow {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3), transparent);
+  border-radius: 50%;
+  transition: all 0.6s ease;
+}
+
+.flipbook-card:hover .flipbook-shadow {
+  width: 90%;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .flipbook-cover {
+    width: 160px;
+    height: 220px;
+  }
+
+  .magazine-title h5 {
+    font-size: 1.4rem;
+  }
+
+  .flipbook-icon {
+    font-size: 2rem;
+  }
+
+  .year-title {
+    font-size: 1.5rem;
+  }
+}

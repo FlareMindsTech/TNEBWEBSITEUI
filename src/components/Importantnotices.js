@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Home.css'
+import './Importantnotices.css'
 import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExclamationTriangle, FaList, FaSmile, FaFileContract, FaFileAlt, FaBook, FaClipboardList, FaFileSignature } from 'react-icons/fa';const Importantnotices = () => {
     // Important Notices Data
       const importantNotices = [
