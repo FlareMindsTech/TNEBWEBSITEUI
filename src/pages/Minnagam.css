@@ -9,12 +9,19 @@
   background: linear-gradient(90deg, #d70f18 0%, #8b0000 50%, #EEAF37 100%);
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;
-  padding: 80px 20px;
+  padding: 30px 15px;
   text-align: center;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(215, 15, 24, 0.4);
   transition: all 0.5s ease;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  border-bottom: 3px solid #EEAF37;
 }
 
 @keyframes gradientShift {
@@ -130,10 +137,10 @@
 }
 
 .hero-icon {
-  font-size: 4rem;
+  font-size: 2.5rem;
   color: white;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
   animation: float 3s ease-in-out infinite, iconSparkle 2s ease-in-out infinite;
 }
 
@@ -152,11 +159,11 @@
 }
 
 .hero-title1 {
-  font-size: 3.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: white;
-  margin: 0 0 15px 0;
-  letter-spacing: 2px;
+  margin: 0 0 8px 0;
+  letter-spacing: 1px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -170,14 +177,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 8px;
   font-weight: 500;
 }
 
 .location-icon {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: #ffd700;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -188,19 +195,19 @@
 }
 
 .hero-description {
-  font-size: 1.5rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.9);
-  margin: 20px 0;
-  font-weight: 300;
+  margin: 10px 0;
+  font-weight: 400;
 }
 
 .hero-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 8px 24px;
+  padding: 6px 20px;
   border-radius: 30px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.3);

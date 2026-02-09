@@ -119,8 +119,8 @@ const Minnagam = () => {
           <FaHotel className="hero-icon" />
           <h1 className="hero-title1">MINNAGAM</h1>
           <div className="hero-subtitle">
-            <FaMapMarkerAlt className="location-icon" />
-            <span>APR Mansion, Royapettah High Road, Chennai</span>
+            <FaMapMarkerAlt className="text-light location-icon" />
+            <span className="text-light">APR Mansion, Royapettah High Road, Chennai</span>
           </div>
           <p className="hero-description">Residential Accommodation for Engineers</p>
           <div className="hero-badge">Information Only</div>
