@@ -257,17 +257,24 @@ export const registerUser = async (userData) => {
  * @param {Object} credentials - Login credentials
  * @param {string} credentials.identifier - LM number, email, or phone number
  * @param {string} credentials.password - User's password
- * @param {string} credentials.location - User's location
+ * @param {string} credentials.city - User's city (sent as location to backend)
  * @returns {Promise} Login response with token and user data
  */
 export const loginUser = async (credentials) => {
   try {
+    // Map city to location for backend compatibility
+    const loginData = {
+      identifier: credentials.identifier,
+      password: credentials.password,
+      location: credentials.city || credentials.location
+    };
+    
     const response = await fetch(`${API_BASE_URL}/api/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(loginData),
     });
     
     if (!response.ok) {

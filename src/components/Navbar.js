@@ -205,7 +205,7 @@ const Navbar = () => {
                               👥 Regional
                             </Link>
                             <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
-                              👥 Branch Secretaries
+                              👥 Brand Secretary
                             </Link>
                           </motion.div>
                         )}
@@ -417,7 +417,7 @@ const Navbar = () => {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Branch Secretaries
+                        <span className="dropdown-icon">👥</span> Brand Secretary
                       </Link>
                     </motion.div>
                   </motion.div>
