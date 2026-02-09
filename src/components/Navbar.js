@@ -205,7 +205,7 @@ const Navbar = () => {
                               👥 Regional
                             </Link>
                             <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
-                              👥 Publicsecretary
+                              👥 Brand Secretary
                             </Link>
                           </motion.div>
                         )}
@@ -295,7 +295,7 @@ const Navbar = () => {
 
                      <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                        💻 e-Minthiran
+                        💻 E-Minthiran
                       </Link>
                     </motion.li>
 
@@ -417,7 +417,7 @@ const Navbar = () => {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Public Secretary
+                        <span className="dropdown-icon">👥</span> Brand Secretary
                       </Link>
                     </motion.div>
                   </motion.div>
@@ -491,7 +491,7 @@ const Navbar = () => {
             </motion.li>
 
              <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>e-Minthiran</Link>
+              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>E-Minthiran</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
