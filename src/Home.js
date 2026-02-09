@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
-import { getAllCarouselImages } from './api';
+import { getAllCarouselImages, getAllEvents } from './api';
 import LatestEvents from './components/LatestEvents';
 // import VisitorCounter from './components/VisitorCounter';
 
@@ -11,6 +11,8 @@ const Home = () => {
   const [currentTime, setCurrentTime] = useState('');
   const [carouselImages, setCarouselImages] = useState([]);
   const [loadingCarousel, setLoadingCarousel] = useState(true);
+  const [latestEvents, setLatestEvents] = useState([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
 
   // Fetch carousel images from API
   useEffect(() => {
@@ -40,33 +42,47 @@ const Home = () => {
     fetchCarouselImages();
   }, []);
 
-  // Latest Events Data
-  const latestEvents = [
-    {
-      id: 1,
-      day: "20",
-      month: "Dec",
-      title: "EA D 35 dt - 16.12.25 CMD MEET",
-      link: "https://tnebeaengineers.in/uploads/notices/1765991527_EAD35dt-16.12.25CMDMEET.pdf",
-      isNew: true
-    },
-    {
-      id: 2,
-      day: "20",
-      month: "Dec",
-      title: "EA D 34 work Allocation and staff pattern",
-      link: "https://tnebeaengineers.in/uploads/notices/1765991634_EAD34workAllocationandstaffpattern.pdf",
-      isNew: true
-    },
-    {
-      id: 3,
-      day: "20",
-      month: "Dec",
-      title: "EA D 31 dt 10.12.25 Extend the SLS benifits to the employees uniformly",
-      link: "https://tnebeaengineers.in/uploads/notices/1765991771_EAD31dt10.12.25ExtendtheSLSbenifitstotheemployeesuniformly.pdf",
-      isNew: true
-    }
-  ];
+  // Fetch latest events/news (show only newest 10)
+  useEffect(() => {
+    const fetchLatestEvents = async () => {
+      try {
+        setLoadingEvents(true);
+        const response = await getAllEvents();
+        const rawEvents = Array.isArray(response) ? response : [];
+        const normalized = rawEvents.map((item, index) => {
+          const title = item.title || item.name || item.eventTitle || item.eventname || 'Untitled Event';
+          const link = item.link || item.url || item.pdfUrl || item.fileUrl || item.documentUrl || '';
+          const dateValue = item.createdAt || item.date || item.eventDate || item.updatedAt || null;
+          const dateObj = dateValue ? new Date(dateValue) : new Date(0);
+          const isNew = dateValue
+            ? Date.now() - dateObj.getTime() <= 7 * 24 * 60 * 60 * 1000
+            : false;
+
+          return {
+            id: item._id || item.id || `${title}-${index}`,
+            title,
+            link,
+            isNew,
+            date: dateObj
+          };
+        });
+
+        const sorted = normalized
+          .sort((a, b) => b.date - a.date)
+          .slice(0, 10)
+          .map(({ date, ...event }) => event);
+
+        setLatestEvents(sorted);
+      } catch (error) {
+        console.error('Error fetching latest events:', error);
+        setLatestEvents([]);
+      } finally {
+        setLoadingEvents(false);
+      }
+    };
+
+    fetchLatestEvents();
+  }, []);
 
   
   // Update current time
@@ -133,7 +149,7 @@ const Home = () => {
             </div>
 
             {/* Right Side - Latest Events*/}
-            <LatestEvents events={latestEvents} />
+            <LatestEvents events={latestEvents} loading={loadingEvents} />
           </div>
 
           {/* Visitor Counter Section */}
