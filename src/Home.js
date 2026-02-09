@@ -2,43 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
-import carouselimage1 from './assets/1765821464_NationalEnergyConservationDay-2025_1.png';
+import { getAllCarouselImages } from './api';
 import LatestEvents from './components/LatestEvents';
-import carouselimage2 from './assets/1762262319_OS.jpg';
-import carouselimage3 from './assets/1762262223_tr.jpg';
-import carouselimage4 from './assets/1762262032_VP2.jpg';
+// import VisitorCounter from './components/VisitorCounter';
 
 
 const Home = () => {
   const [currentTime, setCurrentTime] = useState('');
+  const [carouselImages, setCarouselImages] = useState([]);
+  const [loadingCarousel, setLoadingCarousel] = useState(true);
 
-  // Carousel images data
-  const carouselImages = [
-    {
-      id: 1,
-      src: carouselimage1,
-      alt: "National Energy Conservation Day 2025",
-      caption: null
-    },
-    {
-      id: 2,
-      src: carouselimage2,
-      alt: "Swearing in - Organizing Secretary",
-      caption: "Swearing in - Organizing Secretary"
-    },
-    {
-      id: 3,
-      src: carouselimage3,
-      alt: "Swearing in - Treasurer",
-      caption: "Swearing in - Treasurer"
-    },
-    {
-      id: 4,
-      src: carouselimage4,
-      alt: "Swearing in - Vice President 2",
-      caption: "Swearing in - Vice President 2"
-    }
-  ];
+  // Fetch carousel images from API
+  useEffect(() => {
+    const fetchCarouselImages = async () => {
+      try {
+        setLoadingCarousel(true);
+        const response = await getAllCarouselImages();
+        
+        // Transform API response to match component structure
+        const transformedImages = response.map((item) => ({
+          id: item._id,
+          src: item.imageUrl, // Assuming backend returns imageUrl
+          alt: item.alt || "TNEB Event",
+          caption: item.caption || null
+        }));
+        
+        setCarouselImages(transformedImages);
+      } catch (error) {
+        console.error('Error fetching carousel images:', error);
+        // Fallback to empty array if API fails
+        setCarouselImages([]);
+      } finally {
+        setLoadingCarousel(false);
+      }
+    };
+
+    fetchCarouselImages();
+  }, []);
 
   // Latest Events Data
   const latestEvents = [
@@ -100,30 +100,50 @@ const Home = () => {
           <div className="row">
             {/* Left Side - Carousel */}
             <div className="col-lg-7 col-md-12">
-              <div className="image-carousel-section" style={{objectFit:'cover'}}>
-                <Carousel>
-                  {carouselImages.map((image) => (
-                    <Carousel.Item key={image.id}>
-                      <img
-                        className="d-block w-100 carousel-image"
-                        src={image.src}
-                        alt={image.alt}
-                        style={{marginTop:'2%', objectFit:'contain'}}
-                      />
-                      {image.caption && (
-                        <Carousel.Caption>
-                          <p>{image.caption}</p>
-                        </Carousel.Caption>
-                      )}
-                    </Carousel.Item>
-                  ))}
-                </Carousel>
+              <div className="image-carousel-section">
+                {loadingCarousel ? (
+                  <div className="carousel-loading">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                ) : carouselImages.length > 0 ? (
+                  <Carousel>
+                    {carouselImages.map((image) => (
+                      <Carousel.Item key={image.id}>
+                        <img
+                          className="d-block w-100 carousel-image"
+                          src={image.src}
+                          alt={image.alt}
+                        />
+                        {image.caption && (
+                          <Carousel.Caption>
+                            <p>{image.caption}</p>
+                          </Carousel.Caption>
+                        )}
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                ) : (
+                  <div className="carousel-no-data">
+                    <p>No carousel images available</p>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Right Side - Latest Events*/}
             <LatestEvents events={latestEvents} />
           </div>
+
+          {/* Visitor Counter Section */}
+          {/* <div className="row mt-4">
+            <div className="col-12">
+              <div className="visitor-counter-section">
+                <VisitorCounter />
+              </div>
+            </div>
+          </div> */}
 
           {/* Important Notices Section */}
           {/* <div className="row mt-4">

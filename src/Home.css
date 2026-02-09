@@ -3,6 +3,154 @@
   font-family: 'Merriweather', serif;
 }
 
+/* Carousel Section Styles */
+.image-carousel-section {
+  margin-bottom: 20px;
+  margin-top: 2%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+.carousel-image {
+  height: 420px;
+  width: 100%;
+  object-fit: cover !important;
+  object-position: center;
+  display: block;
+}
+
+.carousel-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 420px;
+  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 100%);
+}
+
+.carousel-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+  color: #ffffff !important;
+}
+
+.carousel-no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 420px;
+  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 100%);
+}
+
+.carousel-no-data p {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.7) !important;
+  padding: 12px 20px !important;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  bottom: 30px !important;
+}
+
+.carousel-caption p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Bootstrap Carousel Controls Styling */
+.image-carousel-section .carousel-control-prev,
+.image-carousel-section .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(21, 69, 138, 0.7);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.image-carousel-section:hover .carousel-control-prev,
+.image-carousel-section:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.image-carousel-section .carousel-control-prev {
+  left: 15px;
+}
+
+.image-carousel-section .carousel-control-next {
+  right: 15px;
+}
+
+.image-carousel-section .carousel-control-prev:hover,
+.image-carousel-section .carousel-control-next:hover {
+  background-color: rgba(21, 69, 138, 0.9);
+}
+
+.image-carousel-section .carousel-indicators {
+  margin-bottom: 15px;
+}
+
+.image-carousel-section .carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.image-carousel-section .carousel-indicators button.active {
+  background-color: #ffffff;
+  transform: scale(1.2);
+}
+
+/* Visitor Counter Section */
+.visitor-counter-section {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 
+    0 10px 30px rgba(59, 130, 246, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.visitor-counter-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+  animation: sectionGlow 10s ease-in-out infinite;
+}
+
+@keyframes sectionGlow {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(10px, 10px) rotate(180deg);
+  }
+}
+
 /* Home-specific button styling */
 .dropdown-menu .quick-link {
   width: auto;
@@ -376,6 +524,30 @@
   .carousel-image {
     height: 250px;
   }
+
+  .carousel-loading,
+  .carousel-no-data {
+    height: 250px;
+  }
+
+  .carousel-caption p {
+    font-size: 0.85rem;
+  }
+
+  .image-carousel-section .carousel-control-prev,
+  .image-carousel-section .carousel-control-next {
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+  }
+
+  .image-carousel-section .carousel-control-prev {
+    left: 10px;
+  }
+
+  .image-carousel-section .carousel-control-next {
+    right: 10px;
+  }
   
   .latest-events-section .card {
     height: auto;
@@ -383,6 +555,12 @@
   
   .marquee-container {
     height: 250px;
+  }
+
+  /* Visitor Counter mobile tweaks */
+  .visitor-counter-section {
+    padding: 20px 15px;
+    border-radius: 15px;
   }
   
   /* Important Notices mobile tweaks */
