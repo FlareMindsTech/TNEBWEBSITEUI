@@ -5,9 +5,11 @@ import { getAllMinthirans } from '../api';
 import './ActRegulations.css';
 
 const Minthiran = () => {
+  const pageStyle = {
+    background: '#ffffff'
+  };
   const [minthirans, setMinthirans] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedPdf, setSelectedPdf] = useState(null);
 
   useEffect(() => {
     fetchMinthirans();
@@ -44,11 +46,11 @@ const Minthiran = () => {
   };
 
   const openPdf = (pdfUrl, title) => {
-    setSelectedPdf({ url: pdfUrl, title });
-  };
-
-  const closePdf = () => {
-    setSelectedPdf(null);
+    if (pdfUrl) {
+      window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      alert('PDF file is not available');
+    }
   };
 
   const monthNames = [
@@ -57,7 +59,7 @@ const Minthiran = () => {
   ];
 
   return (
-    <div className="act-regulations-container">
+    <div className="act-regulations-container" style={pageStyle}>
       <div className="page-header">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -98,18 +100,17 @@ const Minthiran = () => {
               transition={{ duration: 0.5, delay: yearIndex * 0.1 }}
             >
               <h3 className="year-title mb-4">{year}</h3>
-              <div className="row g-4">
+              <div className="magazines-grid">
                 {minthirans[year].map((magazine, index) => (
                   <motion.div
                     key={magazine._id}
-                    className="col-lg-3 col-md-4 col-sm-6"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
                   >
                     <div
                       className="flipbook-card"
-                      onClick={() => openPdf(magazine.pdfUrl, `${magazine.month} ${magazine.year}`)}
+                      onClick={() => openPdf(magazine.pdf?.url || magazine.pdfUrl, `${magazine.month} ${magazine.year}`)}
                     >
                       <div className="flipbook-cover">
                         <div className="flipbook-spine"></div>
@@ -137,47 +138,52 @@ const Minthiran = () => {
         )}
       </div>
 
-      {/* PDF Viewer Modal */}
-      {selectedPdf && (
-        <div className="pdf-modal" onClick={closePdf}>
-          <div className="pdf-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="pdf-close-btn" onClick={closePdf}>
-              ×
-            </button>
-            <h4 className="mb-3">{selectedPdf.title}</h4>
-            {selectedPdf.url ? (
-              <iframe
-                src={`https://docs.google.com/gview?url=${encodeURIComponent(selectedPdf.url)}&embedded=true`}
-                title={selectedPdf.title}
-                className="pdf-viewer"
-                frameBorder="0"
-                allowFullScreen
-                sandbox="allow-same-origin allow-scripts allow-popups allow-presentation"
-              />
-            ) : (
-              <div className="pdf-error">
-                <p>PDF not available</p>
-                <a href={selectedPdf.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-3">
-                  Open in New Tab
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       <style>{`
+        .act-regulations-container {
+          background: #ffffff;
+        }
+
+        .page-header {
+          background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+          color: white;
+          padding: 40px 20px;
+          text-align: center;
+        }
+
+        .page-header h1 {
+          color: white;
+          font-weight: 700;
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+        }
+
+        .page-header .lead {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 1.1rem;
+        }
+
         .year-section {
           margin-bottom: 3rem;
         }
 
         .year-title {
-          color: #1b5baf;
+          background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+          color: white;
           font-weight: 700;
           font-size: 2rem;
-          padding-bottom: 10px;
-          border-bottom: 3px solid #1b5baf;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 8px;
           display: inline-block;
+          box-shadow: 0 4px 12px rgba(215, 15, 24, 0.3);
+        }
+
+        .magazines-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 40px;
+          padding: 20px 0;
         }
 
         .flipbook-card {
@@ -208,7 +214,7 @@ const Minthiran = () => {
           top: 0;
           bottom: 0;
           width: 20px;
-          background: linear-gradient(to right, #15458a, #1b5baf);
+          background: linear-gradient(to right, #EEAF37, #d70f18, #8b0000);
           border-radius: 4px 0 0 4px;
           transform: rotateY(-90deg);
           transform-origin: left;
@@ -219,10 +225,10 @@ const Minthiran = () => {
           position: absolute;
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 50%, #48a9e6 100%);
+          background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
           border-radius: 8px;
           box-shadow: 
-            0 10px 40px rgba(27, 91, 175, 0.4),
+            0 10px 40px rgba(215, 15, 24, 0.4),
             inset 0 1px 0 rgba(255, 255, 255, 0.2);
           display: flex;
           flex-direction: column;
@@ -252,21 +258,22 @@ const Minthiran = () => {
         .magazine-date .month {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #fbbf24;
+          color: #EEAF37;
           text-transform: uppercase;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .magazine-date .year-badge {
           display: inline-block;
-          background: rgba(255, 255, 255, 0.2);
-          padding: 4px 12px;
+          background: linear-gradient(135deg, #8b0000 0%, #d70f18 100%);
+          padding: 6px 14px;
           border-radius: 20px;
           font-size: 0.9rem;
           font-weight: 600;
-          color: white;
+          color: #EEAF37;
           margin-top: 5px;
           backdrop-filter: blur(10px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .magazine-title {
@@ -320,73 +327,6 @@ const Minthiran = () => {
           opacity: 0.6;
         }
 
-        .pdf-modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.9);
-          z-index: 9999;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-        }
-
-        .pdf-modal-content {
-          background: white;
-          border-radius: 12px;
-          padding: 20px;
-          max-width: 1200px;
-          width: 100%;
-          height: 90vh;
-          display: flex;
-          flex-direction: column;
-          position: relative;
-        }
-
-        .pdf-close-btn {
-          position: absolute;
-          top: 15px;
-          right: 15px;
-          background: #1b5baf;
-          color: white;
-          border: none;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          font-size: 24px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          z-index: 10;
-        }
-
-        .pdf-close-btn:hover {
-          background: #15458a;
-          transform: rotate(90deg);
-        }
-
-        .pdf-viewer {
-          width: 100%;
-          height: calc(100% - 60px);
-          border: none;
-          border-radius: 8px;
-        }
-
-        .pdf-error {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100%;
-          color: #666;
-          font-size: 1.1rem;
-        }
-
         @media (max-width: 768px) {
           .flipbook-cover {
             width: 160px;
@@ -403,11 +343,6 @@ const Minthiran = () => {
 
           .year-title {
             font-size: 1.5rem;
-          }
-
-          .pdf-modal-content {
-            padding: 15px;
-            height: 85vh;
           }
         }
       `}</style>

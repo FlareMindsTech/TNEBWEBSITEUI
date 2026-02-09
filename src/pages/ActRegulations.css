@@ -25,11 +25,12 @@
   padding: 15px 0;
 }
 
-.header-logo {
+/* .header-logo {
   height: 80px;
-  width: auto;
+  width: 80px;
   border-radius: 8px;
-}
+  object-fit: contain;
+} */
 
 .header-text h1 {
   font-family: 'Merriweather', serif;
@@ -466,7 +467,8 @@
   }
   
   .header-logo {
-    height: 60px;
+    height: 70px;
+    width: 70px;
   }
   
   .page-header {
@@ -523,6 +525,11 @@
   
   .sub-heading {
     font-size: 12px;
+  }
+
+  .header-logo {
+    height: 60px;
+    width: 60px;
   }
   
   .search-form .input-group {

@@ -5,6 +5,9 @@ import { getAllGalleries } from '../api';
 import './ActRegulations.css';
 
 const Photogallery = () => {
+  const pageStyle = {
+    background: '#ffffff'
+  };
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGallery, setSelectedGallery] = useState(null);
@@ -62,7 +65,7 @@ const Photogallery = () => {
   };
 
   return (
-    <div className="act-regulations-container">
+    <div className="act-regulations-container" style={pageStyle}>
       <div className="page-header">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -224,12 +227,15 @@ const Photogallery = () => {
           border-radius: 12px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
           overflow: hidden;
+          max-width: 1100px;
+          margin: 0 auto;
         }
 
         .gallery-table {
           width: 100%;
           border-collapse: collapse;
           font-size: 0.95rem;
+          table-layout: fixed;
         }
 
         .gallery-table thead {
@@ -241,10 +247,16 @@ const Photogallery = () => {
         }
 
         .gallery-table thead th {
-          padding: 18px 20px;
+          padding: 18px 16px;
           text-align: left;
           font-size: 0.85rem;
           border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+          word-wrap: break-word;
+        }
+
+        .gallery-table thead th:last-child {
+          text-align: center;
+          width: 100px;
         }
 
         .gallery-table tbody tr {
@@ -263,13 +275,15 @@ const Photogallery = () => {
         }
 
         .gallery-table td {
-          padding: 16px 20px;
+          padding: 16px 16px;
           vertical-align: middle;
+          word-wrap: break-word;
         }
 
         .date-cell {
-          width: 140px;
+          width: 120px;
           font-weight: 600;
+          text-align: left;
         }
 
         .date-badge {
@@ -284,7 +298,8 @@ const Photogallery = () => {
         }
 
         .title-cell {
-          width: 220px;
+          width: auto;
+          text-align: left;
         }
 
         .gallery-title {
@@ -300,7 +315,8 @@ const Photogallery = () => {
         }
 
         .description-cell {
-          flex: 1;
+          text-align: left;
+          width: auto;
         }
 
         .gallery-description {
@@ -315,7 +331,7 @@ const Photogallery = () => {
         }
 
         .photos-count {
-          width: 80px;
+          width: 100px;
           text-align: center;
         }
 
@@ -422,9 +438,29 @@ const Photogallery = () => {
         }
 
         .grid-container {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
           gap: 16px;
+          padding-bottom: 10px;
+        }
+
+        .grid-container::-webkit-scrollbar {
+          height: 8px;
+        }
+
+        .grid-container::-webkit-scrollbar-track {
+          background: #f0f0f0;
+          border-radius: 10px;
+        }
+
+        .grid-container::-webkit-scrollbar-thumb {
+          background: linear-gradient(135deg, #1b5baf, #2a6cc7);
+          border-radius: 10px;
+        }
+
+        .grid-container::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(135deg, #15458a, #1b5baf);
         }
 
         .image-grid-item {
@@ -435,6 +471,8 @@ const Photogallery = () => {
           transition: all 0.3s ease;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           aspect-ratio: 1;
+          flex: 0 0 200px;
+          min-width: 200px;
         }
 
         .image-grid-item:hover {
@@ -556,7 +594,12 @@ const Photogallery = () => {
           }
 
           .grid-container {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+          }
+
+          .image-grid-item {
+            flex: 0 0 160px;
+            min-width: 160px;
           }
 
           .details-info h3 {
@@ -596,8 +639,12 @@ const Photogallery = () => {
           }
 
           .grid-container {
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 12px;
+          }
+
+          .image-grid-item {
+            flex: 0 0 140px;
+            min-width: 140px;
           }
 
           .details-info h3 {
@@ -645,7 +692,12 @@ const Photogallery = () => {
           }
 
           .grid-container {
-            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+          }
+
+          .image-grid-item {
+            flex: 0 0 120px;
+            min-width: 120px;
           }
 
           .details-info h3 {
