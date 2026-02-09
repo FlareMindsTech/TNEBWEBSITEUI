@@ -89,13 +89,13 @@
 }
 
 .main-navbar .dropdown-item {
-  color: white !important;
+  color: #EEAF37 !important;
   padding: 8px 20px;
 }
 
 .main-navbar .dropdown-item:hover,
 .main-navbar .dropdown-item.active {
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
 }
 
 .main-navbar .dropdown-item.active {
