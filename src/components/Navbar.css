@@ -42,18 +42,17 @@
 
 .logo-container {
   position: relative;
-  width: 94px;
-  height: 94px;
-  background: #ffffff; 
+  width: 150px;
+  height: 90px;
+  background: transparent;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
-  box-shadow: 0 6px 16px rgba(27, 91, 175, 0.18);
   flex-shrink: 0;
-  min-width: 94px;
-  min-height: 94px;
+  min-width: 150px;
+  min-height: 90px;
 }
 
 .logo-sparkle {
@@ -107,12 +106,13 @@
 /* Default header logo styling */
 .header-logo {
   height: 80px;
-  width: 80px;
+  width: 140px;
   display: block;
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(27,91,175,0.12);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(27,91,175,0.15);
   object-fit: contain;
   max-width: 100%;
+  background: transparent;
 }
 
 .logo-text {
