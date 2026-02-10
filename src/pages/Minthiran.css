@@ -161,19 +161,19 @@
 .magazine-date .month {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2a6cc7;
+  color: #ffffff;
   text-transform: uppercase;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .magazine-date .year-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #15458a 0%, #1b5baf 100%);
+  background: linear-gradient(135deg, #0d3a6d 0%, #1b5baf 100%);
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2a6cc7;
+  color: #ffffff;
   margin-top: 5px;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -197,6 +197,7 @@
   font-size: 0.9rem;
   margin: 5px 0 0;
   opacity: 0.9;
+  color: #e8e8e8;
 }
 
 .flipbook-icon {
@@ -205,7 +206,7 @@
   opacity: 0.9;
   position: relative;
   z-index: 1;
-  animation: float 3s ease-in-out infinite;
+  /* animation: float 3s ease-in-out infinite; */
 }
 
 @keyframes float {
