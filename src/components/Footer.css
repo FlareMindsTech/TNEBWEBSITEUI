@@ -1,4 +1,4 @@
-.footer-section {
+﻿.footer-section {
   margin-top: 40px;
   background: #f8f9fa;
   border-top: 1px solid #e0e0e0;
@@ -41,7 +41,7 @@
 /* Footer Bottom */
 .footer-bottom {
   /* background-color: #48a9e6; */
-      background: radial-gradient(ellipse at center, #d70f18 0%, #000000 100%, #EEAF37 100%);
+      background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
   padding: 1px 0;
   color: white;
 }
