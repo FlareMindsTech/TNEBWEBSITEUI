@@ -42,7 +42,7 @@
 .footer-bottom {
   /* background-color: #48a9e6; */
       background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
-  padding: 1px 0;
+  padding: 12px 0;
   color: white;
 }
 
@@ -96,32 +96,49 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .footer-bottom {
+    padding: 10px 0;
+  }
+
   .footer-bottom-content {
     flex-direction: row;
-    text-align: left;
-    gap: 15px;
-    font-size: 0.4rem;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+  }
+
+  .footer-brand {
+    flex: 0 0 auto;
+  }
+
+  .footer-brand-text {
+    font-size: 1rem;
+    font-weight: 700;
   }
 
   .footer-copyright {
-    order: 0;
     flex: 1;
     text-align: center;
-    font-size: 0.1em;
+    font-size: 0.8rem;
+    opacity: 0.95;
   }
 
   .footer-links {
-    order: 0;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    gap: 10px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
   }
 
   .footer-links a {
-    margin-left: 10px;
-    font-size: 0.65rem;
+    margin-left: 0;
+    font-size: 0.75rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-links a:hover {
+    opacity: 0.8;
   }
 
   .slider-circular {
@@ -139,36 +156,24 @@
 }
 
 @media (max-width: 576px) {
+  .footer-bottom {
+    padding: 8px 0;
+  }
+
   .footer-bottom-content {
-    flex-direction: row;
     gap: 10px;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0 12px;
+  }
+
+  .footer-brand-text {
+    font-size: 0.9rem;
   }
 
   .footer-copyright {
-    flex: 1;
-    text-align: center;
-    font-size: 0.85rem;
-  }
-
-  .footer-links {
-    flex-direction: row;
-    gap: 8px;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+    font-size: 0.72rem;
   }
 
   .footer-links a {
-    width: auto;
-    text-align: left;
-    margin: 0 5px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-  
-  .footer-bottom .row > div {
-    text-align: center !important;
-    margin-bottom: 0;
+    font-size: 0.7rem;
   }
 }
