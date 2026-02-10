@@ -1,4 +1,4 @@
-/* Flip Card Design */
+﻿/* Flip Card Design */
 .handbook-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
@@ -7,7 +7,7 @@
 
 /* Hero Section */
 .handbook-hero {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   padding: 30px 15px;
   text-align: center;
   position: relative;

@@ -1,4 +1,4 @@
-.important-notices-card.card.shadow-sm {
+﻿.important-notices-card.card.shadow-sm {
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -10,8 +10,8 @@
 }
 
 .important-notices-header {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 60%, #EEAF37 100%);
-  box-shadow: 0 6px 16px rgba(215, 15, 24, 0.25);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 60%, #2a6cc7 100%);
+  box-shadow: 0 6px 16px rgba(27, 91, 175, 0.25);
   letter-spacing: 0.4px;
   border-radius: 12px 12px 0 0;
   padding: 18px 24px;
@@ -161,14 +161,14 @@
   align-items: center;
   gap: 8px;
   padding: 10px 24px;
-  background: #d70f18;
+  background: #1b5baf;
   color: #fff;
   border: none;
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.3px;
-  box-shadow: 0 4px 12px rgba(215, 15, 24, 0.2);
+  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.2);
   transition: background 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
