@@ -1,19 +1,19 @@
-:root {
-  --primary-color: #d70f18;
-  --primary-dark: #8b0000;
-  --primary-light: #ff4444;
-  --primary-lighter: #ff6666;
-  --primary-gradient: linear-gradient(90deg, #d70f18 0%, #8b0000 50%, #EEAF37 100%);
-  --hover-gradient: linear-gradient(90deg, #ff4444 0%, #ff6666 50%, #d70f18 100%);
+﻿:root {
+  --primary-color: #1b5baf;
+  --primary-dark: #15458a;
+  --primary-light: #2a6cc7;
+  --primary-lighter: #3a7ddf;
+  --primary-gradient: linear-gradient(90deg, #1b5baf 0%, #15458a 50%, #2a6cc7 100%);
+  --hover-gradient: linear-gradient(90deg, #2a6cc7 0%, #3a7ddf 50%, #1b5baf 100%);
   --text-color: #ffffff;
   --dropdown-bg: rgba(255, 255, 255, 0.98);
-  --shadow-color: rgba(215, 15, 24, 0.2);
+  --shadow-color: rgba(27, 91, 175, 0.2);
 }
 
 /* Navbar Background */
 .main-navbar {
   /* background: var(--primary-gradient) !important; */
-  background: radial-gradient(ellipse at center, #d70f18 0%, #000000 100%, #EEAF37 100%);
+  background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;
   box-shadow: 0 4px 20px var(--shadow-color);
@@ -168,13 +168,13 @@
 
 .search-container:focus-within {
   background: #ffffff;
-  border-color: #d70f18;
-  box-shadow: 0 8px 30px rgba(215, 15, 24, 0.3), 0 0 0 4px rgba(215, 15, 24, 0.1);
+  border-color: #1b5baf;
+  box-shadow: 0 8px 30px rgba(27, 91, 175, 0.3), 0 0 0 4px rgba(27, 91, 175, 0.1);
   transform: translateY(-2px);
 }
 
 .search-icon {
-  color: #d70f18;
+  color: #1b5baf;
   font-size: 1.1rem;
   margin-right: 0.75rem;
   transition: all 0.3s ease;
@@ -182,7 +182,7 @@
 }
 
 .search-container:focus-within .search-icon {
-  color: #8b0000;
+  color: #15458a;
   transform: scale(1.15);
 }
 
@@ -199,12 +199,12 @@
 }
 
 .search-input::placeholder {
-  color: rgba(215, 15, 24, 0.5);
+  color: rgba(27, 91, 175, 0.5);
   font-weight: 400;
 }
 
 .search-input:focus::placeholder {
-  color: rgba(215, 15, 24, 0.3);
+  color: rgba(27, 91, 175, 0.3);
 }
 
 .search-clear {
@@ -223,7 +223,7 @@
 }
 
 .search-clear:hover {
-  color: #d70f18;
+  color: #1b5baf;
   transform: rotate(90deg);
 }
 
@@ -386,14 +386,14 @@
 
 /* Dropdown styling */
 .main-navbar .dropdown-menu {
-  /* background: rgba(27, 91, 175, 0.95) !important; */
+  background: rgba(27, 91, 175, 0.95) !important;
   border: 1px solid rgba(27, 91, 175, 0.3) !important;
   box-shadow: 0 8px 24px rgba(27, 91, 175, 0.3) !important;
   border-radius: 12px !important;
 }
 
 .main-navbar .dropdown-item {
-  color: #EEAF37 !important;
+  color: #ffffff !important;
   font-weight: 600;
   padding: 10px 16px !important;
   border-radius: 8px;
@@ -402,8 +402,8 @@
 }
 .main-navbar .dropdown-item:hover,
 .main-navbar .dropdown-item:focus {
-  color: #EEAF37 !important;
-  background: #d70f18 !important;
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.2) !important;
   transform: translateX(4px);
 }
 
@@ -801,9 +801,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+    background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
     color: #ffffff;
-    box-shadow: 0 10px 24px rgba(215, 15, 24, 0.3);
+    box-shadow: 0 10px 24px rgba(27, 91, 175, 0.3);
   }
 
   .auth-modal.login-active .auth-title {
@@ -820,7 +820,7 @@
   }
 
   .auth-modal.login-active .auth-sub-icon {
-    color: #d70f18;
+    color: #1b5baf;
   }
 
   .auth-modal.login-active .auth-close {
@@ -856,20 +856,20 @@
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
-    border: 1px solid rgba(215, 15, 24, 0.2);
+    border: 1px solid rgba(27, 91, 175, 0.2);
     border-radius: 12px;
     background: #f8fbff;
     transition: all 0.25s ease;
   }
 
   .login-form .input-wrapper:focus-within {
-    border-color: #d70f18;
-    box-shadow: 0 0 0 4px rgba(215, 15, 24, 0.12);
+    border-color: #1b5baf;
+    box-shadow: 0 0 0 4px rgba(27, 91, 175, 0.12);
     background: #ffffff;
   }
 
   .login-form .input-icon {
-    color: #d70f18;
+    color: #1b5baf;
     font-size: 1rem;
   }
 
@@ -887,7 +887,7 @@
   }
 
   .login-form .primary-btn {
-    background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+    background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
     color: #ffffff;
     border: none;
     border-radius: 12px;
@@ -895,13 +895,13 @@
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 14px 28px rgba(215, 15, 24, 0.3);
+    box-shadow: 0 14px 28px rgba(27, 91, 175, 0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .login-form .primary-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 16px 34px rgba(215, 15, 24, 0.35);
+    box-shadow: 0 16px 34px rgba(27, 91, 175, 0.35);
   }
 
   .login-form .primary-btn:active {

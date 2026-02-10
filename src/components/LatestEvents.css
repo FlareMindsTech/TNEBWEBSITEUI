@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap");
 
 /* Latest Events Section */
 .latest-events-section {
@@ -152,7 +152,7 @@
 /* Vertical Carousel for Events */
 .carousel-events-wrapper {
   /* background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%); */
-      background: radial-gradient(ellipse at center, #d70f18 0%, #000000 100%, #EEAF37 100%);
+      background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(21, 69, 138, 0.25);
@@ -164,7 +164,7 @@
 
 .carousel-events-header {
   /* background: linear-gradient(135deg, #15458a 0%, #0f466d 100%); */
-      background: radial-gradient(ellipse at center, #d70f18 0%, #000000 100%, #EEAF37 100%);
+      background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
   color: white;
   padding: 20px;
   display: flex;
