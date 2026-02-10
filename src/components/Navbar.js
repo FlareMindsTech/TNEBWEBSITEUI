@@ -202,10 +202,13 @@ const Navbar = () => {
                               👥 CEC
                             </Link>
                             <Link className="sidebar-item" to="/regional" onClick={closeAllMenus}>
-                              👥 Regional
+                              👥 Regional Secretary
                             </Link>
                             <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
-                              👥 Brand Secretary
+                              👥 Branch Secretary
+                            </Link>
+                            <Link className="sidebar-item" to="/role-of-honour" onClick={closeAllMenus}>
+                              👥 Role Of Honour
                             </Link>
                           </motion.div>
                         )}
@@ -412,12 +415,17 @@ const Navbar = () => {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/regional" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Regional
+                        <span className="dropdown-icon">👥</span> Regional Secretary
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Brand Secretary
+                        <span className="dropdown-icon">👥</span> Branch Secretary
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
+                      <Link className="dropdown-item" to="/role-of-honour" onClick={closeAllMenus}>
+                        <span className="dropdown-icon">👥</span> Role Of Honour
                       </Link>
                     </motion.div>
                   </motion.div>
