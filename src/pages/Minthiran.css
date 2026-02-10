@@ -1,9 +1,9 @@
-.act-regulations-container {
+﻿.act-regulations-container {
   background: #ffffff;
 }
 
 .page-header {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   color: white;
   padding: 30px 15px;
   text-align: center;
@@ -70,7 +70,7 @@
 }
 
 .year-title {
-  background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 50%, #15458a 100%);
   color: white;
   font-weight: 700;
   font-size: 2rem;
@@ -78,7 +78,7 @@
   border: none;
   border-radius: 8px;
   display: inline-block;
-  box-shadow: 0 4px 12px rgba(215, 15, 24, 0.3);
+  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.3);
 }
 
 .magazines-grid {
@@ -117,7 +117,7 @@
   top: 0;
   bottom: 0;
   width: 20px;
-  background: linear-gradient(to right, #EEAF37, #d70f18, #8b0000);
+  background: linear-gradient(to right, #2a6cc7, #1b5baf, #15458a);
   border-radius: 4px 0 0 4px;
   transform: rotateY(-90deg);
   transform-origin: left;
@@ -128,10 +128,10 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #d70f18 0%, #EEAF37 50%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 50%, #15458a 100%);
   border-radius: 8px;
   box-shadow:
-    0 10px 40px rgba(215, 15, 24, 0.4),
+    0 10px 40px rgba(27, 91, 175, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
@@ -161,19 +161,19 @@
 .magazine-date .month {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #EEAF37;
+  color: #2a6cc7;
   text-transform: uppercase;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .magazine-date .year-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #8b0000 0%, #d70f18 100%);
+  background: linear-gradient(135deg, #15458a 0%, #1b5baf 100%);
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #EEAF37;
+  color: #2a6cc7;
   margin-top: 5px;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);

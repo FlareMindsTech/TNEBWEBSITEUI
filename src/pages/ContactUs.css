@@ -1,4 +1,4 @@
-.contact-page {
+﻿.contact-page {
   background: white;
   color: #0f172a;
   padding: 0;
@@ -6,7 +6,7 @@
 }
 
 .page-header {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   color: white;
   padding: 30px 15px;
   text-align: center;
@@ -87,7 +87,7 @@
   font-size: 3.5rem;
   font-weight: 800;
   text-align: center;
-  background: linear-gradient(90deg, #EEAF37, #ffd700, #EEAF37);
+  background: linear-gradient(90deg, #2a6cc7, #ffd700, #2a6cc7);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
