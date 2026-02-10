@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUser, FaCaretDown, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser,FaTimes, FaCaretDown, FaBars, FaTimeees} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
@@ -295,7 +295,7 @@ const Navbar = () => {
 
                      <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                        💻 E-Minthiran
+                       e-Minthiran
                       </Link>
                     </motion.li>
 
@@ -491,7 +491,7 @@ const Navbar = () => {
             </motion.li>
 
              <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>E-Minthiran</Link>
+              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>e-Minthiran</Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
