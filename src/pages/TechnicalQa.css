@@ -1,4 +1,4 @@
-.qa-container {
+﻿.qa-container {
   font-family: 'Merriweather', serif;
   min-height: 100vh;
   background: white;
@@ -7,7 +7,7 @@
 }
 
 .qa-hero {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   color: white;
   padding: 30px 15px;
   text-align: center;

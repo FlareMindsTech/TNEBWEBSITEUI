@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaSearch, FaTimes, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import React, { useState, useEffect, useContext } from 'react';
+import { motion } from 'framer-motion';
+import { FaCalendarAlt, FaClock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import SearchInput from './SearchInput';
 import logo from '../assets/tnebea_logo_cropped2.png';
 import { SidebarContext } from '../context/SidebarContext';
 
@@ -10,9 +11,6 @@ const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
-  const [headerSearch, setHeaderSearch] = useState('');
-  const [searchExpanded, setSearchExpanded] = useState(false);
-  const searchRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
   // Check screen size for responsive search
@@ -57,35 +55,7 @@ const Header = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // Handle click outside to close search
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setSearchExpanded(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleHeaderSearchSubmit = (e) => {
-    e.preventDefault();
-    if (!headerSearch.trim()) return;
-    // Handle search logic here
-    console.log('Searching for:', headerSearch);
-  };
-
-  const handleHeaderSearchClear = () => {
-    setHeaderSearch('');
-    setSearchExpanded(false);
-  };
-
-  const handleSearchIconClick = () => {
-    setSearchExpanded(true);
-  };
 
   return (
     <>
@@ -229,130 +199,13 @@ const Header = () => {
                   </div>
                 </motion.div>
 
-                {/* Expandable Search */}
+                {/* Search Input */}
                 <motion.div
-                  ref={searchRef}
-                  className="search-container"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.9 }}
-                  style={{
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '100%',
-                    justifyContent: 'flex-end'
-                  }}
                 >
-                  <AnimatePresence>
-                    {!searchExpanded ? (
-                      <motion.button
-                        key="search-icon"
-                        onClick={handleSearchIconClick}
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        whileTap={{ scale: 0.95 }}
-                        style={{
-                          background: 'transparent',
-                          border: 'none',
-                          borderRadius: '6px',
-                          width: '22px',
-                          height: '22px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: 'pointer',
-                          boxShadow: 'none',
-                          color: '#d70f18'
-                        }}
-                      >
-                        <FaSearch style={{ fontSize: '14px' }} />
-                      </motion.button>
-                    ) : (
-                      <motion.form
-                        key="search-form"
-                        onSubmit={handleHeaderSearchSubmit}
-                        initial={{ 
-                          width: '220px',
-                          opacity: 0,
-                          y: -4
-                        }}
-                        animate={{ 
-                          width: '220px',
-                          opacity: 1,
-                          y: 0
-                        }}
-                        exit={{ 
-                          width: '220px',
-                          opacity: 0,
-                          y: -4
-                        }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          background: 'transparent',
-                          borderRadius: '6px',
-                          padding: '0',
-                          border: 'none',
-                          boxShadow: 'none',
-                          gap: '6px',
-                          position: 'relative'
-                        }}
-                      >
-                        <FaSearch style={{ 
-                          color: '#d70f18', 
-                          fontSize: '12px',
-                          flexShrink: 0 
-                        }} />
-                        
-                        {/* Search input */}
-                        <input
-                          type="text"
-                          autoFocus
-                          placeholder="Search..."
-                          value={headerSearch}
-                          onChange={(e) => setHeaderSearch(e.target.value)}
-                          style={{
-                            border: 'none',
-                            background: 'transparent',
-                            outline: 'none',
-                            fontSize: '12px',
-                            flex: 1,
-                            padding: '0',
-                            color: '#1a1a1a',
-                            minWidth: 0,
-                            fontFamily: 'inherit',
-                            fontWeight: 500
-                          }}
-                        />
-                        
-                        {/* Clear button */}
-                        {headerSearch && (
-                          <motion.button
-                            type="button"
-                            onClick={handleHeaderSearchClear}
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            whileTap={{ scale: 0.9 }}
-                            style={{
-                              background: 'transparent',
-                              border: 'none',
-                              cursor: 'pointer',
-                              padding: '0',
-                              display: 'flex',
-                              alignItems: 'center',
-                              color: '#d70f18',
-                              flexShrink: 0
-                            }}
-                          >
-                            <FaTimes style={{ fontSize: '11px' }} />
-                          </motion.button>
-                        )}
-                      </motion.form>
-                    )}
-                  </AnimatePresence>
+                  <SearchInput />
                 </motion.div>
               </div>
             </motion.div>
