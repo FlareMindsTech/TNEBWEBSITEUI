@@ -7,6 +7,7 @@ import SearchInput from './SearchInput';
 import logo from '../assets/tnebea_logo_cropped2.png';
 import { SidebarContext } from '../context/SidebarContext';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
@@ -99,7 +100,7 @@ const Header = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <motion.h1 
-                    className="mb-1"
+                    className="mb-1 mx-2 ml-2 fw-bold text-center"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
@@ -136,9 +137,9 @@ const Header = () => {
 
                   
                   {/* Date */}
-                  <div className="datetime-row fw-bold">
+                  <div className="datetime-row fw-bold text-center">
                     <FaCalendarAlt className="datetime-icon fw-bold" />
-                    <span className="datetime-text fw-bold">
+                    <span className="datetime-text fw-bold h4">
                       {currentDate}
                     </span>
                   </div>
