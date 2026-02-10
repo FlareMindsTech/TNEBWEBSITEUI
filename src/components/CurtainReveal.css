@@ -1,0 +1,185 @@
+/* Curtain Reveal Component Styling */
+
+.curtain-container {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, #1a1a1a 0%, #000 70%);
+  z-index: 2000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.curtain-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+  display: block;
+}
+
+.curtain-floor {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 15vh;
+  background: linear-gradient(to bottom, #111 0%, #000 100%);
+  perspective: 1000px;
+  z-index: 5;
+}
+
+.curtain-floor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 40px,
+    rgba(255, 255, 255, 0.02) 41px
+  );
+  transform: rotateX(60deg);
+  transform-origin: top;
+}
+
+.curtain-spotlight {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1500px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+  z-index: 25;
+}
+
+/* Responsive Design */
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .curtain-floor {
+    height: 12vh;
+  }
+
+  .curtain-spotlight {
+    width: 600px;
+    height: 1000px;
+  }
+}
+
+/* Tablet (481px to 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .curtain-floor {
+    height: 14vh;
+  }
+
+  .curtain-spotlight {
+    width: 800px;
+    height: 1200px;
+  }
+}
+
+/* Desktop (769px to 1440px) */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .curtain-floor {
+    height: 15vh;
+  }
+
+  .curtain-spotlight {
+    width: 1000px;
+    height: 1500px;
+  }
+}
+
+/* Large Desktop (1441px and above) */
+@media (min-width: 1441px) {
+  .curtain-floor {
+    height: 15vh;
+  }
+
+  .curtain-spotlight {
+    width: 1200px;
+    height: 1600px;
+  }
+}
+
+/* Portrait orientation adjustments */
+@media (orientation: portrait) {
+  .curtain-spotlight {
+    width: 800px;
+    height: 1200px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) {
+  .curtain-spotlight {
+    width: 1200px;
+    height: 1200px;
+  }
+}
+
+/* Small screens with notch support */
+@supports (padding: max(0px)) {
+  .curtain-container {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .curtain-floor::after {
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 40px,
+      rgba(255, 255, 255, 0.03) 41px
+    );
+  }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .curtain-canvas {
+    opacity: 0.5;
+  }
+}
+
+/* Smooth scaling across different aspect ratios */
+@media (max-aspect-ratio: 9/16) {
+  .curtain-spotlight {
+    top: -40%;
+  }
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .curtain-spotlight {
+    top: -30%;
+  }
+}
