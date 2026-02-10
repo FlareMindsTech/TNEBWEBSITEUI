@@ -260,7 +260,7 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
   color: #2a6cc7;
   font-size: 1.8rem;
   margin-bottom: 10px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   gap: 10px;
