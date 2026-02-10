@@ -23,6 +23,8 @@ import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
 import TnebeaForms from './pages/TnebeaForms';
 import RoleOf from './pages/RoleOf';
+import IntroScreen from './components/IntroScreen';
+import CurtainReveal from './components/CurtainReveal';
 // import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
@@ -34,35 +36,50 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showCurtain, setShowCurtain] = useState(() => {
+    // Check if curtain has been shown before
+    const curtainCompleted = sessionStorage.getItem("curtain_completed");
+    const introCompleted = sessionStorage.getItem("intro_completed");
+    // Don't show curtain if already completed
+    return !curtainCompleted && !introCompleted;
+  });
+  const [showIntro, setShowIntro] = useState(false);
+  const [showApp, setShowApp] = useState(() => {
+    // Show app directly if intro was already completed
+    const curtainCompleted = sessionStorage.getItem("curtain_completed");
+    const introCompleted = sessionStorage.getItem("intro_completed");
+    return curtainCompleted && introCompleted;
+  });
 
-  useEffect(() => {
-    if (sessionStorage.getItem("visited")) {
-      setShowSplash(false);
-    } else {
-      sessionStorage.setItem("visited", "true");
-    }
-  }, []);
+  // Handle curtain opened - show intro screen
+  const handleCurtainOpened = () => {
+    setShowCurtain(false);
+    // Mark curtain as completed
+    sessionStorage.setItem("curtain_completed", "true");
+    // Show intro screen
+    setShowIntro(true);
+  };
 
-  useEffect(() => {
-    if (showSplash) {
-      const timer = setTimeout(() => {
-        setShowSplash(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSplash]);
+  // Handle intro completion - show main app
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    // Mark intro as completed
+    sessionStorage.setItem("intro_completed", "true");
+    // Show main app immediately
+    setShowApp(true);
+  };
 
+  // Prevent scrolling during curtain and intro
   useEffect(() => {
     const body = document.body;
-    if (showSplash) {
+    if (showCurtain || showIntro) {
       body.classList.add('no-scroll');
     } else {
       body.classList.remove('no-scroll');
     }
 
     return () => body.classList.remove('no-scroll');
-  }, [showSplash]);
+  }, [showCurtain, showIntro]);
 
   return (
     <Router>
@@ -74,17 +91,13 @@ function App() {
           extraScale={1.3}
         > */}
           <div className="App">
-          {showSplash && (
-            <div className="splash-screen">
-              <div className="splash-logo-circle">
-                <img src={logo} alt="TNEB Engineers Association" className="splash-logo" />
-              </div>
-              <div className="splash-welcome">Welcome to TNEB</div>
-              <div className="splash-brand">TNEB Engineers Association</div>
-              <div className="splash-subtext">Tamilnadu Electricity Board | Engineers</div>
-            </div>
-          )}
+          {/* Curtain Reveal */}
+          {showCurtain && <CurtainReveal onCurtainOpened={handleCurtainOpened} autoOpen={false} />}
+          
+          {/* Intro Screen */}
+          {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
 
+          {showApp && (
           <div className="app-content">
           <Routes>
             <Route path="/" element={<><Header /><Home /><Footer /></>} />
@@ -113,6 +126,7 @@ function App() {
             <Route path="/role-of-honour" element={<><Header /><RoleOf /><Footer /></>} />
           </Routes>
         </div>
+        )}
       </div>
         {/* </ClickSpark> */}
       </SidebarProvider>
