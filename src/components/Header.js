@@ -105,7 +105,7 @@ const Header = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                   >
-                    Tamilnadu Electricity Board Engineer's Association
+                    Tamilnadu Electricity Board Engineers' Association
                   </motion.h1>
                   <motion.p 
                     className="text-secondary sub-heading mb-0 text-center"
