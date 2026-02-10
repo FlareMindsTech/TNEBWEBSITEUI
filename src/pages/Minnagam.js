@@ -66,8 +66,8 @@ const ContactCard = ({ contact, index }) => {
 const Minnagam = () => {
   const buildingImages = [
     { id: 1, src: building1, alt: 'Proposed Building - View 1' },
-    { id: 2, src: building2, alt: 'Proposed Building - View 2' },
-    { id: 3, src: building3, alt: 'Proposed Building - View 3' }
+    { id: 2, src: building3, alt: 'Proposed Building - View 2' },
+    { id: 3, src: building2, alt: 'Proposed Building - View 3' }
   ];
 
   const rooms = [
