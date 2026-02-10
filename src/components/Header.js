@@ -100,15 +100,15 @@ const Header = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <motion.h1 
-                    className="mb-1 mx-2 ml-2 fw-bold text-center"
+                    className="mb-1 fw-bold text-center header-title"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                   >
-                    Tamilnadu Electricity Board | Engineers Association
+                    Tamilnadu Electricity Board Engineer's Association
                   </motion.h1>
                   <motion.p 
-                    className="text-secondary sub-heading mb-0"
+                    className="text-secondary sub-heading mb-0 text-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.7 }}
@@ -134,18 +134,16 @@ const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
-
-                  
                   {/* Date */}
-                  <div className="datetime-row fw-bold text-center">
+                  <div className="datetime-row fw-bold text-end">
                     <FaCalendarAlt className="datetime-icon fw-bold" />
-                    <span className="datetime-text fw-bold h4">
+                    <span className="datetime-text fw-bold">
                       {currentDate}
                     </span>
                   </div>
                   
                   {/* Time */}
-                  <div className="datetime-row fw-bold">
+                  <div className="datetime-row fw-bold text-end">
                     <FaClock className="datetime-icon fw-bold" />
                     <span className="datetime-time fw-bold">
                       {currentTime}

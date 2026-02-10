@@ -482,12 +482,32 @@
 
 .header-left {
   gap: 12px;
+  width: 100%;
+}
+
+.header-logo {
+  margin-left: 14px;
 }
 
 .header-text-centered {
   flex: 1;
   text-align: center;
   padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+}
+
+.header-title {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (min-width: 992px) {
+  .header-text-centered {
+    margin-left: 8%;
+  }
 }
 
 .header-right {
@@ -524,14 +544,15 @@
 
 .datetime-icon {
   color: var(--primary-color);
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
+  font-weight: bold;
 }
 
 .datetime-text {
-  font-weight: 600;
+  font-weight: 900;
   color: var(--primary-color);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.2px;
   white-space: nowrap;
   overflow: hidden;
@@ -539,9 +560,9 @@
 }
 
 .datetime-time {
-  font-weight: 700;
+  font-weight: 900;
   color: var(--primary-color);
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 0.5px;
   font-family: monospace;
 }
@@ -592,6 +613,7 @@
   font-family: 'Merriweather', serif;
   font-size: 14px;
   color: #666;
+  text-align: center;
 }
 
 .search-form .input-group {
