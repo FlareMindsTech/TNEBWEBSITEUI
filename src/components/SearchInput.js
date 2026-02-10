@@ -12,7 +12,7 @@ const SearchInput = () => {
     e.preventDefault();
     if (searchValue.trim()) {
       console.log('Searching for:', searchValue);
-      // Add your search logic here
+      // logic will soon
     }
   };
 

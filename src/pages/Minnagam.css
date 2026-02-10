@@ -4,86 +4,106 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* Hero Section */
+/* Proposed Building Section */
+.proposed-building-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
+  padding: 40px 20px;
+  border-bottom: 3px solid #1b5baf;
+}
+
+.proposed-building-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.proposed-building-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1b5baf;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.proposed-building-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #1b5baf, #2c7be5);
+  border-radius: 2px;
+}
+
+.building-images-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.building-image-wrapper {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: default;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 4/3;
+}
+
+.building-image-wrapper:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(27, 91, 175, 0.3);
+}
+
+.building-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.building-image-wrapper:hover .building-image {
+  transform: scale(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(27, 91, 175, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.building-image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-overlay span {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hero Section - Simplified */
 .minnagam-hero {
   background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   padding: 30px 15px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(27, 91, 175, 0.3);
-  transition: all 0.5s ease;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.minnagam-hero:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 50px rgba(27, 91, 175, 0.4);
-}
-
-/* Electrical wire spark effects */
-.minnagam-hero::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  width: 30%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #ffd700 50%, transparent 100%);
-  box-shadow: 
-    0 0 10px #ffd700,
-    0 0 20px #ffd700,
-    0 0 30px rgba(255, 215, 0, 0.5);
-  transform: translateY(-50%);
-  animation: leftWire 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Right wire */
-.minnagam-hero::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 10%;
-  width: 30%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #ffd700 50%, transparent 100%);
-  box-shadow: 
-    0 0 10px #ffd700,
-    0 0 20px #ffd700,
-    0 0 30px rgba(255, 215, 0, 0.5);
-  transform: translateY(-50%);
-  animation: rightWire 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-@keyframes leftWire {
-  0%, 100% {
-    opacity: 0.6;
-    left: 10%;
-  }
-  50% {
-    opacity: 1;
-    left: 35%;
-  }
-}
-
-@keyframes rightWire {
-  0%, 100% {
-    opacity: 0.6;
-    right: 10%;
-  }
-  50% {
-    opacity: 1;
-    right: 35%;
-  }
 }
 
 .hero-content {
@@ -93,74 +113,20 @@
   margin: 0 auto;
 }
 
-/* Electrical spark  wires meet */
-.hero-content::before {
-  content: '⚡';
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 3rem;
-  color: #ffd700;
-  text-shadow: 
-    0 0 20px #ffd700,
-    0 0 40px #ffd700,
-    0 0 60px rgba(255, 215, 0, 0.8),
-    0 0 80px rgba(255, 215, 0, 0.6);
-  animation: electricSpark 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes electricSpark {
-  0%, 40%, 100% {
-    opacity: 0;
-    transform: translateX(-50%) scale(0);
-  }
-  45%, 55% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.5);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(2) rotate(15deg);
-    filter: brightness(2);
-  }
-}
-
 .minnagam-hero-icon {
-  font-size: 4rem;
+  font-size: 3rem;
   color: white;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-  animation: minnagam-float 3s ease-in-out infinite, minnagam-icon-sparkle 2s ease-in-out infinite;
-}
-
-@keyframes minnagam-icon-sparkle {
-  0%, 100% {
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
-  }
-}
-
-@keyframes minnagam-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  margin-bottom: 15px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .hero-title1 {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: white;
   margin: 0 0 15px 0;
   letter-spacing: 2px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transform: translate3d(0, 0, 0);
-  will-change: auto;
 }
 
 .hero-subtitle {
@@ -168,27 +134,21 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 15px;
   font-weight: 500;
 }
 
 .location-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #ffd700;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.1); }
 }
 
 .hero-description {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
-  margin: 20px 0;
+  margin: 15px 0;
   font-weight: 300;
 }
 
@@ -348,6 +308,15 @@
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.9rem;
+
+    .modal-close {
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.3rem;
+      border-width: 2px;
+    }
   font-weight: 600;
   border: 1px solid #1b5baf;
 }
@@ -531,17 +500,55 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
+  /* Proposed Building Gallery Responsive */
+  .proposed-building-section {
+    padding: 30px 15px;
+  }
+
+  .proposed-building-title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+  }
+
+  .building-images-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 25px;
+  }
+
+  .building-image-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .modal-close {
+    top: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+
+  .modal-image {
+    max-height: 70vh;
+  }
+
+  /* Hero Section Responsive */
+  .minnagam-hero {
+    padding: 25px 15px;
+  }
+
+  .hero-title1 {
+    font-size: 2rem;
   }
 
   .hero-subtitle {
     flex-direction: column;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .hero-description {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .section-title {
@@ -584,21 +591,52 @@
 }
 
 @media (max-width: 480px) {
-  .minnagam-hero-icon {
-    font-size: 3rem;
+  /* Proposed Building Gallery Mobile */
+  .proposed-building-section {
+    padding: 25px 10px;
   }
 
-  .hero-title {
-    font-size: 2rem;
+  .proposed-building-title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .building-images-grid {
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .image-overlay span {
+    font-size: 0.9rem;
+  }
+
+  /* Hero Section Mobile */
+  .minnagam-hero {
+    padding: 20px 10px;
+  }
+
+  .minnagam-hero-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-title1 {
+    font-size: 1.6rem;
     letter-spacing: 1px;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .hero-description {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    margin: 10px 0;
+  }
+
+  .minnagam-hero-badge {
+    font-size: 0.85rem;
+    padding: 6px 18px;
   }
 
   .section-title {
