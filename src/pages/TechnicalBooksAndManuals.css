@@ -1,4 +1,4 @@
-.books-container {
+﻿.books-container {
   font-family: 'Merriweather', serif;
   min-height: 100vh;
   background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
@@ -16,7 +16,7 @@
 
 .books-header-icon {
   font-size: 4rem;
-  color: #EEAF37;
+  color: #2a6cc7;
   margin-bottom: 20px;
   animation: swing 3s ease-in-out infinite;
 }
@@ -29,7 +29,7 @@
 
 .books-header h1 {
   font-size: 2.8rem;
-  color: #EEAF37;
+  color: #2a6cc7;
   margin: 0 0 10px 0;
   font-weight: bold;
 }

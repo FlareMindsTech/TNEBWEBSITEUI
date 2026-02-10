@@ -1,4 +1,4 @@
-.params-container {
+﻿.params-container {
   font-family: 'Merriweather', serif;
   min-height: 100vh;
   background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
@@ -6,7 +6,7 @@
 }
 
 .params-hero {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   position: relative;
   overflow: hidden;
   padding: 30px 15px;
