@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser,FaTimes, FaCaretDown, FaBars, FaTimeees} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
@@ -9,12 +9,21 @@ import { SidebarContext } from '../context/SidebarContext';
 
 const Navbar = () => {
   const { isSidebarOpen, openSidebar, closeSidebar } = useContext(SidebarContext);
+  const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [authTab, setAuthTab] = useState('login');
   // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
+  
+  // Handle quick links on mobile - navigate in same tab
+  const handleMobileQuickLinkClick = (link) => {
+    // Remove hash prefix if present
+    const path = link.replace('/#', '');
+    navigate(path);
+    closeSidebar();
+  };
 
   const handleDropdownOpen = (key) => {
     if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
@@ -335,19 +344,38 @@ const Navbar = () => {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
+                            style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
                           >
-                            <a className="sidebar-item" href="/important-notices" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <button 
+                              className="sidebar-item" 
+                              onClick={() => {
+                                handleMobileQuickLinkClick('/#/important-notices');
+                              }}
+                              style={{background: 'none', border: 'none', padding: '0.6rem 1rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center', width: '85%', cursor: 'pointer', borderRadius: '0.5rem'}}
+                            >
                               Important Notices
-                            </a>
+                            </button>
                             {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🔌 TANTRANSCO
                             </a> */}
-                            <a className="sidebar-item" href="/board-proceedings" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <button 
+                              className="sidebar-item" 
+                              onClick={() => {
+                                handleMobileQuickLinkClick('/#/board-proceedings');
+                              }}
+                              style={{background: 'none', border: 'none', padding: '0.6rem 1rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center', width: '85%', cursor: 'pointer', borderRadius: '0.5rem'}}
+                            >
                               🏛️ Board Proceedings
-                            </a>
-                            <a className="sidebar-item" href="/photo-gallery" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            </button>
+                            <button 
+                              className="sidebar-item" 
+                              onClick={() => {
+                                handleMobileQuickLinkClick('/#/photo-gallery');
+                              }}
+                              style={{background: 'none', border: 'none', padding: '0.6rem 1rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center', width: '85%', cursor: 'pointer', borderRadius: '0.5rem'}}
+                            >
                               📸 Photogallery
-                            </a>
+                            </button>
                           </motion.div>
                         )}
                       </AnimatePresence>
