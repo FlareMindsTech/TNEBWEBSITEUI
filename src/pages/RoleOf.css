@@ -1,0 +1,111 @@
+.rollofhonour-page {
+  background: #f5f7fb;
+  min-height: 100vh;
+  padding: 30px 16px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.rollofhonour-card {
+  width: 100%;
+  max-width: 980px;
+  background: #ffffff;
+  border: 3px solid #2a2a2a;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.rollofhonour-header {
+  text-align: center;
+  padding: 16px 12px 8px;
+  border-bottom: 2px solid #2a2a2a;
+}
+
+.rollofhonour-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #1a1a1a;
+}
+
+.rollofhonour-header p {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.rollofhonour-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.rollofhonour-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.rollofhonour-table thead th {
+  background: #f0f0f0;
+  font-weight: 800;
+  padding: 8px 10px;
+  border: 1px solid #2a2a2a;
+  text-align: center;
+}
+
+.rollofhonour-table tbody td {
+  padding: 6px 10px;
+  border: 1px solid #2a2a2a;
+  vertical-align: top;
+}
+
+.rollofhonour-table tbody td:first-child {
+  text-align: center;
+  white-space: nowrap;
+  width: 110px;
+  font-weight: 700;
+}
+
+.rollofhonour-table tbody td:nth-child(2),
+.rollofhonour-table tbody td:nth-child(3) {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .rollofhonour-page {
+    padding: 20px 12px 40px;
+  }
+
+  .rollofhonour-card {
+    border-radius: 14px;
+  }
+
+  .rollofhonour-header h2 {
+    font-size: 1.15rem;
+  }
+
+  .rollofhonour-header p {
+    font-size: 0.85rem;
+  }
+
+  .rollofhonour-table {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rollofhonour-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .rollofhonour-table {
+    font-size: 0.8rem;
+  }
+
+  .rollofhonour-table tbody td:first-child {
+    width: 90px;
+  }
+}
