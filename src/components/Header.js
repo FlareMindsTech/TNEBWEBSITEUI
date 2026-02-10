@@ -6,7 +6,8 @@ import Navbar from './Navbar';
 import SearchInput from './SearchInput';
 import logo from '../assets/tnebea_logo_cropped2.png';
 import { SidebarContext } from '../context/SidebarContext';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
@@ -76,23 +77,7 @@ const Header = () => {
           <div className="row align-items-stretch py-2">
             {/* Logo and Title */}
             <div className="col-12 col-md-8 col-lg-9 mb-2 mb-md-0">
-              <div className="d-flex align-items-center h-100" style={{ marginLeft: '30px' }}>
-                <motion.div 
-                  className="logo-container mr-3"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 15,
-                    delay: 0.2
-                  }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    rotate: [0, -3, 3, 0],
-                    transition: { duration: 0.3 }
-                  }}
-                >
+              <div className="header-left d-flex align-items-center h-100">
                   <Link to="/">
                     <motion.img
                       src={logo}
@@ -108,16 +93,14 @@ const Header = () => {
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     />
                   </Link>
-                </motion.div>
                 <motion.div 
-                  className="header-text" 
-                  style={{ color: '#1b5baf' }}
+                  className="header-text header-text-centered" 
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <motion.h1 
-                    className="mb-1"
+                    className="mb-1 mx-2 ml-2 fw-bold text-center"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
@@ -143,57 +126,28 @@ const Header = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="header-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', height: '100%', paddingRight: '20px' }}>
+              <div className="header-right">
                 {/* Date and Time Display */}
                 <motion.div 
                   className="datetime-display"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    background: 'transparent',
-                    borderRadius: '10px',
-                    padding: '0',
-                    border: 'none',
-                    boxShadow: 'none',
-                    minWidth: '160px',
-                    maxWidth: '180px',
-                    flex: 1,
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}
                 >
 
                   
                   {/* Date */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                    <FaCalendarAlt style={{ color: '#d70f18', fontSize: '11px', flexShrink: 0 }} />
-                    <span style={{ 
-                      fontWeight: 500, 
-                      color: '#1b5baf', 
-                      fontSize: '10px',
-                      letterSpacing: '0.2px',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
-                    }}>
+                  <div className="datetime-row fw-bold text-center">
+                    <FaCalendarAlt className="datetime-icon fw-bold" />
+                    <span className="datetime-text fw-bold h4">
                       {currentDate}
                     </span>
                   </div>
                   
                   {/* Time */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FaClock style={{ color: '#d70f18', fontSize: '11px', flexShrink: 0 }} />
-                    <span style={{ 
-                      fontWeight: 700, 
-                      color: '#1b5baf', 
-                      fontSize: '12px',
-                      letterSpacing: '0.5px',
-                      fontFamily: 'monospace'
-                    }}>
+                  <div className="datetime-row fw-bold">
+                    <FaClock className="datetime-icon fw-bold" />
+                    <span className="datetime-time fw-bold">
                       {currentTime}
                     </span>
                   </div>
