@@ -2,6 +2,9 @@ import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaHotel, FaBed, FaPhone, FaMapMarkerAlt, FaSnowflake, FaUsers, FaFileAlt } from 'react-icons/fa';
 import './Minnagam.css';
+import building1 from '../assets/Proposed-building-1.jpeg';
+import building2 from '../assets/Proposed-building-2.jpeg';
+import building3 from '../assets/Proposed-building-3.jpeg';
 
 const RoomCard = ({ room, index }) => {
   const ref = React.useRef(null);
@@ -61,6 +64,12 @@ const ContactCard = ({ contact, index }) => {
 };
 
 const Minnagam = () => {
+  const buildingImages = [
+    { id: 1, src: building1, alt: 'Proposed Building - View 1' },
+    { id: 2, src: building2, alt: 'Proposed Building - View 2' },
+    { id: 3, src: building3, alt: 'Proposed Building - View 3' }
+  ];
+
   const rooms = [
     {
       title: "AC Rooms",
@@ -104,28 +113,42 @@ const Minnagam = () => {
 
   return (
     <div className="minnagam-container">
-      <motion.div
-        className="minnagam-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <motion.div
-          className="hero-content"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
+      {/* Proposed Building Image Gallery */}
+      <div className="proposed-building-section">
+        <div className="proposed-building-container">
+          <h2 className="proposed-building-title">Proposed Building</h2>
+          <div className="building-images-grid">
+            {buildingImages.map((image) => (
+              <div 
+                key={image.id} 
+                className="building-image-wrapper"
+              >
+                <img 
+                  src={image.src} 
+                  alt={image.alt}
+                  className="building-image"
+                />
+                <div className="image-overlay">
+                  <span>Proposed Building</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="minnagam-hero">
+        <div className="hero-content">
           <FaHotel className="minnagam-hero-icon" />
           <h1 className="hero-title1">MINNAGAM</h1>
           <div className="hero-subtitle">
-            <FaMapMarkerAlt className="location-icon" />
-            <span>APR Mansion, Royapettah High Road, Chennai</span>
+            <FaMapMarkerAlt className="location-icon text-light" />
+            <span className='text-light'>APR Mansion, Royapettah High Road, Chennai</span>
           </div>
           <p className="hero-description">Residential Accommodation for Engineers</p>
           <div className="minnagam-hero-badge">Information Only</div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       <div className="minnagam-content">
         <motion.div
