@@ -22,6 +22,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
 import TnebeaForms from './pages/TnebeaForms';
+import RoleOf from './pages/RoleOf';
 // import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
@@ -109,6 +110,7 @@ function App() {
             <Route path="/important-notices" element={<><Header /><Importantnotices /><Footer /></>} />
             <Route path="/board-proceedings" element={<><Header /><BoardProceedings /><Footer /></>} />
             <Route path="/photo-gallery" element={<><Header /><Photogallery /><Footer /></>} />
+            <Route path="/role-of-honour" element={<><Header /><RoleOf /><Footer /></>} />
           </Routes>
         </div>
       </div>

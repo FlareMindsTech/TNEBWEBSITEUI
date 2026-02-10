@@ -6,41 +6,87 @@
 
 /* Hero Section */
 .minnagam-hero {
-  background: linear-gradient(135deg, #d70f18 0%, #8b0000 100%);
-  padding: 30px 15px;
+  background: linear-gradient(90deg, #1b5baf 0%, #2a6cc7 50%, #15458a 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+  padding: 80px 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  color: white;
+  box-shadow: 0 10px 40px rgba(27, 91, 175, 0.3);
+  transition: all 0.5s ease;
 }
 
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.minnagam-hero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(27, 91, 175, 0.4);
+}
+
+/* Electrical wire spark effects */
 .minnagam-hero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  filter: blur(40px);
-  animation: float 6s ease-in-out infinite;
+  top: 50%;
+  left: 10%;
+  width: 30%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #ffd700 50%, transparent 100%);
+  box-shadow: 
+    0 0 10px #ffd700,
+    0 0 20px #ffd700,
+    0 0 30px rgba(255, 215, 0, 0.5);
+  transform: translateY(-50%);
+  animation: leftWire 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
+/* Right wire */
 .minnagam-hero::after {
   content: '';
   position: absolute;
-  bottom: -10%;
-  left: -5%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  filter: blur(30px);
-  animation: float 8s ease-in-out infinite reverse;
+  top: 50%;
+  right: 10%;
+  width: 30%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #ffd700 50%, transparent 100%);
+  box-shadow: 
+    0 0 10px #ffd700,
+    0 0 20px #ffd700,
+    0 0 30px rgba(255, 215, 0, 0.5);
+  transform: translateY(-50%);
+  animation: rightWire 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
+@keyframes leftWire {
+  0%, 100% {
+    opacity: 0.6;
+    left: 10%;
+  }
+  50% {
+    opacity: 1;
+    left: 35%;
+  }
+}
 
+@keyframes rightWire {
+  0%, 100% {
+    opacity: 0.6;
+    right: 10%;
+  }
+  50% {
+    opacity: 1;
+    right: 35%;
+  }
+}
 
 .hero-content {
   position: relative;
@@ -83,15 +129,15 @@
   }
 }
 
-.hero-icon {
-  font-size: 2.5rem;
+.minnagam-hero-icon {
+  font-size: 4rem;
   color: white;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
-  animation: float 3s ease-in-out infinite, iconSparkle 2s ease-in-out infinite;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  animation: minnagam-float 3s ease-in-out infinite, minnagam-icon-sparkle 2s ease-in-out infinite;
 }
 
-@keyframes iconSparkle {
+@keyframes minnagam-icon-sparkle {
   0%, 100% {
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
   }
@@ -100,17 +146,17 @@
   }
 }
 
-@keyframes float {
+@keyframes minnagam-float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
 
 .hero-title1 {
-  font-size: 2.2rem;
+  font-size: 3.5rem;
   font-weight: 800;
   color: white;
-  margin: 0 0 8px 0;
-  letter-spacing: 1px;
+  margin: 0 0 15px 0;
+  letter-spacing: 2px;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -124,14 +170,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 1rem;
-  color: #ffffff;
-  margin-bottom: 8px;
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 15px;
   font-weight: 500;
 }
 
 .location-icon {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   color: #ffd700;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -142,19 +188,19 @@
 }
 
 .hero-description {
-  font-size: 0.95rem;
+  font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.9);
-  margin: 10px 0;
-  font-weight: 400;
+  margin: 20px 0;
+  font-weight: 300;
 }
 
-.hero-badge {
+.minnagam-hero-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 6px 20px;
+  padding: 8px 24px;
   border-radius: 30px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -487,7 +533,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-title1 {
+  .hero-title {
     font-size: 2.5rem;
   }
 
@@ -540,7 +586,7 @@
 }
 
 @media (max-width: 480px) {
-  .hero-icon {
+  .minnagam-hero-icon {
     font-size: 3rem;
   }
 
