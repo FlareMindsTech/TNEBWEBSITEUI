@@ -336,16 +336,16 @@ const Navbar = () => {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <Link className="sidebar-item" to="/important-notices" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <Link className="sidebar-item" to="/important-notices"  onClick={closeAllMenus}>
                               Important Notices
                             </Link>
-                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/"  onClick={closeAllMenus}>
                               🔌 TANTRANSCO
                             </a> */}
-                            <Link className="sidebar-item" href="/board-proceedings" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <Link className="sidebar-item" to="/board-proceedings"  onClick={closeAllMenus}>
                               🏛️ Board Proceedings
                             </Link>
-                            <Link className="sidebar-item" to="/photo-gallery" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <Link className="sidebar-item" to="/photo-gallery"  onClick={closeAllMenus}>
                               📸 Photogallery
                             </Link>
                           </motion.div>
