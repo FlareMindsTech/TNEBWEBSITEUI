@@ -336,18 +336,18 @@ const Navbar = () => {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <a className="sidebar-item" href="/important-notices" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <Link className="sidebar-item" to="/important-notices" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               Important Notices
-                            </a>
+                            </Link>
                             {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🔌 TANTRANSCO
                             </a> */}
-                            <a className="sidebar-item" href="/board-proceedings" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            <Link className="sidebar-item" href="/board-proceedings" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               🏛️ Board Proceedings
-                            </a>
-                            <a className="sidebar-item" href="/photo-gallery" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+                            </Link>
+                            <Link className="sidebar-item" to="/photo-gallery" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
                               📸 Photogallery
-                            </a>
+                            </Link>
                           </motion.div>
                         )}
                       </AnimatePresence>
