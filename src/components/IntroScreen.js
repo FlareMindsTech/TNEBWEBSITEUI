@@ -212,7 +212,7 @@ const IntroScreen = ({ onComplete }) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Welcome to TNEB
+              Welcome to TNEBA
             </motion.h2>
             <motion.p
               className="success-message"
