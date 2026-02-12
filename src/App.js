@@ -24,7 +24,6 @@ import ScrollToTop from './components/ScrollToTop';
 import TnebeaForms from './pages/TnebeaForms';
 import RoleOf from './pages/RoleOf';
 import IntroScreen from './components/IntroScreen';
-import CurtainReveal from './components/CurtainReveal';
 // import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
 import './App.css';
@@ -36,29 +35,17 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 
 function App() {
-  const [showCurtain, setShowCurtain] = useState(() => {
-    // Check if curtain has been shown before
-    const curtainCompleted = sessionStorage.getItem("curtain_completed");
+  const [showIntro, setShowIntro] = useState(() => {
+    // Check if intro has been shown before
     const introCompleted = sessionStorage.getItem("intro_completed");
-    // Don't show curtain if already completed
-    return !curtainCompleted && !introCompleted;
+    // Show intro if not completed
+    return !introCompleted;
   });
-  const [showIntro, setShowIntro] = useState(false);
   const [showApp, setShowApp] = useState(() => {
     // Show app directly if intro was already completed
-    const curtainCompleted = sessionStorage.getItem("curtain_completed");
     const introCompleted = sessionStorage.getItem("intro_completed");
-    return curtainCompleted && introCompleted;
+    return introCompleted;
   });
-
-  // Handle curtain opened - show intro screen
-  const handleCurtainOpened = () => {
-    setShowCurtain(false);
-    // Mark curtain as completed
-    sessionStorage.setItem("curtain_completed", "true");
-    // Show intro screen
-    setShowIntro(true);
-  };
 
   // Handle intro completion - show main app
   const handleIntroComplete = () => {
@@ -69,17 +56,17 @@ function App() {
     setShowApp(true);
   };
 
-  // Prevent scrolling during curtain and intro
+  // Prevent scrolling during intro
   useEffect(() => {
     const body = document.body;
-    if (showCurtain || showIntro) {
+    if (showIntro) {
       body.classList.add('no-scroll');
     } else {
       body.classList.remove('no-scroll');
     }
 
     return () => body.classList.remove('no-scroll');
-  }, [showCurtain, showIntro]);
+  }, [showIntro]);
 
   return (
     <Router>
@@ -91,9 +78,6 @@ function App() {
           extraScale={1.3}
         > */}
           <div className="App">
-          {/* Curtain Reveal */}
-          {showCurtain && <CurtainReveal onCurtainOpened={handleCurtainOpened} autoOpen={false} />}
-          
           {/* Intro Screen */}
           {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
 
