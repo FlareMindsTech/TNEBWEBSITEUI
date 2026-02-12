@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser,FaTimes, FaCaretDown, FaBars, FaTimeees} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
@@ -9,12 +9,21 @@ import { SidebarContext } from '../context/SidebarContext';
 
 const Navbar = () => {
   const { isSidebarOpen, openSidebar, closeSidebar } = useContext(SidebarContext);
+  const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [authTab, setAuthTab] = useState('login');
   // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
+  
+  // Handle quick links on mobile - navigate in same tab
+  const handleMobileQuickLinkClick = (link) => {
+    // Remove hash prefix if present
+    const path = link.replace('/#', '');
+    navigate(path);
+    closeSidebar();
+  };
 
   const handleDropdownOpen = (key) => {
     if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
@@ -335,6 +344,7 @@ const Navbar = () => {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
+                            style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
                           >
                             <Link className="sidebar-item" to="/important-notices"  onClick={closeAllMenus}>
                               Important Notices
