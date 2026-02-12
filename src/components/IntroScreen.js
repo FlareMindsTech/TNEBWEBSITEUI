@@ -32,15 +32,15 @@ const IntroScreen = ({ onComplete }) => {
       setShowSuccess(true);
 
       // Generate falling emojis
-      const emojisList = ['🎉', '✨', '⚡', '🎊', '💫', '🌟', '✅', '🎯'];
-      const fallingEmojis = Array.from({ length: 30 }, (_, i) => ({
-        id: i,
-        emoji: emojisList[Math.floor(Math.random() * emojisList.length)],
-        left: Math.random() * 100,
-        delay: Math.random() * 0.5,
-        duration: 2 + Math.random() * 2
-      }));
-      setEmojis(fallingEmojis);
+      // const emojisList = ['🎉', '✨', '⚡', '🎊', '💫', '🌟', '✅', '🎯'];
+      // const fallingEmojis = Array.from({ length: 30 }, (_, i) => ({
+      //   id: i,
+      //   emoji: emojisList[Math.floor(Math.random() * emojisList.length)],
+      //   left: Math.random() * 100,
+      //   delay: Math.random() * 0.5,
+      //   duration: 2 + Math.random() * 2
+      // }));
+      // setEmojis(fallingEmojis);
 
       // Complete after 3 seconds of showing success
       setTimeout(() => {
@@ -179,15 +179,15 @@ const IntroScreen = ({ onComplete }) => {
               <span className="button-text">Enter Website</span>
             </motion.button> */}
 
-            {/* Press Enter hint */}
+            {/* Press Enter hint
             <motion.p
               className="intro-hint"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5, duration: 1 }}
             >
-              {/* Press <kbd>Enter</kbd> or click the button */}
-            </motion.p>
+               Press <kbd>Enter</kbd> or click the button
+            </motion.p> */}
           </motion.div>
         ) : (
           <motion.div
@@ -237,7 +237,7 @@ const IntroScreen = ({ onComplete }) => {
       </AnimatePresence>
 
       {/* Falling Confetti on Success */}
-      {showSuccess && (
+      {/* {showSuccess && (
         <div className="emojis-container">
           {emojis.map((emoji) => (
             <motion.div
@@ -260,7 +260,7 @@ const IntroScreen = ({ onComplete }) => {
             </motion.div>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
