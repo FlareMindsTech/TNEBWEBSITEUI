@@ -8,6 +8,7 @@ import logo from '../assets/tnebea_logo_cropped2.png';
 import { SidebarContext } from '../context/SidebarContext';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   const [currentTime, setCurrentTime] = useState('');
@@ -56,8 +57,6 @@ const Header = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-
-
   return (
     <>
       {/* Main Header */}
@@ -78,21 +77,21 @@ const Header = () => {
             {/* Logo and Title */}
             <div className="col-12 col-md-8 col-lg-9 mb-2 mb-md-0">
               <div className="header-left d-flex align-items-center h-100">
-                  <Link to="/">
-                    <motion.img
-                      src={logo}
-                      alt="TNEBEA Logo"
-                      className="header-logo"
-                      animate={{
-                        filter: [
-                          "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))",
-                          "drop-shadow(0 0 12px rgba(72, 169, 230, 0.5))",
-                          "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))"
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  </Link>
+                <Link to="/">
+                  <motion.img
+                    src={logo}
+                    alt="TNEBEA Logo"
+                    className="header-logo"
+                    animate={{
+                      filter: [
+                        "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))",
+                        "drop-shadow(0 0 12px rgba(72, 169, 230, 0.5))",
+                        "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </Link>
                 <motion.div 
                   className="header-text header-text-centered" 
                   initial={{ opacity: 0, x: -30 }}
@@ -126,33 +125,34 @@ const Header = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="header-right">
-                {/* Date and Time Display */}
+              <div className="header-right mobile-two-column-layout">
+                {/* Date and Time Display - Left side on mobile */}
                 <motion.div 
-                  className="datetime-display"
+                  className="datetime-display mobile-datetime-left"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
                   {/* Date */}
-                  <div className="datetime-row fw-bold text-end">
-                    <FaCalendarAlt className="datetime-icon fw-bold" />
-                    <span className="datetime-text fw-bold">
+                  <div className="datetime-row fw-bold text-start">
+                    <FaCalendarAlt className="datetime-icon fw-bold mobile-icon-shrink" />
+                    <span className="datetime-text fw-bold mobile-date-text">
                       {currentDate}
                     </span>
                   </div>
                   
                   {/* Time */}
-                  <div className="datetime-row fw-bold text-end">
-                    <FaClock className="datetime-icon fw-bold" />
-                    <span className="datetime-time fw-bold">
+                  <div className="datetime-row fw-bold text-start">
+                    <FaClock className="datetime-icon fw-bold mobile-icon-shrink" />
+                    <span className="datetime-time fw-bold mobile-time-text">
                       {currentTime}
                     </span>
                   </div>
                 </motion.div>
 
-                {/* Search Input */}
+                {/* Search Input - Right side on mobile */}
                 <motion.div
+                  className="mobile-search-right"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.9 }}
