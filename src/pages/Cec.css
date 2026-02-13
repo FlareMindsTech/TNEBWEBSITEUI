@@ -330,7 +330,7 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
 .card-front img {
   width: 200px;
   height: 250px;
-  object-fit: cover;
+  /* object-fit: cover; */
   border-radius: 10px;
   margin-bottom: 15px;
   border: 2px solid #1b5baf;
