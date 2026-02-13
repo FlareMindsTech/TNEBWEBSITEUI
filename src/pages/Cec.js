@@ -155,28 +155,28 @@ const Cec = () => {
           </div>
           <div className="info-body">
             <div className="info-item">
-              <div className="info-icon"><FaCalendarAlt /></div>
+              <div className="cec-info-icon"><FaCalendarAlt /></div>
               <div className="info-content">
                 <span className="info-label">Current Term</span>
                 <strong className="info-value">2025-2027</strong>
               </div>
             </div>
             <div className="info-item">
-              <div className="info-icon"><FaClipboardList /></div>
+              <div className="cec-info-icon"><FaClipboardList /></div>
               <div className="info-content">
                 <span className="info-label">Elected</span>
                 <strong className="info-value">October 2025</strong>
               </div>
             </div>
             <div className="info-item">
-              <div className="info-icon"><FaCalendarAlt /></div>
+              <div className="cec-info-icon"><FaCalendarAlt /></div>
               <div className="info-content">
                 <span className="info-label">Next Election</span>
                 <strong className="info-value">October 2027</strong>
               </div>
             </div>
             <div className="info-item">
-              <div className="info-icon"><FaUsers /></div>
+              <div className="cec-info-icon"><FaUsers /></div>
               <div className="info-content">
                 <span className="info-label">Total Members</span>
                 <strong className="info-value">15</strong>

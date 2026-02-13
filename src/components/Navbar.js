@@ -1,7 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUser,FaTimes, FaCaretDown, FaBars, FaTimeees} from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { 
+  FaUser, FaTimes, FaCaretDown, FaBars, 
+  FaHome, FaUsers, FaInfoCircle, FaCog, 
+  FaMobile, FaBook, FaLink, FaFileAlt, 
+  FaPhone, FaGavel, FaFilePdf, FaUserTie, 
+  FaTrophy, FaClipboardList, FaQuestionCircle, 
+  FaChartBar, FaBookOpen, FaBell, 
+  FaLandmark, FaImages, FaRegNewspaper,
+  FaHandPaper
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
@@ -181,7 +190,7 @@ const Navbar = () => {
                   <ul className="navbar-nav flex-column">
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/" onClick={closeAllMenus}>
-                        🏠 Home
+                        <FaHome className="sidebar-icon" /> Home
                       </Link>
                     </motion.li>
 
@@ -190,7 +199,7 @@ const Navbar = () => {
                         className="nav-link sidebar-toggle"
                         onClick={() => setOpenDropdown(openDropdown === 'about' ? null : 'about')}
                       >
-                        <span>👥 About TNEBEA</span>
+                        <span><FaUsers className="sidebar-icon" /> About TNEBEA</span>
                         <motion.span
                           animate={{ rotate: openDropdown === 'about' ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
@@ -208,16 +217,16 @@ const Navbar = () => {
                             transition={{ duration: 0.3 }}
                           >
                             <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
-                              👥 CEC
+                              <FaUserTie className="sidebar-icon" /> CEC
                             </Link>
                             <Link className="sidebar-item" to="/regional" onClick={closeAllMenus}>
-                              👥 Regional Secretary
+                              <FaUsers className="sidebar-icon" /> Regional Secretary
                             </Link>
                             <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
-                              👥 Branch Secretary
+                              <FaUsers className="sidebar-icon" /> Branch Secretary
                             </Link>
                             <Link className="sidebar-item" to="/role-of-honour" onClick={closeAllMenus}>
-                              👥 Role Of Honour
+                              <FaTrophy className="sidebar-icon" /> Role Of Honour
                             </Link>
                           </motion.div>
                         )}
@@ -229,7 +238,7 @@ const Navbar = () => {
                         className="nav-link sidebar-toggle"
                         onClick={() => setOpenDropdown(openDropdown === 'tnebInfo' ? null : 'tnebInfo')}
                       >
-                        <span>ℹ️ General Info</span>
+                        <span><FaInfoCircle className="sidebar-icon" /> General Info</span>
                         <motion.span
                           animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
@@ -247,16 +256,16 @@ const Navbar = () => {
                             transition={{ duration: 0.3 }}
                           >
                             <Link className="sidebar-item" to="/act-regulations" onClick={closeAllMenus}>
-                              ⚖️ Act & Regulations
+                              <FaGavel className="sidebar-icon" /> Act & Regulations
                             </Link>
                             <Link className="sidebar-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
-                              📄 Manuals & Forms
+                              <FaFilePdf className="sidebar-icon" /> Manuals & Forms
                             </Link>
                             <Link className="sidebar-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
-                              👴 Pension Scheme (CPS)
+                              <FaUserTie className="sidebar-icon" /> Pension Scheme (CPS)
                             </Link>
                             <Link className="sidebar-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
-                              📋 Distribution Instructions
+                              <FaClipboardList className="sidebar-icon" /> Distribution Instructions
                             </Link>
                           </motion.div>
                         )}
@@ -268,7 +277,7 @@ const Navbar = () => {
                         className="nav-link sidebar-toggle"
                         onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
                       >
-                        <span>⚙️ Technical</span>
+                        <span><FaCog className="sidebar-icon" /> Technical</span>
                         <motion.span
                           animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
@@ -286,13 +295,13 @@ const Navbar = () => {
                             transition={{ duration: 0.3 }}
                           >
                             <Link className="sidebar-item" to="/technical-qa" onClick={closeAllMenus}>
-                              ❓ Technical Q&A
+                              <FaQuestionCircle className="sidebar-icon" /> Technical Q&A
                             </Link>
                             <Link className="sidebar-item" to="/technical-parameters" onClick={closeAllMenus}>
-                              📊 Technical Parameters
+                              <FaChartBar className="sidebar-icon" /> Technical Parameters
                             </Link>
                             <Link className="sidebar-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
-                              📚 Books & Manuals
+                              <FaBookOpen className="sidebar-icon" /> Books & Manuals
                             </Link>
                           </motion.div>
                         )}
@@ -301,19 +310,19 @@ const Navbar = () => {
 
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/Minnagam" onClick={closeAllMenus}>
-                        📱 Minnagam
+                        <FaMobile className="sidebar-icon" /> Minnagam
                       </Link>
                     </motion.li>
 
-                     <motion.li className="nav-item" variants={navItemVariants}>
+                    <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                       e-Minthiran
+                        <FaRegNewspaper className="sidebar-icon" /> e-Minthiran
                       </Link>
                     </motion.li>
 
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/hand-book" onClick={closeAllMenus}>
-                        📖 Hand Book
+                        <FaHandPaper className="sidebar-icon" /> Hand Book
                       </Link>
                     </motion.li>
 
@@ -328,7 +337,7 @@ const Navbar = () => {
                         className="nav-link sidebar-toggle"
                         onClick={() => setOpenDropdown(openDropdown === 'quickLinks' ? null : 'quickLinks')}
                       >
-                        <span>🔗 Quick Links</span>
+                        <span><FaLink className="sidebar-icon" /> Quick Links</span>
                         <motion.span
                           animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
@@ -346,33 +355,32 @@ const Navbar = () => {
                             transition={{ duration: 0.3 }}
                             style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
                           >
-                            <Link className="sidebar-item" to="/important-notices"  onClick={closeAllMenus}>
-                              Important Notices
+                            <Link className="sidebar-item" to="/important-notices" onClick={closeAllMenus}>
+                              <FaBell className="sidebar-icon" /> Important Notices
                             </Link>
-                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/"  onClick={closeAllMenus}>
+                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" onClick={closeAllMenus}>
                               🔌 TANTRANSCO
                             </a> */}
-                            <Link className="sidebar-item" to="/board-proceedings"  onClick={closeAllMenus}>
-                              🏛️ Board Proceedings
+                            <Link className="sidebar-item" to="/board-proceedings" onClick={closeAllMenus}>
+                              <FaLandmark className="sidebar-icon" /> Board Proceedings
                             </Link>
-                            <Link className="sidebar-item" to="/photo-gallery"  onClick={closeAllMenus}>
-                              📸 Photogallery
+                            <Link className="sidebar-item" to="/photo-gallery" onClick={closeAllMenus}>
+                              <FaImages className="sidebar-icon" /> Photogallery
                             </Link>
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </motion.li>
 
-                    
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/tnebea-forms" onClick={closeAllMenus}>
-                        📝TNEBEA Forms
+                        <FaFileAlt className="sidebar-icon" /> TNEBEA Forms
                       </Link>
                     </motion.li>
 
                     <motion.li className="nav-item" variants={navItemVariants}>
                       <Link className="nav-link" to="/contactus" onClick={closeAllMenus}>
-                        ☎️ Contact
+                        <FaPhone className="sidebar-icon" /> Contact
                       </Link>
                     </motion.li>
                   </ul>
@@ -420,22 +428,22 @@ const Navbar = () => {
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/cec" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> CEC
+                        <span className="dropdown-icon"><FaUserTie /></span> CEC
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/regional" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Regional Secretary
+                        <span className="dropdown-icon"><FaUsers /></span> Regional Secretary
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Branch Secretary
+                        <span className="dropdown-icon"><FaUsers /></span> Branch Secretary
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/role-of-honour" onClick={closeAllMenus}>
-                        <span className="dropdown-icon">👥</span> Role Of Honour
+                        <span className="dropdown-icon"><FaTrophy /></span> Role Of Honour
                       </Link>
                     </motion.div>
                   </motion.div>
@@ -459,16 +467,16 @@ const Navbar = () => {
                 {openDropdown === 'tnebInfo' && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/act-regulations" onClick={closeAllMenus}><span className="dropdown-icon">⚖️</span> Act & Regulations</Link>
+                      <Link className="dropdown-item" to="/act-regulations" onClick={closeAllMenus}><span className="dropdown-icon"><FaGavel /></span> Act & Regulations</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/manuals-and-forms-download" onClick={closeAllMenus}><span className="dropdown-icon">📄</span> Manuals & Forms</Link>
+                      <Link className="dropdown-item" to="/manuals-and-forms-download" onClick={closeAllMenus}><span className="dropdown-icon"><FaFilePdf /></span> Manuals & Forms</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/contributory-pension-scheme" onClick={closeAllMenus}><span className="dropdown-icon">👴</span> Pension Scheme (CPS)</Link>
+                      <Link className="dropdown-item" to="/contributory-pension-scheme" onClick={closeAllMenus}><span className="dropdown-icon"><FaUserTie /></span> Pension Scheme (CPS)</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/distribution-related-instructions" onClick={closeAllMenus}><span className="dropdown-icon">📋</span> Distribution Instructions</Link>
+                      <Link className="dropdown-item" to="/distribution-related-instructions" onClick={closeAllMenus}><span className="dropdown-icon"><FaClipboardList /></span> Distribution Instructions</Link>
                     </motion.div>
                   </motion.div>
                 )}
@@ -491,13 +499,13 @@ const Navbar = () => {
                 {openDropdown === 'tech' && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-qa" onClick={closeAllMenus}><span className="dropdown-icon">❓</span> Technical Q&A</Link>
+                      <Link className="dropdown-item" to="/technical-qa" onClick={closeAllMenus}><span className="dropdown-icon"><FaQuestionCircle /></span> Technical Q&A</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-parameters" onClick={closeAllMenus}><span className="dropdown-icon">📊</span> Technical Parameters</Link>
+                      <Link className="dropdown-item" to="/technical-parameters" onClick={closeAllMenus}><span className="dropdown-icon"><FaChartBar /></span> Technical Parameters</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-books-and-manuals" onClick={closeAllMenus}><span className="dropdown-icon">📚</span> Books & Manuals</Link>
+                      <Link className="dropdown-item" to="/technical-books-and-manuals" onClick={closeAllMenus}><span className="dropdown-icon"><FaBookOpen /></span> Books & Manuals</Link>
                     </motion.div>
                   </motion.div>
                 )}
@@ -508,7 +516,7 @@ const Navbar = () => {
               <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minnagam</Link>
             </motion.li>
 
-             <motion.li className="nav-item" variants={navItemVariants}>
+            <motion.li className="nav-item" variants={navItemVariants}>
               <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>e-Minthiran</Link>
             </motion.li>
 
@@ -531,18 +539,18 @@ const Navbar = () => {
                 {openDropdown === 'quickLinks' && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/important-notices"  onClick={closeAllMenus}>
-                        <span className="dropdown-icon">📌</span> Important Notices
+                      <Link className="dropdown-item" to="/important-notices" onClick={closeAllMenus}>
+                        <span className="dropdown-icon"><FaBell /></span> Important Notices
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/board-proceedings"  onClick={closeAllMenus}>
-                        <span className="dropdown-icon">🏛️</span> Board Proceedings
+                      <Link className="dropdown-item" to="/board-proceedings" onClick={closeAllMenus}>
+                        <span className="dropdown-icon"><FaLandmark /></span> Board Proceedings
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/photo-gallery"  onClick={closeAllMenus}>
-                        <span className="dropdown-icon">📸</span> Photo Gallery
+                      <Link className="dropdown-item" to="/photo-gallery" onClick={closeAllMenus}>
+                        <span className="dropdown-icon"><FaImages /></span> Photo Gallery
                       </Link>
                     </motion.div>
                   </motion.div>
@@ -577,7 +585,7 @@ const Navbar = () => {
                   <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
                       <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                        <span className="user-menu-icon">🔑</span><span>Login</span>
+                        <span className="user-menu-icon"><FaUser /></span><span>Login</span>
                       </Link>
                     </motion.div>
                   </motion.div>

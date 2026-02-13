@@ -27,8 +27,8 @@
 
 .input:focus,.input:not(:placeholder-shown) {
   background-color: #fff;
-  border: 1px solid rgb(98, 0, 255);
-  width: 200px;
+  border: 1px solid #1b5baf;
+  width: 180px;
   cursor: none;
   padding: 18px 16px 18px 40px;
 }
@@ -42,8 +42,8 @@
   background-color: #fff;
   border-radius: 10px;
   z-index: -1;
-  fill: rgb(98, 0, 255);
-  border: 1px solid rgb(98, 0, 255);
+  fill: #1b5baf;
+  border: 1px solid #1b5baf;
 }
 
 .input:hover + .icon {
