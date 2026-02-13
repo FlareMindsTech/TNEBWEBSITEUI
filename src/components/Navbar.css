@@ -1266,23 +1266,33 @@
   width: 100%;
 }
 
+/* FIX: All nav links in sidebar - proper left alignment */
 .sidebar-nav .nav-link {
   color: rgba(255, 255, 255, 0.9) !important;
   padding: 0.75rem 1.25rem !important;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   font-weight: 500;
   transition: all 0.3s ease;
   border-left: 3px solid transparent;
   cursor: pointer;
+  width: 100%;
+  text-align: left !important;
 }
 
 .sidebar-nav .nav-link .sidebar-icon {
   color: #ffffff !important;
   margin-right: 12px;
   font-size: 1.1rem;
+  flex-shrink: 0;
+  display: inline-block !important;
+}
+
+.sidebar-nav .nav-link span {
+  display: inline-flex;
+  align-items: center;
 }
 
 .sidebar-nav .nav-link:hover {
@@ -1292,16 +1302,20 @@
   color: white !important;
 }
 
+/* FIX: Sidebar toggle buttons - proper alignment */
 .sidebar-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   cursor: pointer;
+  width: 100%;
 }
 
 .sidebar-toggle span:first-child {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 1;
 }
 
 .sidebar-toggle span:last-child {
@@ -1310,6 +1324,24 @@
   display: flex;
   align-items: center;
   color: #ffffff !important;
+  flex-shrink: 0;
+}
+
+/* FIX: Regular non-dropdown links (Home, Minnagam, e-Minthiran, Hand Book, Forms, Contact) */
+.sidebar-nav .nav-link:not(.sidebar-toggle) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100%;
+}
+
+.sidebar-nav .nav-link:not(.sidebar-toggle) .sidebar-icon {
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.sidebar-nav .nav-link:not(.sidebar-toggle)::after {
+  display: none;
 }
 
 .sidebar-submenu {
@@ -1318,28 +1350,76 @@
   overflow: hidden;
 }
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
+/* FIX: Sidebar dropdown items - proper left alignment */
+.sidebar-submenu .sidebar-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   color: rgba(255, 255, 255, 0.85) !important;
   padding: 0.6rem 1.25rem 0.6rem 2rem !important;
   text-decoration: none;
   transition: all 0.3s ease;
   border-left: 2px solid transparent;
   font-size: 0.95rem;
+  width: 100%;
 }
 
-.sidebar-item .sidebar-icon {
+.sidebar-submenu .sidebar-item .sidebar-icon {
   color: #ffffff !important;
   margin-right: 12px;
   font-size: 1rem;
+  flex-shrink: 0;
+  display: inline-block !important;
 }
 
-.sidebar-item:hover {
+.sidebar-submenu .sidebar-item:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white !important;
   padding-left: 2.25rem !important;
   border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+/* FIX: Direct sidebar-item links (for any direct sidebar-item not in submenu) */
+.sidebar-nav .sidebar-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  padding: 0.6rem 1.25rem 0.6rem 2rem !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 2px solid transparent;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.sidebar-nav .sidebar-item .sidebar-icon {
+  color: #ffffff !important;
+  margin-right: 12px;
+  font-size: 1rem;
+  flex-shrink: 0;
+  display: inline-block !important;
+}
+
+.sidebar-nav .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white !important;
+  padding-left: 2.25rem !important;
+  border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+/* FIX: Ensure all text in sidebar nav links is left aligned */
+.sidebar-nav .nav-link span,
+.sidebar-nav .sidebar-item span,
+.sidebar-submenu .sidebar-item span {
+  text-align: left !important;
+}
+
+/* FIX: Override any potential Bootstrap conflicts */
+.sidebar-nav .nav-link,
+.sidebar-nav .sidebar-item,
+.sidebar-submenu .sidebar-item {
+  text-align: left !important;
 }
 
 .sidebar-footer {
