@@ -92,6 +92,10 @@
   background: rgba(243, 156, 18, 0.12);
 }
 
+.rollofhonour-bold-row td {
+  font-weight: 800;
+}
+
 .rollofhonour-table tbody td:first-child {
   text-align: center;
   white-space: nowrap;

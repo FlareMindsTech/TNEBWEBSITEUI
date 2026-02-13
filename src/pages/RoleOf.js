@@ -74,8 +74,8 @@ const RoleOfHonour = () => {
               </tr>
             </thead>
             <tbody>
-              {rollOfHonour.map((row) => (
-                <tr key={row.year}>
+              {[...rollOfHonour].reverse().map((row) => (
+                <tr key={row.year} className={row.year === '2025-' ? 'rollofhonour-bold-row' : ''}>
                   <td>{row.year}</td>
                   <td>{row.president}</td>
                   <td>{row.secretary}</td>
