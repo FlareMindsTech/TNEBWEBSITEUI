@@ -3,7 +3,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Cec from './pages/Cec';
 import Regional from './pages/Regional';
-import Publicsecretary from './pages/Publicsecretary';
+import Branchsecretary from './pages/Branchsecretary';
 import ActRegulations from './pages/ActRegulations';
 import ManualsAndFormsDownload from './pages/ManualsAndFormsDownload';
 import ContributoryPensionScheme from './pages/ContributoryPensionScheme';
@@ -88,7 +88,7 @@ function App() {
             <Route path="/" element={<><Header /><Home /><Footer /></>} />
             <Route path="/cec" element={<><Header /><Cec /><Footer /></>} />
             <Route path="/regional" element={<><Header /><Regional /><Footer /></>} />
-            <Route path="/public-secretary" element={<><Header /><Publicsecretary /><Footer /></>} />
+            <Route path="/public-secretary" element={<><Header /><Branchsecretary/><Footer /></>} />
             <Route path="/act-regulations" element={<><Header /><ActRegulations /><Footer /></>} />
             <Route path="/manuals-and-forms-download" element={<><Header /><ManualsAndFormsDownload /><Footer /></>} />
             <Route path="/contributory-pension-scheme" element={<><Header /><ContributoryPensionScheme /><Footer /></>} />
