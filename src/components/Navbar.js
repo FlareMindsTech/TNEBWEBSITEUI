@@ -10,7 +10,7 @@ import {
   FaLandmark, FaImages, FaRegNewspaper,
   FaHandPaper
 } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import AuthModal from './AuthModal';
