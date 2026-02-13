@@ -10,6 +10,7 @@ import ContributoryPensionScheme from './pages/ContributoryPensionScheme';
 import DistributionRelatedInstructions from './pages/DistributionRelatedInstructions';
 import Minnagam from './pages/Minnagam';
 import Minthiran from './pages/Minthiran';
+import MinthiranBookDetail from './pages/MinthiranBookDetail';
 import HandBook from './pages/HandBook';
 import TechnicalQa from './pages/TechnicalQa';
 import TechnicalParameters from './pages/TechnicalParameters';
@@ -94,6 +95,7 @@ function App() {
             <Route path="/distribution-related-instructions" element={<><Header /><DistributionRelatedInstructions /><Footer /></>} />
             <Route path="/Minnagam" element={<><Header /><Minnagam /><Footer /></>} />
             <Route path="/Minthiran" element={<><Header /><Minthiran /><Footer /></>} />
+            <Route path="/minthiran-book/:bookId" element={<><Header /><MinthiranBookDetail /><Footer /></>} />
             <Route path="/hand-book" element={<><Header /><HandBook /><Footer /></>} />
             <Route path="/technical-qa" element={<><Header /><TechnicalQa /><Footer /></>} />
             <Route path="/technical-parameters" element={<><Header /><TechnicalParameters /><Footer /></>} />
