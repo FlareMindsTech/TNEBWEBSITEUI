@@ -128,7 +128,7 @@ export default function ContactUs() {
             
             <div className="info-item">
               <div className="info-icon-wrapper">
-                <FaMapMarkerAlt className="info-icon" />
+                <FaMapMarkerAlt className="contact-info-icon" />
               </div>
               <div className="info-content">
                 <h5>Address</h5>
@@ -138,7 +138,7 @@ export default function ContactUs() {
 
             <div className="info-item">
               <div className="info-icon-wrapper">
-                <FaBuilding className="info-icon" />
+                <FaBuilding className="contact-info-icon" />
               </div>
               <div className="info-content">
                 <h5>Organization</h5>
@@ -148,7 +148,7 @@ export default function ContactUs() {
 
             <div className="info-item">
               <div className="info-icon-wrapper">
-                <FaPhone className="info-icon" />
+                <FaPhone className="contact-info-icon" />
               </div>
               <div className="info-content">
                 <h5>Phone</h5>
@@ -158,7 +158,7 @@ export default function ContactUs() {
 
             <div className="info-item">
               <div className="info-icon-wrapper">
-                <FaEnvelope className="info-icon" />
+                <FaEnvelope className="contact-info-icon" />
               </div>
               <div className="info-content">
                 <h5>Email</h5>
