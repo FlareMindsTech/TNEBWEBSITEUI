@@ -1,0 +1,411 @@
+.regional-container {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* SweetAlert Custom Styles */
+.swal2-container {
+  z-index: 10000 !important;
+}
+
+.swal2-popup {
+  border-radius: 20px !important;
+  padding: 2em !important;
+}
+
+.swal2-title {
+  color: #1b5baf !important;
+  font-size: 1.8rem !important;
+}
+
+.swal2-html-container {
+  margin: 1em 0 !important;
+}
+
+.swal2-confirm {
+  background: linear-gradient(135deg, #1b5baf, #15458a) !important;
+  border-radius: 10px !important;
+  padding: 12px 30px !important;
+  font-weight: 600 !important;
+}
+
+.swal2-confirm:hover {
+  background: linear-gradient(135deg, #15458a, #2a6cc7) !important;
+  box-shadow: 0 5px 20px rgba(27, 91, 175, 0.4) !important;
+}
+
+/* Hero Section */
+.regional-hero {
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
+  padding: 40px 20px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(27, 91, 175, 0.3);
+}
+
+.regional-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.regional-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-icon {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.regional-hero h1 {
+  color: white;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.hero-divider {
+  width: 80px;
+  height: 3px;
+  background: white;
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+.regional-hero h2 {
+  color: rgba(255,255,255,0.95);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.regional-hero p {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+}
+
+/* Secretaries Grid */
+.secretaries-grid-section {
+  margin-bottom: 40px;
+}
+
+.secretaries-grid-section h3 {
+  text-align: center;
+  color: #2a6cc7;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.section-sub {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.secretaries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.secretary-card {
+  height: 400px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.secretary-card:hover .card-front {
+  transform: rotateY(180deg);
+}
+
+.secretary-card:hover .card-back {
+  transform: rotateY(0);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  transition: transform 0.6s ease;
+}
+
+.card-front {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 2px solid #1b5baf;
+}
+
+.card-front .serial {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #1b5baf;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.photo-placeholder {
+  width: 140px;
+  height: 180px;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #666;
+  border: 2px dashed #999;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.card-info h5 {
+  color: #2a6cc7;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.card-info p {
+  color: #2a6bc8;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.region-name {
+  font-weightweight: 600;
+  color: #1b5baf;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
+  color: white;
+  transform: rotateY(180deg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-back h5 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.back-region {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.back-desig {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.back-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card-back button {
+  background: white;
+  color: #1b5baf;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.3s ease;
+}
+
+.card-back button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Info Section */
+.regional-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 30px 20px;
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.info-stat {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(27, 91, 175, 0.1);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.info-stat:hover {
+  border-color: #1b5baf;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(27, 91, 175, 0.2);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1b5baf;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .secretaries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .regional-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .regional-hero h2 {
+    font-size: 1.2rem;
+  }
+
+  .card-info h5 {
+    font-size: 0.9rem;
+  }
+
+  .card-info p {
+    font-size: 0.7rem;
+  }
+
+  .photo-placeholder {
+    width: 120px;
+    height: 160px;
+  }
+
+  .secretaries-grid-section h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .secretaries-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .regional-container {
+    padding: 10px;
+  }
+
+  .regional-hero {
+    padding: 30px 15px;
+    margin-bottom: 30px;
+  }
+
+  .regional-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .regional-hero h2 {
+    font-size: 1rem;
+  }
+
+  .secretaries-grid-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .secretary-card {
+    height: 380px;
+  }
+
+  .card-front {
+    padding: 15px;
+  }
+
+  .card-back {
+    padding: 20px;
+  }
+
+  .photo-placeholder {
+    width: 100px;
+    height: 140px;
+    font-size: 9px;
+  }
+
+  .regional-info {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px 10px;
+  }
+}
