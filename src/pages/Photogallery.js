@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllGalleries } from '../api';
 import './Photogallery.css';
 
 const Photogallery = () => {
+  const navigate = useNavigate();
   const pageStyle = {
     background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
     minHeight: '100vh'
@@ -12,8 +14,6 @@ const Photogallery = () => {
   
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedGallery, setSelectedGallery] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
   
   const tableRef = useRef(null);
@@ -39,23 +39,8 @@ const Photogallery = () => {
     }
   };
 
-  const openGallery = (gallery) => {
-    setSelectedGallery(gallery);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeGallery = () => {
-    setSelectedGallery(null);
-    setSelectedImage(null);
-    document.body.style.overflow = 'auto';
-  };
-
-  const openImageModal = (image) => {
-    setSelectedImage(image);
-  };
-
-  const closeImageModal = () => {
-    setSelectedImage(null);
+  const handleGalleryClick = (gallery) => {
+    navigate(`/gallery-detail/${gallery._id}`);
   };
 
   const formatDate = (dateString) => {
@@ -131,7 +116,7 @@ const Photogallery = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.05 }}
-                        onClick={() => openGallery(gallery)}
+                        onClick={() => handleGalleryClick(gallery)}
                         onMouseEnter={() => setHoveredRow(index)}
                         onMouseLeave={() => setHoveredRow(null)}
                         className={`gallery-row ${hoveredRow === index ? 'hovered' : ''}`}
@@ -173,122 +158,6 @@ const Photogallery = () => {
           )}
         </div>
       </div>
-
-      {/* Gallery Details Modal */}
-      <AnimatePresence>
-        {selectedGallery && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="gallery-details-modal"
-            onClick={closeGallery}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="gallery-details-content"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className="details-close-btn" onClick={closeGallery}>
-                ×
-              </button>
-              
-              <div className="details-header">
-                <div className="details-info">
-                  <div className="details-title-container">
-                    <h3>{selectedGallery.title}</h3>
-                  </div>
-                  <p className="details-date">
-                    <span className="date-icon">📅</span>
-                    {formatDate(selectedGallery.createdAt)}
-                  </p>
-                  {selectedGallery.description && (
-                    <div className="details-description-container">
-                      <p className="details-description">{selectedGallery.description}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="images-grid">
-                <div className="images-header">
-                  <h5 className="images-title">
-                    Gallery Images <span className="images-count">({selectedGallery.images?.length || 0})</span>
-                  </h5>
-                </div>
-                <div className="grid-scroll-container">
-                  <div className="grid-container">
-                    {selectedGallery.images?.map((image, idx) => {
-                      const imageObj = typeof image === 'string' ? { url: image, caption: '' } : image;
-                      return (
-                        <motion.div
-                          key={idx}
-                          className="image-grid-item"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3, delay: idx * 0.05 }}
-                          onClick={() => openImageModal({
-                            url: imageObj.url || imageObj,
-                            caption: imageObj.caption || ''
-                          })}
-                        >
-                          <div className="image-container">
-                            <img
-                              src={imageObj.url || imageObj}
-                              alt={`${selectedGallery.title} - Image ${idx + 1}`}
-                              className="grid-image"
-                              loading="lazy"
-                            />
-                            <div className="image-index">{idx + 1}</div>
-                          </div>
-                          {imageObj.caption && (
-                            <div className="image-caption-overlay">
-                              <p>{imageObj.caption}</p>
-                            </div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Image Lightbox Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="image-lightbox"
-            onClick={closeImageModal}
-          >
-            <button className="lightbox-close-btn" onClick={closeImageModal}>
-              ×
-            </button>
-            <div className="lightbox-container">
-              <motion.img
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                src={selectedImage.url}
-                alt="Full size"
-                className="lightbox-image"
-              />
-              {selectedImage.caption && (
-                <div className="lightbox-caption">
-                  <p>{selectedImage.caption}</p>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
