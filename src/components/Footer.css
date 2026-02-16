@@ -1,13 +1,15 @@
 ﻿.footer-section {
-  margin-top: 40px;
+  margin-top: auto;
   background: #f8f9fa;
   border-top: 1px solid #e0e0e0;
+  width: 100%;
 }
 
 .footer-slider {
   padding: 20px 0;
   background: white;
   overflow: hidden;
+  display: block;
 }
 
 .slider-circular {
@@ -40,8 +42,7 @@
 
 /* Footer Bottom */
 .footer-bottom {
-  /* background-color: #48a9e6; */
-      background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
+  background: radial-gradient(ellipse at center, #1b5baf 0%, #000000 100%, #2a6cc7 100%);
   padding: 12px 0;
   color: white;
 }
@@ -60,7 +61,6 @@
   align-items: center;
   gap: 12px;
 }
-
 
 .footer-brand-text {
   font-size: 1.3rem;
@@ -146,12 +146,16 @@
   }
 
   .slider-item {
-    width: 70px;
-    height: 70px;
+    margin: 0 10px;
+  }
+  
+  .slider-item img {
+    height: 40px;
   }
   
   .footer-slider {
-    display: none;
+    display: block;
+    padding: 15px 0;
   }
 }
 
@@ -175,5 +179,13 @@
 
   .footer-links a {
     font-size: 0.7rem;
+  }
+  
+  .footer-slider {
+    padding: 12px 0;
+  }
+  
+  .slider-item img {
+    height: 35px;
   }
 }
