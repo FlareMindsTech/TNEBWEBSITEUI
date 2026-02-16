@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaUser, FaTimes, FaCaretDown, FaBars, 
@@ -25,6 +25,35 @@ const Navbar = () => {
   const [authTab, setAuthTab] = useState('login');
   // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
+  const sidebarRef = useRef(null);
+  
+  // Handle click outside sidebar to close it in mobile view
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if sidebar is open and click was outside the sidebar
+      if (isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        // Check if the click was on the navbar-toggler button (which should open sidebar, not close)
+        const togglerButton = document.querySelector('.navbar-toggler');
+        if (togglerButton && !togglerButton.contains(event.target)) {
+          closeSidebar();
+          setOpenDropdown(null);
+        }
+      }
+    };
+
+    // Add event listener when sidebar is open
+    if (isSidebarOpen) {
+      // Small delay to prevent immediate closing when just opened
+      const timer = setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+  }, [isSidebarOpen, closeSidebar]);
   
   // Handle quick links on mobile - navigate in same tab
   const handleMobileQuickLinkClick = (link) => {
@@ -170,6 +199,7 @@ const Navbar = () => {
               />
               <motion.div
                 className="mobile-sidebar"
+                ref={sidebarRef}
                 initial={{ x: -300 }}
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
