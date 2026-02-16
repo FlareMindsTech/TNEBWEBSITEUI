@@ -125,7 +125,7 @@ const Branchsecretary = () => {
       {/* Hero Section */}
       <div className="branch-hero">
         <div className="branch-hero-content">
-          <FaMapMarkerAlt className="hero-icon" />
+          <FaUsers className="hero-icon" />
           <h1>BRANCH SECRETARIES</h1>
           <div className="hero-divider"></div>
           <h2>TNEBEA 2025-2027</h2>
