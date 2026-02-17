@@ -1451,10 +1451,17 @@
     display: none !important;
   }
 
+  .sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
   .mobile-sidebar {
     width: min(280px, 80vw);
-    max-height: 100vh;
-    height: 100vh;
+    /* max-height: 100vh; */
+    height: 93vh;
+    overflow-y: auto;
   }
   
   .sidebar-nav {

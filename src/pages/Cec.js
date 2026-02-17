@@ -139,7 +139,7 @@ const Cec = () => {
               <div className="card-back">
                 <h5>{member.name}</h5>
                 <p className="back-designation">{member.designation}</p>
-                <p className="back-qual"><FaIdCard /> {member.qualification}</p>
+                <p className="back-qual"> {member.qualification}</p>
                 <p className="back-contact"><FaPhone /> {member.contact}</p>
                 <button onClick={(e) => { e.stopPropagation(); showMemberDetails(member); }}>View Details</button>
               </div>
