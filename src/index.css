@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
 
+:root {
+  --global-bg-gradient: linear-gradient(135deg, #e8f2ff 0%, #d4e7ff 50%, #e8f2ff 100%);
+  --global-bg-primary: #e8f2ff;
+  --global-bg-secondary: #d4e7ff;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,12 +22,30 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  background: var(--global-bg-gradient);
+  background-attachment: fixed;
 }
 
 #root {
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+#root::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(90deg, transparent 49.5%, rgba(27, 91, 175, 0.03) 50%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(27, 91, 175, 0.03) 50%, transparent 50.5%);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .footer-section {

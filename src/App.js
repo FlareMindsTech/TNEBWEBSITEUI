@@ -32,6 +32,7 @@ import logo from './assets/tnebea_logo_cropped2.png';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import BoardProceedings from "./pages/BoardProceedings";
 import Photogallery from './pages/Photogallery';
+import GalleryDetail from './pages/GalleryDetail';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 
@@ -109,6 +110,7 @@ function App() {
             <Route path="/important-notices" element={<><Header /><Importantnotices /><Footer /></>} />
             <Route path="/board-proceedings" element={<><Header /><BoardProceedings /><Footer /></>} />
             <Route path="/photo-gallery" element={<><Header /><Photogallery /><Footer /></>} />
+            <Route path="/gallery-detail/:galleryId" element={<><Header /><GalleryDetail /><Footer /></>} />
             <Route path="/role-of-honour" element={<><Header /><RoleOf /><Footer /></>} />
           </Routes>
         </div>
