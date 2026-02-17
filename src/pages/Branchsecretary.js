@@ -69,25 +69,34 @@ const Branchsecretary = () => {
   ];
 
   const showSecretaryDetails = (secretary) => {
-    const contactHTML = secretary.contact2 
-      ? `
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
-            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
-            <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact}</strong>
-          </div>
-          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
-            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
-            <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact2}</strong>
-          </div>
-        </div>
-      `
-      : `
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px; margin-top: 20px;">
+    let contactHTML = `<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">`;
+    
+    contactHTML += `
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
+        <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact}</strong>
+      </div>
+    `;
+    
+    if (secretary.contact2) {
+      contactHTML += `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
-          <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact}</strong>
+          <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact2}</strong>
         </div>
       `;
+    }
+    
+    if (secretary.contact3) {
+      contactHTML += `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
+          <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact3}</strong>
+        </div>
+      `;
+    }
+    
+    contactHTML += `</div>`;
 
     Swal.fire({
       title: `<strong>${secretary.name}</strong>`,
@@ -157,6 +166,7 @@ const Branchsecretary = () => {
                 <p className="back-desig">{secretary.designation}</p>
                 <p className="back-contact"><FaPhone /> {secretary.contact}</p>
                 {secretary.contact2 && <p className="back-contact"><FaPhone /> {secretary.contact2}</p>}
+                {secretary.contact3 && <p className="back-contact"><FaPhone /> {secretary.contact3}</p>}
                 <button onClick={(e) => { e.stopPropagation(); showSecretaryDetails(secretary); }}>View Details</button>
               </div>
             </div>
