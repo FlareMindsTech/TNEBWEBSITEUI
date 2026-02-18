@@ -239,6 +239,8 @@
     padding: 6px 12px;
     gap: 6px;
     min-width: 120px;
+    justify-content: center;
+    margin: 0 auto;
   }
 
   .visitor-icon {
@@ -310,6 +312,7 @@
     padding: 5px 10px;
     gap: 5px;
     min-width: 100px;
+    margin: 0 auto;
   }
 
   .visitor-icon {
