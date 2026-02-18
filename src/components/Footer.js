@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import IPDSImage from '../assets/IPDS-1.gif';
 import Cea from '../assets/cea.png';
@@ -9,9 +10,51 @@ import Pfcl from '../assets/pfcl.png';
 import Minofpower from '../assets/minofpower_3.png';
 import Mygov from '../assets/mygov_7.png';
 import { motion } from 'framer-motion';
+import { trackVisitor, getVisitorCount, getVisitorId } from '../api';
 import "./Footer.css"
 
 const Footer = () => {
+  const [visitorCount, setVisitorCount] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const initializeVisitorTracking = async () => {
+      try {
+        // Get or generate visitor ID
+        const visitorId = getVisitorId();
+        
+        // Track visitor with ID
+        const trackResponse = await trackVisitor(visitorId);
+        
+        // Use count from track response or fetch separately
+        if (trackResponse && trackResponse.totalVisitors !== undefined) {
+          setVisitorCount(trackResponse.totalVisitors);
+        } else {
+          // Fallback: fetch current count
+          const countData = await getVisitorCount();
+          setVisitorCount(countData.totalVisitors || countData.count || 0);
+        }
+      } catch (error) {
+        console.error('Visitor tracking error:', error);
+        // Fallback to just fetching count if tracking fails
+        try {
+          const countData = await getVisitorCount();
+          setVisitorCount(countData.totalVisitors || countData.count || 0);
+        } catch (err) {
+          console.error('Failed to fetch visitor count:', err);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeVisitorTracking();
+  }, []);
+
+  const formatVisitorCount = (count) => {
+    if (!count) return '0';
+    return count.toLocaleString('en-IN');
+  };
   // Footer slider images
   const footerImages = [
     { id: 1, src: Cea, alt: "CEA", link: "http://cea.nic.in/" },
@@ -97,6 +140,28 @@ const Footer = () => {
               <Link to="/privacy-policy">Privacy Policy</Link>
               <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </div>
+            <motion.div 
+              className="visitor-count-badge"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {!isLoading && (
+                <>
+                  <svg className="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span className="visitor-count">{formatVisitorCount(visitorCount)}</span>
+                  <span className="visitor-label">Visitors</span>
+                </>
+              )}
+              {isLoading && (
+                <div className="visitor-loading">
+                  <div className="spinner-dot"></div>
+                </div>
+              )}
+            </motion.div>
           </div>
         </div>
       </motion.div>
