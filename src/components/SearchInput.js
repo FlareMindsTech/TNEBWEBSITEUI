@@ -23,7 +23,7 @@ const SearchInput = () => {
           type="text"
           name="text"
           className="input"
-          placeholder="Search something..."
+          placeholder="Search..."
           value={searchValue}
           onChange={handleSearchChange}
           required

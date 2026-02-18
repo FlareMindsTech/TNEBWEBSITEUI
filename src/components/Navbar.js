@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaUser, FaTimes, FaCaretDown, FaBars, 
@@ -25,6 +25,35 @@ const Navbar = () => {
   const [authTab, setAuthTab] = useState('login');
   // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
+  const sidebarRef = useRef(null);
+  
+  // Handle click outside sidebar to close it in mobile view
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if sidebar is open and click was outside the sidebar
+      if (isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        // Check if the click was on the navbar-toggler button (which should open sidebar, not close)
+        const togglerButton = document.querySelector('.navbar-toggler');
+        if (togglerButton && !togglerButton.contains(event.target)) {
+          closeSidebar();
+          setOpenDropdown(null);
+        }
+      }
+    };
+
+    // Add event listener when sidebar is open
+    if (isSidebarOpen) {
+      // Small delay to prevent immediate closing when just opened
+      const timer = setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+  }, [isSidebarOpen, closeSidebar]);
   
   // Handle quick links on mobile - navigate in same tab
   const handleMobileQuickLinkClick = (link) => {
@@ -170,6 +199,7 @@ const Navbar = () => {
               />
               <motion.div
                 className="mobile-sidebar"
+                ref={sidebarRef}
                 initial={{ x: -300 }}
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
@@ -186,205 +216,207 @@ const Navbar = () => {
                   </motion.button>
                 </div>
 
-                <nav className="sidebar-nav">
-                  <ul className="navbar-nav flex-column">
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/" onClick={closeAllMenus}>
-                        <FaHome className="sidebar-icon" /> Home
-                      </Link>
-                    </motion.li>
+                <div className="sidebar-nav-container">
+                  <nav className="sidebar-nav">
+                    <ul className="navbar-nav flex-column">
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/" onClick={closeAllMenus}>
+                          <FaHome className="sidebar-icon" /> Home
+                        </Link>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <div
-                        className="nav-link sidebar-toggle"
-                        onClick={() => setOpenDropdown(openDropdown === 'about' ? null : 'about')}
-                      >
-                        <span><FaUsers className="sidebar-icon" /> About TNEBEA</span>
-                        <motion.span
-                          animate={{ rotate: openDropdown === 'about' ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <div
+                          className="nav-link sidebar-toggle"
+                          onClick={() => setOpenDropdown(openDropdown === 'about' ? null : 'about')}
                         >
-                          <FaCaretDown />
-                        </motion.span>
-                      </div>
-                      <AnimatePresence>
-                        {openDropdown === 'about' && (
-                          <motion.div 
-                            className="sidebar-submenu"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                          <span><FaUsers className="sidebar-icon" /> About TNEBEA</span>
+                          <motion.span
+                            animate={{ rotate: openDropdown === 'about' ? 180 : 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
-                              <FaUserTie className="sidebar-icon" /> CEC
-                            </Link>
-                            <Link className="sidebar-item" to="/regional" onClick={closeAllMenus}>
-                              <FaUsers className="sidebar-icon" /> Regional Secretary
-                            </Link>
-                            <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
-                              <FaUsers className="sidebar-icon" /> Branch Secretary
-                            </Link>
-                            <Link className="sidebar-item" to="/role-of-honour" onClick={closeAllMenus}>
-                              <FaTrophy className="sidebar-icon" /> Role Of Honour
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.li>
+                            <FaCaretDown />
+                          </motion.span>
+                        </div>
+                        <AnimatePresence>
+                          {openDropdown === 'about' && (
+                            <motion.div 
+                              className="sidebar-submenu"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
+                                <FaUserTie className="sidebar-icon" /> CEC
+                              </Link>
+                              <Link className="sidebar-item" to="/regional" onClick={closeAllMenus}>
+                                <FaUsers className="sidebar-icon" /> Regional Secretary
+                              </Link>
+                              <Link className="sidebar-item" to="/public-secretary" onClick={closeAllMenus}>
+                                <FaUsers className="sidebar-icon" /> Branch Secretary
+                              </Link>
+                              <Link className="sidebar-item" to="/role-of-honour" onClick={closeAllMenus}>
+                                <FaTrophy className="sidebar-icon" /> Role Of Honour
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <div
-                        className="nav-link sidebar-toggle"
-                        onClick={() => setOpenDropdown(openDropdown === 'tnebInfo' ? null : 'tnebInfo')}
-                      >
-                        <span><FaInfoCircle className="sidebar-icon" /> General Info</span>
-                        <motion.span
-                          animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <div
+                          className="nav-link sidebar-toggle"
+                          onClick={() => setOpenDropdown(openDropdown === 'tnebInfo' ? null : 'tnebInfo')}
                         >
-                          <FaCaretDown />
-                        </motion.span>
-                      </div>
-                      <AnimatePresence>
-                        {openDropdown === 'tnebInfo' && (
-                          <motion.div 
-                            className="sidebar-submenu"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                          <span><FaInfoCircle className="sidebar-icon" /> General Info</span>
+                          <motion.span
+                            animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <Link className="sidebar-item" to="/act-regulations" onClick={closeAllMenus}>
-                              <FaGavel className="sidebar-icon" /> Act & Regulations
-                            </Link>
-                            <Link className="sidebar-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
-                              <FaFilePdf className="sidebar-icon" /> Manuals & Forms
-                            </Link>
-                            <Link className="sidebar-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
-                              <FaUserTie className="sidebar-icon" /> Pension Scheme (CPS)
-                            </Link>
-                            <Link className="sidebar-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
-                              <FaClipboardList className="sidebar-icon" /> Distribution Instructions
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.li>
+                            <FaCaretDown />
+                          </motion.span>
+                        </div>
+                        <AnimatePresence>
+                          {openDropdown === 'tnebInfo' && (
+                            <motion.div 
+                              className="sidebar-submenu"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <Link className="sidebar-item" to="/act-regulations" onClick={closeAllMenus}>
+                                <FaGavel className="sidebar-icon" /> Act & Regulations
+                              </Link>
+                              <Link className="sidebar-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
+                                <FaFilePdf className="sidebar-icon" /> Manuals & Forms
+                              </Link>
+                              <Link className="sidebar-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
+                                <FaUserTie className="sidebar-icon" /> Pension Scheme (CPS)
+                              </Link>
+                              <Link className="sidebar-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
+                                <FaClipboardList className="sidebar-icon" /> Distribution Instructions
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <div
-                        className="nav-link sidebar-toggle"
-                        onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
-                      >
-                        <span><FaCog className="sidebar-icon" /> Technical</span>
-                        <motion.span
-                          animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <div
+                          className="nav-link sidebar-toggle"
+                          onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
                         >
-                          <FaCaretDown />
-                        </motion.span>
-                      </div>
-                      <AnimatePresence>
-                        {openDropdown === 'tech' && (
-                          <motion.div 
-                            className="sidebar-submenu"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                          <span><FaCog className="sidebar-icon" /> Technical</span>
+                          <motion.span
+                            animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <Link className="sidebar-item" to="/technical-qa" onClick={closeAllMenus}>
-                              <FaQuestionCircle className="sidebar-icon" /> Technical Q&A
-                            </Link>
-                            <Link className="sidebar-item" to="/technical-parameters" onClick={closeAllMenus}>
-                              <FaChartBar className="sidebar-icon" /> Technical Parameters
-                            </Link>
-                            <Link className="sidebar-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
-                              <FaBookOpen className="sidebar-icon" /> Books & Manuals
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.li>
+                            <FaCaretDown />
+                          </motion.span>
+                        </div>
+                        <AnimatePresence>
+                          {openDropdown === 'tech' && (
+                            <motion.div 
+                              className="sidebar-submenu"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <Link className="sidebar-item" to="/technical-qa" onClick={closeAllMenus}>
+                                <FaQuestionCircle className="sidebar-icon" /> Technical Q&A
+                              </Link>
+                              <Link className="sidebar-item" to="/technical-parameters" onClick={closeAllMenus}>
+                                <FaChartBar className="sidebar-icon" /> Technical Parameters
+                              </Link>
+                              <Link className="sidebar-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
+                                <FaBookOpen className="sidebar-icon" /> Books & Manuals
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/Minnagam" onClick={closeAllMenus}>
-                        <FaMobile className="sidebar-icon" /> Minnagam
-                      </Link>
-                    </motion.li>
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/Minnagam" onClick={closeAllMenus}>
+                          <FaMobile className="sidebar-icon" /> Minnagam
+                        </Link>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                        <FaRegNewspaper className="sidebar-icon" /> e-Minthiran
-                      </Link>
-                    </motion.li>
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
+                          <FaRegNewspaper className="sidebar-icon" /> e-Minthiran
+                        </Link>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/hand-book" onClick={closeAllMenus}>
-                        <FaHandPaper className="sidebar-icon" /> Hand Book
-                      </Link>
-                    </motion.li>
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/hand-book" onClick={closeAllMenus}>
+                          <FaHandPaper className="sidebar-icon" /> Hand Book
+                        </Link>
+                      </motion.li>
 
-                    {/* <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/news" onClick={closeAllMenus}>
-                        📰 News
-                      </Link>
-                    </motion.li> */}
+                      {/* <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/news" onClick={closeAllMenus}>
+                          📰 News
+                        </Link>
+                      </motion.li> */}
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <div
-                        className="nav-link sidebar-toggle"
-                        onClick={() => setOpenDropdown(openDropdown === 'quickLinks' ? null : 'quickLinks')}
-                      >
-                        <span><FaLink className="sidebar-icon" /> Quick Links</span>
-                        <motion.span
-                          animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <div
+                          className="nav-link sidebar-toggle"
+                          onClick={() => setOpenDropdown(openDropdown === 'quickLinks' ? null : 'quickLinks')}
                         >
-                          <FaCaretDown />
-                        </motion.span>
-                      </div>
-                      <AnimatePresence>
-                        {openDropdown === 'quickLinks' && (
-                          <motion.div 
-                            className="sidebar-submenu"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
+                          <span><FaLink className="sidebar-icon" /> Quick Links</span>
+                          <motion.span
+                            animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }}
                             transition={{ duration: 0.3 }}
-                            style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
                           >
-                            <Link className="sidebar-item" to="/important-notices" onClick={closeAllMenus}>
-                              <FaBell className="sidebar-icon" /> Important Notices
-                            </Link>
-                            {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" onClick={closeAllMenus}>
-                              🔌 TANTRANSCO
-                            </a> */}
-                            <Link className="sidebar-item" to="/board-proceedings" onClick={closeAllMenus}>
-                              <FaLandmark className="sidebar-icon" /> Board Proceedings
-                            </Link>
-                            <Link className="sidebar-item" to="/photo-gallery" onClick={closeAllMenus}>
-                              <FaImages className="sidebar-icon" /> Photogallery
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.li>
+                            <FaCaretDown />
+                          </motion.span>
+                        </div>
+                        <AnimatePresence>
+                          {openDropdown === 'quickLinks' && (
+                            <motion.div 
+                              className="sidebar-submenu"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
+                            >
+                              <Link className="sidebar-item" to="/important-notices" onClick={closeAllMenus}>
+                                <FaBell className="sidebar-icon" /> Important Notices
+                              </Link>
+                              {/* <a className="sidebar-item" href="https://www.tantransco.gov.in/" onClick={closeAllMenus}>
+                                🔌 TANTRANSCO
+                              </a> */}
+                              <Link className="sidebar-item" to="/board-proceedings" onClick={closeAllMenus}>
+                                <FaLandmark className="sidebar-icon" /> Board Proceedings
+                              </Link>
+                              <Link className="sidebar-item" to="/photo-gallery" onClick={closeAllMenus}>
+                                <FaImages className="sidebar-icon" /> Photogallery
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/tnebea-forms" onClick={closeAllMenus}>
-                        <FaFileAlt className="sidebar-icon" /> TNEBEA Forms
-                      </Link>
-                    </motion.li>
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/tnebea-forms" onClick={closeAllMenus}>
+                          <FaFileAlt className="sidebar-icon" /> TNEBEA Forms
+                        </Link>
+                      </motion.li>
 
-                    <motion.li className="nav-item" variants={navItemVariants}>
-                      <Link className="nav-link" to="/contactus" onClick={closeAllMenus}>
-                        <FaPhone className="sidebar-icon" /> Contact
-                      </Link>
-                    </motion.li>
-                  </ul>
-                </nav>
+                      <motion.li className="nav-item" variants={navItemVariants}>
+                        <Link className="nav-link" to="/contactus" onClick={closeAllMenus}>
+                          <FaPhone className="sidebar-icon" /> Contact
+                        </Link>
+                      </motion.li>
+                    </ul>
+                  </nav>
+                </div>
 
                 <div className="sidebar-footer">
                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

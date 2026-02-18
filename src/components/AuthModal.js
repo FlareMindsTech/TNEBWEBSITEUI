@@ -153,7 +153,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       show={show}
       onHide={onClose}
       centered
-      backdrop="static"
+      backdrop={true}
       dialogClassName="auth-modal-dialog"
       contentClassName="auth-modal"
     >
