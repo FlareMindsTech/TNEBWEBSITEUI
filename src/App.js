@@ -37,38 +37,38 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 
 function App() {
-  const [showIntro, setShowIntro] = useState(() => {
-    // Check if intro has been shown before
-    const introCompleted = sessionStorage.getItem("intro_completed");
-    // Show intro if not completed
-    return !introCompleted;
-  });
-  const [showApp, setShowApp] = useState(() => {
-    // Show app directly if intro was already completed
-    const introCompleted = sessionStorage.getItem("intro_completed");
-    return introCompleted;
-  });
+  // const [showIntro, setShowIntro] = useState(() => {
+  //   // Check if intro has been shown before
+  //   const introCompleted = sessionStorage.getItem("intro_completed");
+  //   // Show intro if not completed
+  //   return !introCompleted;
+  // });
+  // const [showApp, setShowApp] = useState(() => {
+  //   // Show app directly if intro was already completed
+  //   const introCompleted = sessionStorage.getItem("intro_completed");
+  //   return introCompleted;
+  // });
 
-  // Handle intro completion - show main app
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    // Mark intro as completed
-    sessionStorage.setItem("intro_completed", "true");
-    // Show main app immediately
-    setShowApp(true);
-  };
+  // // Handle intro completion - show main app
+  // const handleIntroComplete = () => {
+  //   setShowIntro(false);
+  //   // Mark intro as completed
+  //   sessionStorage.setItem("intro_completed", "true");
+  //   // Show main app immediately
+  //   setShowApp(true);
+  // };
 
-  // Prevent scrolling during intro
-  useEffect(() => {
-    const body = document.body;
-    if (showIntro) {
-      body.classList.add('no-scroll');
-    } else {
-      body.classList.remove('no-scroll');
-    }
+  // // Prevent scrolling during intro
+  // useEffect(() => {
+  //   const body = document.body;
+  //   if (showIntro) {
+  //     body.classList.add('no-scroll');
+  //   } else {
+  //     body.classList.remove('no-scroll');
+  //   }
 
-    return () => body.classList.remove('no-scroll');
-  }, [showIntro]);
+  //   return () => body.classList.remove('no-scroll');
+  // }, [showIntro]);
 
   return (
     <Router>
@@ -81,9 +81,9 @@ function App() {
         > */}
           <div className="App">
           {/* Intro Screen */}
-          {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
+          {/* {showIntro && <IntroScreen onComplete={handleIntroComplete} />} */}
 
-          {showApp && (
+          
           <div className="app-content">
           <Routes>
             <Route path="/" element={<><Header /><Home /><Footer /></>} />
@@ -114,7 +114,7 @@ function App() {
             <Route path="/role-of-honour" element={<><Header /><RoleOf /><Footer /></>} />
           </Routes>
         </div>
-        )}
+      
       </div>
         {/* </ClickSpark> */}
       </SidebarProvider>

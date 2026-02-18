@@ -80,7 +80,7 @@ const Regional = () => {
       {/* Hero Section */}
       <div className="regional-hero">
         <div className="regional-hero-content">
-          <FaMapMarkerAlt className="hero-icon" />
+          <FaUsers className="hero-icon" />
           <h1>REGIONAL SECRETARIES</h1>
           <div className="hero-divider"></div>
           <h2>TNEBEA 2025-2027</h2>
