@@ -52,6 +52,7 @@
   align-items: center;
   gap: 30px;
   flex-wrap: wrap;
+  padding: 0 15px;
 }
 
 /* Footer Brand with Logo */
@@ -92,6 +93,82 @@
 
 .footer-links a:hover {
   text-decoration: underline;
+}
+
+/* Visitor Count Badge */
+.visitor-count-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.visitor-count-badge:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.visitor-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  animation: blink 3s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.visitor-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.visitor-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.visitor-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+}
+
+.spinner-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 /* Responsive */
@@ -153,6 +230,26 @@
   .footer-slider {
     display: none;
   }
+
+  .visitor-count-badge {
+    padding: 6px 12px;
+    gap: 6px;
+    min-width: 120px;
+  }
+
+  .visitor-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .visitor-count {
+    font-size: 1rem;
+    min-width: 40px;
+  }
+
+  .visitor-label {
+    font-size: 0.75rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -174,6 +271,26 @@
   }
 
   .footer-links a {
+    font-size: 0.7rem;
+  }
+
+  .visitor-count-badge {
+    padding: 5px 10px;
+    gap: 5px;
+    min-width: 100px;
+  }
+
+  .visitor-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .visitor-count {
+    font-size: 0.9rem;
+    min-width: 35px;
+  }
+
+  .visitor-label {
     font-size: 0.7rem;
   }
 }

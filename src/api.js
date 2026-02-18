@@ -192,6 +192,19 @@ export const getAllCarouselImages = async () => {
 // ==================== VISITOR TRACKING APIs ====================
 
 /**
+ * Generate or retrieve unique visitor ID from localStorage
+ * @returns {string} Unique visitor ID
+ */
+export const getVisitorId = () => {
+  let visitorId = localStorage.getItem('visitorId');
+  if (!visitorId) {
+    visitorId = `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('visitorId', visitorId);
+  }
+  return visitorId;
+};
+
+/**
  * Track a visitor (with 1-hour cooldown)
  * @param {string} visitorId - Unique visitor identifier
  * @returns {Promise} Tracking response with success status
