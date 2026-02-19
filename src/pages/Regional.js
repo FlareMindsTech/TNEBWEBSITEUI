@@ -45,9 +45,10 @@ const Regional = () => {
       `;
 
     Swal.fire({
-      title: `<strong>${secretary.name}</strong>`,
+      title: '',
       html: `
         <div style="text-align: center; padding: 20px;">
+          <h2 style="color: #1b5baf; font-weight: 700; font-size: 1.5rem; margin-bottom: 20px; word-wrap: break-word;">${secretary.name}</h2>
           <div style="width: 100%; height: 200px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666; border: 2px dashed #999; border-radius: 10px; margin-bottom: 20px;">
             NO IMAGE
           </div>
