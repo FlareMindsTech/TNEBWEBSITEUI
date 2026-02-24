@@ -57,9 +57,10 @@ const Cec = () => {
 
   const showMemberDetails = (member) => {
     Swal.fire({
-      title: `<strong>${member.name}</strong>`,
+      title: '',
       html: `
         <div style="text-align: center; padding: 20px;">
+          <h2 style="color: #1b5baf; font-weight: 700; font-size: 1.5rem; margin-bottom: 20px; word-wrap: break-word;">${member.name}</h2>
           <img src="${member.photo}" alt="${member.name}" style="width: 180px; height: 220px; border-radius: 15px; margin-bottom: 20px; border: 3px solid #1b5baf;" />
           <h3 style="color: #1b5baf; margin-bottom: 10px;">${member.designation}</h3>
           <p style="color: #666; font-size: 1rem; margin-bottom: 15px;">${member.qualification}</p>
