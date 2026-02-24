@@ -98,13 +98,14 @@ const Minthiran = () => {
   };
 
   const openBookDetail = (magazine) => {
-    const pdfLink = magazine?.pdf?.url || magazine?.pdfUrl;
-    if (pdfLink) {
-      window.open(pdfLink, '_blank', 'noopener,noreferrer');
+    if (!magazine?._id) {
+      console.warn('Book ID missing for this magazine:', magazine);
       return;
     }
 
-    console.warn('PDF link missing for this magazine:', magazine);
+    navigate(`/minthiran-book/${magazine._id}`, {
+      state: { book: magazine }
+    });
   };
 
   const monthNames = [
