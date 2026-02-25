@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './SearchInput.css';
 
 const SearchInput = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -16,22 +18,42 @@ const SearchInput = () => {
     }
   };
 
+  const handleClear = () => {
+    setSearchValue('');
+    setIsFocused(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <div className="input-container">
       <form onSubmit={handleSearchSubmit} style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
         <input
+          ref={inputRef}
           type="text"
           name="text"
           className="input"
           placeholder="Search..."
           value={searchValue}
           onChange={handleSearchChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           required
         />
+        {/* Search Icon - Always visible */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          className="icon"
+          className="icon search-icon"
         >
           <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
           <g strokeLinejoin="round" strokeLinecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -44,6 +66,30 @@ const SearchInput = () => {
             ></path>
           </g>
         </svg>
+        
+        {/* Clear (Cross) Icon - Proper X icon */}
+        {(searchValue || isFocused) && (
+          <button
+            type="button"
+            className="clear-button"
+            onClick={handleClear}
+            aria-label="Clear search"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="clear-icon"
+            >
+              <path
+                d="M18 6L6 18M6 6L18 18"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        )}
       </form>
     </div>
   );
