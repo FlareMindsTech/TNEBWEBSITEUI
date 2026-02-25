@@ -1,4 +1,4 @@
-/* From Uiverse.io by Yaya12085 */ 
+/* From Uiverse.io by Yaya12085 - Modified */
 .input-container {
   position: relative;
   display: flex;
@@ -25,12 +25,13 @@
   color: rgb(131, 128, 128);
 }
 
-.input:focus,.input:not(:placeholder-shown) {
+.input:focus,
+.input:not(:placeholder-shown) {
   background-color: #fff;
   border: 1px solid #1b5baf;
   width: 180px;
-  cursor: none;
-  padding: 18px 16px 18px 40px;
+  cursor: text;
+  padding: 18px 40px 18px 40px;
 }
 
 .icon {
@@ -41,9 +42,17 @@
   width: 40px;
   background-color: #fff;
   border-radius: 10px;
-  z-index: -1;
   fill: #1b5baf;
   border: 1px solid #1b5baf;
+  transition: all .5s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Search icon specific - always visible */
+.search-icon {
+  opacity: 1;
+  z-index: 1;
 }
 
 .input:hover + .icon {
@@ -51,8 +60,39 @@
   transition: .2s ease-in-out;
 }
 
-.input:focus + .icon,.input:not(:placeholder-shown) + .icon {
-  z-index: 0;
+.input:focus + .icon,
+.input:not(:placeholder-shown) + .icon {
   background-color: transparent;
   border: none;
+}
+
+/* Clear Button Styles */
+.clear-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+  color: #1b5baf;
+}
+
+.clear-button:hover {
+  background-color: rgba(27, 91, 175, 0.1);
+}
+
+.clear-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
 }
