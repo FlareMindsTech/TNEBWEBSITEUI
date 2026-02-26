@@ -31,7 +31,7 @@ const SpecCard = ({ spec, index }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 + idx * 0.05 }}
             >
-              <FaTag size={10} />
+              <FaTag size={10} style={{ color: '#ffffff', marginRight: '4px' }} />
               {tag}
             </motion.span>
           ))}
@@ -114,7 +114,7 @@ const TechnicalParameters = () => {
           transition={{ delay: 0.2 }}
         >
           <h1>
-            <FaCog className="params-hero-icon" />
+            <FaCog className="params-hero-icon" style={{ color: '#ffffff' }} />
             Technical Parameters
           </h1>
           <p>Industry standards and technical specifications</p>
@@ -129,7 +129,7 @@ const TechnicalParameters = () => {
           transition={{ delay: 0.3 }}
         >
           <div className="filter-label">
-            <FaFilter /> Filter by Category
+            <FaFilter style={{ color: '#ffffff', marginRight: '8px' }} /> Filter by Category
           </div>
           <div className="filter-buttons">
             {filters.map((filter) => (
