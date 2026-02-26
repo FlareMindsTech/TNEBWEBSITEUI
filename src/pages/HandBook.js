@@ -210,21 +210,21 @@ const HandBook = () => {
               <div className="info-item">
                 <FaMapMarkerAlt className="info-icon" />
                 <div>
-                  <h4><FaMapMarkerAlt /> Address</h4>
+                  <h4> Address</h4>
                   <p>T.N.E.B. Engineers' Association<br />144, Anna Salai, Chennai – 600 002<br />(Regn.No.217/94)</p>
                 </div>
               </div>
               <div className="info-item">
                 <FaPhone className="info-icon" />
                 <div>
-                  <h4><FaPhone /> Mobile</h4>
+                  <h4> Mobile</h4>
                   <a href="tel:9487465104">94874 65104</a>
                 </div>
               </div>
               <div className="info-item">
                 <FaEnvelope className="info-icon" />
                 <div>
-                  <h4><FaEnvelope /> Email</h4>
+                  <h4> Email</h4>
                   <a href="mailto:tnebea@gmail.com">tnebea@gmail.com</a>
                 </div>
               </div>
