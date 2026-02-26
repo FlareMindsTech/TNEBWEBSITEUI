@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaUsers, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useSearch } from '../context/SearchContext';
 import './Branchsecretary.css';
 
 const Branchsecretary = () => {
+  const { searchQuery, isSearchActive } = useSearch();
+
   const parseContacts = (contactStr) => {
     const contacts = contactStr.split('/').map(c => c.trim());
     return { contact: contacts[0], contact2: contacts[1], contact3: contacts[2] || null };
@@ -68,6 +71,16 @@ const Branchsecretary = () => {
     { id: 56, serialNo: 56, branch: "UDANGUDI", name: "Er. S. MUTHARASAN", designation: "AEE/MECH/USTPP-I", ...parseContacts("90802 94585 / 99446 98615"), photo: null }
   ];
 
+  const filteredSecretaries = branchSecretaries.filter(secretary => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      secretary.name.toLowerCase().includes(searchLower) ||
+      secretary.designation.toLowerCase().includes(searchLower) ||
+      secretary.branch.toLowerCase().includes(searchLower)
+    );
+  });
+
   const showSecretaryDetails = (secretary) => {
     let contactHTML = `<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">`;
     
@@ -89,7 +102,6 @@ const Branchsecretary = () => {
     
     if (secretary.contact3) {
       contactHTML += `
-      
         <div style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #e3f2fd; padding: 15px; border-radius: 10px;">
           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.2em" width="1.2em" style="color: #1b5baf;"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
           <strong style="color: #1b5baf; font-size: 1.2rem;">${secretary.contact3}</strong>
@@ -133,7 +145,6 @@ const Branchsecretary = () => {
 
   return (
     <div className="branch-container">
-      {/* Hero Section */}
       <div className="branch-hero">
         <div className="branch-hero-content">
           <FaUsers className="hero-icon" />
@@ -144,39 +155,44 @@ const Branchsecretary = () => {
         </div>
       </div>
 
-      {/* Branch Secretaries Grid */}
       <div className="secretaries-grid-section">
         <h3><FaUsers /> Branch Representatives</h3>
         <p className="section-sub">Click or hover for details</p>
         
         <div className="secretaries-grid">
-          {branchSecretaries.map((secretary) => (
-            <div key={secretary.id} className="secretary-card">
-              <div className="card-front">
-                <div className="serial">{secretary.serialNo}</div>
-                <div className="photo-placeholder">
-                  NO IMAGE
+          {filteredSecretaries.length > 0 ? (
+            filteredSecretaries.map((secretary) => (
+              <div key={secretary.id} className="secretary-card">
+                <div className="card-front">
+                  <div className="serial">{secretary.serialNo}</div>
+                  <div className="photo-placeholder">
+                    NO IMAGE
+                  </div>
+                  <div className="card-info">
+                    <h5>{secretary.name}</h5>
+                    <p className="branch-name">{secretary.branch}</p>
+                  </div>
                 </div>
-                <div className="card-info">
+                <div className="card-back">
                   <h5>{secretary.name}</h5>
-                  <p className="branch-name">{secretary.branch}</p>
+                  <p className="back-branch"><FaMapMarkerAlt /> {secretary.branch}</p>
+                  <p className="back-desig">{secretary.designation}</p>
+                  <p className="back-contact"><FaPhone /> {secretary.contact}</p>
+                  {secretary.contact2 && <p className="back-contact"><FaPhone /> {secretary.contact2}</p>}
+                  {secretary.contact3 && <p className="back-contact"><FaPhone /> {secretary.contact3}</p>}
+                  <button onClick={(e) => { e.stopPropagation(); showSecretaryDetails(secretary); }}>View Details</button>
                 </div>
               </div>
-              <div className="card-back">
-                <h5>{secretary.name}</h5>
-                <p className="back-branch"><FaMapMarkerAlt /> {secretary.branch}</p>
-                <p className="back-desig">{secretary.designation}</p>
-                <p className="back-contact"><FaPhone /> {secretary.contact}</p>
-                {secretary.contact2 && <p className="back-contact"><FaPhone /> {secretary.contact2}</p>}
-                {secretary.contact3 && <p className="back-contact"><FaPhone /> {secretary.contact3}</p>}
-                <button onClick={(e) => { e.stopPropagation(); showSecretaryDetails(secretary); }}>View Details</button>
-              </div>
+            ))
+          ) : null}
+          {filteredSecretaries.length === 0 && isSearchActive && (
+            <div className="no-results" style={{ width: '100%', gridColumn: '1 / -1', padding: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <p style={{ fontSize: '1.5rem', color: '#dc3545', fontWeight: 'bold' }}>No matching values</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
-      {/* Info Section */}
       <div className="branch-info">
         <div className="info-stat">
           <div className="stat-number">56</div>

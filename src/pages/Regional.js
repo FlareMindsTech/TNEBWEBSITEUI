@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaUsers, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useSearch } from '../context/SearchContext';
 import './Regional.css';
 
 const Regional = () => {
+  const { searchQuery, isSearchActive } = useSearch();
+
   const regionalSecretaries = [
     { id: 1, serialNo: 1, region: "CHENNAI HQRS", name: "Er. R. RAVICHANDRAN", designation: "SE / MECH / COAL / HQRS", contact: "99623 22669", contact2: null, photo: null },
     { id: 2, serialNo: 2, region: "CHENNAI GENERATION", name: "Er. S. MURUGESAN", designation: "AEE / MECH / COMMISSIONING NCTPP3", contact: "99624 05511", contact2: null, photo: null },
@@ -22,6 +25,16 @@ const Regional = () => {
     { id: 15, serialNo: 15, region: "VELLORE", name: "Er. P. SANKAR", designation: "AEE / O&M / SHOLINGHUR / VELLORE EDC", contact: "93426 38880", contact2: null, photo: null },
     { id: 16, serialNo: 16, region: "VILLUPURAM", name: "Er. P. DILEEP KUMAR", designation: "MANAGER / IS / VILLUPURAM EDC", contact: "94458 55720", contact2: "99523 02163", photo: null }
   ];
+
+  const filteredSecretaries = regionalSecretaries.filter(secretary => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      secretary.name.toLowerCase().includes(searchLower) ||
+      secretary.designation.toLowerCase().includes(searchLower) ||
+      secretary.region.toLowerCase().includes(searchLower)
+    );
+  });
 
   const showSecretaryDetails = (secretary) => {
     const contactHTML = secretary.contact2 
@@ -95,28 +108,35 @@ const Regional = () => {
         <p className="section-sub">Click or hover for details</p>
         
         <div className="secretaries-grid">
-          {regionalSecretaries.map((secretary) => (
-            <div key={secretary.id} className="secretary-card">
-              <div className="card-front">
-                <div className="serial">{secretary.serialNo}</div>
-                <div className="photo-placeholder">
-                  NO IMAGE
+          {filteredSecretaries.length > 0 ? (
+            filteredSecretaries.map((secretary) => (
+              <div key={secretary.id} className="secretary-card">
+                <div className="card-front">
+                  <div className="serial">{secretary.serialNo}</div>
+                  <div className="photo-placeholder">
+                    NO IMAGE
+                  </div>
+                  <div className="card-info">
+                    <h5>{secretary.name}</h5>
+                    <p className="region-name">{secretary.region}</p>
+                  </div>
                 </div>
-                <div className="card-info">
+                <div className="card-back">
                   <h5>{secretary.name}</h5>
-                  <p className="region-name">{secretary.region}</p>
+                  <p className="back-region"><FaMapMarkerAlt /> {secretary.region}</p>
+                  <p className="back-desig">{secretary.designation}</p>
+                  <p className="back-contact"><FaPhone /> {secretary.contact}</p>
+                  {secretary.contact2 && <p className="back-contact"><FaPhone /> {secretary.contact2}</p>}
+                  <button onClick={(e) => { e.stopPropagation(); showSecretaryDetails(secretary); }}>View Details</button>
                 </div>
               </div>
-              <div className="card-back">
-                <h5>{secretary.name}</h5>
-                <p className="back-region"><FaMapMarkerAlt /> {secretary.region}</p>
-                <p className="back-desig">{secretary.designation}</p>
-                <p className="back-contact"><FaPhone /> {secretary.contact}</p>
-                {secretary.contact2 && <p className="back-contact"><FaPhone /> {secretary.contact2}</p>}
-                <button onClick={(e) => { e.stopPropagation(); showSecretaryDetails(secretary); }}>View Details</button>
-              </div>
+            ))
+          ) : null}
+          {filteredSecretaries.length === 0 && isSearchActive && (
+            <div className="no-results" style={{ width: '100%', gridColumn: '1 / -1', padding: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <p style={{ fontSize: '1.5rem', color: '#dc3545', fontWeight: 'bold' }}>No matching values</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
 

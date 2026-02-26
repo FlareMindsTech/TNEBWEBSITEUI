@@ -1,8 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSearch } from '../context/SearchContext';
 import './RoleOf.css';
 
 const RoleOfHonour = () => {
+  const { searchQuery, isSearchActive } = useSearch();
+
   const rollOfHonour = [
     { year: '1957', president: 'Er.T.KRISHNASWAMY', secretary: 'Er.L.R.SAPTHARISHI' },
     { year: '1958', president: 'Er.T.KRISHNASWAMY', secretary: 'Er.L.R.SAPTHARISHI' },
@@ -56,6 +59,19 @@ const RoleOfHonour = () => {
     { year: '2025-', president: 'Er.N.SENTHILKUMAR', secretary: 'Er.K.VIJAY' }
   ];
 
+  const filteredData = rollOfHonour.filter(row => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      row.year.toLowerCase().includes(searchLower) ||
+      row.president.toLowerCase().includes(searchLower) ||
+      row.secretary.toLowerCase().includes(searchLower)
+    );
+  });
+
+  // Reverse for display
+  const displayData = [...filteredData].reverse();
+
   return (
     <div className="rollofhonour-page">
       <div className="rollofhonour-card">
@@ -74,13 +90,24 @@ const RoleOfHonour = () => {
               </tr>
             </thead>
             <tbody>
-              {[...rollOfHonour].reverse().map((row) => (
-                <tr key={row.year} className={row.year === '2025-' ? 'rollofhonour-bold-row' : ''}>
-                  <td>{row.year}</td>
-                  <td>{row.president}</td>
-                  <td>{row.secretary}</td>
+              {displayData.length > 0 ? (
+                displayData.map((row) => (
+                  <tr key={row.year} className={row.year === '2025-' ? 'rollofhonour-bold-row' : ''}>
+                    <td>{row.year}</td>
+                    <td>{row.president}</td>
+                    <td>{row.secretary}</td>
+                  </tr>
+                ))
+              ) : null}
+              {displayData.length === 0 && isSearchActive && (
+                <tr>
+                  <td colSpan="3" style={{ padding: '40px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100px' }}>
+                      <p style={{ fontSize: '1.5rem', color: '#dc3545', fontWeight: 'bold', margin: 0 }}>No matching values</p>
+                    </div>
+                  </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

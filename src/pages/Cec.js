@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { FaUsers, FaPhone, FaTimes, FaCalendarAlt, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaInfoCircle, FaPhoneAlt, FaStar, FaCrown } from 'react-icons/fa';
+import React from 'react';
+import { FaUsers, FaPhone, FaTimes, FaCalendarAlt, FaClipboardList, FaHandshake, FaUserTie, FaCog, FaIdCard, FaInfoCircle, FaPhoneAlt, FaStar, FaCrown, FaSearch } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useSearch } from '../context/SearchContext';
 import './Cec.css';
 // Import images
 const memberImages = [
@@ -23,8 +24,7 @@ const memberImages = [
 ];
 
 const Cec = () => {
-  // const [selectedMember, setSelectedMember] = useState(null);
-  // const [modalVisible, setModalVisible] = useState(false);
+  const { searchQuery, isSearchActive } = useSearch();
 
   const cecMembers = [
     { id: 0, serialNo: null, designation: "Principal Secretary", name: "Er. T. JAYANTHI", qualification: "SE / Comm. Opn / Grid Operation / Hqrs", contact: "97106 22185", photo: memberImages[0] },
@@ -45,15 +45,14 @@ const Cec = () => {
     { id: 15, serialNo: 15, designation: "Secretary-Coordination", name: "Er. X. ANITA CELINE", qualification: "AEE / ELECTRICAL / COAL", contact: "72990 38100", photo: memberImages[15] }
   ];
 
-  // const openDialog = (member) => {
-  //   setSelectedMember(member);
-  //   setModalVisible(true);
-  // };
-
-  // const closeDialog = () => {
-  //   setModalVisible(false);
-  //   setTimeout(() => setSelectedMember(null), 300);
-  // };
+  const filteredMembers = cecMembers.filter(member => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      member.name.toLowerCase().includes(searchLower) ||
+      member.designation.toLowerCase().includes(searchLower)
+    );
+  });
 
   const showMemberDetails = (member) => {
     Swal.fire({
@@ -128,24 +127,31 @@ const Cec = () => {
         <p className="section-sub">Click or hover for details</p>
         
         <div className="members-grid">
-          {cecMembers.slice(1).map((member) => (
-            <div key={member.id} className="member-card">
-              <div className="card-front">
-                <img src={member.photo} alt={member.name} />
-                <div className="card-info">
+          {filteredMembers.length > 0 ? (
+            filteredMembers.slice(1).map((member) => (
+              <div key={member.id} className="member-card">
+                <div className="card-front">
+                  <img src={member.photo} alt={member.name} />
+                  <div className="card-info">
+                    <h5>{member.name}</h5>
+                    <p>{member.designation}</p>
+                  </div>
+                </div>
+                <div className="card-back">
                   <h5>{member.name}</h5>
-                  <p>{member.designation}</p>
+                  <p className="back-designation">{member.designation}</p>
+                  <p className="back-qual"> {member.qualification}</p>
+                  <p className="back-contact"><FaPhone /> {member.contact}</p>
+                  <button onClick={(e) => { e.stopPropagation(); showMemberDetails(member); }}>View Details</button>
                 </div>
               </div>
-              <div className="card-back">
-                <h5>{member.name}</h5>
-                <p className="back-designation">{member.designation}</p>
-                <p className="back-qual"> {member.qualification}</p>
-                <p className="back-contact"><FaPhone /> {member.contact}</p>
-                <button onClick={(e) => { e.stopPropagation(); showMemberDetails(member); }}>View Details</button>
-              </div>
+            ))
+          ) : null}
+          {filteredMembers.length === 0 && isSearchActive && (
+            <div className="no-results" style={{ width: '100%', gridColumn: '1 / -1', padding: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <p style={{ fontSize: '1.5rem', color: '#dc3545', fontWeight: 'bold' }}>No matching values</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
@@ -241,51 +247,6 @@ const Cec = () => {
           <p className="query-phone"><FaPhoneAlt /> {cecMembers[4].contact}</p>
         </div>
       </div>
-
-      {/* Enhanced Modal */}
-      {/* {selectedMember && (
-        <div className={`modal-overlay ${modalVisible ? 'visible' : ''}`} onClick={closeDialog}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeDialog}><FaTimes /></button>
-            
-            <div className="modal-header">
-              <div className="modal-badge">
-                {selectedMember.id === 0 ? <FaCrown /> : `#${selectedMember.serialNo}`}
-              </div>
-              <h4>{selectedMember.designation}</h4>
-            </div>
-            
-            <div className="modal-body">
-              <img src={selectedMember.photo} alt={selectedMember.name} />
-              <h3>{selectedMember.name}</h3>
-              <p className="modal-qual">{selectedMember.qualification}</p>
-              
-              <div className="modal-contact">
-                <div className="contact-item">
-                  <FaPhone />
-                  <div>
-                    <span>Contact</span>
-                    <strong>{selectedMember.contact}</strong>
-                  </div>
-                </div>
-                
-                <div className="contact-item">
-                  <FaUserTie />
-                  <div>
-                    <span>Position</span>
-                    <strong>{selectedMember.designation}</strong>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="modal-actions">
-                <button className="modal-btn primary">Call Now</button>
-                <button className="modal-btn secondary">Share</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };
