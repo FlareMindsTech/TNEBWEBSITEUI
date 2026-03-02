@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaUsers, FaPhone, FaMapMarkerAlt, FaUser, FaBriefcase } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useSearch } from '../context/SearchContext';
 import './Regional.css';
 
 const Regional = () => {
+  const { searchQuery, isSearchActive } = useSearch();
+
   const regionalSecretaries = [
     { id: 1, serialNo: 1, region: "CHENNAI HQRS", name: "Er. R. RAVICHANDRAN", designation: "SE / MECH / COAL / HQRS", contact: "99623 22669", contact2: null, photo: null },
     { id: 2, serialNo: 2, region: "CHENNAI GENERATION", name: "Er. S. MURUGESAN", designation: "AEE / MECH / COMMISSIONING NCTPP3", contact: "99624 05511", contact2: null, photo: null },
@@ -22,6 +25,16 @@ const Regional = () => {
     { id: 15, serialNo: 15, region: "VELLORE", name: "Er. P. SANKAR", designation: "AEE / O&M / SHOLINGHUR / VELLORE EDC", contact: "93426 38880", contact2: null, photo: null },
     { id: 16, serialNo: 16, region: "VILLUPURAM", name: "Er. P. DILEEP KUMAR", designation: "MANAGER / IS / VILLUPURAM EDC", contact: "94458 55720", contact2: "99523 02163", photo: null }
   ];
+
+  const filteredSecretaries = regionalSecretaries.filter(secretary => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      secretary.name.toLowerCase().includes(searchLower) ||
+      secretary.designation.toLowerCase().includes(searchLower) ||
+      secretary.region.toLowerCase().includes(searchLower)
+    );
+  });
 
   const showSecretaryDetails = (secretary) => {
     const contactHTML = secretary.contact2 

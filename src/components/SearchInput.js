@@ -1,26 +1,37 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSearch } from '../context/SearchContext';
 import './SearchInput.css';
 
-const SearchInput = () => {
-  const [searchValue, setSearchValue] = useState('');
+const SearchInput = ({ placeholder = "Search..." }) => {
+  const { searchQuery, setSearchQuery, isSearchActive, setIsSearchActive } = useSearch();
+  const [localValue, setLocalValue] = useState(searchQuery);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
 
+  // Sync local state with context
+  useEffect(() => {
+    setLocalValue(searchQuery);
+  }, [searchQuery]);
+
   const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
+    const value = e.target.value;
+    setLocalValue(value);
+    setSearchQuery(value);
+    setIsSearchActive(value.trim().length > 0);
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchValue.trim()) {
-      console.log('Searching for:', searchValue);
-      // logic will soon
+    if (localValue.trim()) {
+      setSearchQuery(localValue);
+      setIsSearchActive(true);
     }
   };
 
   const handleClear = () => {
-    setSearchValue('');
-    setIsFocused(false);
+    setLocalValue('');
+    setSearchQuery('');
+    setIsSearchActive(false);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -42,12 +53,11 @@ const SearchInput = () => {
           type="text"
           name="text"
           className="input"
-          placeholder="Search..."
-          value={searchValue}
+          placeholder={placeholder}
+          value={localValue}
           onChange={handleSearchChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          required
         />
         {/* Search Icon - Always visible */}
         <svg
@@ -68,7 +78,7 @@ const SearchInput = () => {
         </svg>
         
         {/* Clear (Cross) Icon - Proper X icon */}
-        {(searchValue || isFocused) && (
+        {(localValue || isFocused) && (
           <button
             type="button"
             className="clear-button"

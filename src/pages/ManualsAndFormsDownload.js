@@ -251,8 +251,9 @@ const ManualsAndFormsDownload = () => {
             whileHover={{ scale: 1.1, rotate: -5 }}
             style={{ display: 'inline-block' }}
           >
-            📚
+            <FaFilePdf className="mr-2" />
           </motion.span>
+          
           {' '}TNEB Manuals, Forms & Documents
         </motion.h1>
         <motion.p

@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaUsers, FaPhone, FaMapMarkerAlt, FaUser, FaBriefcase } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useSearch } from '../context/SearchContext';
 import './Branchsecretary.css';
 
 const Branchsecretary = () => {
+  const { searchQuery, isSearchActive } = useSearch();
+
   const parseContacts = (contactStr) => {
     const contacts = contactStr.split('/').map(c => c.trim());
     return { contact: contacts[0], contact2: contacts[1], contact3: contacts[2] || null };
@@ -67,6 +70,16 @@ const Branchsecretary = () => {
     { id: 55, serialNo: 55, branch: "VIRUDHUNAGAR", name: "Er. A. ZAHIR HUSSAIN", designation: "EE/P&C/765KV SS", ...parseContacts("98425 41062"), photo: null },
     { id: 56, serialNo: 56, branch: "UDANGUDI", name: "Er. S. MUTHARASAN", designation: "AEE/MECH/USTPP-I", ...parseContacts("90802 94585 / 99446 98615"), photo: null }
   ];
+
+  const filteredSecretaries = branchSecretaries.filter(secretary => {
+    if (!isSearchActive) return true;
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      secretary.name.toLowerCase().includes(searchLower) ||
+      secretary.designation.toLowerCase().includes(searchLower) ||
+      secretary.branch.toLowerCase().includes(searchLower)
+    );
+  });
 
   const showSecretaryDetails = (secretary) => {
     let contactHTML = `<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 18px;">`;
@@ -167,7 +180,6 @@ const Branchsecretary = () => {
 
   return (
     <div className="branch-container">
-      {/* Hero Section */}
       <div className="branch-hero">
         <div className="branch-hero-content">
           <FaUsers className="hero-icon" />
@@ -178,7 +190,6 @@ const Branchsecretary = () => {
         </div>
       </div>
 
-      {/* Branch Secretaries Grid */}
       <div className="secretaries-grid-section">
         <h3><FaUsers /> Branch Representatives</h3>
         <p className="section-sub">Click or hover for details</p>
@@ -210,7 +221,6 @@ const Branchsecretary = () => {
         </div>
       </div>
 
-      {/* Info Section */}
       <div className="branch-info">
         <div className="info-stat">
           <div className="stat-number">56</div>

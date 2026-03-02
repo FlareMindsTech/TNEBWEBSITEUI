@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaFilePdf, FaDownload } from 'react-icons/fa';
+import { FaFilePdf, FaDownload, FaBolt } from 'react-icons/fa';
 import './DistributionRelatedInstructions.css';
 
 // Animation variants
@@ -117,7 +117,7 @@ const DistributionRelatedInstructions = () => {
             whileHover={{ scale: 1.1, rotate: -5 }}
             style={{ display: 'inline-block' }}
           >
-            ⚡
+            <FaBolt style={{ color: '#ffffff', fontSize: '2rem' }} />
           </motion.span>
           {' '}Distribution Related Instructions
         </motion.h1>
