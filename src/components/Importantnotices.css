@@ -1,27 +1,27 @@
 ﻿.important-notices-card.card.shadow-sm {
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  border-radius: 9px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.3s ease;
 }
 
 .important-notices-card.card.shadow-sm:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .important-notices-header {
   background: linear-gradient(135deg, #1b5baf 0%, #15458a 60%, #2a6cc7 100%);
-  box-shadow: 0 6px 16px rgba(27, 91, 175, 0.25);
-  letter-spacing: 0.4px;
-  border-radius: 12px 12px 0 0;
-  padding: 18px 24px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 12px rgba(27, 91, 175, 0.25);
+  letter-spacing: 0.3px;
+  border-radius: 9px 9px 0 0;
+  padding: 14px 18px;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
 }
 
 .important-notices-header h5 {
   font-weight: 600;
-  letter-spacing: 0.3px;
-  font-size: 1.1rem;
+  letter-spacing: 0.23px;
+  font-size: 0.825rem;
   font-family: 'Merriweather', serif;
 }
 
@@ -33,13 +33,13 @@
 
 .important-notices-body {
   background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
-  padding: 32px 24px;
+  padding: 24px 18px;
 }
 
 .notices-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 21px;
   position: relative;
 }
 
@@ -50,16 +50,16 @@
 .notice-card {
   position: relative;
   background: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 9px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   border: 1px solid #e3eaf4;
-  border-left: 4px solid var(--notice-color);
+  border-left: 3px solid var(--notice-color);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  min-height: 220px;
+  gap: 11px;
+  min-height: 165px;
 }
 
 .notice-card-glow {
@@ -67,43 +67,43 @@
 }
 
 .notice-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
 }
 
 .notice-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .notice-icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s ease;
 }
 
 .notice-card:hover .notice-icon-wrapper {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.15);
 }
 
 .notice-icon {
-  font-size: 22px;
+  font-size: 17px;
   color: white;
 }
 
 .notice-type-badge {
-  padding: 5px 12px;
-  border-radius: 16px;
-  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 12px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .notice-card-title {
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1.6;
   color: #1e293b;
@@ -138,44 +138,44 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 16px;
-  border-top: 2px solid #f1f5f9;
-  gap: 12px;
+  padding-top: 12px;
+  border-top: 1.5px solid #f1f5f9;
+  gap: 9px;
 }
 
 .notice-meta-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 9px;
   font-weight: 500;
   color: #64748b;
 }
 
 .notice-meta-icon {
-  font-size: 13px;
+  font-size: 10px;
 }
 
 .btn-view-notices {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
+  gap: 6px;
+  padding: 8px 18px;
   background: #1b5baf;
   color: #fff;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.2);
+  font-size: 10px;
+  letter-spacing: 0.23px;
+  box-shadow: 0 3px 9px rgba(27, 91, 175, 0.2);
   transition: background 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .btn-view-notices:hover {
   background: #15458a;
-  box-shadow: 0 6px 16px rgba(27, 91, 175, 0.25);
+  box-shadow: 0 5px 12px rgba(27, 91, 175, 0.25);
 }
 
 .btn-view-notices:active {
@@ -184,21 +184,21 @@
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .important-notices-body {
-    padding: 20px 16px;
+    padding: 15px 12px;
   }
 
   .notices-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 15px;
   }
 
   .notice-card {
-    padding: 16px;
+    padding: 12px;
     min-height: auto;
   }
 
   .notice-card-title {
-    font-size: 14px;
+    font-size: 10.5px;
     -webkit-line-clamp: 2;
   }
 
@@ -207,43 +207,43 @@
   }
 
   .notice-meta-item {
-    font-size: 11px;
+    font-size: 8px;
   }
 }
 
 @media (max-width: 480px) {
   .important-notices-body {
-    padding: 16px 12px;
+    padding: 12px 9px;
   }
 
   .important-notices-header {
-    padding: 14px 16px;
+    padding: 10.5px 12px;
   }
 
   .important-notices-header h5 {
-    font-size: 0.95rem;
+    font-size: 0.71rem;
   }
 
   .notice-card {
-    padding: 12px;
+    padding: 9px;
   }
 
   .notice-icon-wrapper {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 
   .notice-icon {
-    font-size: 18px;
+    font-size: 13.5px;
   }
 
   .notice-card-title {
-    font-size: 12px;
+    font-size: 9px;
     line-height: 1.4;
   }
 
   .notice-type-badge {
-    font-size: 10px;
-    padding: 4px 8px;
+    font-size: 7.5px;
+    padding: 3px 6px;
   }
 }
