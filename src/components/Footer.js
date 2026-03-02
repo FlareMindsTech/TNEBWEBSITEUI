@@ -26,11 +26,11 @@ const Footer = () => {
         // Track visitor with ID
         const trackResponse = await trackVisitor(visitorId);
         
-        // Use count from track response or fetch separately
+        // Use count from track
         if (trackResponse && trackResponse.totalVisitors !== undefined) {
           setVisitorCount(trackResponse.totalVisitors);
         } else {
-          // Fallback: fetch current count
+          // fetch current count
           const countData = await getVisitorCount();
           setVisitorCount(countData.totalVisitors || countData.count || 0);
         }
@@ -148,10 +148,13 @@ const Footer = () => {
             >
               {!isLoading && (
                 <>
-                  <svg className="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
+                  <span className="visitor-icon-wrap">
+                    <svg className="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span className="visitor-pulse" aria-hidden="true"></span>
+                  </span>
                   <span className="visitor-count">{formatVisitorCount(visitorCount)}</span>
                   <span className="visitor-label">Visitors</span>
                 </>

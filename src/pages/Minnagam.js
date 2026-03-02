@@ -151,7 +151,7 @@ const Minnagam = () => {
       </div>
 
       <div className="minnagam-content">
-        <motion.div
+        {/* <motion.div
           className="facilities-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -159,13 +159,13 @@ const Minnagam = () => {
         >
           <h2 className="section-title">Available Facilities</h2>
           <p className="section-subtitle">Two AC Rooms, Four Non-AC Deluxe Rooms and 16 Dormitories Available</p>
-        </motion.div>
-
+        </motion.div> */}
+{/* 
         <div className="rooms-grid">
           {rooms.map((room, index) => (
             <RoomCard key={index} room={room} index={index} />
           ))}
-        </div>
+        </div> */}
 
         <motion.div
           className="contact-section"

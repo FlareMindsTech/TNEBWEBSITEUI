@@ -5,7 +5,7 @@
   padding: 20px;
 }
 
-/* Prevent body scroll when SweetAlert is open */
+/*  body scroll when SweetAlert is open */
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
   overflow: hidden !important;
   padding-right: 0 !important;
@@ -45,6 +45,49 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
 .swal2-confirm:hover {
   background: linear-gradient(135deg, #15458a, #2a6cc7) !important;
   box-shadow: 0 5px 20px rgba(27, 91, 175, 0.4) !important;
+}
+
+/* Member Details Popup Custom Styles */
+.member-details-popup {
+  border: 3px solid #1b5baf !important;
+  box-shadow: 0 15px 50px rgba(27, 91, 175, 0.3) !important;
+  background: white !important;
+}
+
+.member-details-popup::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  /* background: linear-gradient(90deg, #1b5baf, #15458a, #2a6cc7, #1b5baf); */
+  border-radius: 20px 20px 0 0;
+}
+
+.member-details-popup::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  /* background: linear-gradient(90deg, #2a6cc7, #1b5baf); */
+  border-radius: 0 0 20px 20px;
+}
+
+.member-details-content {
+  font-size: 1rem !important;
+  color: #333 !important;
+}
+
+.swal2-close {
+  color: #1b5baf !important;
+  font-size: 2rem !important;
+}
+
+.swal2-close:hover {
+  color: #15458a !important;
 }
 
 /* Hero Section */
@@ -342,12 +385,18 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
 }
 
 .card-info h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #2a6cc7;
   font-size: 1.2rem;
   margin-bottom: 5px;
 }
 
 .card-info p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #2a6bc8;
   font-size: 0.9rem;
 }
