@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaFilePdf, FaDownload } from 'react-icons/fa';
+import { FaFilePdf, FaDownload, FaMoneyBillWave } from 'react-icons/fa';
 import './ContributoryPensionScheme.css';
 import CPS3 from '../assets/documents/CPS3.pdf';
 import CPSExposureDraft1 from '../assets/documents/CPS-Exposure-Draft1.pdf';
@@ -135,7 +135,7 @@ const ContributoryPensionScheme = () => {
             whileHover={{ scale: 1.1, rotate: 5 }}
             style={{ display: 'inline-block' }}
           >
-            💰
+            <FaMoneyBillWave style={{ color: '#ffffff', fontSize: '2rem' }} />
           </motion.span>
           {' '}Contributory Pension Scheme
         </motion.h1>

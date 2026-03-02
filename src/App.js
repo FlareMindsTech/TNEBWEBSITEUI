@@ -27,6 +27,7 @@ import RoleOf from './pages/RoleOf';
 import IntroScreen from './components/IntroScreen';
 // import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
+import { SearchProvider } from './context/SearchContext';
 import './App.css';
 import logo from './assets/tnebea_logo_cropped2.png';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -73,51 +74,53 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <SidebarProvider>
-        {/* <ClickSpark
-          sparkRadius={50}
-          sparkCount={10}
-          extraScale={1.3}
-        > */}
-          <div className="App">
-          {/* Intro Screen */}
-          {/* {showIntro && <IntroScreen onComplete={handleIntroComplete} />} */}
+      <SearchProvider>
+        <SidebarProvider>
+          {/* <ClickSpark
+            sparkRadius={50}
+            sparkCount={10}
+            extraScale={1.3}
+          > */}
+            <div className="App">
+            {/* Intro Screen */}
+            {/* {showIntro && <IntroScreen onComplete={handleIntroComplete} />} */}
 
-          
-          <div className="app-content">
-          <Routes>
-            <Route path="/" element={<><Header /><Home /><Footer /></>} />
-            <Route path="/cec" element={<><Header /><Cec /><Footer /></>} />
-            <Route path="/regional" element={<><Header /><Regional /><Footer /></>} />
-            <Route path="/public-secretary" element={<><Header /><Branchsecretary/><Footer /></>} />
-            <Route path="/act-regulations" element={<><Header /><ActRegulations /><Footer /></>} />
-            <Route path="/manuals-and-forms-download" element={<><Header /><ManualsAndFormsDownload /><Footer /></>} />
-            <Route path="/contributory-pension-scheme" element={<><Header /><ContributoryPensionScheme /><Footer /></>} />
-            <Route path="/distribution-related-instructions" element={<><Header /><DistributionRelatedInstructions /><Footer /></>} />
-            <Route path="/Minnagam" element={<><Header /><Minnagam /><Footer /></>} />
-            <Route path="/Minthiran" element={<><Header /><Minthiran /><Footer /></>} />
-            <Route path="/minthiran-book/:bookId" element={<><Header /><MinthiranBookDetail /><Footer /></>} />
-            <Route path="/hand-book" element={<><Header /><HandBook /><Footer /></>} />
-            <Route path="/technical-qa" element={<><Header /><TechnicalQa /><Footer /></>} />
-            <Route path="/technical-parameters" element={<><Header /><TechnicalParameters /><Footer /></>} />
-            <Route path="/technical-books-and-manuals" element={<><Header /><TechnicalBooksAndManuals /><Footer /></>} />
-            <Route path="/news" element={<><Header /><News /><Footer /></>} />
-            <Route path="/contactus" element={<><Header /><ContactUs /><Footer /></>} />
-            <Route path="/forget" element={<><Navbar /><ForgotPassword /><Footer /></>} />
-            <Route path="/tnebea-forms" element={<><Header /><TnebeaForms /><Footer /></>} />
-            <Route path="/privacy-policy" element={<><Header /><PrivacyPolicy /><Footer /></>} />
-            <Route path="/terms-and-conditions" element={<><Header /><TermsAndConditions /><Footer /></>} />
-            <Route path="/important-notices" element={<><Header /><Importantnotices /><Footer /></>} />
-            <Route path="/board-proceedings" element={<><Header /><BoardProceedings /><Footer /></>} />
-            <Route path="/photo-gallery" element={<><Header /><Photogallery /><Footer /></>} />
-            <Route path="/gallery-detail/:galleryId" element={<><Header /><GalleryDetail /><Footer /></>} />
-            <Route path="/role-of-honour" element={<><Header /><RoleOf /><Footer /></>} />
-          </Routes>
+            
+            <div className="app-content">
+            <Routes>
+              <Route path="/" element={<>< Header /><Home /><Footer /></>} />
+              <Route path="/cec" element={<>< Header /><Cec /><Footer /></>} />
+              <Route path="/regional" element={<>< Header /><Regional /><Footer /></>} />
+              <Route path="/public-secretary" element={<>< Header /><Branchsecretary/><Footer /></>} />
+              <Route path="/act-regulations" element={<>< Header /><ActRegulations /><Footer /></>} />
+              <Route path="/manuals-and-forms-download" element={<>< Header /><ManualsAndFormsDownload /><Footer /></>} />
+              <Route path="/contributory-pension-scheme" element={<>< Header /><ContributoryPensionScheme /><Footer /></>} />
+              <Route path="/distribution-related-instructions" element={<>< Header /><DistributionRelatedInstructions /><Footer /></>} />
+              <Route path="/Minnagam" element={<>< Header /><Minnagam /><Footer /></>} />
+              <Route path="/Minthiran" element={<>< Header /><Minthiran /><Footer /></>} />
+              <Route path="/minthiran-book/:bookId" element={<>< Header /><MinthiranBookDetail /><Footer /></>} />
+              <Route path="/hand-book" element={<>< Header /><HandBook /><Footer /></>} />
+              <Route path="/technical-qa" element={<>< Header /><TechnicalQa /><Footer /></>} />
+              <Route path="/technical-parameters" element={<>< Header /><TechnicalParameters /><Footer /></>} />
+              <Route path="/technical-books-and-manuals" element={<>< Header /><TechnicalBooksAndManuals /><Footer /></>} />
+              <Route path="/news" element={<>< Header /><News /><Footer /></>} />
+              <Route path="/contactus" element={<>< Header /><ContactUs /><Footer /></>} />
+              <Route path="/forget" element={<>< Navbar /><ForgotPassword /><Footer /></>} />
+              <Route path="/tnebea-forms" element={<>< Header /><TnebeaForms /><Footer /></>} />
+              <Route path="/privacy-policy" element={<>< Header /><PrivacyPolicy /><Footer /></>} />
+              <Route path="/terms-and-conditions" element={<>< Header /><TermsAndConditions /><Footer /></>} />
+              <Route path="/important-notices" element={<>< Header /><Importantnotices /><Footer /></>} />
+              <Route path="/board-proceedings" element={<>< Header /><BoardProceedings /><Footer /></>} />
+              <Route path="/photo-gallery" element={<>< Header /><Photogallery /><Footer /></>} />
+              <Route path="/gallery-detail/:galleryId" element={<>< Header /><GalleryDetail /><Footer /></>} />
+              <Route path="/role-of-honour" element={<>< Header /><RoleOf /><Footer /></>} />
+            </Routes>
+          </div>
+        
         </div>
-      
-      </div>
-        {/* </ClickSpark> */}
-      </SidebarProvider>
+          {/* </ClickSpark> */}
+        </SidebarProvider>
+      </SearchProvider>
     </Router>
   );
 }

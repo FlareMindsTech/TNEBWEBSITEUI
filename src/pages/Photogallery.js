@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllGalleries } from '../api';
+import { FaCamera } from 'react-icons/fa';
 import './Photogallery.css';
 
 const Photogallery = () => {
@@ -70,7 +71,9 @@ const Photogallery = () => {
           transition={{ duration: 0.6 }}
           className="header-content"
         >
-          <div className="header-icon">📸</div>
+          <div className="header-icon">
+            <FaCamera style={{ color: '#ffffff', fontSize: '2.5rem' }} />
+          </div>
           <h1>Photo Gallery</h1>
           <p className="lead">
             Explore our collection of memorable moments and events
@@ -89,7 +92,9 @@ const Photogallery = () => {
             </div>
           ) : galleries.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">🖼️</div>
+              <div className="empty-icon">
+                <FaCamera style={{ color: '#6c757d', fontSize: '3rem' }} />
+              </div>
               <p className="empty-text">No galleries available at the moment.</p>
             </div>
           ) : (
