@@ -78,6 +78,25 @@
   z-index: 10;
 }
 
+.minthiran-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 14px;
+  align-items: end;
+}
+
+.month-filter-group {
+  min-width: 0;
+}
+
+.month-filter-group label {
+  margin-bottom: 6px;
+}
+
+.month-filter-group .filter-select {
+  height: 50px;
+}
+
 .filter-section {
   display: flex;
   gap: 20px;
@@ -124,6 +143,10 @@
 
 .search-section {
   width: 100%;
+}
+
+.search-section-compact {
+  min-width: 0;
 }
 
 .search-wrapper {
@@ -180,6 +203,14 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
+}
+
+.active-filters-always {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding-top: 0;
+  border-top: none;
+  justify-content: flex-start;
 }
 
 .results-count {
@@ -586,6 +617,11 @@
   .filter-search-container {
     margin: -10px 15px 20px;
     padding: 20px;
+  }
+
+  .minthiran-toolbar {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .filter-section {
