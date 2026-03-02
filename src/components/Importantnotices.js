@@ -112,12 +112,12 @@ import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExcl
                           );
                         })}
                       </div>
-                      <div className="text-center mt-3">
+                      {/* <div className="text-center mt-3">
                         <button type="button" className="btn-view-notices" onClick={handleViewAllNotices}>
                           <FaList className="mr-1" />
                           View All Notices
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
