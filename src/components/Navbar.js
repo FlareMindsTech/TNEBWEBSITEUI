@@ -419,12 +419,26 @@ const Navbar = () => {
                 </div>
 
                 <div className="sidebar-footer">
+
+                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <button className="btn btn-light w-100" onClick={() => { setAuthTab(''); setShowAuth(true); closeAllMenus(); }}>
+                      <FaClipboardList className="me-2" />
+                      Complaints
+                    </button>
+                  </motion.div>
+
                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="btn btn-light w-100" onClick={() => { setAuthTab('login'); setShowAuth(true); closeAllMenus(); }}>
                       <FaUser className="me-2" />
                       Login
                     </button>
                   </motion.div>
+                  {/* <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <button className="btn btn-light w-100" onClick={() => { setAuthTab(''); setShowAuth(true); closeAllMenus(); }}>
+                      <FaFileAlt className="me-2" />
+                      Grievances
+                    </button>
+                  </motion.div> */}
                 </div>
               </motion.div>
             </React.Fragment>
@@ -615,11 +629,24 @@ const Navbar = () => {
               <AnimatePresence>
                 {userMenuOpen && (
                   <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
+
+                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
+                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                        <span className="user-menu-icon"><FaClipboardList /></span><span>Complaints</span>
+                      </Link>
+                    </motion.div>
+
                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
                       <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
                         <span className="user-menu-icon"><FaUser /></span><span>Login</span>
                       </Link>
                     </motion.div>
+                    {/* <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}>
+                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                        <span className="user-menu-icon"><FaFileAlt /></span><span>Grievances</span>
+                      </Link>
+                    </motion.div> */}
+
                   </motion.div>
                 )}
               </AnimatePresence>
