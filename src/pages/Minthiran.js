@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllMinthirans } from '../api';
 import './Minthiran.css';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 const Minthiran = () => {
   const navigate = useNavigate();
   const pageStyle = {
@@ -12,7 +14,6 @@ const Minthiran = () => {
   };
   const [minthirans, setMinthirans] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedYear, setSelectedYear] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -59,43 +60,59 @@ const Minthiran = () => {
     return allMagazines;
   };
 
-  const filteredMagazines = useMemo(() => {
-    let magazines = getAllMagazines();
+  const currentYearMagazines = useMemo(
+    () => getAllMagazines().filter((m) => Number(m.year) === CURRENT_YEAR),
+    [minthirans]
+  );
 
-    // Filter by year
-    if (selectedYear !== 'all') {
-      magazines = magazines.filter(m => m.year === selectedYear);
-    }
+  const monthOrder = useMemo(
+    () => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    []
+  );
 
-    // Filter by month
-    if (selectedMonth !== 'all') {
-      magazines = magazines.filter(m => m.month === selectedMonth);
-    }
+  const availableMonths = useMemo(() => {
+    const monthSet = new Set(
+      currentYearMagazines
+        .map((magazine) => magazine.month)
+        .filter(Boolean)
+    );
 
-    // Search by title or content
-    if (searchQuery.trim() !== '') {
-      const query = searchQuery.toLowerCase();
-      magazines = magazines.filter(m => 
-        m.title?.toLowerCase().includes(query) ||
-        m.month?.toLowerCase().includes(query) ||
-        m.description?.toLowerCase().includes(query) ||
-        m.year?.toString().includes(query)
-      );
-    }
+    return Array.from(monthSet).sort((a, b) => {
+      const indexA = monthOrder.indexOf(a);
+      const indexB = monthOrder.indexOf(b);
 
-    return magazines;
-  }, [minthirans, selectedYear, selectedMonth, searchQuery]);
-
-  const groupFilteredByYear = () => {
-    const grouped = {};
-    filteredMagazines.forEach(item => {
-      if (!grouped[item.year]) {
-        grouped[item.year] = [];
+      if (indexA === -1 && indexB === -1) {
+        return a.localeCompare(b);
       }
-      grouped[item.year].push(item);
+      if (indexA === -1) {
+        return 1;
+      }
+      if (indexB === -1) {
+        return -1;
+      }
+
+      return indexA - indexB;
     });
-    return grouped;
-  };
+  }, [currentYearMagazines, monthOrder]);
+
+  const filteredMagazines = useMemo(() => {
+    let magazines = currentYearMagazines;
+
+    if (selectedMonth !== 'all') {
+      magazines = magazines.filter((m) => m.month === selectedMonth);
+    }
+
+    if (searchQuery.trim() === '') {
+      return magazines;
+    }
+
+    const query = searchQuery.toLowerCase();
+    return magazines.filter((m) =>
+      m.title?.toLowerCase().includes(query) ||
+      m.month?.toLowerCase().includes(query) ||
+      m.description?.toLowerCase().includes(query)
+    );
+  }, [currentYearMagazines, searchQuery, selectedMonth]);
 
   const openBookDetail = (magazine) => {
     if (!magazine?._id) {
@@ -107,13 +124,6 @@ const Minthiran = () => {
       state: { book: magazine }
     });
   };
-
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-
-  const years = Object.keys(minthirans).sort((a, b) => b - a);
 
   return (
     <div className="act-regulations-container" style={pageStyle}>
@@ -131,50 +141,32 @@ const Minthiran = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="lead"
         >
-          Monthly Magazine Archives
+          {CURRENT_YEAR} Monthly Magazine Collection
         </motion.p>
       </div>
 
-      {/* Enhanced Filter and Search Section */}
-      <div className="filter-search-container">
-        <div className="filter-section">
-          <div className="filter-group">
-            <label htmlFor="yearFilter">Filter by Year:</label>
-            <select 
-              id="yearFilter"
-              className="filter-select"
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-            >
-              <option value="all">All Years</option>
-              {years.map(year => (
-                <option key={year} value={year}>{year}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="monthFilter">Filter by Month:</label>
-            <select 
-              id="monthFilter"
-              className="filter-select"
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-            >
-              <option value="all">All Months</option>
-              {monthNames.map(month => (
-                <option key={month} value={month}>{month}</option>
-              ))}
-            </select>
-          </div>
+      <div className="filter-search-container minthiran-toolbar">
+        <div className="filter-group month-filter-group">
+          <label htmlFor="monthFilter">Filter by Month</label>
+          <select
+            id="monthFilter"
+            className="filter-select"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="all">All Months</option>
+            {availableMonths.map((month) => (
+              <option key={month} value={month}>{month}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="search-section">
+        <div className="search-section search-section-compact">
           <div className="search-wrapper">
             <input
               type="text"
               className="search-input"
-              placeholder="🔍 Search magazines by title, month, year..."
+              placeholder={`🔍 Search ${CURRENT_YEAR} magazines by title, month...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -189,23 +181,11 @@ const Minthiran = () => {
           </div>
         </div>
 
-        {(selectedYear !== 'all' || selectedMonth !== 'all' || searchQuery) && (
-          <div className="active-filters">
-            <span className="results-count">
-              {filteredMagazines.length} {filteredMagazines.length === 1 ? 'magazine' : 'magazines'} found
-            </span>
-            <button 
-              className="clear-all-filters"
-              onClick={() => {
-                setSelectedYear('all');
-                setSelectedMonth('all');
-                setSearchQuery('');
-              }}
-            >
-              Clear All Filters
-            </button>
-          </div>
-        )}
+        <div className="active-filters active-filters-always">
+          <span className="results-count">
+            {filteredMagazines.length} {filteredMagazines.length === 1 ? 'magazine' : 'magazines'} in {CURRENT_YEAR}
+          </span>
+        </div>
       </div>
 
       <div className="container py-4">
@@ -219,12 +199,11 @@ const Minthiran = () => {
         ) : filteredMagazines.length === 0 ? (
           <div className="text-center py-5 no-results">
             <div className="no-results-icon">📚</div>
-            <h3>No magazines found</h3>
-            <p className="text-muted">Try adjusting your filters or search query</p>
+            <h3>No {CURRENT_YEAR} magazines found</h3>
+            <p className="text-muted">Try changing month filter or search keyword</p>
             <button 
               className="reset-button"
               onClick={() => {
-                setSelectedYear('all');
                 setSelectedMonth('all');
                 setSearchQuery('');
               }}
@@ -233,71 +212,66 @@ const Minthiran = () => {
             </button>
           </div>
         ) : (
-          Object.keys(groupFilteredByYear())
-            .sort((a, b) => b - a)
-            .map((year, yearIndex) => (
-              <motion.div
-                key={year}
-                className="year-section mb-5"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: yearIndex * 0.1 }}
-              >
-                <h3 className="year-title mb-4">{year}</h3>
-                <div className="magazines-grid">
-                  {groupFilteredByYear()[year].map((magazine, index) => (
-                    <motion.div
-                      key={magazine._id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                    >
-                      <div
-                        className="real-book-card"
-                        onClick={() => openBookDetail(magazine)}
-                      >
-                        <div className="real-book">
-                          <div className="real-book-spine">
-                            <div className="spine-text">
-                              <span>Minthiran</span>
-                              <span>{magazine.year}</span>
-                            </div>
+          <motion.div
+            className="year-section mb-5"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="year-title mb-4">{CURRENT_YEAR}</h3>
+            <div className="magazines-grid">
+              {filteredMagazines.map((magazine, index) => (
+                <motion.div
+                  key={magazine._id || `${magazine.month}-${index}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <div
+                    className="real-book-card"
+                    onClick={() => openBookDetail(magazine)}
+                  >
+                    <div className="real-book">
+                      <div className="real-book-spine">
+                        <div className="spine-text">
+                          <span>Minthiran</span>
+                          <span>{CURRENT_YEAR}</span>
+                        </div>
+                      </div>
+                      <div className="real-book-cover">
+                        <div className="cover-texture"></div>
+                        <div className="cover-content">
+                          <div className="cover-header">
+                            <div className="cover-badge">e-Minthiran</div>
                           </div>
-                          <div className="real-book-cover">
-                            <div className="cover-texture"></div>
-                            <div className="cover-content">
-                              <div className="cover-header">
-                                <div className="cover-badge">e-Minthiran</div>
-                              </div>
-                              <div className="cover-date-box">
-                                <div className="cover-month">{magazine.month}</div>
-                                <div className="cover-year">{magazine.year}</div>
-                              </div>
-                              <div className="cover-title">
-                                <h5>Monthly</h5>
-                                <h4>Magazine</h4>
-                              </div>
-                              <div className="cover-footer">
-                                <div className="cover-number">
-                                  {String(index + 1).padStart(2, '0')}
-                                </div>
-                                <div className="cover-icon">📖</div>
-                              </div>
+                          <div className="cover-date-box">
+                            <div className="cover-month">{magazine.month}</div>
+                            <div className="cover-year">{CURRENT_YEAR}</div>
+                          </div>
+                          <div className="cover-title">
+                            <h5>Monthly</h5>
+                            <h4>Magazine</h4>
+                          </div>
+                          <div className="cover-footer">
+                            <div className="cover-number">
+                              {String(index + 1).padStart(2, '0')}
                             </div>
-                            <div className="cover-edge"></div>
-                            <div className="cover-corner top-left"></div>
-                            <div className="cover-corner top-right"></div>
-                            <div className="cover-corner bottom-left"></div>
-                            <div className="cover-corner bottom-right"></div>
+                            <div className="cover-icon">📖</div>
                           </div>
                         </div>
-                        <div className="book-shadow"></div>
+                        <div className="cover-edge"></div>
+                        <div className="cover-corner top-left"></div>
+                        <div className="cover-corner top-right"></div>
+                        <div className="cover-corner bottom-left"></div>
+                        <div className="cover-corner bottom-right"></div>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))
+                    </div>
+                    <div className="book-shadow"></div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         )}
       </div>
     </div>
