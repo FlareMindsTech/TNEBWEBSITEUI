@@ -1,8 +1,14 @@
-﻿.important-notices-card.card.shadow-sm {
+﻿.important-notices-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.important-notices-card.card.shadow-sm {
   border: none;
   border-radius: 9px;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.3s ease;
+  overflow-x: hidden;
 }
 
 .important-notices-card.card.shadow-sm:hover {
@@ -183,8 +189,31 @@
 }
 /* Mobile responsive styles */
 @media (max-width: 768px) {
+  .important-notices-wrapper {
+    padding: 0 8px;
+  }
+
+  .important-notices-wrapper .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .important-notices-wrapper .col-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .important-notices-card {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .important-notices-body {
-    padding: 15px 12px;
+    padding: 15px 8px;
+  }
+
+  .important-notices-header {
+    padding: 10.5px 8px;
   }
 
   .notices-grid {
@@ -212,12 +241,21 @@
 }
 
 @media (max-width: 480px) {
+  .important-notices-wrapper {
+    padding: 0 4px;
+  }
+
+  .important-notices-card {
+    border-radius: 6px;
+  }
+
   .important-notices-body {
-    padding: 12px 9px;
+    padding: 12px 6px;
   }
 
   .important-notices-header {
-    padding: 10.5px 12px;
+    padding: 8px 6px;
+    border-radius: 6px 6px 0 0;
   }
 
   .important-notices-header h5 {
