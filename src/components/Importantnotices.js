@@ -60,7 +60,8 @@ import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExcl
       };
     
   return (
-    <div className="row mt-4">
+    <div className="important-notices-wrapper">
+      <div className="row mt-4">
                 <div className="col-12">
                   <div className="card shadow-sm important-notices-card">
                     <div className="card-header important-notices-header text-white" style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center', gap:'10px'}}>
@@ -122,6 +123,7 @@ import { FaUser, FaSearch, FaFilePdf, FaDownload, FaCalendar, FaBullhorn, FaExcl
                   </div>
                 </div>
               </div>
+    </div>
   )
 }
 
