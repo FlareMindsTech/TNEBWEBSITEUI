@@ -24,7 +24,7 @@ const Home = () => {
       id: 1,
       name: 'TNEB',
       logos: [tnebeaLogo],
-      onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+      url: 'https://www.tnebltd.org/en/tneb/'
     },
     {
       id: 2,
