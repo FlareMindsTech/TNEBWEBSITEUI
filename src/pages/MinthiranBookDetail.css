@@ -310,6 +310,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: none;
   /* Leather/linen texture */
   background-image:
     repeating-linear-gradient(
@@ -912,7 +913,23 @@
     font-size: 0.65rem;
   }
   .mbr-header-right {
-    display: none;
+    min-width: auto;
+  }
+  
+  .mbr-zoom-pill {
+    padding: 4px 6px;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .mbr-zoom-pill button {
+    padding: 4px 6px;
+    font-size: 0.85rem;
+  }
+  
+  .mbr-zoom-pill .zoom-reset {
+    min-width: 38px;
+    font-size: 0.75rem;
   }
 
   .mbr-progress-track {
@@ -930,7 +947,7 @@
   .mbr-viewport {
     min-height: 58vh;
     border-radius: 2px 8px 8px 2px;
-    touch-action: pan-y;
+    touch-action: none;
   }
   .mbr-viewport::before {
     border-left-width: 3px;
