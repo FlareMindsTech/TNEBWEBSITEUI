@@ -4,6 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 import { getAllCarouselImages, getAllEvents } from './api';
 import LatestEvents from './components/LatestEvents';
+import tnebeaLogo from './assets/icons/tnebea_logo_cropped2.png';
+import tnpdcl from "./assets/icons/tnpdclelogo.png"
+import tantransco from "./assets/icons/tantransco.png.png"
+import tngecl from "./assets/icons/egelogo.png"
 // import VisitorCounter from './components/VisitorCounter';
 
 
@@ -13,6 +17,44 @@ const Home = () => {
   const [loadingCarousel, setLoadingCarousel] = useState(true);
   const [latestEvents, setLatestEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
+  const [logoIndexBySite, setLogoIndexBySite] = useState({});
+
+  const trustedWebsites = [
+    {
+      id: 1,
+      name: 'TNEB',
+      logos: [tnebeaLogo],
+      onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+    {
+      id: 2,
+      name: 'TNPDCL',
+      logos: [tnpdcl],
+      url: 'https://www.tnpdcl.org/en/tnpdcl/'
+    },
+    {
+      id: 3,
+      name: 'TANTRANSCO',
+      logos: [tantransco],
+      url: 'https://www.tantransco.org/en/tantransco/'
+    },
+    {
+      id: 4,
+      name: 'TNGECL',
+      logos: [tngecl],
+      url: 'https://www.tngecl.org/en/greenenergy/'
+    }
+  ];
+
+  const handleTrustedLogoError = (siteId, totalLogos) => {
+    setLogoIndexBySite((prev) => {
+      const currentIndex = prev[siteId] || 0;
+      if (currentIndex >= totalLogos - 1) {
+        return prev;
+      }
+      return { ...prev, [siteId]: currentIndex + 1 };
+    });
+  };
 
   // Fetch carousel images from API
   useEffect(() => {
@@ -226,6 +268,62 @@ const Home = () => {
           </div> */}
         </div>
       </main>
+
+      <section className="trusted-sites-section">
+        <div className="container-fluid">
+          <h3 className="trusted-sites-title">Explore Our Trusted Websites</h3>
+          <div className="trusted-sites-grid">
+            {trustedWebsites.map((site) => {
+              const currentLogoIndex = logoIndexBySite[site.id] || 0;
+              const currentLogo = site.logos?.[currentLogoIndex];
+              const hasLogo = Boolean(currentLogo);
+
+              const cardContent = (
+                <>
+                  <span className="trusted-site-logo-wrap">
+                    {hasLogo ? (
+                      <img
+                        src={currentLogo}
+                        alt={site.name}
+                        className="trusted-site-logo"
+                        onError={() => handleTrustedLogoError(site.id, site.logos.length)}
+                      />
+                    ) : (
+                      <span className="trusted-site-initial">{site.name.charAt(0)}</span>
+                    )}
+                  </span>
+                  <span className="trusted-site-name">{site.name}</span>
+                </>
+              );
+
+              if (site.url) {
+                return (
+                  <a
+                    key={site.id}
+                    href={site.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="trusted-site-card"
+                  >
+                    {cardContent}
+                  </a>
+                );
+              }
+
+              return (
+                <button
+                  key={site.id}
+                  type="button"
+                  className="trusted-site-card trusted-site-button"
+                  onClick={site.onClick}
+                >
+                  {cardContent}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
 
     </div>
