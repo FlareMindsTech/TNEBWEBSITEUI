@@ -25,15 +25,6 @@ const sectionVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.06 * i, duration: 0.35 },
-  }),
-};
-
 const forms = [
   { title: 'Joining Report', url: joiningReportDoc, type: 'Word File' },
   { title: 'Class I - Casual Leave application Form', url: classICasualLeave, type: 'PDF File' },
@@ -219,34 +210,41 @@ const TnebeaForms = () => {
             <div className="section-line" />
           </div>
 
-          <div className="cards-grid">
-            {forms.map((item, i) => (
-              <motion.button
-                key={item.title}
-                className="form-card"
-                custom={i}
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                style={{ '--card-index': i }}
-                whileHover={{ y: -8, scale: 1.02, boxShadow: '0 16px 48px rgba(27,91,175,0.16)' }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => openDocument(item)}
-              >
-                <div className="card-top">
-                  <span className="file-chip">{item.type}</span>
-                </div>
-                <div className="card-body">
-                  <div className="card-icon">📝</div>
-                  <div className="card-title">{item.title}</div>
-                </div>
-                <div className="card-bottom">
-                  <span className="open-text">Open Document</span>
-                  <span className="open-arrow">➜</span>
-                </div>
-              </motion.button>
-            ))}
+          <div className="forms-table-wrap">
+            <table className="forms-table" aria-label="Forms table">
+              <thead>
+                <tr>
+                  <th className="serial-col">S.No</th>
+                  <th className="name-col">Form Name</th>
+                  <th className="type-col">Type</th>
+                  <th className="action-col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {forms.map((item, i) => (
+                  <motion.tr
+                    key={item.title}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.04, duration: 0.25 }}
+                  >
+                    <td className="serial-cell">{i + 1}</td>
+                    <td className="name-cell">{item.title}</td>
+                    <td className="type-cell">{item.type}</td>
+                    <td className="action-cell">
+                      <button
+                        type="button"
+                        className="table-open-btn"
+                        onClick={() => openDocument(item)}
+                      >
+                        Open
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </motion.div>
 
@@ -262,34 +260,41 @@ const TnebeaForms = () => {
             <div className="section-line" />
           </div>
 
-          <div className="cards-grid">
-            {loans.map((item, i) => (
-              <motion.button
-                key={item.title}
-                className="form-card loan"
-                custom={i}
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                style={{ '--card-index': i }}
-                whileHover={{ y: -8, scale: 1.02, boxShadow: '0 16px 48px rgba(27,91,175,0.16)' }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => openDocument(item)}
-              >
-                <div className="card-top">
-                  <span className="file-chip">{item.type}</span>
-                </div>
-                <div className="card-body">
-                  <div className="card-icon">📄</div>
-                  <div className="card-title">{item.title}</div>
-                </div>
-                <div className="card-bottom">
-                  <span className="open-text">Open Document</span>
-                  <span className="open-arrow">➜</span>
-                </div>
-              </motion.button>
-            ))}
+          <div className="forms-table-wrap">
+            <table className="forms-table" aria-label="Loans and advances table">
+              <thead>
+                <tr>
+                  <th className="serial-col">S.No</th>
+                  <th className="name-col">Loan / Advance Name</th>
+                  <th className="type-col">Type</th>
+                  <th className="action-col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loans.map((item, i) => (
+                  <motion.tr
+                    key={item.title}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.04, duration: 0.25 }}
+                  >
+                    <td className="serial-cell">{i + 1}</td>
+                    <td className="name-cell">{item.title}</td>
+                    <td className="type-cell">{item.type}</td>
+                    <td className="action-cell">
+                      <button
+                        type="button"
+                        className="table-open-btn"
+                        onClick={() => openDocument(item)}
+                      >
+                        Open
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </motion.div>
 
