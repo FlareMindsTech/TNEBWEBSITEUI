@@ -125,7 +125,8 @@ const MinthiranBookDetail = () => {
   const pageImages = useMemo(() => book?.pdf?.pages || [], [book]);
   const pageCount = pageImages.length;
   const currentImage = pageImages[currentPage];
-  const effectiveZoom = isMobile ? 1 : zoom;
+  const effectiveZoom = zoom;
+  const touchDistanceRef = useRef(0);
 
   /* ── Clamp pan ── */
   const clampPan = useCallback(
@@ -174,13 +175,12 @@ const MinthiranBookDetail = () => {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  /* ── Clear pan when zoom resets ── */
   useEffect(() => {
-    if (isMobile) {
-      setZoom(1);
+    if (zoom === 1) {
       setPan({ x: 0, y: 0 });
-      setIsDragging(false);
     }
-  }, [isMobile]);
+  }, [zoom]);
 
   /* ── Page Turn Core ── */
   const turnToPage = useCallback(
@@ -215,38 +215,41 @@ const MinthiranBookDetail = () => {
 
   /* ── Zoom ── */
   const zoomIn = useCallback(() => {
-    if (isMobile) return;
     setZoom((prev) => {
       const next = Math.min(MAX_ZOOM, +(prev + ZOOM_STEP).toFixed(2));
       setPan((p) => clampPan(p.x, p.y, next));
       return next;
     });
-  }, [clampPan, isMobile]);
+  }, [clampPan]);
 
   const zoomOut = useCallback(() => {
-    if (isMobile) return;
     setZoom((prev) => {
       const next = Math.max(MIN_ZOOM, +(prev - ZOOM_STEP).toFixed(2));
       setPan((p) => clampPan(p.x, p.y, next));
       return next;
     });
-  }, [clampPan, isMobile]);
+  }, [clampPan]);
+
+  const setZoomLevel = useCallback((newZoom) => {
+    const clamped = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
+    setZoom(clamped);
+    setPan((p) => clampPan(p.x, p.y, clamped));
+  }, [clampPan]);
 
   const resetZoom = useCallback(() => {
-    if (isMobile) return;
     setZoom(1);
     setPan({ x: 0, y: 0 });
-  }, [isMobile]);
+  }, []);
 
   /* ── Keyboard ── */
   const handleKeyPress = useCallback(
     (e) => {
       if (e.key === "ArrowRight") turnToPage(currentPage + 1);
       if (e.key === "ArrowLeft") turnToPage(currentPage - 1);
-      if (!isMobile && (e.key === "+" || e.key === "=")) zoomIn();
-      if (!isMobile && e.key === "-") zoomOut();
+      if (e.key === "+" || e.key === "=") zoomIn();
+      if (e.key === "-") zoomOut();
     },
-    [currentPage, isMobile, turnToPage, zoomIn, zoomOut],
+    [currentPage, turnToPage, zoomIn, zoomOut],
   );
 
   useEffect(() => {
@@ -256,31 +259,85 @@ const MinthiranBookDetail = () => {
 
   /* ── Mouse drag ── */
   const handleMouseDown = (e) => {
-    if (isMobile || effectiveZoom <= 1) return;
+    if (effectiveZoom <= 1) return;
     e.preventDefault();
     setIsDragging(true);
     setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
   };
   const handleMouseMove = (e) => {
-    if (!isDragging || isMobile || effectiveZoom <= 1) return;
+    if (!isDragging || effectiveZoom <= 1) return;
     setPan(clampPan(e.clientX - dragStart.x, e.clientY - dragStart.y));
   };
   const stopDragging = () => setIsDragging(false);
 
-  /* ── Touch swipe ── */
+  /* ── Pinch zoom for touch ── */
   const handleTouchStart = (e) => {
-    if (!isMobile || !e.touches?.length) return;
-    const t = e.touches[0];
-    touchStartRef.current = { x: t.clientX, y: t.clientY, time: Date.now() };
+    if (!e.touches?.length) return;
+    
+    // Pinch zoom: two fingers
+    if (e.touches.length === 2) {
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(t2.clientX - t1.clientX, 2) + Math.pow(t2.clientY - t1.clientY, 2)
+      );
+      touchDistanceRef.current = distance;
+      touchStartRef.current = { zoom };
+      e.preventDefault();
+    } else if (e.touches.length === 1) {
+      // Single touch: prepare for swipe or drag
+      const t = e.touches[0];
+      touchStartRef.current = { x: t.clientX, y: t.clientY, time: Date.now(), zoom };
+      if (effectiveZoom > 1) {
+        setIsDragging(true);
+        setDragStart({ x: t.clientX - pan.x, y: t.clientY - pan.y });
+      }
+    }
   };
+
+  const handleTouchMove = (e) => {
+    if (!e.touches?.length) return;
+    
+    // Pinch zoom
+    if (e.touches.length === 2 && touchDistanceRef.current > 0) {
+      e.preventDefault();
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(t2.clientX - t1.clientX, 2) + Math.pow(t2.clientY - t1.clientY, 2)
+      );
+      const scale = distance / touchDistanceRef.current;
+      const newZoom = touchStartRef.current.zoom * scale;
+      setZoomLevel(newZoom);
+    } else if (e.touches.length === 1 && isDragging && effectiveZoom > 1) {
+      // Single touch drag when zoomed
+      e.preventDefault();
+      const t = e.touches[0];
+      setPan(clampPan(t.clientX - dragStart.x, t.clientY - dragStart.y));
+    }
+  };
+
   const handleTouchEnd = (e) => {
-    if (!isMobile || !e.changedTouches?.length) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartRef.current.x;
-    const dy = t.clientY - touchStartRef.current.y;
-    const elapsed = Date.now() - touchStartRef.current.time;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) && elapsed < 900) {
-      dx < 0 ? turnToPage(currentPage + 1) : turnToPage(currentPage - 1);
+    if (!e.changedTouches?.length) return;
+    
+    // If pinch zoom was active, reset the distance
+    if (e.touches.length < 2) {
+      touchDistanceRef.current = 0;
+    }
+    
+    // Single touch swipe (only if not dragging while zoomed)
+    if (e.touches.length === 0 && effectiveZoom <= 1) {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartRef.current.x;
+      const dy = t.clientY - touchStartRef.current.y;
+      const elapsed = Date.now() - touchStartRef.current.time;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) && elapsed < 900) {
+        dx < 0 ? turnToPage(currentPage + 1) : turnToPage(currentPage - 1);
+      }
+    }
+    
+    if (e.touches.length === 0) {
+      setIsDragging(false);
     }
   };
 
@@ -343,34 +400,32 @@ const MinthiranBookDetail = () => {
           </h1>
         </div>
         <div className="mbr-header-right">
-          {!isMobile && (
-            <div className="mbr-zoom-pill">
-              <button
-                onClick={zoomOut}
-                disabled={zoom <= MIN_ZOOM}
-                aria-label="Zoom out"
-                title="Zoom out (-)"
-              >
-                <FaMagnifyingGlassMinus />
-              </button>
-              <button
-                className="zoom-reset"
-                onClick={resetZoom}
-                disabled={zoom === 1}
-                title="Reset zoom"
-              >
-                {Math.round(zoom * 100)}%
-              </button>
-              <button
-                onClick={zoomIn}
-                disabled={zoom >= MAX_ZOOM}
-                aria-label="Zoom in"
-                title="Zoom in (+)"
-              >
-                <FaMagnifyingGlassPlus />
-              </button>
-            </div>
-          )}
+          <div className="mbr-zoom-pill">
+            <button
+              onClick={zoomOut}
+              disabled={zoom <= MIN_ZOOM}
+              aria-label="Zoom out"
+              title="Zoom out (-)"
+            >
+              <FaMagnifyingGlassMinus />
+            </button>
+            <button
+              className="zoom-reset"
+              onClick={resetZoom}
+              disabled={zoom === 1}
+              title="Reset zoom"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
+            <button
+              onClick={zoomIn}
+              disabled={zoom >= MAX_ZOOM}
+              aria-label="Zoom in"
+              title="Zoom in (+)"
+            >
+              <FaMagnifyingGlassPlus />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -424,12 +479,13 @@ const MinthiranBookDetail = () => {
                 onMouseUp={stopDragging}
                 onMouseLeave={stopDragging}
                 onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
                 <div
                   className="mbr-zoom-stage"
                   style={{
-                    transform: `translate3d(${isMobile ? 0 : pan.x}px, ${isMobile ? 0 : pan.y}px, 0) scale(${effectiveZoom})`,
+                    transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${effectiveZoom})`,
                   }}
                 >
                   <div ref={pageStackRef} className="mbr-page-stack">
@@ -553,9 +609,9 @@ const MinthiranBookDetail = () => {
               <FaAnglesRight />
             </button>
 
-            {isMobile && (
+            {isMobile && effectiveZoom === 1 && (
               <div className="mbr-swipe-hint">
-                <span>Swipe to turn pages</span>
+                <span>Pinch to zoom • Swipe to turn pages</span>
               </div>
             )}
           </div>
