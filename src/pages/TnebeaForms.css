@@ -293,11 +293,98 @@
   border-radius: 3px;
 }
 
-/* Cards Grid */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 11px;
+/* Forms Table */
+.forms-table-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 8px 26px rgba(27, 91, 175, 0.08);
+}
+
+.forms-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.forms-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  table-layout: fixed;
+}
+
+.forms-table thead th {
+  background: linear-gradient(135deg, rgba(27, 91, 175, 0.18), rgba(42, 122, 226, 0.18));
+  color: #123463;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 13px 12px;
+  border-bottom: 1px solid rgba(27, 91, 175, 0.2);
+  letter-spacing: 0.2px;
+}
+
+.forms-table tbody td {
+  padding: 13px 12px;
+  font-size: 0.79rem;
+  color: #1a2f52;
+  border-bottom: 1px solid rgba(27, 91, 175, 0.12);
+  vertical-align: middle;
+  text-align: center;
+}
+
+.forms-table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(27, 91, 175, 0.03), rgba(42, 122, 226, 0.04));
+}
+
+.forms-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.forms-table .serial-col,
+.forms-table .serial-cell {
+  width: 80px;
+}
+
+.forms-table .name-col,
+.forms-table .name-cell {
+  width: 52%;
+  text-align: center;
+}
+
+.forms-table .type-col,
+.forms-table .type-cell {
+  width: 160px;
+}
+
+.forms-table .action-col,
+.forms-table .action-cell {
+  width: 110px;
+}
+
+.forms-table .name-cell {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+}
+
+.table-open-btn {
+  border: 1px solid var(--theme);
+  color: var(--theme);
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.table-open-btn:hover {
+  background: var(--theme);
+  color: #fff;
 }
 
 .form-card {
@@ -480,14 +567,29 @@
     font-size: 1.35rem;
   }
   
-  .cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 11px;
-  }
-  
   .hero-stats {
     flex-direction: column;
     align-items: center;
+  }
+
+  .forms-table {
+    min-width: 680px;
+  }
+
+  .forms-table thead th,
+  .forms-table tbody td {
+    padding: 10px 10px;
+    font-size: 0.76rem;
+  }
+
+  .forms-table .type-col,
+  .forms-table .type-cell {
+    width: 130px;
+  }
+
+  .forms-table .action-col,
+  .forms-table .action-cell {
+    width: 100px;
   }
 }
 
@@ -496,13 +598,8 @@
     padding: 45px 12px 24px;
   }
   
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .form-card {
-    min-height: 120px;
-    padding: 12px;
+  .forms-table {
+    min-width: 620px;
   }
   
   .section-kicker {
