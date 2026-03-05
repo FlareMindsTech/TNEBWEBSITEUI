@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaHotel, FaBed, FaPhone, FaMapMarkerAlt, FaSnowflake, FaUsers, FaFileAlt } from 'react-icons/fa';
+import { FaHotel, FaBed, FaMapMarkerAlt, FaSnowflake, FaUsers, FaFileAlt } from 'react-icons/fa';
 import './Minnagam.css';
 import building1 from '../assets/Proposed-building-1.jpeg';
 import building2 from '../assets/Proposed-building-2.jpeg';
@@ -42,28 +42,29 @@ const RoomCard = ({ room, index }) => {
   );
 };
 
-const ContactCard = ({ contact, index }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+// const ContactCard = ({ contact, index }) => {
+//   const ref = React.useRef(null);
+//   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  return (
-    <motion.div
-      ref={ref}
-      className="contact-card"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-      transition={{ delay: index * 0.2, duration: 0.5 }}
-      whileHover={{ scale: 1.05 }}
-    >
-      <FaPhone className="contact-icon" />
-      <h4 className="contact-role">{contact.role}</h4>
-      <p className="contact-name">{contact.name}</p>
-      <a href={`tel:${contact.phone}`} className="contact-phone">{contact.phone}</a>
-    </motion.div>
-  );
-};
+//   return (
+//     <motion.div
+//       ref={ref}
+//       className="contact-card"
+//       initial={{ opacity: 0, scale: 0.8 }}
+//       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+//       transition={{ delay: index * 0.2, duration: 0.5 }}
+//       whileHover={{ scale: 1.05 }}
+//     >
+//       <h4 className="contact-role">{contact.role}</h4>
+//       <p className="contact-name">{contact.name}</p>
+//       <a href={`tel:${contact.phone}`} className="contact-phone">{contact.phone}</a>
+//     </motion.div>
+//   );
+// };
 
 const Minnagam = () => {
+  const proposedSectionRef = React.useRef(null);
+
   const buildingImages = [
     { id: 1, src: building2, alt: 'Proposed Building - View 1' },
     { id: 2, src: building3, alt: 'Proposed Building - View 2' },
@@ -98,23 +99,27 @@ const Minnagam = () => {
     }
   ];
 
-  const contacts = [
-    {
-      role: "Care Taker",
-      name: "Sekar",
-      phone: "9042183530"
-    },
-    {
-      role: "Secretary (Minnagam)",
-      name: "Er. S. SENTHIL",
-      phone: "9894812568"
-    }
-  ];
+  // const contacts = [
+  //   {
+  //     role: "Care Taker",
+  //     name: "Sekar",
+  //     phone: "9042183530"
+  //   },
+  //   {
+  //     role: "Secretary (Minnagam)",
+  //     name: "Er. S. SENTHIL",
+  //     phone: "9894812568"
+  //   }
+  // ];
+
+  const handleViewConstructionProposal = () => {
+    proposedSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="minnagam-container">
       {/* Proposed Building Image Gallery */}
-      <div className="proposed-building-section">
+      <div className="proposed-building-section" ref={proposedSectionRef}>
         <div className="proposed-building-container">
           <h2 className="proposed-building-title">Proposed Building</h2>
           <div className="building-images-grid">
@@ -167,7 +172,7 @@ const Minnagam = () => {
           ))}
         </div> */}
 
-        <motion.div
+        {/* <motion.div
           className="contact-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -181,7 +186,7 @@ const Minnagam = () => {
           {contacts.map((contact, index) => (
             <ContactCard key={index} contact={contact} index={index} />
           ))}
-        </div>
+        </div> */}
 
         <motion.div
           className="proposal-section"
@@ -193,16 +198,15 @@ const Minnagam = () => {
           <FaFileAlt className="proposal-icon" />
           <h3>Future Development</h3>
           <p>Learn about our upcoming multipurpose complex project</p>
-          <motion.a
-            href="https://tnebeaengineers.in/wp-content/uploads/2024/05/CONSTRUCTION-OF-MULTIPURPOSE-COMPLEX-AT-MINNAGAM-CHENNAI-PROPOSAL.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.button
+            type="button"
             className="proposal-button"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleViewConstructionProposal}
           >
             View Construction Proposal
-          </motion.a>
+          </motion.button>
         </motion.div>
 
         <motion.div

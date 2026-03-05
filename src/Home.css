@@ -3,6 +3,82 @@
   font-family: 'Merriweather', serif;
 }
 
+.trusted-sites-section {
+  padding: 20px 0 28px;
+  background: #f2f4f7;
+}
+
+.trusted-sites-title {
+  text-align: center;
+  color: #15458a;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+
+.trusted-sites-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 24px;
+  background: #e6e8eb;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.trusted-site-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid rgba(27, 91, 175, 0.25);
+  background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 100%);
+  color: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trusted-site-button {
+  cursor: pointer;
+}
+
+.trusted-site-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(27, 91, 175, 0.25);
+  color: #ffffff;
+}
+
+.trusted-site-logo-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trusted-site-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.trusted-site-initial {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1b5baf;
+}
+
+.trusted-site-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
 /* Carousel Section Styles */
 .image-carousel-section {
   margin-bottom: 20px;
@@ -330,6 +406,24 @@
   .footer-slider {
     display: none;
   }
+
+  .trusted-sites-title {
+    font-size: 1.55rem;
+  }
+
+  .trusted-sites-grid {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .trusted-site-card {
+    padding: 10px 12px;
+  }
+
+  .trusted-site-name {
+    font-size: 1.05rem;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -365,6 +459,14 @@
 
   .notice-card-footer {
     gap: 8px;
+  }
+
+  .trusted-sites-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trusted-site-name {
+    font-size: 1rem;
   }
 }
 
