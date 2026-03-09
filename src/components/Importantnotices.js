@@ -75,26 +75,28 @@ const Importantnotices = () => {
                               <th className="type-col">Type</th>
                               <th className="date-col">Date</th>
                               <th className="size-col">Size</th>
-                              <th className="action-col">Action</th>
                             </tr>
                           </thead>
                           <tbody>
                             {importantNotices.map((notice, index) => (
-                              <tr key={notice.id}>
+                              <tr
+                                key={notice.id}
+                                className="notice-row"
+                                role="button"
+                                tabIndex={0}
+                                onClick={() => openNotice(notice)}
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault();
+                                    openNotice(notice);
+                                  }
+                                }}
+                              >
                                 <td className="serial-cell">{index + 1}</td>
                                 <td className="title-cell">{notice.title}</td>
                                 <td className="type-cell">{notice.type}</td>
                                 <td className="date-cell">{notice.date}</td>
                                 <td className="size-cell">{notice.size}</td>
-                                <td className="action-cell">
-                                  <button
-                                    type="button"
-                                    className="notice-open-btn"
-                                    onClick={() => openNotice(notice)}
-                                  >
-                                    Open
-                                  </button>
-                                </td>
                               </tr>
                             ))}
                           </tbody>
