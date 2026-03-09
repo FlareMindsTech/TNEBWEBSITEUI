@@ -44,6 +44,13 @@ const loans = [
   { title: 'Utilisation Certificate', url: utilisationCertificate, type: 'PDF File' },
 ];
 
+function handleRowKeyDown(event, item) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    openDocument(item);
+  }
+}
+
 function openDocument(item) {
   if (item?.url) {
     window.open(item.url, '_blank', 'noopener,noreferrer');
@@ -217,13 +224,17 @@ const TnebeaForms = () => {
                   <th className="serial-col">S.No</th>
                   <th className="name-col">Form Name</th>
                   <th className="type-col">Type</th>
-                  <th className="action-col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {forms.map((item, i) => (
                   <motion.tr
                     key={item.title}
+                    className="table-click-row"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => openDocument(item)}
+                    onKeyDown={(event) => handleRowKeyDown(event, item)}
                     initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -232,15 +243,6 @@ const TnebeaForms = () => {
                     <td className="serial-cell">{i + 1}</td>
                     <td className="name-cell">{item.title}</td>
                     <td className="type-cell">{item.type}</td>
-                    <td className="action-cell">
-                      <button
-                        type="button"
-                        className="table-open-btn"
-                        onClick={() => openDocument(item)}
-                      >
-                        Open
-                      </button>
-                    </td>
                   </motion.tr>
                 ))}
               </tbody>
@@ -267,13 +269,17 @@ const TnebeaForms = () => {
                   <th className="serial-col">S.No</th>
                   <th className="name-col">Loan / Advance Name</th>
                   <th className="type-col">Type</th>
-                  <th className="action-col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {loans.map((item, i) => (
                   <motion.tr
                     key={item.title}
+                    className="table-click-row"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => openDocument(item)}
+                    onKeyDown={(event) => handleRowKeyDown(event, item)}
                     initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -282,15 +288,6 @@ const TnebeaForms = () => {
                     <td className="serial-cell">{i + 1}</td>
                     <td className="name-cell">{item.title}</td>
                     <td className="type-cell">{item.type}</td>
-                    <td className="action-cell">
-                      <button
-                        type="button"
-                        className="table-open-btn"
-                        onClick={() => openDocument(item)}
-                      >
-                        Open
-                      </button>
-                    </td>
                   </motion.tr>
                 ))}
               </tbody>
