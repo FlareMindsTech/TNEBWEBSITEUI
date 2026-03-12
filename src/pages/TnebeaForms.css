@@ -311,7 +311,7 @@
 .forms-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 760px;
+  min-width: 680px;
   table-layout: fixed;
 }
 
@@ -339,6 +339,31 @@
   background: linear-gradient(135deg, rgba(27, 91, 175, 0.03), rgba(42, 122, 226, 0.04));
 }
 
+.forms-table tbody .table-click-row {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.forms-table tbody .table-click-row:hover {
+  background: linear-gradient(135deg, rgba(27, 91, 175, 0.08), rgba(42, 122, 226, 0.1));
+  box-shadow: inset 0 0 0 1px rgba(27, 91, 175, 0.2);
+  transform: translateY(-1px);
+}
+
+.forms-table tbody .table-click-row:hover .name-cell {
+  color: #0f3f84;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.forms-table tbody .table-click-row {
+  cursor: pointer;
+}
+
+.forms-table tbody .table-click-row:focus-visible {
+  outline: 2px solid var(--theme);
+  outline-offset: -2px;
+}
+
 .forms-table tbody tr:last-child td {
   border-bottom: none;
 }
@@ -359,32 +384,10 @@
   width: 160px;
 }
 
-.forms-table .action-col,
-.forms-table .action-cell {
-  width: 110px;
-}
-
 .forms-table .name-cell {
   white-space: normal;
   word-break: break-word;
   line-height: 1.35;
-}
-
-.table-open-btn {
-  border: 1px solid var(--theme);
-  color: var(--theme);
-  background: #fff;
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.table-open-btn:hover {
-  background: var(--theme);
-  color: #fff;
 }
 
 .form-card {

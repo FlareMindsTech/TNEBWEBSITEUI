@@ -53,7 +53,7 @@
 
 .important-notices-table {
   width: 100%;
-  min-width: 900px;
+  min-width: 800px;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -79,6 +79,31 @@
 
 .important-notices-table tbody tr:hover {
   background: linear-gradient(135deg, rgba(27, 91, 175, 0.03), rgba(42, 122, 226, 0.04));
+}
+
+.important-notices-table tbody .notice-row {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.important-notices-table tbody .notice-row:hover {
+  background: linear-gradient(135deg, rgba(27, 91, 175, 0.08), rgba(42, 122, 226, 0.1));
+  box-shadow: inset 0 0 0 1px rgba(27, 91, 175, 0.2);
+  transform: translateY(-1px);
+}
+
+.important-notices-table tbody .notice-row:hover .title-cell {
+  color: #0f3f84;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.important-notices-table tbody .notice-row {
+  cursor: pointer;
+}
+
+.important-notices-table tbody .notice-row:focus-visible {
+  outline: 2px solid #1b5baf;
+  outline-offset: -2px;
 }
 
 .important-notices-table tbody tr:last-child td {
@@ -112,28 +137,6 @@
 .important-notices-table .size-col,
 .important-notices-table .size-cell {
   width: 120px;
-}
-
-.important-notices-table .action-col,
-.important-notices-table .action-cell {
-  width: 100px;
-}
-
-.notice-open-btn {
-  border: 1px solid #1b5baf;
-  color: #1b5baf;
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.notice-open-btn:hover {
-  background: #1b5baf;
-  color: #ffffff;
 }
 
 .notices-grid {
