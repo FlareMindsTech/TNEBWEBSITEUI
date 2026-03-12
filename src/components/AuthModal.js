@@ -32,6 +32,9 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       if (defaultTab === 'forgot') {
         setForgotForm({ email: '' });
       }
+      if (defaultTab === 'work') {
+        setTab('work');
+      }
     }
   }, [defaultTab, show]);
 
@@ -172,32 +175,34 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       <div className="auth-header">
         <div className="auth-ribbon">
           <FaUserLock />
-          <span>Secure Access</span>
+          <span>{tab === 'work' ? 'Notice' : 'Secure Access'}</span>
         </div>
-        <motion.div
-          className="auth-tabs auth-tabs-single"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          <button
-            className={`auth-tab ${tab === 'login' ? 'active' : ''}`}
-            onClick={() => switchTab('login')}
+        {tab !== 'work' && (
+          <motion.div
+            className="auth-tabs auth-tabs-single"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
           >
-            <FaUserLock />
-            <span>Login</span>
-          </button>
-          {/* Register tab hidden for now */}
-          {/*
-          <button
-            className={`auth-tab ${tab === 'register' ? 'active' : ''}`}
-            onClick={() => switchTab('register')}
-          >
-            <FaUserPlus />
-            <span>Sign Up</span>
-          </button>
-          */}
-        </motion.div>
+            <button
+              className={`auth-tab ${tab === 'login' ? 'active' : ''}`}
+              onClick={() => switchTab('login')}
+            >
+              <FaUserLock />
+              <span>Login</span>
+            </button>
+            {/* Register tab hidden for now */}
+            {/*
+            <button
+              className={`auth-tab ${tab === 'register' ? 'active' : ''}`}
+              onClick={() => switchTab('register')}
+            >
+              <FaUserPlus />
+              <span>Sign Up</span>
+            </button>
+            */}
+          </motion.div>
+        )}
         {/* <p className="auth-subtext">Access your TNEBEA space or create a fresh account.</p>
         <div className="auth-chips">
           <span className="auth-chip">No OTP delays</span>
@@ -207,6 +212,18 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       </div>
 
       <Modal.Body className="auth-body">
+        {tab === 'work' ? (
+          <motion.div
+            key="auth-work"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            style={{ textAlign: 'center', padding: '0.75rem 0.25rem' }}
+          >
+            <h5 style={{ marginBottom: '0.5rem', color: '#15458a', fontWeight: 700 }}>Work Undergoing</h5>
+            <p style={{ marginBottom: 0, color: '#4b5f7a' }}>Complaints section is currently under development. Please check again later.</p>
+          </motion.div>
+        ) : null}
         {tab === 'login' ? (
           <motion.div
             key="auth-login"

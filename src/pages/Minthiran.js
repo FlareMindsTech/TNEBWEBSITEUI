@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Swal from 'sweetalert2';
 import { getAllMinthirans } from '../api';
 import './Minthiran.css';
 
@@ -120,8 +121,15 @@ const Minthiran = () => {
       return;
     }
 
-    navigate(`/minthiran-book/${magazine._id}`, {
-      state: { book: magazine }
+    // navigate(`/minthiran-book/${magazine._id}`, {
+    //   state: { book: magazine }
+    // });
+
+    Swal.fire({
+      title: 'Page Work Under Construction',
+      text: 'e-Minthiran books are temporarily unavailable.',
+      icon: 'info',
+      confirmButtonText: 'OK'
     });
   };
 

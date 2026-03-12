@@ -421,7 +421,7 @@ const Navbar = () => {
                 <div className="sidebar-footer">
 
                    <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <button className="btn btn-light w-100" onClick={() => { setAuthTab(''); setShowAuth(true); closeAllMenus(); }}>
+                    <button className="btn btn-light w-100" onClick={() => { setAuthTab('work'); setShowAuth(true); closeAllMenus(); }}>
                       <FaClipboardList className="me-2" />
                       Complaints
                     </button>
@@ -631,7 +631,7 @@ const Navbar = () => {
                   <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
 
                      <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault();setAuthTab(''); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault();setAuthTab('work'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
                         <span className="user-menu-icon"><FaClipboardList /></span><span>Complaints</span>
                       </Link>
                     </motion.div>
