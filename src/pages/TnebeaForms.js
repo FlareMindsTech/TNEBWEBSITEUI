@@ -17,6 +17,8 @@ import gpfPartFinal from '../assets/tnebea-forms/GPF-Part-Final-Application.pdf'
 import computerLoan from '../assets/tnebea-forms/Computer-Loan.pdf';
 import marriageLoan from '../assets/tnebea-forms/marriageloan.pdf';
 import utilisationCertificate from '../assets/tnebea-forms/Utilisation-Certificate.pdf';
+import OptionForm from'../assets/tnebea-forms/latest-forms/Option Form 2019 - 2026.pdf';
+import optionWR2019 from'../assets/tnebea-forms/latest-forms/option WR2019_Officer BP.pdf';
 
 const themeColor = '#1b5baf';
 
@@ -26,6 +28,8 @@ const sectionVariants = {
 };
 
 const forms = [
+  { title: 'Option Form 2019 - 2026', url: OptionForm, type: 'PDF File' },
+  { title: 'option WR2019_Officer BP', url: optionWR2019, type: 'PDF File' },
   { title: 'Joining Report', url: joiningReportDoc, type: 'Word File' },
   { title: 'Class I - Casual Leave application Form', url: classICasualLeave, type: 'PDF File' },
   { title: 'Casual Leave application Form - English', url: casualLeaveEnglish, type: 'PDF File' },
@@ -34,6 +38,8 @@ const forms = [
   { title: 'Class III & IV Leave application', url: classIIIAndIVLeave, type: 'PDF File' },
   { title: 'Class I Joining Report', url: classIJoiningReport, type: 'PDF File' },
   { title: 'Provincial TA Bill', url: provincialTABill, type: 'PDF File' },
+  // { title: 'Option Form 2019 - 2026', url: OptionForm, type: 'PDF File' },
+  // { title: 'option WR2019_Officer BP', url: optionWR2019, type: 'PDF File' },
 ];
 
 const loans = [
