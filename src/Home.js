@@ -62,15 +62,16 @@ const Home = () => {
       try {
         setLoadingCarousel(true);
         const response = await getAllCarouselImages();
-        
+
         // Transform API response to match component structure
         const transformedImages = response.map((item) => ({
           id: item._id,
           src: item.imageUrl, // Assuming backend returns imageUrl
-          alt: item.alt || "TNEB Event",
-          caption: item.caption || null
+          alt: item.title || item.alt || "TNEB Event",
+          caption: item.description || item.caption || null,
+          subtitle: item.subtitle || null
         }));
-        
+
         setCarouselImages(transformedImages);
       } catch (error) {
         console.error('Error fetching carousel images:', error);
@@ -126,14 +127,14 @@ const Home = () => {
     fetchLatestEvents();
   }, []);
 
-  
+
   // Update current time
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
       const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
+
       const day = days[now.getDay()];
       const date = now.getDate();
       const month = months[now.getMonth()];
@@ -141,7 +142,7 @@ const Home = () => {
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
       const seconds = now.getSeconds().toString().padStart(2, '0');
-      
+
       setCurrentTime(`${day}, ${date}-${month}-${year}, ${hours}:${minutes}:${seconds}`);
     };
 
@@ -174,9 +175,10 @@ const Home = () => {
                           src={image.src}
                           alt={image.alt}
                         />
-                        {image.caption && (
+                        {(image.caption || image.subtitle) && (
                           <Carousel.Caption>
-                            <p>{image.caption}</p>
+                            {image.subtitle && <h5 className="carousel-subtitle">{image.subtitle}</h5>}
+                            {image.caption && <p>{image.caption}</p>}
                           </Carousel.Caption>
                         )}
                       </Carousel.Item>
