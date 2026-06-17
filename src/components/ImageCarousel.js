@@ -80,6 +80,7 @@ const ImageCarousel = ({ images }) => {
                   </svg>
                   <div className="carousel-header mt-4">
                     <h1 className="carousel-title-text">{image.alt}</h1>
+                    {image.subtitle && <p className="carousel-subtitle-text">{image.subtitle}</p>}
                   </div>
                   {image.caption && (
                     <div className="carousel-quote-container">
