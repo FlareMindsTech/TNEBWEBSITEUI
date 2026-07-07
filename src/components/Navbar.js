@@ -257,7 +257,7 @@ const Navbar = () => {
                                 <FaUsers className="sidebar-icon" /> Branch Secretary
                               </Link>
                               <Link className="sidebar-item" to="/role-of-honour" onClick={closeAllMenus}>
-                                <FaTrophy className="sidebar-icon" /> Role Of Honour
+                                <FaTrophy className="sidebar-icon" /> Roll Of Honour
                               </Link>
                             </motion.div>
                           )}
@@ -489,7 +489,7 @@ const Navbar = () => {
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/role-of-honour" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaTrophy /></span> Role Of Honour
+                        <span className="dropdown-icon"><FaTrophy /></span> Roll Of Honour
                       </Link>
                     </motion.div>
                   </motion.div>

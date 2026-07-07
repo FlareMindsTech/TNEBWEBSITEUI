@@ -8,6 +8,22 @@ import './Minthiran.css';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+const MONTH_ORDER = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+
 const Minthiran = () => {
   const navigate = useNavigate();
   const pageStyle = {
@@ -61,15 +77,20 @@ const Minthiran = () => {
     return allMagazines;
   };
 
-  const currentYearMagazines = useMemo(
-    () => getAllMagazines().filter((m) => Number(m.year) === CURRENT_YEAR),
-    [minthirans]
-  );
+  const currentYearMagazines = useMemo(() => {
+    const magazines = getAllMagazines().filter((m) => Number(m.year) === CURRENT_YEAR);
+    return magazines.sort((a, b) => {
+      const indexA = MONTH_ORDER.indexOf(a.month);
+      const indexB = MONTH_ORDER.indexOf(b.month);
 
-  const monthOrder = useMemo(
-    () => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    []
-  );
+      if (indexA === -1 && indexB === -1) {
+        return (a.month || '').localeCompare(b.month || '');
+      }
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
+  }, [minthirans]);
 
   const availableMonths = useMemo(() => {
     const monthSet = new Set(
@@ -79,22 +100,18 @@ const Minthiran = () => {
     );
 
     return Array.from(monthSet).sort((a, b) => {
-      const indexA = monthOrder.indexOf(a);
-      const indexB = monthOrder.indexOf(b);
+      const indexA = MONTH_ORDER.indexOf(a);
+      const indexB = MONTH_ORDER.indexOf(b);
 
       if (indexA === -1 && indexB === -1) {
         return a.localeCompare(b);
       }
-      if (indexA === -1) {
-        return 1;
-      }
-      if (indexB === -1) {
-        return -1;
-      }
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
 
       return indexA - indexB;
     });
-  }, [currentYearMagazines, monthOrder]);
+  }, [currentYearMagazines]);
 
   const filteredMagazines = useMemo(() => {
     let magazines = currentYearMagazines;
