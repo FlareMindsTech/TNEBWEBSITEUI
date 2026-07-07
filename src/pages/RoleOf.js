@@ -56,7 +56,7 @@ const RoleOfHonour = () => {
     { year: '2015-2018', president: 'Er.N.KANNAN', secretary: 'Er.N.MATHIMARAN' },
     { year: '2019-2022', president: 'Er.K.INDIRANI', secretary: 'Er.T.JAYANTHI' },
     { year: '2023-2025', president: 'Er.G.SADHASIVAM', secretary: 'Er.V.SHANMUGA' },
-    { year: '2025-', president: 'Er.N.SENTHILKUMAR', secretary: 'Er.K.VIJAY' }
+    { year: '2025-Present', president: 'Er.N.SENTHILKUMAR', secretary: 'Er.K.VIJAY' }
   ];
 
   const filteredData = rollOfHonour.filter(row => {
@@ -69,8 +69,8 @@ const RoleOfHonour = () => {
     );
   });
 
-  // Reverse for display
-  const displayData = [...filteredData].reverse();
+  // Display in chronological order (from 1957 to present)
+  const displayData = [...filteredData];
 
   return (
     <div className="rollofhonour-page">
@@ -83,6 +83,17 @@ const RoleOfHonour = () => {
         <div className="rollofhonour-table-wrapper">
           <table className="rollofhonour-table">
             <thead>
+              <tr className="founder-row">
+                <th className="founder-year-header">FOUNDERS</th>
+                <th className="founder-header">
+                  <div className="founder-title">Founder President</div>
+                  <div className="founder-name">Er.G.SUNDARAM</div>
+                </th>
+                <th className="founder-header">
+                  <div className="founder-title">Founder General Secretary</div>
+                  <div className="founder-name">Er.A.T.SRESHTA</div>
+                </th>
+              </tr>
               <tr>
                 <th>YEAR</th>
                 <th>PRESIDENT</th>
@@ -92,7 +103,7 @@ const RoleOfHonour = () => {
             <tbody>
               {displayData.length > 0 ? (
                 displayData.map((row) => (
-                  <tr key={row.year} className={row.year === '2025-' ? 'rollofhonour-bold-row' : ''}>
+                  <tr key={row.year} className={row.year === '2025-Present' ? 'rollofhonour-bold-row' : ''}>
                     <td>{row.year}</td>
                     <td>{row.president}</td>
                     <td>{row.secretary}</td>

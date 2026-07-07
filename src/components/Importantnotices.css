@@ -72,7 +72,7 @@
   padding: 12px 10px;
   font-size: 0.74rem;
   color: #1a2f52;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid rgba(27, 91, 175, 0.12);
   vertical-align: middle;
 }
@@ -113,17 +113,23 @@
 .important-notices-table .serial-col,
 .important-notices-table .serial-cell {
   width: 72px;
+  text-align: center;
 }
 
-.important-notices-table .title-col,
-.important-notices-table .title-cell {
+.important-notices-table .title-col{
   width: 44%;
   text-align: center;
   white-space: normal;
   word-break: break-word;
   line-height: 1.4;
 }
-
+.important-notices-table .title-cell {
+  width: 44%;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+}
 .important-notices-table .type-col,
 .important-notices-table .type-cell {
   width: 110px;

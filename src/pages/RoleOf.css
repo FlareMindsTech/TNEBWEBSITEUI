@@ -109,7 +109,47 @@
   text-align: center;
 }
 
+/* Founder Row Styling */
+.rollofhonour-table thead tr.founder-row th {
+  background: linear-gradient(135deg, #fffcf5 0%, #ffeecf 100%);
+  color: #b37400;
+  font-weight: 700;
+  border: 1px solid rgba(243, 156, 18, 0.45);
+  border-bottom: 2px solid var(--roh-accent);
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+.rollofhonour-table thead tr.founder-row th.founder-year-header {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #b37400;
+  text-transform: uppercase;
+}
+
+.rollofhonour-table thead tr.founder-row th .founder-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--roh-muted);
+  margin-bottom: 3px;
+  letter-spacing: 0.8px;
+}
+
+.rollofhonour-table thead tr.founder-row th .founder-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--roh-primary);
+}
+
 @media (max-width: 768px) {
+  .rollofhonour-table thead tr.founder-row th .founder-name {
+    font-size: 0.85rem;
+  }
+  .rollofhonour-table thead tr.founder-row th .founder-title {
+    font-size: 0.62rem;
+  }
   .rollofhonour-page {
     padding: 20px 12px 40px;
   }
@@ -144,6 +184,12 @@
 }
 
 @media (max-width: 480px) {
+  .rollofhonour-table thead tr.founder-row th .founder-name {
+    font-size: 0.75rem;
+  }
+  .rollofhonour-table thead tr.founder-row th .founder-title {
+    font-size: 0.58rem;
+  }
   .rollofhonour-page {
     padding: 15px 8px 40px;
   }

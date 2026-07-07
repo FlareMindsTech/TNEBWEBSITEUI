@@ -7,7 +7,9 @@ import LatestEvents from './components/LatestEvents';
 import tnebeaLogo from './assets/icons/tnebea_logo_cropped2.png';
 import tnpdcl from "./assets/icons/tnpdclelogo.png"
 import tantransco from "./assets/icons/tantransco.png.png"
-import tngecl from "./assets/icons/egelogo.png"
+import tngecl from "./assets/icons/egelogo.png";
+import tnpgcl from "./assets/icons/TNPGCL.jpeg"
+
 // import VisitorCounter from './components/VisitorCounter';
 
 
@@ -43,6 +45,12 @@ const Home = () => {
       name: 'TNGECL',
       logos: [tngecl],
       url: 'https://www.tngecl.org/en/greenenergy/'
+    },
+     {
+      id: 5,
+      name: 'TNPGCL',
+      logos: [tnpgcl],
+      url: 'https://www.tnpgcl.org/en/generation/'
     }
   ];
 

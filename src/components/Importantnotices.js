@@ -74,7 +74,7 @@ const Importantnotices = () => {
                               <th className="title-col">Notice Title</th>
                               <th className="type-col">Type</th>
                               <th className="date-col">Date</th>
-                              <th className="size-col">Size</th>
+                             
                             </tr>
                           </thead>
                           <tbody>
@@ -96,7 +96,6 @@ const Importantnotices = () => {
                                 <td className="title-cell">{notice.title}</td>
                                 <td className="type-cell">{notice.type}</td>
                                 <td className="date-cell">{notice.date}</td>
-                                <td className="size-cell">{notice.size}</td>
                               </tr>
                             ))}
                           </tbody>
