@@ -626,23 +626,29 @@
   }
 
   .forms-table {
-    min-width: 680px;
+    min-width: 100%;
+    table-layout: auto;
   }
 
   .forms-table thead th,
   .forms-table tbody td {
-    padding: 10px 10px;
-    font-size: 0.76rem;
+    padding: 10px 8px;
+    font-size: 0.74rem;
   }
 
-  .forms-table .type-col,
-  .forms-table .type-cell {
-    width: 130px;
+  .forms-table .serial-col,
+  .forms-table .serial-cell {
+    width: 60px;
   }
 
-  .forms-table .action-col,
-  .forms-table .action-cell {
-    width: 100px;
+  .forms-table .name-col,
+  .forms-table .name-cell {
+    padding-left: 15px;
+  }
+
+  .forms-table .download-col,
+  .forms-table .download-cell {
+    width: 110px;
   }
 }
 
@@ -652,7 +658,7 @@
   }
 
   .forms-table {
-    min-width: 620px;
+    min-width: 100%;
   }
 
   .section-kicker {
