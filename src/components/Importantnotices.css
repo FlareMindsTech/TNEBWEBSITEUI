@@ -125,6 +125,7 @@
 }
 .important-notices-table .title-cell {
   width: 44%;
+  padding-left: 30px;
   text-align: left;
   white-space: normal;
   word-break: break-word;
@@ -133,11 +134,13 @@
 .important-notices-table .type-col,
 .important-notices-table .type-cell {
   width: 110px;
+  padding-left: 30px;
 }
 
 .important-notices-table .date-col,
 .important-notices-table .date-cell {
   width: 130px;
+  text-align: center;
 }
 
 .important-notices-table .size-col,

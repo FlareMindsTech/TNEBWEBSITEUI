@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { FaDownload } from 'react-icons/fa';
 import './TnebeaForms.css';
 // pdf imports
 import joiningReportDoc from '../assets/tnebea-forms/joining-report.doc';
@@ -229,7 +230,7 @@ const TnebeaForms = () => {
                 <tr>
                   <th className="serial-col">S.No</th>
                   <th className="name-col">Form Name</th>
-                  <th className="type-col">Type</th>
+                  <th className="download-col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -248,7 +249,11 @@ const TnebeaForms = () => {
                   >
                     <td className="serial-cell">{i + 1}</td>
                     <td className="name-cell">{item.title}</td>
-                    <td className="type-cell">{item.type}</td>
+                    <td className="download-cell" onClick={(e) => e.stopPropagation()}>
+                      <a href={item.url} download={item.title} className="btn-download" title="Download File">
+                        <FaDownload className="download-icon" /> Download
+                      </a>
+                    </td>
                   </motion.tr>
                 ))}
               </tbody>
@@ -274,7 +279,7 @@ const TnebeaForms = () => {
                 <tr>
                   <th className="serial-col">S.No</th>
                   <th className="name-col">Loan / Advance Name</th>
-                  <th className="type-col">Type</th>
+                  <th className="download-col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -293,7 +298,11 @@ const TnebeaForms = () => {
                   >
                     <td className="serial-cell">{i + 1}</td>
                     <td className="name-cell">{item.title}</td>
-                    <td className="type-cell">{item.type}</td>
+                    <td className="download-cell" onClick={(e) => e.stopPropagation()}>
+                      <a href={item.url} download={item.title} className="btn-download" title="Download File">
+                        <FaDownload className="download-icon" /> Download
+                      </a>
+                    </td>
                   </motion.tr>
                 ))}
               </tbody>

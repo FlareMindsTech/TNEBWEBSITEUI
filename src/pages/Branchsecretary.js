@@ -193,8 +193,8 @@ const Branchsecretary = () => {
       </div>
 
       <div className="secretaries-grid-section">
-        <h3><FaUsers /> Branch Representatives</h3>
-        <p className="section-sub">Click or hover for details</p>
+        {/* <h3><FaUsers /> Branch Representatives</h3> */}
+        {/* <p className="section-sub">Click or hover for details</p> */}
         
         <div className="secretaries-grid">
           {branchSecretaries.map((secretary) => (

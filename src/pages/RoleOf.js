@@ -78,22 +78,15 @@ const RoleOfHonour = () => {
         <div className="rollofhonour-header">
           <h2>ROLL OF HONOUR</h2>
           <p>TNEB ENGINEERS' ASSOCIATION</p>
+          <div className="founder-row-simple">
+            <span><strong>Founder President:</strong> Er.G.SUNDARAM</span>
+            <span><strong>Founder General Secretary:</strong> Er.A.T.SRESHTA</span>
+          </div>
         </div>
 
         <div className="rollofhonour-table-wrapper">
           <table className="rollofhonour-table">
             <thead>
-              <tr className="founder-row">
-                <th className="founder-year-header">FOUNDERS</th>
-                <th className="founder-header">
-                  <div className="founder-title">Founder President</div>
-                  <div className="founder-name">Er.G.SUNDARAM</div>
-                </th>
-                <th className="founder-header">
-                  <div className="founder-title">Founder General Secretary</div>
-                  <div className="founder-name">Er.A.T.SRESHTA</div>
-                </th>
-              </tr>
               <tr>
                 <th>YEAR</th>
                 <th>PRESIDENT</th>

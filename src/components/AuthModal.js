@@ -221,7 +221,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             style={{ textAlign: 'center', padding: '0.75rem 0.25rem' }}
           >
             <h5 style={{ marginBottom: '0.5rem', color: '#15458a', fontWeight: 700 }}>Work Undergoing</h5>
-            <p style={{ marginBottom: 0, color: '#4b5f7a' }}>Complaints section is currently under development. Please check again later.</p>
+            <p style={{ marginBottom: 0, color: '#4b5f7a' }}>Grievance section is currently under development. Please check again later.</p>
           </motion.div>
         ) : null}
         {tab === 'login' ? (
