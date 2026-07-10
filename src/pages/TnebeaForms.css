@@ -395,7 +395,8 @@
 }
 
 .forms-table .name-col{
-  text-align: center;
+  text-align: left;
+  padding-left: 150px;
 }
 
 .forms-table .name-cell {
