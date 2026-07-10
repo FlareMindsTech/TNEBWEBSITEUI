@@ -6,8 +6,8 @@
   --shadow-sm: 0 4px 12px rgba(27, 91, 175, 0.08);
   --shadow-md: 0 8px 24px rgba(27, 91, 175, 0.12);
   --shadow-lg: 0 16px 48px rgba(27, 91, 175, 0.16);
-  
-  background: 
+
+  background:
     radial-gradient(ellipse at 0% 0%, var(--theme-glass), transparent 50%),
     radial-gradient(ellipse at 100% 100%, rgba(27, 91, 175, 0.05), transparent 50%),
     linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
@@ -31,7 +31,7 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 80%, rgba(27, 91, 175, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(27, 91, 175, 0.1) 0%, transparent 50%);
   pointer-events: none;
@@ -61,8 +61,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .hero-title {
@@ -154,13 +161,27 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.1); }
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
 }
 
 @keyframes sparkle {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Stats */
@@ -370,24 +391,52 @@
 
 .forms-table .serial-col,
 .forms-table .serial-cell {
-  width: 80px;
+  width: 180px;
 }
 
-.forms-table .name-col,
-.forms-table .name-cell {
-  width: 52%;
+.forms-table .name-col{
   text-align: center;
 }
 
-.forms-table .type-col,
-.forms-table .type-cell {
-  width: 160px;
-}
-
 .forms-table .name-cell {
+    text-align: left;
+  padding-left: 150px;
+
   white-space: normal;
   word-break: break-word;
   line-height: 1.35;
+}
+
+.forms-table .download-col,
+.forms-table .download-cell {
+  width: 200px;
+  text-align: center;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--theme);
+  background: var(--theme-light);
+  border: 1px solid rgba(27, 91, 175, 0.18);
+  border-radius: 8px;
+  text-decoration: none !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-download:hover {
+  background: var(--theme);
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(27, 91, 175, 0.15);
+}
+
+.download-icon {
+  font-size: 0.78rem;
 }
 
 .form-card {
@@ -561,15 +610,15 @@
     padding: 60px 15px 30px;
     min-height: 300px;
   }
-  
+
   .hero-title {
     font-size: 1.65rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.35rem;
   }
-  
+
   .hero-stats {
     flex-direction: column;
     align-items: center;
@@ -600,18 +649,18 @@
   .forms-hero {
     padding: 45px 12px 24px;
   }
-  
+
   .forms-table {
     min-width: 620px;
   }
-  
+
   .section-kicker {
     display: block;
     text-align: center;
     border-radius: 8px;
     margin-bottom: 8px;
   }
-  
+
   .section-line {
     display: none;
   }
@@ -623,6 +672,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
