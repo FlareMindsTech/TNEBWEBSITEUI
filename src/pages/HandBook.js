@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle, FaBolt } from 'react-icons/fa';
+import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle, FaBolt, FaInfoCircle } from 'react-icons/fa';
 import './HandBook.css';
 
 const EditionCard = ({ edition, index }) => {
@@ -211,11 +211,11 @@ const HandBook = () => {
                 <FaMapMarkerAlt className="info-icon" />
                 <div>
                   <h4> Address</h4>
-                  <p>T.N.E.B. Engineers' Association<br />144, Anna Salai, Chennai – 600 002<br />(Regn.No.217/94)</p>
+                  <p>T.N.E.B. Engineers' Association<br />144, Anna Salai,<br /> Chennai – 600 002<br />(Regn.No.217/94)</p>
                 </div>
               </div>
               <div className="info-item">
-                <FaPhone className="info-icon" />
+                <FaPhone className="info-icon phone-icon-flipped" />
                 <div>
                   <h4> Mobile</h4>
                   <a href="tel:9487465104">94874 65104</a>
@@ -230,7 +230,8 @@ const HandBook = () => {
               </div>
             </div>
             <div className="contact-note">
-              📧 Send digital request letter to the email address for your hard copy
+              <FaInfoCircle />
+              <span>Send digital request letter to the email address for your hard copy</span>
             </div>
           </div>
         </motion.section>

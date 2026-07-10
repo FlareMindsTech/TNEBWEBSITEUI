@@ -1,4 +1,4 @@
-﻿/* Flip Card Design */
+/* Flip Card Design */
 .handbook-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f8f9fa 0%, #e8eef7 100%);
@@ -486,6 +486,7 @@
   max-width: 900px;
   margin: 0 auto;
   border: 2px solid #e8eef7;
+  position: relative;
 }
 
 .contact-box::before {
@@ -509,6 +510,8 @@
 .info-item {
   display: flex;
   gap: 15px;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .info-icon {
@@ -516,6 +519,10 @@
   color: #1b5baf;
   flex-shrink: 0;
   margin-top: 5px;
+}
+
+.phone-icon-flipped {
+  transform: scaleX(-1);
 }
 
 .info-item h4 {
@@ -526,6 +533,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  text-align: left;
 }
 
 .info-item p,
@@ -535,6 +543,7 @@
   margin: 0;
   line-height: 1.7;
   text-decoration: none;
+  text-align: left;
 }
 
 .info-item a {
@@ -551,12 +560,22 @@
 .contact-note {
   background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
   color: #856404;
-  padding: 20px;
+  padding: 16px 24px;
   border-radius: 12px;
   border-left: 4px solid #ffc107;
   font-size: 1rem;
   font-weight: 600;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.contact-note svg {
+  font-size: 1.2rem;
+  color: #856404;
+  flex-shrink: 0;
 }
 
 /* Responsive Design */
