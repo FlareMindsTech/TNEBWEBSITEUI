@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaBook, FaStar, FaRupeeSign, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle, FaBolt, FaInfoCircle } from 'react-icons/fa';
 import './HandBook.css';
+import handbookCover from '../assets/handbook_cover.jpg';
 
 const EditionCard = ({ edition, index }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -131,6 +132,16 @@ const HandBook = () => {
       </motion.section>
 
       <div className="handbook-main">
+        <motion.div
+          className="handbook-cover-container"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <img src={handbookCover} alt="Power Engineer's Handbook Cover" className="handbook-cover-image" />
+        </motion.div>
+
         <motion.section
           className="about-section"
           initial={{ opacity: 0 }}
