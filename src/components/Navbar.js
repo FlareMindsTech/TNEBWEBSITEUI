@@ -423,7 +423,7 @@ const Navbar = () => {
                    <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="btn btn-light w-100" onClick={() => { window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); closeAllMenus(); }}>
                       <FaClipboardList className="me-2" />
-                      Grievance
+                      Grievance Form
                     </button>
                   </motion.div>
 

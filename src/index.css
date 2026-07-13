@@ -31,6 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 100vh;
 }
 
 #root::before {
@@ -50,7 +51,6 @@ body {
 
 .footer-section {
   margin-top: auto;
-  max-height: 10vh;
 }
 
 code {
