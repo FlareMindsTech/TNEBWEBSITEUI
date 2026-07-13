@@ -701,3 +701,30 @@
     gap: 20px;
   }
 }
+
+/* Handbook Cover Image Styling */
+.handbook-cover-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.handbook-cover-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  object-fit: contain;
+  max-height: 550px;
+  transition: transform 0.3s ease;
+}
+
+.handbook-cover-image:hover {
+  transform: scale(1.02);
+}
+
