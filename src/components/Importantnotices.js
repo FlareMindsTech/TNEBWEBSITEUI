@@ -1,112 +1,120 @@
-import './Importantnotices.css'
+import React, { useEffect, useState } from 'react';
+import './Importantnotices.css';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { getAllImportantNotices } from '../api';
+
 
 const Importantnotices = () => {
-    // Important Notices Data
-      const importantNotices = [
-        {
-          id: 1,
-          title: "EA D 31 dt 10.12.25 Extend the SLS benifits to the employees uniformly",
-          link: "uploads/notices/1765991771_EAD31dt10.12.25ExtendtheSLSbenifitstotheemployeesuniformly.pdf",
-          date: "17 Dec 2025",
-          size: "1,656.5 KB",
-          type: "Benefits"
-        },
-        {
-          id: 2,
-          title: "EA D 34 work Allocation and staff pattern",
-          link: "uploads/notices/1765991634_EAD34workAllocationandstaffpattern.pdf",
-          date: "17 Dec 2025",
-          size: "3,684.2 KB",
-          type: "Allocation"
-        },
-        {
-          id: 3,
-          title: "EA D 35 dt - 16.12.25 CMD MEET",
-          link: "uploads/notices/1765991527_EAD35dt-16.12.25CMDMEET.pdf",
-          date: "17 Dec 2025",
-          size: "1,379.7 KB",
-          type: "Meeting"
-        },
-        {
-          id: 4,
-          title: "TNEBEA CEC/ EBF Election Result 2025-2027",
-          link: "uploads/notices/1761625929_TNEBEAElectionResult2025.pdf",
-          date: "28 Oct 2025",
-          size: "2,854.3 KB",
-          type: "Results"
-        },
-        {
-          id: 5,
-          title: "LM MASTER LIST",
-          link: "uploads/notices/1758385146_LMMASTERLIST072025.pdf",
-          date: "20 Sep 2025",
-          size: "3,242.5 KB",
-          type: "List"
-        }
-      ];
+  const [importantNotices, setImportantNotices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-      const openNotice = (notice) => {
-        if (!notice?.link) return;
-        const noticeLink = notice.link.startsWith('http')
-          ? notice.link
-          : `https://tnebeaengineers.in/${notice.link}`;
-        window.open(noticeLink, '_blank', 'noopener,noreferrer');
-      };
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const data = await getAllImportantNotices();
+        setImportantNotices(data);
+      } catch (err) {
+        console.error("Error loading notices:", err);
+        setError("Failed to load important notices.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
+  const openNotice = (notice) => {
+    const noticeLink = notice.docUrl || notice.link;
+    if (!noticeLink) return;
     
+    const finalLink = noticeLink.startsWith('http')
+      ? noticeLink
+      : `https://tnebeaengineers.in/${noticeLink}`;
+      
+    window.open(finalLink, '_blank', 'noopener,noreferrer');
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+    } catch (e) {
+      return dateString;
+    }
+  };
+
   return (
     <div className="important-notices-wrapper">
       <div className="row mt-4">
-                <div className="col-12">
-                  <div className="card shadow-sm important-notices-card">
-                    <div className="card-header important-notices-header text-white" style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center', gap:'10px'}}>
-                      <FaExclamationTriangle className="mr-2" />
-                      <h5 className="mb-0">
-                        Important Notices
-                      </h5>
-                    </div>
-                    <div className="card-body important-notices-body">
-                      <div className="important-notices-table-wrap">
-                        <table className="important-notices-table" aria-label="Important notices table">
-                          <thead>
-                            <tr>
-                              <th className="serial-col">S.No</th>
-                              <th className="title-col">Notice Title</th>
-                              <th className="type-col">Type</th>
-                              <th className="date-col">Date</th>
-                             
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {importantNotices.map((notice, index) => (
-                              <tr
-                                key={notice.id}
-                                className="notice-row"
-                                role="button"
-                                tabIndex={0}
-                                onClick={() => openNotice(notice)}
-                                onKeyDown={(event) => {
-                                  if (event.key === 'Enter' || event.key === ' ') {
-                                    event.preventDefault();
-                                    openNotice(notice);
-                                  }
-                                }}
-                              >
-                                <td className="serial-cell">{index + 1}</td>
-                                <td className="title-cell">{notice.title}</td>
-                                <td className="type-cell">{notice.type}</td>
-                                <td className="date-cell">{notice.date}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+        <div className="col-12">
+          <div className="card shadow-sm important-notices-card">
+            <div className="card-header important-notices-header text-white" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+              <FaExclamationTriangle className="mr-2" />
+              <h5 className="mb-0">Important Notices</h5>
+            </div>
+            <div className="card-body important-notices-body">
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '30px 10px', color: '#1b5baf', fontWeight: 'bold' }}>
+                  Loading notices...
                 </div>
-              </div>
+              ) : error ? (
+                <div style={{ textAlign: 'center', padding: '30px 10px', color: '#dc3545', fontWeight: 'bold' }}>
+                  {error}
+                </div>
+              ) : importantNotices.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '30px 10px', color: '#6c757d' }}>
+                  No important notices available.
+                </div>
+              ) : (
+                <div className="important-notices-table-wrap">
+                  <table className="important-notices-table" aria-label="Important notices table">
+                    <thead>
+                      <tr>
+                        <th className="serial-col">S.No</th>
+                        <th className="title-col">Notice Title</th>
+                        <th className="type-col">Type</th>
+                        <th className="date-col">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {importantNotices.map((notice, index) => (
+                        <tr
+                          key={notice._id || notice.id}
+                          className="notice-row"
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => openNotice(notice)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              openNotice(notice);
+                            }
+                          }}
+                        >
+                          <td className="serial-cell">{index + 1}</td>
+                          <td className="title-cell">{notice.Notice_title || notice.title}</td>
+                          <td className="type-cell">{notice.Type || notice.type}</td>
+                          <td className="date-cell">{formatDate(notice.date)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Importantnotices
+export default Importantnotices;

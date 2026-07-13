@@ -135,6 +135,33 @@ export const getMinthiranById = async (id) => {
   }
 };
 
+// ==================== IMPORTANT NOTICE APIs ====================
+
+/**
+ * Get all important notices
+ * @returns {Promise} Array of all important notices
+ */
+export const getAllImportantNotices = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/important-notices`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching important notices:', error);
+    throw error;
+  }
+};
+
 // ==================== EVENT APIs ====================
 
 /**
