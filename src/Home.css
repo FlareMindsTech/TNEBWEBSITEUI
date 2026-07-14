@@ -542,6 +542,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -558,7 +559,8 @@
   font-weight: 600;
   text-align: center;
   border: none;
-  border-top: 2px solid #ffc107; /* A subtle golden border separating the slide image and subtitle */
+  border-top: 2px solid #ffc107;
+  /* A subtle golden border separating the slide image and subtitle */
   animation: subtitleFadeIn 0.4s ease-out forwards;
   letter-spacing: 0.5px;
 }

@@ -1,4 +1,4 @@
-﻿.page-header {
+.page-header {
   background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
   color: white;
   padding: 40px 15px;
@@ -36,8 +36,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(40px) rotate(180deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(40px) rotate(180deg);
+  }
 }
 
 .header-content {
@@ -55,8 +62,15 @@
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .page-header h1 {
@@ -306,7 +320,8 @@
 }
 
 /* Loading & Empty States */
-.loading-state, .empty-state {
+.loading-state,
+.empty-state {
   padding: 60px 20px;
   text-align: center;
   background: white;
@@ -331,11 +346,11 @@
     padding: 35px;
     max-width: 95%;
   }
-  
+
   .grid-container {
     gap: 18px;
   }
-  
+
   .image-grid-item {
     flex: 0 0 200px;
     min-width: 200px;
@@ -346,39 +361,39 @@
   .page-header {
     padding: 35px 15px;
   }
-  
+
   .page-header h1 {
     font-size: 2.2rem;
   }
-  
+
   .gallery-table thead th.date-col {
     width: 120px;
     min-width: 120px;
   }
-  
+
   .gallery-table thead th.title-col {
     width: 200px;
     min-width: 200px;
   }
-  
+
   .gallery-table thead th.desc-col {
     min-width: 250px;
   }
-  
+
   .date-cell {
     width: 120px;
     min-width: 120px;
   }
-  
+
   .title-cell {
     width: 200px;
     min-width: 200px;
   }
-  
+
   .grid-container {
     gap: 16px;
   }
-  
+
   .image-grid-item {
     flex: 0 0 180px;
     min-width: 180px;
@@ -397,52 +412,52 @@
   .page-header .lead {
     font-size: 0.95rem;
   }
-  
+
   .table-responsive-container {
     border-radius: 12px;
     padding: 0;
     margin: 0 auto;
   }
-  
+
   .gallery-table {
     font-size: 0.85rem;
   }
-  
+
   .gallery-table thead th {
     padding: 12px 8px;
     font-size: 0.75rem;
     white-space: normal;
   }
-  
+
   .gallery-table thead th.date-col {
     width: 80px;
     min-width: 80px;
   }
-  
+
   .gallery-table thead th.title-col {
     width: 130px;
     min-width: 130px;
   }
-  
+
   .gallery-table thead th.desc-col {
     min-width: 180px;
   }
-  
+
   .gallery-table thead th.count-col {
     width: 70px;
     min-width: 70px;
   }
-  
+
   .gallery-table td {
     padding: 10px 8px;
     word-break: break-word;
   }
-  
+
   .date-cell {
     width: 80px;
     min-width: 80px;
   }
-  
+
   .title-cell {
     width: 130px;
     min-width: 130px;
@@ -456,13 +471,13 @@
     width: 70px;
     min-width: 70px;
   }
-  
+
   .gallery-title {
     font-size: 0.9rem;
     white-space: normal;
     line-height: 1.3;
   }
-  
+
   .gallery-description {
     font-size: 0.8rem;
     white-space: normal;
@@ -480,21 +495,21 @@
     padding: 4px 8px;
     min-width: auto;
   }
-  
+
   .gallery-details-content {
     padding: 20px;
     border-radius: 14px;
     max-height: 85vh;
   }
-  
+
   .details-info h3 {
     font-size: 1.6rem;
   }
-  
+
   .grid-container {
     gap: 12px;
   }
-  
+
   .image-grid-item {
     flex: 0 0 150px;
     min-width: 150px;
@@ -514,7 +529,7 @@
   .page-header .lead {
     font-size: 0.9rem;
   }
-  
+
   .header-icon {
     font-size: 2.2rem;
     margin-bottom: 10px;
@@ -529,13 +544,13 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .gallery-table {
     min-width: 500px;
     font-size: 0.8rem;
     table-layout: fixed;
   }
-  
+
   .gallery-table thead th {
     padding: 10px 6px;
     font-size: 0.7rem;
@@ -543,21 +558,21 @@
     letter-spacing: 0px;
     white-space: normal;
   }
-  
+
   .gallery-table thead th.date-col {
     width: 70px;
     min-width: 70px;
   }
-  
+
   .gallery-table thead th.title-col {
     width: 110px;
     min-width: 110px;
   }
-  
+
   .gallery-table thead th.desc-col {
     min-width: 150px;
   }
-  
+
   .gallery-table thead th.count-col {
     width: 60px;
     min-width: 60px;
@@ -566,19 +581,19 @@
   .gallery-table tbody tr:hover {
     background: linear-gradient(135deg, rgba(63, 81, 181, 0.05), rgba(33, 150, 243, 0.05));
   }
-  
+
   .gallery-table td {
     padding: 8px 6px;
     font-size: 0.8rem;
     word-break: break-word;
     vertical-align: middle;
   }
-  
+
   .date-cell {
     width: 70px;
     min-width: 70px;
   }
-  
+
   .title-cell {
     width: 110px;
     min-width: 110px;
@@ -622,7 +637,7 @@
   .table-wrapper::-webkit-scrollbar {
     height: 6px;
   }
-  
+
   .gallery-details-content {
     padding: 15px;
     border-radius: 12px;
@@ -636,7 +651,7 @@
     top: 15px;
     right: 15px;
   }
-  
+
   .details-info h3 {
     font-size: 1.4rem;
   }
@@ -644,29 +659,29 @@
   .details-date {
     font-size: 0.85rem;
   }
-  
+
   .images-title {
     font-size: 1.1rem;
   }
-  
+
   .grid-container {
     gap: 10px;
   }
-  
+
   .image-grid-item {
     flex: 0 0 130px;
     min-width: 130px;
   }
-  
+
   .lightbox-image {
     max-height: 70vh;
   }
-  
+
   .lightbox-caption {
     padding: 12px;
     margin-top: 12px;
   }
-  
+
   .lightbox-caption p {
     font-size: 0.95rem;
   }

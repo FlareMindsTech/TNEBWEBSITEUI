@@ -8,7 +8,7 @@ import {
   FaTrophy, FaClipboardList, FaQuestionCircle, 
   FaChartBar, FaBookOpen, FaBell, 
   FaLandmark, FaImages, FaRegNewspaper,
-  FaHandPaper, FaUserPlus
+  FaHandPaper, FaUserPlus, FaCaretRight
 } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
@@ -239,7 +239,7 @@ const Navbar = () => {
                           </motion.span>
                         </div>
                         <AnimatePresence>
-                          {openDropdown === 'about' && (
+                          {(openDropdown === 'about' || openDropdown === 'about_tnebea') && (
                             <motion.div 
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
@@ -247,6 +247,33 @@ const Navbar = () => {
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
                             >
+                              <div
+                                className="sidebar-item d-flex align-items-center justify-content-between"
+                                onClick={() => setOpenDropdown(openDropdown === 'about_tnebea' ? 'about' : 'about_tnebea')}
+                                style={{ padding: '8px 20px', color: '#ffffff', cursor: 'pointer', fontSize: '0.95rem' }}
+                              >
+                                <span><FaInfoCircle className="sidebar-icon" /> About TNEBEA</span>
+                                <motion.span animate={{ rotate: openDropdown === 'about_tnebea' ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                                  <FaCaretDown />
+                                </motion.span>
+                              </div>
+                              <AnimatePresence>
+                                {openDropdown === 'about_tnebea' && (
+                                  <motion.div 
+                                    className="sidebar-submenu"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    style={{ paddingLeft: '20px' }}
+                                  >
+                                    <span className="sidebar-item disabled text-light-50" style={{ paddingLeft: '45px', cursor: 'default', opacity: 0.7 }}>
+                                      This page is under development
+                                    </span>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+
                               <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
                                 <FaUserTie className="sidebar-icon" /> CEC & EBF
                               </Link>
@@ -495,13 +522,40 @@ const Navbar = () => {
             >
               <span className="nav-link d-flex align-items-center gap-1 cursor-pointer text-light">
                 About 
-                <motion.span animate={{ rotate: openDropdown === 'about' ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                <motion.span animate={{ rotate: (openDropdown === 'about' || openDropdown === 'about_tnebea') ? 180 : 0 }} transition={{ duration: 0.3 }}>
                   <FaCaretDown />
                 </motion.span>
               </span>
               <AnimatePresence>
-                {openDropdown === 'about' && (
+                {(openDropdown === 'about' || openDropdown === 'about_tnebea') && (
                   <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
+                    <motion.div 
+                      variants={itemVariants}
+                      className="dropdown-submenu position-relative"
+                      onMouseEnter={() => setOpenDropdown('about_tnebea')}
+                      onMouseLeave={() => setOpenDropdown('about')}
+                    >
+                      <span className="dropdown-item d-flex align-items-center justify-content-between cursor-pointer">
+                        <span><span className="dropdown-icon"><FaInfoCircle /></span> About TNEBEA</span>
+                        <FaCaretRight style={{ fontSize: '0.8rem', marginLeft: '10px' }} />
+                      </span>
+                      <AnimatePresence>
+                        {openDropdown === 'about_tnebea' && (
+                          <motion.div 
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 10 }}
+                            className="dropdown-menu show position-absolute" 
+                            style={{ left: '100%', top: 0, minWidth: '220px' }}
+                          >
+                            <span className="dropdown-item disabled text-muted" style={{ cursor: 'default' }}>
+                              This page is under development
+                            </span>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                    
                     <motion.div variants={itemVariants}>
                       <Link className="dropdown-item" to="/cec" onClick={closeAllMenus}>
                         <span className="dropdown-icon"><FaUserTie /></span> CEC & EBF
