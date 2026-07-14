@@ -535,3 +535,30 @@
   color: #ffffff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
+
+/* Subtitle Plate Styles */
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carousel-subtitle-plate {
+  background: linear-gradient(135deg, #15458a 0%, #1e5bb0 100%);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 0;
+  margin-top: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  border-top: 2px solid #ffc107; /* A subtle golden border separating the slide image and subtitle */
+  animation: subtitleFadeIn 0.4s ease-out forwards;
+  letter-spacing: 0.5px;
+}

@@ -20,6 +20,11 @@ const Home = () => {
   const [latestEvents, setLatestEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [logoIndexBySite, setLogoIndexBySite] = useState({});
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleSelect = (selectedIndex) => {
+    setActiveIndex(selectedIndex);
+  };
 
   const trustedWebsites = [
     {
@@ -46,7 +51,7 @@ const Home = () => {
       logos: [tngecl],
       url: 'https://www.tngecl.org/en/greenenergy/'
     },
-     {
+    {
       id: 5,
       name: 'TNPGCL',
       logos: [tnpgcl],
@@ -175,23 +180,29 @@ const Home = () => {
                     </div>
                   </div>
                 ) : carouselImages.length > 0 ? (
-                  <Carousel>
-                    {carouselImages.map((image) => (
-                      <Carousel.Item key={image.id}>
-                        <img
-                          className="d-block w-100 carousel-image"
-                          src={image.src}
-                          alt={image.alt}
-                        />
-                        {(image.caption || image.subtitle) && (
-                          <Carousel.Caption>
-                            {image.subtitle && <h5 className="carousel-subtitle">{image.subtitle}</h5>}
-                            {image.caption && <p>{image.caption}</p>}
-                          </Carousel.Caption>
-                        )}
-                      </Carousel.Item>
-                    ))}
-                  </Carousel>
+                  <>
+                    <Carousel activeIndex={activeIndex} onSelect={handleSelect}>
+                      {carouselImages.map((image) => (
+                        <Carousel.Item key={image.id}>
+                          <img
+                            className="d-block w-100 carousel-image"
+                            src={image.src}
+                            alt={image.alt}
+                          />
+                          {image.caption && (
+                            <Carousel.Caption>
+                              <p>{image.caption}</p>
+                            </Carousel.Caption>
+                          )}
+                        </Carousel.Item>
+                      ))}
+                    </Carousel>
+                    {carouselImages[activeIndex]?.subtitle && (
+                      <div key={activeIndex} className="carousel-subtitle-plate">
+                        {carouselImages[activeIndex].subtitle}
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <div className="carousel-no-data">
                     <p>No carousel images available</p>
