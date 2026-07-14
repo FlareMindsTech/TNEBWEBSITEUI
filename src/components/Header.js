@@ -68,7 +68,7 @@ const Header = () => {
           opacity: isSidebarOpen ? 0 : 1,
           height: isSidebarOpen ? 0 : 'auto',
           overflow: isSidebarOpen ? 'hidden' : 'visible',
-          marginBottom: isSidebarOpen ? 0 : 'auto'
+          marginBottom: isSidebarOpen ? 0 : 0
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 import { getAllCarouselImages, getAllEvents } from './api';
 import LatestEvents from './components/LatestEvents';
-import tnebeaLogo from './assets/icons/tnebea_logo_cropped2.png';
+import tnebeaLogo from './assets/icons/tneb_logo.png';
 import tnpdcl from "./assets/icons/tnpdclelogo.png"
 import tantransco from "./assets/icons/tantransco.png.png"
 import tngecl from "./assets/icons/egelogo.png";

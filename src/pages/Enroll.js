@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaGavel, FaCog, FaArrowLeft } from 'react-icons/fa';
+import { FaUserPlus, FaCog, FaArrowLeft } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './BoardProceedings.css';
 
-const BoardProceedings = () => {
+const Enroll = () => {
   return (
     <div className="board-proceedings-container">
       <div className="board-proceedings-card">
         <div className="bp-icon-container">
-          <FaGavel className="bp-main-icon" />
+          <FaUserPlus className="bp-main-icon" />
           <FaCog className="bp-gear-bg" />
         </div>
         
-        <h2 className="bp-title">Board Proceedings</h2>
+        <h2 className="bp-title">Enrollment</h2>
         
         <p className="bp-description fw-bold text-primary fs-4">
           This page is under development
@@ -27,4 +27,4 @@ const BoardProceedings = () => {
   );
 };
 
-export default BoardProceedings;
+export default Enroll;

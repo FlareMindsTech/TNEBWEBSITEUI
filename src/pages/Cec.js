@@ -41,8 +41,8 @@ const Cec = () => {
     { id: 11, serialNo: 11, designation: "Secretary (Internal Affairs)", name: "Er. J. ROSELINE GRACE", qualification: "AEE / C&I / KUZHITHURAI KANYAKUMARI", contact: "94896 18015", photo: memberImages[11] },
     { id: 12, serialNo: 12, designation: "Secretary (Personal Affairs)", name: "Er. K. GOMATHI", qualification: "AE / O&M / WEST KINATHUKADAVU COIMBATORE", contact: "75027 36561", photo: memberImages[12] },
     { id: 13, serialNo: 13, designation: "Secretary/EBF", name: "Er. C. R. JAYAMURTHI", qualification: "SUPERINTENDING ENGINEER / 765KV SS / TANTRANSCO HQRS", contact: "96000 82034", photo: memberImages[13] },
-    { id: 14, serialNo: 14, designation: "Treasurer/EBF", name: "Er. R. BALAMURUGAN", qualification: "AEE / MRT / METERING CHENNAI SOUTH", contact: "99625 11494", photo: memberImages[14] },
-    { id: 15, serialNo: 15, designation: "Secretary-Coordination", name: "Er. X. ANITA CELINE", qualification: "AEE / ELECTRICAL / COAL", contact: "72990 38100", photo: memberImages[15] }
+    { id: 14, serialNo: 14, designation: "Secretary-Coordination", name: "Er. X. ANITA CELINE", qualification: "AEE / ELECTRICAL / COAL", contact: "72990 38100", photo: memberImages[15] },
+    { id: 15, serialNo: 15, designation: "Treasurer/EBF", name: "Er. R. BALAMURUGAN", qualification: "AEE / MRT / METERING CHENNAI SOUTH", contact: "99625 11494", photo: memberImages[14] },
   ];
 
   const filteredMembers = cecMembers.filter(member => {
@@ -163,7 +163,35 @@ const Cec = () => {
         <p className="section-sub">Click or hover for details</p>
         
         <div className="members-grid">
-          {cecMembers.slice(1).map((member) => (
+          {filteredMembers.filter((member) => member.id >= 1 && member.id <= 13).map((member) => (
+            <div key={member.id} className="member-card">
+              <div className="card-front">
+                <img src={member.photo} alt={member.name} />
+                <div className="card-info">
+                    <h5><FaUser style={{ marginRight: '8px', color: '#2a6cc7' }} />{member.name}</h5>
+                    <p><FaBriefcase style={{ marginRight: '6px', color: '#ff6b6b' }} />{member.designation}</p>
+                </div>
+              </div>
+              <div className="card-back">
+                <h5>{member.name}</h5>
+                <p className="back-designation">{member.designation}</p>
+                <p className="back-qual"> {member.qualification}</p>
+                <p className="back-contact"><FaPhone /> {member.contact}</p>
+                <button onClick={(e) => { e.stopPropagation(); showMemberDetails(member); }}>View Details</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* EBF Committee Heading and Members Grid */}
+      <div className="members-grid-section mt-5">
+        <h3><FaUsers /> EBF Committee</h3>
+        <div className="hero-divider" style={{ backgroundColor: '#2a6cc7', width: '60px', height: '3px', margin: '10px auto 10px' }}></div>
+        <p className="section-sub">Click or hover for details</p>
+        
+        <div className="members-grid">
+          {filteredMembers.filter((member) => member.id >= 14 && member.id <= 15).map((member) => (
             <div key={member.id} className="member-card">
               <div className="card-front">
                 <img src={member.photo} alt={member.name} />
