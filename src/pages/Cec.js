@@ -40,8 +40,8 @@ const Cec = () => {
     { id: 10, serialNo: 10, designation: "Secretary (Legal)", name: "Dr. A. DURGADEVI", qualification: "AEE / SCHEMES / MADURAI", contact: "94434 56136", photo: memberImages[10] },
     { id: 11, serialNo: 11, designation: "Secretary (Internal Affairs)", name: "Er. J. ROSELINE GRACE", qualification: "AEE / C&I / KUZHITHURAI KANYAKUMARI", contact: "94896 18015", photo: memberImages[11] },
     { id: 12, serialNo: 12, designation: "Secretary (Personal Affairs)", name: "Er. K. GOMATHI", qualification: "AE / O&M / WEST KINATHUKADAVU COIMBATORE", contact: "75027 36561", photo: memberImages[12] },
-    { id: 13, serialNo: 13, designation: "Secretary/EBF", name: "Er. C. R. JAYAMURTHI", qualification: "SUPERINTENDING ENGINEER / 765KV SS / TANTRANSCO HQRS", contact: "96000 82034", photo: memberImages[13] },
-    { id: 14, serialNo: 14, designation: "Secretary-Coordination", name: "Er. X. ANITA CELINE", qualification: "AEE / ELECTRICAL / COAL", contact: "72990 38100", photo: memberImages[15] },
+    { id: 13, serialNo: 13, designation: "Secretary-Coordination", name: "Er. X. ANITA CELINE", qualification: "AEE / ELECTRICAL / COAL", contact: "72990 38100", photo: memberImages[15] },
+    { id: 14, serialNo: 14, designation: "Secretary/EBF", name: "Er. C. R. JAYAMURTHI", qualification: "SUPERINTENDING ENGINEER / 765KV SS / TANTRANSCO HQRS", contact: "96000 82034", photo: memberImages[13] },
     { id: 15, serialNo: 15, designation: "Treasurer/EBF", name: "Er. R. BALAMURUGAN", qualification: "AEE / MRT / METERING CHENNAI SOUTH", contact: "99625 11494", photo: memberImages[14] },
   ];
 
