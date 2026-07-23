@@ -13,7 +13,6 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
-import AuthModal from './AuthModal';
 import { SidebarContext } from '../context/SidebarContext';
 
 const Navbar = () => {
@@ -21,8 +20,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
-  const [authTab, setAuthTab] = useState('login');
   // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -485,7 +482,7 @@ const Navbar = () => {
                   </motion.div>
 
                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <button className="btn btn-light w-100" onClick={() => { setAuthTab('login'); setShowAuth(true); closeAllMenus(); }}>
+                    <button className="btn btn-light w-100" onClick={() => { navigate('/login'); closeAllMenus(); }}>
                       <FaUser className="me-2" />
                       Login
                     </button>
@@ -746,7 +743,7 @@ const Navbar = () => {
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); setAuthTab('login'); setShowAuth(true); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                      <Link className="user-dropdown-item" to="/login" onClick={() => closeAllMenus()} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
                         <span className="user-menu-icon"><FaUser /></span><span>Login</span>
                       </Link>
                     </motion.div>
@@ -763,7 +760,6 @@ const Navbar = () => {
           </div>
         </motion.div>
       </div>
-      <AuthModal show={showAuth} onClose={() => setShowAuth(false)} defaultTab={authTab} />
     </motion.nav>
   );
 };

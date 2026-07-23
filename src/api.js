@@ -288,11 +288,14 @@ export const getVisitorCount = async () => {
 /**
  * Register a new user
  * @param {Object} userData - User registration data
- * @param {string} userData.name - User's full name
- * @param {string} userData.email - User's email address
- * @param {string} userData.phoneno - User's phone number
- * @param {string} userData.password - User's password
- * @param {string} userData.lm_number - User's LM number
+ * @param {string} userData.name
+ * @param {string} userData.email
+ * @param {string} userData.phone_no
+ * @param {string} userData.city
+ * @param {string} userData.lm_number
+ * @param {string} userData.pbo_number
+ * @param {string} userData.date_of_birth
+ * @param {string} userData.emp_id
  * @returns {Promise} Registration response with user data
  */
 export const registerUser = async (userData) => {
@@ -321,18 +324,15 @@ export const registerUser = async (userData) => {
 /**
  * Login user
  * @param {Object} credentials - Login credentials
- * @param {string} credentials.identifier - LM number, email, or phone number
+ * @param {string} credentials.identifier - Employee ID or PBO Number
  * @param {string} credentials.password - User's password
- * @param {string} credentials.city - User's city (sent as location to backend)
  * @returns {Promise} Login response with token and user data
  */
 export const loginUser = async (credentials) => {
   try {
-    // Map city to location for backend compatibility
     const loginData = {
       identifier: credentials.identifier,
-      password: credentials.password,
-      location: credentials.city || credentials.location
+      password: credentials.password
     };
     
     const response = await fetch(`${API_BASE_URL}/api/users/login`, {
@@ -373,6 +373,33 @@ export const logoutUser = () => {
     localStorage.removeItem('userData');
   } catch (error) {
     console.error('Error logging out:', error);
+  }
+};
+
+/**
+ * Forgot Password
+ * @param {Object} data - Forgot password data
+ * @returns {Promise}
+ */
+export const forgotPassword = async (data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    throw error;
   }
 };
 
