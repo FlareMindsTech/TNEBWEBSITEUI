@@ -37,6 +37,7 @@ import Photogallery from './pages/Photogallery';
 import GalleryDetail from './pages/GalleryDetail';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
+import AuthPage from './pages/AuthPage';
 
 function App() {
   // const [showIntro, setShowIntro] = useState(() => {
@@ -116,6 +117,7 @@ function App() {
               <Route path="/photo-gallery" element={<>< Header /><Photogallery /><Footer /></>} />
               <Route path="/gallery-detail/:galleryId" element={<>< Header /><GalleryDetail /><Footer /></>} />
               <Route path="/role-of-honour" element={<>< Header /><RoleOf /><Footer /></>} />
+              <Route path="/login" element={<>< Header /><AuthPage /><Footer /></>} />
             </Routes>
           </div>
         
