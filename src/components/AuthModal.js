@@ -16,8 +16,8 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const navigate = useNavigate();
   const [tab, setTab] = useState(defaultTab);
   const [loginForm, setLoginForm] = useState({ identifier: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
-  const [forgotForm, setForgotForm] = useState({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
+  const [registerForm, setRegisterForm] = useState({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+  const [forgotForm, setForgotForm] = useState({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,10 +27,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         setLoginForm({ identifier: '', password: '' });
       }
       if (defaultTab === 'register') {
-        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
+        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
       }
       if (defaultTab === 'forgot') {
-        setForgotForm({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
+        setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
       }
       if (defaultTab === 'work') {
         setTab('work');
@@ -46,10 +46,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       setLoginForm({ identifier: '', password: '' });
     }
     if (next === 'register') {
-      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
+      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
     }
     if (next === 'forgot') {
-      setForgotForm({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
+      setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
     }
   };
 
@@ -101,7 +101,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.city || !registerForm.lm_number || !registerForm.pbo_number || !registerForm.date_of_birth || !registerForm.emp_id) {
+    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.city || !registerForm.lm_number || !registerForm.ppo_number || !registerForm.date_of_birth || !registerForm.emp_id) {
       Swal.fire({
         icon: 'warning',
         title: 'Incomplete Form',
@@ -125,7 +125,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         confirmButtonColor: theme.primary,
         timer: 3000
       }).then(() => {
-        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
+        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
         setTab('login');
       });
 
@@ -143,7 +143,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
-    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.pbo_number || !forgotForm.lm_number) {
+    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.ppo_number || !forgotForm.lm_number) {
       Swal.fire({
         icon: 'warning',
         title: 'Incomplete Form',
@@ -166,7 +166,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         text: response.message || 'A new password has been sent to your registered email address.',
         confirmButtonColor: theme.primary
       }).then(() => {
-        setForgotForm({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
+        setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
         setTab('login');
       });
 
@@ -269,10 +269,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           >
             <Form onSubmit={handleLogin}>
               <Form.Group className="mb-3">
-                <Form.Label>Employee ID or PBO Number</Form.Label>
+                <Form.Label>Employee ID or PPO Number</Form.Label>
                 {renderInput(<FaIdBadge />, {
                   type: 'text',
-                  placeholder: 'Enter Employee ID or PBO Number',
+                  placeholder: 'Enter Employee ID or PPO Number',
                   value: loginForm.identifier,
                   onChange: (e) => setLoginForm({ ...loginForm, identifier: e.target.value }),
                   required: true
@@ -362,12 +362,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>PBO Number</Form.Label>
+                <Form.Label>PPO Number</Form.Label>
                 {renderInput(<FaIdCard />, {
                   type: 'text',
-                  placeholder: 'Enter PBO number',
-                  value: registerForm.pbo_number,
-                  onChange: (e) => setRegisterForm({ ...registerForm, pbo_number: e.target.value }),
+                  placeholder: 'Enter PPO Number',
+                  value: registerForm.ppo_number,
+                  onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value }),
                   required: true
                 })}
               </Form.Group>
@@ -438,12 +438,12 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>PBO Number</Form.Label>
+                <Form.Label>PPO Number</Form.Label>
                 {renderInput(<FaIdCard />, {
                   type: 'text',
-                  placeholder: 'Enter PBO number',
-                  value: forgotForm.pbo_number,
-                  onChange: (e) => setForgotForm({ ...forgotForm, pbo_number: e.target.value }),
+                  placeholder: 'Enter PPO Number',
+                  value: forgotForm.ppo_number,
+                  onChange: (e) => setForgotForm({ ...forgotForm, ppo_number: e.target.value }),
                   required: true
                 })}
               </Form.Group>
