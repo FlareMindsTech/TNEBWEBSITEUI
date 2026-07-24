@@ -293,7 +293,7 @@ export const getVisitorCount = async () => {
  * @param {string} userData.phone_no
  * @param {string} userData.city
  * @param {string} userData.lm_number
- * @param {string} userData.pbo_number
+ * @param {string} userData.ppo_number
  * @param {string} userData.date_of_birth
  * @param {string} userData.emp_id
  * @returns {Promise} Registration response with user data
@@ -324,7 +324,7 @@ export const registerUser = async (userData) => {
 /**
  * Login user
  * @param {Object} credentials - Login credentials
- * @param {string} credentials.identifier - Employee ID or PBO Number
+ * @param {string} credentials.identifier - Employee ID or PPO Number
  * @param {string} credentials.password - User's password
  * @returns {Promise} Login response with token and user data
  */
