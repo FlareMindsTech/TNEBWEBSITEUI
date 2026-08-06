@@ -284,59 +284,34 @@ export const getVisitorCount = async () => {
   }
 };
 
-// ==================== AUTHENTICATION APIs ====================
-
-/**
- * Register a new user
- * @param {Object} userData - User registration data
- * @param {string} userData.name
- * @param {string} userData.email
- * @param {string} userData.phone_no
- * @param {string} userData.city
- * @param {string} userData.lm_number
- * @param {string} userData.ppo_number
- * @param {string} userData.date_of_birth
- * @param {string} userData.emp_id
- * @returns {Promise} Registration response with user data
- */
 export const registerUser = async (userData) => {
   try {
-    const dataToSend = { ...userData };
-    
-    if (dataToSend.phone_no !== undefined) {
-      dataToSend.phoneno = dataToSend.phone_no;
-    }
+    console.log("Sending registration data:", userData);
 
-    if (dataToSend.pbo_number !== undefined) {
-      dataToSend.ppo_number = dataToSend.pbo_number;
-    }
-
-    if (dataToSend.lm_number === '') {
-      delete dataToSend.lm_number;
-    }
-
-    const response = await fetch(`https://tnebserver-email.vercel.app/api/users/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSend),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      const detailedError = errorData.error ? ` (${errorData.error})` : '';
-      throw new Error((errorData.message || `HTTP error! status: ${response.status}`) + detailedError);
-    }
+    const response = await fetch(
+      "https://tnebserver-email.vercel.app/api/users/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed");
+    }
+
     return data;
+
   } catch (error) {
-    console.error('Error registering user:', error);
+    console.error("Registration Error:", error);
     throw error;
   }
 };
-
 /**
  * Login user
  * @param {Object} credentials - Login credentials
