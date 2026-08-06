@@ -9,6 +9,7 @@ import ManualsAndFormsDownload from './pages/ManualsAndFormsDownload';
 import ContributoryPensionScheme from './pages/ContributoryPensionScheme';
 import DistributionRelatedInstructions from './pages/DistributionRelatedInstructions';
 import Minnagam from './pages/Minnagam';
+import DashboardMinnagam from './pages/DashboardMinnagam';
 import Minthiran from './pages/Minthiran';
 import MinthiranBookDetail from './pages/MinthiranBookDetail';
 import HandBook from './pages/HandBook';
@@ -99,6 +100,7 @@ function App() {
               <Route path="/contributory-pension-scheme" element={<>< Header /><ContributoryPensionScheme /><Footer /></>} />
               <Route path="/distribution-related-instructions" element={<>< Header /><DistributionRelatedInstructions /><Footer /></>} />
               <Route path="/Minnagam" element={<>< Header /><Minnagam /><Footer /></>} />
+              <Route path="/dashboard/minnagam" element={<>< Header /><DashboardMinnagam /><Footer /></>} />
               <Route path="/Minthiran" element={<>< Header /><Minthiran /><Footer /></>} />
               <Route path="/minthiran-book/:bookId" element={<>< Header /><MinthiranBookDetail /><Footer /></>} />
               <Route path="/hand-book" element={<>< Header /><HandBook /><Footer /></>} />

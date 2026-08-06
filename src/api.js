@@ -344,7 +344,12 @@ export const loginUser = async (credentials) => {
     // Store token in localStorage if login is successful
     if (data.token) {
       localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user || {}));
+      localStorage.setItem('userData', JSON.stringify({
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+        role: data.role
+      }));
     }
 
     return data;
@@ -376,7 +381,7 @@ export const forgotPassword = async (data) => {
   try {
     const dataToSend = { ...data };
 
-    const response = await fetch(`${API_BASE_URL}/api/users/forgot-password`, {
+    const response = await fetch(`https://tnebserver-email.vercel.app/api/users/forgot-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -433,8 +438,12 @@ export const isAuthenticated = () => {
  */
 export const submitMinnagamForm = async (formData) => {
   try {
+    const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/api/minnagam`, {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       body: formData,
     });
 
@@ -456,10 +465,12 @@ export const submitMinnagamForm = async (formData) => {
  */
 export const getMinnagams = async () => {
   try {
+    const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/api/minnagam`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
     });
 
@@ -470,6 +481,35 @@ export const getMinnagams = async () => {
     return await response.json();
   } catch (error) {
     console.error('Error fetching minnagams:', error);
+    throw error;
+  }
+};
+
+/**
+ * Update Minnagam entry status
+ * @param {string} id - The ID of the minnagam entry
+ * @param {string} status - The new status ('Approved', 'Rejected', 'Pending')
+ * @returns {Promise} The updated entry
+ */
+export const updateMinnagamStatus = async (id, status) => {
+  try {
+    const token = getAuthToken();
+    const response = await fetch(`${API_BASE_URL}/api/minnagam/${id}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating minnagam status:', error);
     throw error;
   }
 };

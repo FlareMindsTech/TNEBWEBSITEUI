@@ -40,8 +40,8 @@ const AuthPage = () => {
       setLoading(true);
       const response = await loginUser({ identifier: loginForm.identifier, password: loginForm.password });
       setLoading(false);
-      Swal.fire({ icon: 'success', title: 'Login Successful!', text: `Welcome back, ${response.user?.name || 'User'}!` });
-      navigate('/Minnagam');
+      Swal.fire({ icon: 'success', title: 'Login Successful!', text: `Welcome back, ${response.name || 'User'}!` });
+      navigate('/dashboard/minnagam');
     } catch (error) {
       setLoading(false);
       Swal.fire({ icon: 'error', title: 'Login Failed', text: error.response?.data?.error || 'Invalid credentials' });
@@ -58,7 +58,7 @@ const AuthPage = () => {
       setLoading(true);
       await registerUser(registerForm);
       setLoading(false);
-      Swal.fire({ icon: 'success', title: 'Registration Successful!', text: 'Your password has been sent to your email.' });
+      Swal.fire({ icon: 'success', title: 'Register Successfully', text: 'Password sent to your email' });
       setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
       setTab('login');
     } catch (error) {
