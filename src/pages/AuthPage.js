@@ -3,9 +3,9 @@ import { Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  FaUserLock, FaUserPlus, FaEnvelope, FaLock, 
-  FaUser, FaPhoneAlt, FaMapMarkerAlt, FaIdBadge, 
+import {
+  FaUserLock, FaUserPlus, FaEnvelope, FaLock,
+  FaUser, FaPhoneAlt, FaMapMarkerAlt, FaIdBadge,
   FaIdCard, FaUserTie, FaArrowLeft
 } from 'react-icons/fa';
 import { loginUser, registerUser, forgotPassword } from '../api';
@@ -20,10 +20,10 @@ const AuthPage = () => {
   const [loginForm, setLoginForm] = useState({ identifier: '', password: '' });
   const [registerForm, setRegisterForm] = useState({
     name: '', email: '', phone_no: '', city: '',
-    lm_number: '', ppo_number: '', date_of_birth: '', emp_id: ''
+    lm_number: '', pbo_number: '', date_of_birth: '', emp_id: ''
   });
   const [forgotForm, setForgotForm] = useState({
-    email: '', emp_id: '', ppo_number: '', lm_number: ''
+    email: '', emp_id: '', pbo_number: '', lm_number: ''
   });
 
   const switchTab = (newTab) => {
@@ -41,7 +41,7 @@ const AuthPage = () => {
       const response = await loginUser({ identifier: loginForm.identifier, password: loginForm.password });
       setLoading(false);
       Swal.fire({ icon: 'success', title: 'Login Successful!', text: `Welcome back, ${response.user?.name || 'User'}!` });
-      navigate('/');
+      navigate('/Minnagam');
     } catch (error) {
       setLoading(false);
       Swal.fire({ icon: 'error', title: 'Login Failed', text: error.response?.data?.error || 'Invalid credentials' });
@@ -59,7 +59,7 @@ const AuthPage = () => {
       await registerUser(registerForm);
       setLoading(false);
       Swal.fire({ icon: 'success', title: 'Registration Successful!', text: 'Your password has been sent to your email.' });
-      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
       setTab('login');
     } catch (error) {
       setLoading(false);
@@ -69,7 +69,7 @@ const AuthPage = () => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.ppo_number || !forgotForm.lm_number) {
+    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.pbo_number || !forgotForm.lm_number) {
       Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Please fill in all fields!' });
       return;
     }
@@ -78,7 +78,7 @@ const AuthPage = () => {
       await forgotPassword(forgotForm);
       setLoading(false);
       Swal.fire({ icon: 'success', title: 'Success!', text: 'A new password has been sent to your email.' });
-      setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
+      setForgotForm({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
       setTab('login');
     } catch (error) {
       setLoading(false);
@@ -151,7 +151,7 @@ const AuthPage = () => {
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
                     <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>PPO Number</Form.Label>
-                    {renderInput(<FaIdCard />, { type: 'text', placeholder: 'Enter PPO Number', value: registerForm.ppo_number, onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value }), required: true })}
+                    {renderInput(<FaIdCard />, { type: 'text', placeholder: 'Enter PPO Number', value: registerForm.pbo_number, onChange: (e) => setRegisterForm({ ...registerForm, pbo_number: e.target.value }), required: true })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
                     <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Employee ID</Form.Label>
@@ -180,9 +180,9 @@ const AuthPage = () => {
                 <p style={{ color: '#666', marginBottom: '20px' }}>Verify your identity to receive a new password via email.</p>
                 {renderInput(<FaEnvelope />, { type: 'email', placeholder: 'Email Address', value: forgotForm.email, onChange: (e) => setForgotForm({ ...forgotForm, email: e.target.value }), required: true })}
                 {renderInput(<FaUserTie />, { type: 'text', placeholder: 'Employee ID', value: forgotForm.emp_id, onChange: (e) => setForgotForm({ ...forgotForm, emp_id: e.target.value }), required: true })}
-                {renderInput(<FaIdCard />, { type: 'text', placeholder: 'PPO Number', value: forgotForm.ppo_number, onChange: (e) => setForgotForm({ ...forgotForm, ppo_number: e.target.value }), required: true })}
+                {renderInput(<FaIdCard />, { type: 'text', placeholder: 'PPO Number', value: forgotForm.pbo_number, onChange: (e) => setForgotForm({ ...forgotForm, pbo_number: e.target.value }), required: true })}
                 {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'LM Number', value: forgotForm.lm_number, onChange: (e) => setForgotForm({ ...forgotForm, lm_number: e.target.value }), required: true })}
-                
+
                 <button type="submit" className="auth-page-btn" disabled={loading}>
                   {loading ? 'PROCESSING...' : 'SEND NEW PASSWORD'}
                 </button>
