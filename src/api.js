@@ -1,5 +1,6 @@
 const API_BASE_URL = process.env.BACKEND_API || 'https://tnebserver-u7qr.onrender.com';
 
+
 export const BASE_URL = API_BASE_URL;
 export const MAIL_URL = API_BASE_URL;
 
@@ -17,11 +18,11 @@ export const getAllGalleries = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -43,11 +44,11 @@ export const getGalleryBySlug = async (slug) => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -70,11 +71,11 @@ export const getAllMinthirans = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -96,11 +97,11 @@ export const getMinthiransByYear = async (year) => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -122,11 +123,11 @@ export const getMinthiranById = async (id) => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -149,11 +150,11 @@ export const getAllImportantNotices = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -176,11 +177,11 @@ export const getAllEvents = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -203,11 +204,11 @@ export const getAllCarouselImages = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -245,11 +246,11 @@ export const trackVisitor = async (visitorId) => {
       },
       body: JSON.stringify({ visitorId }),
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -270,11 +271,11 @@ export const getVisitorCount = async () => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -300,19 +301,34 @@ export const getVisitorCount = async () => {
  */
 export const registerUser = async (userData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/users/register`, {
+    const dataToSend = { ...userData };
+    
+    if (dataToSend.phone_no !== undefined) {
+      dataToSend.phoneno = dataToSend.phone_no;
+    }
+
+    if (dataToSend.pbo_number !== undefined) {
+      dataToSend.ppo_number = dataToSend.pbo_number;
+    }
+
+    if (dataToSend.lm_number === '') {
+      delete dataToSend.lm_number;
+    }
+
+    const response = await fetch(`https://tnebserver-email.vercel.app/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(dataToSend),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      const detailedError = errorData.error ? ` (${errorData.error})` : '';
+      throw new Error((errorData.message || `HTTP error! status: ${response.status}`) + detailedError);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -334,7 +350,7 @@ export const loginUser = async (credentials) => {
       identifier: credentials.identifier,
       password: credentials.password
     };
-    
+
     const response = await fetch(`${API_BASE_URL}/api/users/login`, {
       method: 'POST',
       headers: {
@@ -342,20 +358,20 @@ export const loginUser = async (credentials) => {
       },
       body: JSON.stringify(loginData),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     // Store token in localStorage if login is successful
     if (data.token) {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('userData', JSON.stringify(data.user || {}));
     }
-    
+
     return data;
   } catch (error) {
     console.error('Error logging in:', error);
@@ -383,19 +399,21 @@ export const logoutUser = () => {
  */
 export const forgotPassword = async (data) => {
   try {
+    const dataToSend = { ...data };
+
     const response = await fetch(`${API_BASE_URL}/api/users/forgot-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(dataToSend),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
-    
+
     return await response.json();
   } catch (error) {
     console.error('Error in forgot password:', error);
@@ -431,4 +449,52 @@ export const getUserData = () => {
  */
 export const isAuthenticated = () => {
   return !!getAuthToken();
+};
+
+/**
+ * Submit Minnagam form with document upload
+ * @param {FormData} formData - Form data containing minnagam details and document
+ * @returns {Promise} Response data
+ */
+export const submitMinnagamForm = async (formData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/minnagam`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error submitting minnagam form:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get all Minnagam entries
+ * @returns {Promise} Array of minnagam entries
+ */
+export const getMinnagams = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/minnagam`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching minnagams:', error);
+    throw error;
+  }
 };
