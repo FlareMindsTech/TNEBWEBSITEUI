@@ -8,12 +8,13 @@ import {
   FaTrophy, FaClipboardList, FaQuestionCircle, 
   FaChartBar, FaBookOpen, FaBell, 
   FaLandmark, FaImages, FaRegNewspaper,
-  FaHandPaper, FaUserPlus, FaCaretRight
+  FaHandPaper, FaUserPlus, FaCaretRight, FaHotel
 } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import { SidebarContext } from '../context/SidebarContext';
+import { isAuthenticated, getUserData } from "../api";
 
 const Navbar = () => {
   const { isSidebarOpen, openSidebar, closeSidebar } = useContext(SidebarContext);
@@ -718,6 +719,12 @@ const Navbar = () => {
               <Link className="nav-link nav-hover-effect" to="/contactus" onClick={closeAllMenus}>Contact</Link>
             </motion.li>
 
+            {isAuthenticated() && (
+              <motion.li className="nav-item" variants={navItemVariants}>
+                <Link className="nav-link nav-hover-effect" style={{ color: '#ffb300', fontWeight: 'bold' }} to="/dashboard/minnagam" onClick={closeAllMenus}>Dashboard</Link>
+              </motion.li>
+            )}
+
           </ul>
           <div className="ms-lg-3" style={{ position: 'relative' }}>
             <div className="user-menu-container">
@@ -742,16 +749,21 @@ const Navbar = () => {
                       </Link>
                     </motion.div>
 
-                    <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                      <Link className="user-dropdown-item" to="/login" onClick={() => closeAllMenus()} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                        <span className="user-menu-icon"><FaUser /></span><span>Login</span>
-                      </Link>
-                    </motion.div>
-                    {/* <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}>
-                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                        <span className="user-menu-icon"><FaFileAlt /></span><span>Grievances</span>
-                      </Link>
-                    </motion.div> */}
+                    {isAuthenticated() ? (
+                      <>
+                        <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
+                          <Link className="user-dropdown-item" to="/" onClick={() => { localStorage.removeItem('authToken'); localStorage.removeItem('userData'); window.location.reload(); closeAllMenus(); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                            <span className="user-menu-icon"><FaUser /></span><span>Logout</span>
+                          </Link>
+                        </motion.div>
+                      </>
+                    ) : (
+                      <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+                        <Link className="user-dropdown-item" to="/login" onClick={() => closeAllMenus()} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                          <span className="user-menu-icon"><FaUser /></span><span>Login</span>
+                        </Link>
+                      </motion.div>
+                    )}
 
                   </motion.div>
                 )}
