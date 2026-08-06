@@ -286,7 +286,7 @@ export const getVisitorCount = async () => {
 
 export const registerUser = async (userData) => {
   try {
-    console.log("Sending registration data:", userData);
+    
 
     const response = await fetch(
       "https://tnebserver-email.vercel.app/api/users/register",
