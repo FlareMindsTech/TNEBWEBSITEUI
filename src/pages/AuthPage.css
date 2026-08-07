@@ -118,6 +118,12 @@
   outline: none;
 }
 
+/* Hide default browser password reveal icon */
+.auth-page-input::-ms-reveal,
+.auth-page-input::-ms-clear {
+  display: none;
+}
+
 .auth-page-actions {
   display: flex;
   justify-content: space-between;

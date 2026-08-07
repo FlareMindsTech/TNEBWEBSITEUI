@@ -469,6 +469,14 @@ const Navbar = () => {
                           <FaPhone className="sidebar-icon" /> Contact
                         </Link>
                       </motion.li>
+
+                      {isAuthenticated() && (
+                        <motion.li className="nav-item" variants={navItemVariants}>
+                          <Link className="nav-link" to="/dashboard/minnagam" onClick={closeAllMenus}>
+                            <FaChartBar className="sidebar-icon" /> Dashboard
+                          </Link>
+                        </motion.li>
+                      )}
                     </ul>
                   </nav>
                 </div>
@@ -482,12 +490,21 @@ const Navbar = () => {
                     </button>
                   </motion.div>
 
-                  <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <button className="btn btn-light w-100" onClick={() => { navigate('/login'); closeAllMenus(); }}>
-                      <FaUser className="me-2" />
-                      Login
-                    </button>
-                  </motion.div>
+                  {isAuthenticated() ? (
+                    <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <button className="btn btn-light w-100" onClick={() => { localStorage.removeItem('authToken'); localStorage.removeItem('userData'); window.location.reload(); closeAllMenus(); }}>
+                        <FaUser className="me-2" />
+                        Logout
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <button className="btn btn-light w-100" onClick={() => { navigate('/login'); closeAllMenus(); }}>
+                        <FaUser className="me-2" />
+                        Login
+                      </button>
+                    </motion.div>
+                  )}
                   {/* <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="btn btn-light w-100" onClick={() => { setAuthTab(''); setShowAuth(true); closeAllMenus(); }}>
                       <FaFileAlt className="me-2" />

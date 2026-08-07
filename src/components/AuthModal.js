@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
-import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt, FaPhoneAlt, FaIdBadge, FaIdCard, FaUserTie } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaUser, FaUserPlus, FaUserLock, FaTimes, FaArrowLeft, FaMapMarkerAlt, FaPhoneAlt, FaIdBadge, FaIdCard, FaUserTie, FaEye, FaEyeSlash } from 'react-icons/fa';
 import './AuthModal.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser, registerUser, forgotPassword } from '../api';
@@ -16,9 +16,13 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const navigate = useNavigate();
   const [tab, setTab] = useState(defaultTab);
   const [loginForm, setLoginForm] = useState({ identifier: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+  const [registerForm, setRegisterForm] = useState({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
   const [forgotForm, setForgotForm] = useState({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
   const [loading, setLoading] = useState(false);
+
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (show) {
@@ -27,7 +31,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         setLoginForm({ identifier: '', password: '' });
       }
       if (defaultTab === 'register') {
-        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
       }
       if (defaultTab === 'forgot') {
         setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
@@ -46,7 +50,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       setLoginForm({ identifier: '', password: '' });
     }
     if (next === 'register') {
-      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
     }
     if (next === 'forgot') {
       setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
@@ -101,11 +105,21 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.city || !registerForm.lm_number || !registerForm.ppo_number || !registerForm.date_of_birth || !registerForm.emp_id) {
+    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.password || !registerForm.confirmPassword) {
       Swal.fire({
         icon: 'warning',
         title: 'Incomplete Form',
         text: 'Please fill in all required fields',
+        confirmButtonColor: theme.primary
+      });
+      return;
+    }
+
+    if (registerForm.password !== registerForm.confirmPassword) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Passwords do not match',
+        text: 'Please ensure both passwords are the same',
         confirmButtonColor: theme.primary
       });
       return;
@@ -121,11 +135,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       Swal.fire({
         icon: 'success',
         title: 'Registration Successful!',
-        text: 'Your password has been sent to your email. You can now log in.',
+        text: 'You can now log in with your password.',
         confirmButtonColor: theme.primary,
         timer: 3000
       }).then(() => {
-        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '' });
+        setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
         setTab('login');
       });
 
@@ -181,10 +195,15 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     }
   };
 
-  const renderInput = (icon, props) => (
-    <div className="auth-input-wrapper">
+  const renderInput = (icon, props, suffixIcon = null) => (
+    <div className="auth-input-wrapper" style={{ position: 'relative' }}>
       <span className="auth-input-icon">{icon}</span>
-      <Form.Control className="auth-input" {...props} value={props.value ?? ''} />
+      <Form.Control className="auth-input" {...props} value={props.value ?? ''} style={{ ...props.style, paddingRight: suffixIcon ? '40px' : undefined }} />
+      {suffixIcon && (
+        <span className="auth-input-suffix-icon" style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#888', display: 'flex', alignItems: 'center' }}>
+          {suffixIcon}
+        </span>
+      )}
     </div>
   );
 
@@ -269,10 +288,10 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
           >
             <Form onSubmit={handleLogin}>
               <Form.Group className="mb-3">
-                <Form.Label>Employee ID or PPO Number</Form.Label>
+                <Form.Label>Email or Phone Number</Form.Label>
                 {renderInput(<FaIdBadge />, {
                   type: 'text',
-                  placeholder: 'Enter Employee ID or PPO Number',
+                  placeholder: 'Enter Email or Phone Number',
                   value: loginForm.identifier,
                   onChange: (e) => setLoginForm({ ...loginForm, identifier: e.target.value }),
                   required: true
@@ -281,12 +300,16 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
               <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 {renderInput(<FaLock />, {
-                  type: 'password',
+                  type: showLoginPassword ? 'text' : 'password',
                   placeholder: 'Enter your password',
                   value: loginForm.password,
                   onChange: (e) => setLoginForm({ ...loginForm, password: e.target.value }),
                   required: true
-                })}
+                },
+                <div onClick={() => setShowLoginPassword(!showLoginPassword)}>
+                  {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+                )}
               </Form.Group>
               <div className="auth-actions">
                 <Form.Check type="checkbox" label="Remember me" />
@@ -342,54 +365,77 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>City</Form.Label>
+                <Form.Label>City (Optional)</Form.Label>
                 {renderInput(<FaMapMarkerAlt />, {
                   type: 'text',
-                  placeholder: 'Enter your city',
+                  placeholder: 'Enter City',
                   value: registerForm.city,
-                  onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value }),
-                  required: true
+                  onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value })
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>LM Number</Form.Label>
-                {renderInput(<FaIdBadge />, {
+                <Form.Label>LM Number (Optional)</Form.Label>
+                {renderInput(<FaIdCard />, {
                   type: 'text',
                   placeholder: 'Enter your LM number',
                   value: registerForm.lm_number,
-                  onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value }),
-                  required: true
+                  onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value })
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>PPO Number</Form.Label>
+                <Form.Label>PPO Number (Optional)</Form.Label>
                 {renderInput(<FaIdCard />, {
                   type: 'text',
                   placeholder: 'Enter PPO Number',
                   value: registerForm.ppo_number,
-                  onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value }),
-                  required: true
+                  onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value })
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Employee ID</Form.Label>
+                <Form.Label>Employee ID (Optional)</Form.Label>
                 {renderInput(<FaUserTie />, {
                   type: 'text',
                   placeholder: 'Enter Employee ID',
                   value: registerForm.emp_id,
-                  onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value }),
-                  required: true
+                  onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value })
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Date of Birth</Form.Label>
+                <Form.Label>Date of Birth (Optional)</Form.Label>
                 {renderInput(<FaUser />, {
                   type: 'date',
                   placeholder: 'Select Date of Birth',
                   value: registerForm.date_of_birth,
-                  onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value }),
-                  required: true
+                  onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value })
                 })}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: showRegisterPassword ? 'text' : 'password',
+                  placeholder: 'Enter Password',
+                  value: registerForm.password,
+                  onChange: (e) => setRegisterForm({ ...registerForm, password: e.target.value }),
+                  required: true
+                },
+                <div onClick={() => setShowRegisterPassword(!showRegisterPassword)}>
+                  {showRegisterPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+                )}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Confirm Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: showConfirmPassword ? 'text' : 'password',
+                  placeholder: 'Confirm Password',
+                  value: registerForm.confirmPassword,
+                  onChange: (e) => setRegisterForm({ ...registerForm, confirmPassword: e.target.value }),
+                  required: true
+                },
+                <div onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+                )}
               </Form.Group>
 
               <Button

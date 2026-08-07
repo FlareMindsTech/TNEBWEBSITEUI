@@ -1,5 +1,5 @@
 .dashboard-minnagam-container {
-  padding: 2rem;
+  padding: 1rem 2rem 2rem; /* Reduced top padding */
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
@@ -29,6 +29,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-top: 0;
   margin-bottom: 2rem;
 }
 
@@ -58,6 +59,7 @@
 .minnagam-content {
   width: 100%;
   max-width: 100%;
+  padding-top: 0;
 }
 
 .minnagam-form-container, .submissions-container {
@@ -184,6 +186,8 @@
   align-items: center;
   justify-content: center;
   min-width: 120px;
+  height: 48px;
+  box-sizing: border-box;
 }
 
 .spinner {

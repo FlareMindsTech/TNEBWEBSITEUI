@@ -4,6 +4,7 @@ import { FaSpinner, FaCheckCircle, FaExclamationCircle, FaUpload } from 'react-i
 import './DashboardMinnagam.css';
 import { submitMinnagamForm, getMinnagams, isAuthenticated, getUserData, updateMinnagamStatus } from '../api';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const DashboardMinnagam = () => {
   const navigate = useNavigate();
@@ -82,14 +83,19 @@ const DashboardMinnagam = () => {
       data.append('document', formData.document);
 
       await submitMinnagamForm(data);
-      setSuccessMsg('Minnagam application submitted successfully!');
+      
+      Swal.fire({
+        title: 'Submitted!',
+        text: 'Minnagam application submitted successfully!',
+        icon: 'success',
+        confirmButtonColor: '#15458a',
+        confirmButtonText: 'OK'
+      });
+
       setFormData({ nomineeName: '', relation: '', units: '', utrNumber: '', document: null });
       setStep(1);
-      setTimeout(() => {
-        setSuccessMsg('');
-        setActiveTab('submissions');
-        fetchSubmissions();
-      }, 2000);
+      setActiveTab('submissions');
+      fetchSubmissions();
     } catch (err) {
       setError(err.message || 'Failed to submit the form. Please try again.');
     } finally {
@@ -133,7 +139,7 @@ const DashboardMinnagam = () => {
     <div className="dashboard-minnagam-container">
       {!isTreasurer && (
         <div className="minnagam-tabs">
-          <button className={`tab-btn ${activeTab === 'submit' ? 'active' : ''}`} onClick={() => setActiveTab('submit')}>Submit Request</button>
+          <button className={`tab-btn ${activeTab === 'submit' ? 'active' : ''}`} onClick={() => setActiveTab('submit')}>Minnagam Request</button>
           <button className={`tab-btn ${activeTab === 'submissions' ? 'active' : ''}`} onClick={() => setActiveTab('submissions')}>{canApprove ? 'All Submissions' : 'My Submissions'}</button>
         </div>
       )}
@@ -141,7 +147,7 @@ const DashboardMinnagam = () => {
       <div className="minnagam-content">
         {activeTab === 'submit' && (
           <motion.div className="minnagam-form-container" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h2 className="form-header">Submit Minnagam Request</h2>
+            <h2 className="form-header"> Minnagam Request</h2>
             
             <div className="stepper">
               <div className={`step ${step >= 1 ? 'active' : ''}`}>1. Nominee Details</div>
@@ -156,7 +162,7 @@ const DashboardMinnagam = () => {
               {step === 1 && (
                 <motion.div className="form-step" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <div className="form-group">
-                    <label>Nominee Name *</label>
+                    <label>Name of Nominee *</label>
                     <input type="text" name="nomineeName" value={formData.nomineeName} onChange={handleInputChange} placeholder="Enter full name" />
                   </div>
                   <div className="form-group">
@@ -198,7 +204,7 @@ const DashboardMinnagam = () => {
                   <div className="form-actions">
                     <button type="button" className="btn-prev" onClick={prevStep} disabled={loading}>Back</button>
                     <button type="submit" className="btn-submit" disabled={loading}>
-                      {loading ? <FaSpinner className="spinner" /> : 'Submit'}
+                      {loading ? 'Submitting...' : 'Submit Request'}
                     </button>
                   </div>
                 </motion.div>
@@ -211,7 +217,7 @@ const DashboardMinnagam = () => {
           <motion.div className="submissions-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2>{canApprove ? 'All Submissions' : 'My Submissions'}</h2>
             {loading ? (
-              <div className="loading-spinner"><FaSpinner className="spinner" /> Loading...</div>
+              <div className="loading-spinner"><FaSpinner className="spinner" /></div>
             ) : (
               <div className="table-responsive">
                 <table className="submissions-table">

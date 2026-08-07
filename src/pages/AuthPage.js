@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   FaUserLock, FaUserPlus, FaEnvelope, FaLock,
   FaUser, FaPhoneAlt, FaMapMarkerAlt, FaIdBadge,
-  FaIdCard, FaUserTie, FaArrowLeft
+  FaIdCard, FaUserTie, FaArrowLeft, FaEye, FaEyeSlash
 } from 'react-icons/fa';
 import { loginUser, registerUser, forgotPassword } from '../api';
 import './AuthPage.css';
@@ -20,11 +20,15 @@ const AuthPage = () => {
   const [loginForm, setLoginForm] = useState({ identifier: '', password: '' });
   const [registerForm, setRegisterForm] = useState({
     name: '', email: '', phone_no: '', city: '',
-    lm_number: '', pbo_number: '', date_of_birth: '', emp_id: ''
+    lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: ''
   });
   const [forgotForm, setForgotForm] = useState({
     email: '', emp_id: '', pbo_number: '', lm_number: ''
   });
+
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const switchTab = (newTab) => {
     setTab(newTab);
@@ -50,16 +54,20 @@ const AuthPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.emp_id) {
+    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.password || !registerForm.confirmPassword) {
       Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Please fill in all required fields!' });
+      return;
+    }
+    if (registerForm.password !== registerForm.confirmPassword) {
+      Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Passwords do not match!' });
       return;
     }
     try {
       setLoading(true);
       await registerUser(registerForm);
       setLoading(false);
-      Swal.fire({ icon: 'success', title: 'Register Successfully', text: 'Password sent to your email' });
-      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '' });
+      Swal.fire({ icon: 'success', title: 'Register Successfully', text: 'You can now login with your password' });
+      setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
       setTab('login');
     } catch (error) {
       setLoading(false);
@@ -86,10 +94,15 @@ const AuthPage = () => {
     }
   };
 
-  const renderInput = (icon, props) => (
-    <div className="auth-page-input-wrapper">
+  const renderInput = (icon, props, suffixIcon = null) => (
+    <div className="auth-page-input-wrapper" style={{ position: 'relative' }}>
       <span className="auth-page-input-icon">{icon}</span>
-      <input className="auth-page-input" {...props} value={props.value || ''} />
+      <input className="auth-page-input" {...props} value={props.value || ''} style={{ ...props.style, paddingRight: suffixIcon ? '40px' : undefined }} />
+      {suffixIcon && (
+        <span className="auth-page-input-suffix-icon" style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#888', display: 'flex', alignItems: 'center' }}>
+          {suffixIcon}
+        </span>
+      )}
     </div>
   );
 
@@ -105,12 +118,16 @@ const AuthPage = () => {
             <motion.div key="auth-login" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Form onSubmit={handleLogin}>
                 <Form.Group style={{ marginBottom: '20px' }}>
-                  <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Employee ID or PPO Number</Form.Label>
-                  {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'Enter Employee ID or PPO Number', value: loginForm.identifier, onChange: (e) => setLoginForm({ ...loginForm, identifier: e.target.value }), required: true })}
+                  <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Email or Phone Number</Form.Label>
+                  {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'Enter Email or Phone Number', value: loginForm.identifier, onChange: (e) => setLoginForm({ ...loginForm, identifier: e.target.value }), required: true })}
                 </Form.Group>
                 <Form.Group style={{ marginBottom: '20px' }}>
                   <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Password</Form.Label>
-                  {renderInput(<FaLock />, { type: 'password', placeholder: 'Enter Password', value: loginForm.password, onChange: (e) => setLoginForm({ ...loginForm, password: e.target.value }), required: true })}
+                  {renderInput(<FaLock />, { type: showLoginPassword ? 'text' : 'password', placeholder: 'Enter Password', value: loginForm.password, onChange: (e) => setLoginForm({ ...loginForm, password: e.target.value }), required: true },
+                    <div onClick={() => setShowLoginPassword(!showLoginPassword)}>
+                      {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
+                    </div>
+                  )}
                 </Form.Group>
                 <div className="auth-page-actions">
                   <Form.Check type="checkbox" label="Remember me" style={{ fontSize: '14px' }} />
@@ -142,24 +159,40 @@ const AuthPage = () => {
                     {renderInput(<FaPhoneAlt />, { type: 'tel', placeholder: 'Enter Phone (10 digits)', pattern: "[0-9]{10}", value: registerForm.phone_no, onChange: (e) => setRegisterForm({ ...registerForm, phone_no: e.target.value }), required: true })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>City</Form.Label>
-                    {renderInput(<FaMapMarkerAlt />, { type: 'text', placeholder: 'Enter City', value: registerForm.city, onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value }), required: true })}
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>City (Optional)</Form.Label>
+                    {renderInput(<FaMapMarkerAlt />, { type: 'text', placeholder: 'Enter City', value: registerForm.city, onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value }) })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>LM Number</Form.Label>
-                    {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'Enter LM Number', value: registerForm.lm_number, onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value }), required: true })}
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>LM Number (Optional)</Form.Label>
+                    {renderInput(<FaIdCard />, { type: 'text', placeholder: 'Enter LM Number', value: registerForm.lm_number, onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value }) })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>PPO Number</Form.Label>
-                    {renderInput(<FaIdCard />, { type: 'text', placeholder: 'Enter PPO Number', value: registerForm.pbo_number, onChange: (e) => setRegisterForm({ ...registerForm, pbo_number: e.target.value }), required: true })}
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>PPO Number (Optional)</Form.Label>
+                    {renderInput(<FaIdCard />, { type: 'text', placeholder: 'Enter PPO Number', value: registerForm.pbo_number, onChange: (e) => setRegisterForm({ ...registerForm, pbo_number: e.target.value }) })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Employee ID</Form.Label>
-                    {renderInput(<FaUserTie />, { type: 'text', placeholder: 'Enter Employee ID', value: registerForm.emp_id, onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value }), required: true })}
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Employee ID (Optional)</Form.Label>
+                    {renderInput(<FaUserTie />, { type: 'text', placeholder: 'Enter Employee ID', value: registerForm.emp_id, onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value }) })}
                   </Form.Group>
                   <Form.Group style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Date of Birth</Form.Label>
-                    {renderInput(<FaUser />, { type: 'date', placeholder: 'Select Date of Birth', value: registerForm.date_of_birth, onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value }), required: true })}
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Date of Birth (Optional)</Form.Label>
+                    {renderInput(<FaUser />, { type: 'date', placeholder: 'Select Date of Birth', value: registerForm.date_of_birth, onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value }) })}
+                  </Form.Group>
+                  <Form.Group style={{ marginBottom: '20px' }}>
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Password</Form.Label>
+                    {renderInput(<FaLock />, { type: showRegisterPassword ? 'text' : 'password', placeholder: 'Enter Password', value: registerForm.password, onChange: (e) => setRegisterForm({ ...registerForm, password: e.target.value }), required: true },
+                      <div onClick={() => setShowRegisterPassword(!showRegisterPassword)}>
+                        {showRegisterPassword ? <FaEyeSlash /> : <FaEye />}
+                      </div>
+                    )}
+                  </Form.Group>
+                  <Form.Group style={{ marginBottom: '20px' }}>
+                    <Form.Label style={{ fontWeight: 600, color: '#333', marginBottom: '8px', display: 'block', fontSize: '14px' }}>Confirm Password</Form.Label>
+                    {renderInput(<FaLock />, { type: showConfirmPassword ? 'text' : 'password', placeholder: 'Confirm Password', value: registerForm.confirmPassword, onChange: (e) => setRegisterForm({ ...registerForm, confirmPassword: e.target.value }), required: true },
+                      <div onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                      </div>
+                    )}
                   </Form.Group>
                 </div>
                 <button type="submit" className="auth-page-btn" disabled={loading}>
