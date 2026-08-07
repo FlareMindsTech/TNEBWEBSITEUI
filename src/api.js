@@ -289,7 +289,7 @@ export const registerUser = async (userData) => {
     
 
     const response = await fetch(
-      "https://tnebserver-email.vercel.app/api/users/register",
+      `${API_BASE_URL}/api/users/register`,
       {
         method: "POST",
         headers: {

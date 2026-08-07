@@ -192,6 +192,12 @@
   background: transparent;
 }
 
+/* Hide default browser password reveal icon */
+.auth-input::-ms-reveal,
+.auth-input::-ms-clear {
+  display: none;
+}
+
 .auth-actions {
   display: flex;
   align-items: center;
