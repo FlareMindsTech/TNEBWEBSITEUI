@@ -17,12 +17,17 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
   const [tab, setTab] = useState(defaultTab);
   const [loginForm, setLoginForm] = useState({ identifier: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
-  const [forgotForm, setForgotForm] = useState({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
+  const [forgotForm, setForgotForm] = useState({ identifier: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
 
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showForgotConfirmPassword, setShowForgotConfirmPassword] = useState(false);
+
+  const [authError, setAuthError] = useState('');
 
   useEffect(() => {
     if (show) {
@@ -34,7 +39,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
         setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
       }
       if (defaultTab === 'forgot') {
-        setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
+        setForgotForm({ identifier: '', password: '', confirmPassword: '' });
       }
       if (defaultTab === 'work') {
         setTab('work');
@@ -46,6 +51,7 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
   const switchTab = (next) => {
     setTab(next);
+    setAuthError('');
     if (next === 'login') {
       setLoginForm({ identifier: '', password: '' });
     }
@@ -53,20 +59,16 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       setRegisterForm({ name: '', email: '', phone_no: '', city: '', lm_number: '', ppo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: '' });
     }
     if (next === 'forgot') {
-      setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
+      setForgotForm({ identifier: '', password: '', confirmPassword: '' });
     }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setAuthError('');
 
     if (!loginForm.identifier || !loginForm.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Incomplete Form',
-        text: 'Please fill in all fields',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError('Please fill in all fields');
       return;
     }
 
@@ -94,34 +96,32 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
     } catch (error) {
       setLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: error.message || 'Invalid credentials. Please try again.',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError(error.message || 'Invalid credentials. Please try again.');
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setAuthError('');
+
     if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.password || !registerForm.confirmPassword) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Incomplete Form',
-        text: 'Please fill in all required fields',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError('Name, email, phone number, and password are required');
+      return;
+    }
+
+    if (!registerForm.email.includes('@')) {
+      setAuthError('Please provide a valid email address containing @');
+      return;
+    }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(registerForm.phone_no)) {
+      setAuthError('Phone number must be exactly 10 digits');
       return;
     }
 
     if (registerForm.password !== registerForm.confirmPassword) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Passwords do not match',
-        text: 'Please ensure both passwords are the same',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError('Passwords do not match');
       return;
     }
 
@@ -145,25 +145,21 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
 
     } catch (error) {
       setLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Registration Failed',
-        text: error.message || 'Could not register. Please try again.',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError(error.message || 'User with this email, phone number, or LM number already exists');
     }
   };
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
+    setAuthError('');
 
-    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.ppo_number || !forgotForm.lm_number) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Incomplete Form',
-        text: 'Please fill in all required fields to verify your identity',
-        confirmButtonColor: theme.primary
-      });
+    if (!forgotForm.identifier || !forgotForm.password || !forgotForm.confirmPassword) {
+      setAuthError('Identifier (Email or Phone Number), password, and confirm password are required');
+      return;
+    }
+    
+    if (forgotForm.password !== forgotForm.confirmPassword) {
+      setAuthError('Passwords do not match');
       return;
     }
 
@@ -177,21 +173,16 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: response.message || 'A new password has been sent to your registered email address.',
+        text: response.message || 'Password has been successfully updated.',
         confirmButtonColor: theme.primary
       }).then(() => {
-        setForgotForm({ email: '', emp_id: '', ppo_number: '', lm_number: '' });
+        setForgotForm({ identifier: '', password: '', confirmPassword: '' });
         setTab('login');
       });
 
     } catch (error) {
       setLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed',
-        text: error.message || 'Could not reset password. Please try again.',
-        confirmButtonColor: theme.primary
-      });
+      setAuthError(error.message || 'Could not reset password. Please try again.');
     }
   };
 
@@ -286,6 +277,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
+            {authError && (
+              <div style={{ backgroundColor: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginBottom: '15px', fontSize: '14px', border: '1px solid #f5c6cb' }}>
+                {authError}
+              </div>
+            )}
             <Form onSubmit={handleLogin}>
               <Form.Group className="mb-3">
                 <Form.Label>Email or Phone Number</Form.Label>
@@ -332,6 +328,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
+            {authError && (
+              <div style={{ backgroundColor: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginBottom: '15px', fontSize: '14px', border: '1px solid #f5c6cb' }}>
+                {authError}
+              </div>
+            )}
             <Form onSubmit={handleRegister}>
               <Form.Group className="mb-3">
                 <Form.Label>Full Name</Form.Label>
@@ -454,6 +455,11 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
+            {authError && (
+              <div style={{ backgroundColor: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginBottom: '15px', fontSize: '14px', border: '1px solid #f5c6cb' }}>
+                {authError}
+              </div>
+            )}
             <Form onSubmit={handleForgotPassword}>
               <button
                 type="button"
@@ -462,46 +468,44 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
               >
                 <FaArrowLeft /> Back to Login
               </button>
-              <p className="auth-helper-text">Verify your identity to receive a new password via email.</p>
+              <p className="auth-helper-text">Reset your password using your email or phone number.</p>
               <Form.Group className="mb-3">
-                <Form.Label>Email Address</Form.Label>
-                {renderInput(<FaEnvelope />, {
-                  type: 'email',
-                  placeholder: 'name@example.com',
-                  value: forgotForm.email,
-                  onChange: (e) => setForgotForm({ ...forgotForm, email: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Employee ID</Form.Label>
-                {renderInput(<FaUserTie />, {
-                  type: 'text',
-                  placeholder: 'Enter Employee ID',
-                  value: forgotForm.emp_id,
-                  onChange: (e) => setForgotForm({ ...forgotForm, emp_id: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>PPO Number</Form.Label>
-                {renderInput(<FaIdCard />, {
-                  type: 'text',
-                  placeholder: 'Enter PPO Number',
-                  value: forgotForm.ppo_number,
-                  onChange: (e) => setForgotForm({ ...forgotForm, ppo_number: e.target.value }),
-                  required: true
-                })}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>LM Number</Form.Label>
+                <Form.Label>Email or Phone Number</Form.Label>
                 {renderInput(<FaIdBadge />, {
                   type: 'text',
-                  placeholder: 'Enter LM number',
-                  value: forgotForm.lm_number,
-                  onChange: (e) => setForgotForm({ ...forgotForm, lm_number: e.target.value }),
+                  placeholder: 'Enter Email or Phone Number',
+                  value: forgotForm.identifier,
+                  onChange: (e) => setForgotForm({ ...forgotForm, identifier: e.target.value }),
                   required: true
                 })}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>New Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: showForgotPassword ? 'text' : 'password',
+                  placeholder: 'Enter New Password',
+                  value: forgotForm.password,
+                  onChange: (e) => setForgotForm({ ...forgotForm, password: e.target.value }),
+                  required: true
+                },
+                <div onClick={() => setShowForgotPassword(!showForgotPassword)}>
+                  {showForgotPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+                )}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Confirm New Password</Form.Label>
+                {renderInput(<FaLock />, {
+                  type: showForgotConfirmPassword ? 'text' : 'password',
+                  placeholder: 'Confirm New Password',
+                  value: forgotForm.confirmPassword,
+                  onChange: (e) => setForgotForm({ ...forgotForm, confirmPassword: e.target.value }),
+                  required: true
+                },
+                <div onClick={() => setShowForgotConfirmPassword(!showForgotConfirmPassword)}>
+                  {showForgotConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+                )}
               </Form.Group>
 
               <Button
@@ -509,9 +513,8 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 className="auth-primary-btn"
                 disabled={loading}
               >
-                {loading ? 'Sending new password…' : 'Send New Password'}
+                {loading ? 'Updating password…' : 'Update Password'}
               </Button>
-              <p className="auth-footnote">We'll send a new generated password to your email.</p>
             </Form>
           </motion.div>
         ) : null}
