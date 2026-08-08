@@ -23,12 +23,14 @@ const AuthPage = () => {
     lm_number: '', pbo_number: '', date_of_birth: '', emp_id: '', password: '', confirmPassword: ''
   });
   const [forgotForm, setForgotForm] = useState({
-    email: '', emp_id: '', pbo_number: '', lm_number: ''
+    identifier: '', password: '', confirmPassword: ''
   });
 
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showForgotConfirmPassword, setShowForgotConfirmPassword] = useState(false);
 
   const switchTab = (newTab) => {
     setTab(newTab);
@@ -77,20 +79,24 @@ const AuthPage = () => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    if (!forgotForm.email || !forgotForm.emp_id || !forgotForm.pbo_number || !forgotForm.lm_number) {
-      Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Please fill in all fields!' });
+    if (!forgotForm.identifier || !forgotForm.password || !forgotForm.confirmPassword) {
+      Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Identifier (Email or Phone Number), password, and confirm password are required!' });
+      return;
+    }
+    if (forgotForm.password !== forgotForm.confirmPassword) {
+      Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Passwords do not match!' });
       return;
     }
     try {
       setLoading(true);
-      await forgotPassword(forgotForm);
+      const response = await forgotPassword(forgotForm);
       setLoading(false);
-      Swal.fire({ icon: 'success', title: 'Success!', text: 'A new password has been sent to your email.' });
-      setForgotForm({ email: '', emp_id: '', pbo_number: '', lm_number: '' });
+      Swal.fire({ icon: 'success', title: 'Success!', text: response.message || 'Password has been successfully updated.' });
+      setForgotForm({ identifier: '', password: '', confirmPassword: '' });
       setTab('login');
     } catch (error) {
       setLoading(false);
-      Swal.fire({ icon: 'error', title: 'Failed', text: error.response?.data?.error || 'Could not reset password' });
+      Swal.fire({ icon: 'error', title: 'Failed', text: error.response?.data?.error || error.message || 'Could not reset password' });
     }
   };
 
@@ -210,14 +216,27 @@ const AuthPage = () => {
                 <button type="button" className="auth-page-back-btn" onClick={() => setTab('login')}>
                   <FaArrowLeft /> Back to Login
                 </button>
-                <p style={{ color: '#666', marginBottom: '20px' }}>Verify your identity to receive a new password via email.</p>
-                {renderInput(<FaEnvelope />, { type: 'email', placeholder: 'Email Address', value: forgotForm.email, onChange: (e) => setForgotForm({ ...forgotForm, email: e.target.value }), required: true })}
-                {renderInput(<FaUserTie />, { type: 'text', placeholder: 'Employee ID', value: forgotForm.emp_id, onChange: (e) => setForgotForm({ ...forgotForm, emp_id: e.target.value }), required: true })}
-                {renderInput(<FaIdCard />, { type: 'text', placeholder: 'PPO Number', value: forgotForm.pbo_number, onChange: (e) => setForgotForm({ ...forgotForm, pbo_number: e.target.value }), required: true })}
-                {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'LM Number', value: forgotForm.lm_number, onChange: (e) => setForgotForm({ ...forgotForm, lm_number: e.target.value }), required: true })}
+                <p style={{ color: '#666', marginBottom: '20px' }}>Reset your password using your email or phone number.</p>
+                <div style={{ marginBottom: '15px' }}>
+                  {renderInput(<FaIdBadge />, { type: 'text', placeholder: 'Email or Phone Number', value: forgotForm.identifier, onChange: (e) => setForgotForm({ ...forgotForm, identifier: e.target.value }), required: true })}
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  {renderInput(<FaLock />, { type: showForgotPassword ? 'text' : 'password', placeholder: 'New Password', value: forgotForm.password, onChange: (e) => setForgotForm({ ...forgotForm, password: e.target.value }), required: true },
+                    <div onClick={() => setShowForgotPassword(!showForgotPassword)}>
+                      {showForgotPassword ? <FaEyeSlash /> : <FaEye />}
+                    </div>
+                  )}
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  {renderInput(<FaLock />, { type: showForgotConfirmPassword ? 'text' : 'password', placeholder: 'Confirm New Password', value: forgotForm.confirmPassword, onChange: (e) => setForgotForm({ ...forgotForm, confirmPassword: e.target.value }), required: true },
+                    <div onClick={() => setShowForgotConfirmPassword(!showForgotConfirmPassword)}>
+                      {showForgotConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                    </div>
+                  )}
+                </div>
 
-                <button type="submit" className="auth-page-btn" disabled={loading}>
-                  {loading ? 'PROCESSING...' : 'SEND NEW PASSWORD'}
+                <button type="submit" className="auth-page-btn" disabled={loading} style={{ marginTop: '5px' }}>
+                  {loading ? 'PROCESSING...' : 'UPDATE PASSWORD'}
                 </button>
               </Form>
             </motion.div>

@@ -381,7 +381,7 @@ export const forgotPassword = async (data) => {
   try {
     const dataToSend = { ...data };
 
-    const response = await fetch(`https://tnebserver-email.vercel.app/api/users/forgot-password`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/forgot-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
