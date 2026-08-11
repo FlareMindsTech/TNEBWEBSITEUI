@@ -564,3 +564,62 @@
   animation: subtitleFadeIn 0.4s ease-out forwards;
   letter-spacing: 0.5px;
 }
+
+/* Responsive Carousel Heights and Section Margin */
+
+/* Ultra-wide screens */
+@media (min-width: 2000px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 700px;
+  }
+}
+
+@media (max-width: 1999px) and (min-width: 1600px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 580px;
+  }
+}
+
+@media (max-width: 1599px) and (min-width: 1400px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 480px;
+  }
+}
+
+/* Base height is 420px for 1201px - 1399px */
+
+@media (max-width: 1200px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 380px;
+  }
+}
+
+@media (max-width: 991px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 340px;
+  }
+  .image-carousel-section {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 260px;
+  }
+  .image-carousel-section {
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-image, .carousel-loading, .carousel-no-data {
+    height: 200px;
+  }
+  .image-carousel-section {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+  }
+}
