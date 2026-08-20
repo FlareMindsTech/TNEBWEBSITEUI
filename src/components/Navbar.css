@@ -2245,12 +2245,20 @@
 /* ==========================================================================
    MOBILE NAVBAR ACTIONS (SEARCH & USER PROFILE IN NAVBAR)
    ========================================================================== */
+/* Hidden by default on Desktop / Web View */
 .mobile-navbar-actions {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  position: relative !important;
-  z-index: 1005 !important;
+  display: none !important;
+}
+
+/* Shown ONLY on Mobile / Tablet Screens (< 992px) */
+@media (max-width: 991.98px) {
+  .mobile-navbar-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    position: relative !important;
+    z-index: 1005 !important;
+  }
 }
 
 .mobile-nav-search-wrapper {
