@@ -1,16 +1,18 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaUser, FaTimes, FaCaretDown, FaBars, 
-  FaHome, FaUsers, FaInfoCircle, FaCog, 
-  FaMobile, FaBook, FaLink, FaFileAlt, 
-  FaPhone, FaGavel, FaFilePdf, FaUserTie, 
-  FaTrophy, FaClipboardList, FaQuestionCircle, 
-  FaChartBar, FaBookOpen, FaBell, 
+import {
+  FaUser, FaTimes, FaCaretDown, FaBars,
+  FaHome, FaUsers, FaInfoCircle, FaCog,
+  FaMobile, FaBook, FaLink, FaFileAlt,
+  FaPhone, FaGavel, FaFilePdf, FaUserTie,
+  FaTrophy, FaClipboardList, FaQuestionCircle,
+  FaChartBar, FaBookOpen, FaBell,
   FaLandmark, FaImages, FaRegNewspaper,
-  FaHandPaper, FaUserPlus, FaCaretRight, FaHotel
+  FaHandPaper, FaUserPlus, FaCaretRight, FaChevronRight, FaHotel,
+  FaDesktop, FaEdit, FaEnvelope, FaBuilding
 } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import SearchInput from './SearchInput';
 import "./Navbar.css";
 // import Logo from "../assets/tnebea_logo_cropped2.png";
 import { SidebarContext } from '../context/SidebarContext';
@@ -19,12 +21,32 @@ import { isAuthenticated, getUserData } from "../api";
 const Navbar = () => {
   const { isSidebarOpen, openSidebar, closeSidebar } = useContext(SidebarContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  // const [searchQuery, setSearchQuery] = useState('');
   const closeTimeoutRef = useRef(null);
   const sidebarRef = useRef(null);
-  
+  const userMenuRef = useRef(null);
+
+  // Close user menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuOpen && userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+    if (userMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [userMenuOpen]);
+
+  // Close dropdowns on route changes
+  useEffect(() => {
+    setUserMenuOpen(false);
+    setOpenDropdown(null);
+  }, [location.pathname]);
+
   // Handle click outside sidebar to close it in mobile view
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -52,7 +74,7 @@ const Navbar = () => {
       };
     }
   }, [isSidebarOpen, closeSidebar]);
-  
+
   // Handle quick links on mobile - navigate in same tab
   const handleMobileQuickLinkClick = (link) => {
     // Remove hash prefix if present
@@ -61,47 +83,44 @@ const Navbar = () => {
     closeSidebar();
   };
 
-  const handleDropdownOpen = (key) => {
-    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    setOpenDropdown(key);
+  const handleDropdownOpen = (dropdownName) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    setOpenDropdown(dropdownName);
   };
 
   const handleDropdownClose = () => {
     closeTimeoutRef.current = setTimeout(() => setOpenDropdown(null), 200);
   };
 
-  const handleUserMenuToggle = () => {
-    setUserMenuOpen(!userMenuOpen);
-  };
-
   const closeAllMenus = () => {
     closeSidebar();
     setOpenDropdown(null);
-    setUserMenuOpen(false);
   };
 
   const dropdownVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: -10,
       scale: 0.95,
       transition: { duration: 0.15 }
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { 
-        duration: 0.2, 
+      transition: {
+        duration: 0.2,
         ease: "easeOut",
         staggerChildren: 0.05,
         when: "beforeChildren"
       }
     },
-    exit: { 
-      opacity: 0, 
-      y: -10, 
-      transition: { duration: 0.15 } 
+    exit: {
+      opacity: 0,
+      y: -10,
+      transition: { duration: 0.15 }
     }
   };
 
@@ -109,29 +128,6 @@ const Navbar = () => {
     hidden: { x: -10, opacity: 0 },
     visible: { x: 0, opacity: 1 },
     exit: { x: -10, opacity: 0 }
-  };
-
-  const userDropdownVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -5, 
-      scale: 0.95,
-      transformOrigin: "top right"
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: { 
-        duration: 0.2,
-        ease: "easeOut"
-      }
-    },
-    exit: { 
-      opacity: 0, 
-      y: -5, 
-      transition: { duration: 0.15 } 
-    }
   };
 
   const containerVariants = {
@@ -149,32 +145,24 @@ const Navbar = () => {
     visible: { opacity: 1, y: 0 }
   };
 
+  const userDropdownVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: -10 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, scale: 0.95, y: -10, transition: { duration: 0.15 } }
+  };
+
   return (
-    <motion.nav 
+    <motion.nav
       className="main-navbar navbar navbar-expand-lg"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="container-fluid px-4">
-        {/* Logo */}
-        {/* <motion.div 
-          className="navbar-brand d-flex align-items-center logo-wrapper"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <div className="logo-container me-2">
-            <img src={Logo} alt="TNEBEA" className="logo-img" />
-            <div className="logo-sparkle"></div>
-            <div className="logo-sparkle delay-1"></div>
-            <div className="logo-sparkle delay-2"></div>
-          </div>
-        </motion.div> */}
-
+      <div className="container-fluid px-3 px-lg-4 d-flex align-items-center justify-content-between">
         {/* Mobile Toggle Button */}
-        <motion.button 
-          className="navbar-toggler" 
-          type="button" 
+        <motion.button
+          className="navbar-toggler"
+          type="button"
           onClick={() => openSidebar()}
           whileTap={{ scale: 0.9 }}
         >
@@ -184,6 +172,106 @@ const Navbar = () => {
             <FaBars className="navbar-toggler-icon" />
           )}
         </motion.button>
+
+        {/* Mobile Actions: Search and Profile Icon (Visible only on mobile/tablet screens < 992px) */}
+        <div className="mobile-navbar-actions d-flex d-lg-none align-items-center gap-2" ref={userMenuRef}>
+          <div className="mobile-nav-search-wrapper">
+            <SearchInput placeholder="Search..." />
+          </div>
+
+          <div className="user-menu-container position-relative">
+            <motion.div 
+              className="user-profile-icon"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ boxShadow: userMenuOpen ? "0 0 20px rgba(223, 176, 100, 0.6)" : "0 2px 8px rgba(0, 0, 0, 0.25)" }}
+            >
+              <FaUser />
+              <motion.div className="pulse-dot" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
+            </motion.div>
+
+            <AnimatePresence>
+              {userMenuOpen && (
+                <motion.div 
+                  variants={userDropdownVariants} 
+                  initial="hidden" 
+                  animate="visible" 
+                  exit="exit" 
+                  className="user-profile-floating-dropdown"
+                >
+                  <div className="user-dropdown-cards-wrapper">
+                    {/* Grievance */}
+                    <Link 
+                      className="user-dropdown-card" 
+                      to="#" 
+                      onClick={(e) => { 
+                        e.preventDefault(); 
+                        window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); 
+                        setUserMenuOpen(false);
+                      }} 
+                    >
+                      <div className="user-card-icon-circle">
+                        <FaClipboardList />
+                      </div>
+                      <div className="user-card-divider"></div>
+                      <div className="user-card-text">
+                        <span className="user-card-title">Grievance</span>
+                        <span className="user-card-subtitle">Feedback &amp; Complaints</span>
+                      </div>
+                      <div className="user-card-arrow-wedge">
+                        <FaChevronRight />
+                      </div>
+                    </Link>
+
+                    {/* Login / Logout */}
+                    {isAuthenticated() ? (
+                      <Link 
+                        className="user-dropdown-card" 
+                        to="/" 
+                        onClick={() => { 
+                          localStorage.removeItem('authToken'); 
+                          localStorage.removeItem('userData'); 
+                          window.location.reload(); 
+                        }} 
+                      >
+                        <div className="user-card-icon-circle">
+                          <FaUser />
+                        </div>
+                        <div className="user-card-divider"></div>
+                        <div className="user-card-text">
+                          <span className="user-card-title">Logout</span>
+                          <span className="user-card-subtitle">Sign Out of Account</span>
+                        </div>
+                        <div className="user-card-arrow-wedge">
+                          <FaChevronRight />
+                        </div>
+                      </Link>
+                    ) : (
+                      <Link 
+                        className="user-dropdown-card" 
+                        to="/login" 
+                        onClick={() => setUserMenuOpen(false)} 
+                      >
+                        <div className="user-card-icon-circle">
+                          <FaUser />
+                        </div>
+                        <div className="user-card-divider"></div>
+                        <div className="user-card-text">
+                          <span className="user-card-title">Login</span>
+                          <span className="user-card-subtitle">Member Portal Access</span>
+                        </div>
+                        <div className="user-card-arrow-wedge">
+                          <FaChevronRight />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
 
         <AnimatePresence>
           {isSidebarOpen && (
@@ -238,7 +326,7 @@ const Navbar = () => {
                         </div>
                         <AnimatePresence>
                           {(openDropdown === 'about' || openDropdown === 'about_tnebea') && (
-                            <motion.div 
+                            <motion.div
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -257,7 +345,7 @@ const Navbar = () => {
                               </div>
                               <AnimatePresence>
                                 {openDropdown === 'about_tnebea' && (
-                                  <motion.div 
+                                  <motion.div
                                     className="sidebar-submenu"
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: "auto", opacity: 1 }}
@@ -304,7 +392,7 @@ const Navbar = () => {
                         </div>
                         <AnimatePresence>
                           {openDropdown === 'tnebInfo' && (
-                            <motion.div 
+                            <motion.div
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -343,7 +431,7 @@ const Navbar = () => {
                         </div>
                         <AnimatePresence>
                           {openDropdown === 'tech' && (
-                            <motion.div 
+                            <motion.div
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -366,13 +454,13 @@ const Navbar = () => {
 
                       <motion.li className="nav-item" variants={navItemVariants}>
                         <Link className="nav-link" to="/Minnagam" onClick={closeAllMenus}>
-                          <FaMobile className="sidebar-icon" /> Minnagam
+                          <FaBuilding className="sidebar-icon" /> Minnagam
                         </Link>
                       </motion.li>
 
                       <motion.li className="nav-item" variants={navItemVariants}>
                         <Link className="nav-link" to="/Minthiran" onClick={closeAllMenus}>
-                          <FaRegNewspaper className="sidebar-icon" /> e-Minthiran
+                          <FaBook className="sidebar-icon" /> e-Minthiran
                         </Link>
                       </motion.li>
 
@@ -403,13 +491,13 @@ const Navbar = () => {
                         </div>
                         <AnimatePresence>
                           {openDropdown === 'quickLinks' && (
-                            <motion.div 
+                            <motion.div
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
-                              style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0'}}
+                              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0' }}
                             >
                               <Link className="sidebar-item" to="/important-notices" onClick={closeAllMenus}>
                                 <FaBell className="sidebar-icon" /> Important Notices
@@ -443,7 +531,7 @@ const Navbar = () => {
                         </div>
                         <AnimatePresence>
                           {openDropdown === 'enroll' && (
-                            <motion.div 
+                            <motion.div
                               className="sidebar-submenu"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -483,7 +571,7 @@ const Navbar = () => {
 
                 <div className="sidebar-footer">
 
-                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="btn btn-light w-100" onClick={() => { window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); closeAllMenus(); }}>
                       <FaClipboardList className="me-2" />
                       Grievance Form
@@ -517,7 +605,7 @@ const Navbar = () => {
           )}
         </AnimatePresence>
 
-        <motion.div 
+        <motion.div
           className="collapse navbar-collapse d-none d-lg-flex"
           variants={containerVariants}
           initial="hidden"
@@ -526,214 +614,410 @@ const Navbar = () => {
         >
           <ul className="navbar-nav align-items-center flex-grow-1">
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/" onClick={closeAllMenus}>Home</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/' ? 'active-nav-link' : ''}`} to="/" onClick={closeAllMenus}>
+                <FaHome className="nav-icon" /> Home
+              </Link>
             </motion.li>
 
-            <motion.li 
-              className="nav-item dropdown" 
+            {/* 1. About Dropdown */}
+            <motion.li
+              className="nav-item dropdown"
               variants={navItemVariants}
-              onMouseEnter={() => handleDropdownOpen('about')} 
+              onMouseEnter={() => handleDropdownOpen('about')}
               onMouseLeave={handleDropdownClose}
             >
-              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer text-light">
-                About 
-                <motion.span animate={{ rotate: (openDropdown === 'about' || openDropdown === 'about_tnebea') ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <FaCaretDown />
+              <span className={`nav-link d-flex align-items-center gap-1 cursor-pointer text-light ${openDropdown === 'about' ? 'active-dropdown-tab' : ''}`}>
+                <FaUsers className="nav-icon" />
+                About
+                <motion.span animate={{ rotate: openDropdown === 'about' ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                  <FaCaretDown className="nav-caret" />
                 </motion.span>
               </span>
               <AnimatePresence>
-                {(openDropdown === 'about' || openDropdown === 'about_tnebea') && (
-                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
-                    <motion.div 
-                      variants={itemVariants}
-                      className="dropdown-submenu position-relative"
-                      onMouseEnter={() => setOpenDropdown('about_tnebea')}
-                      onMouseLeave={() => setOpenDropdown('about')}
-                    >
-                      <span className="dropdown-item d-flex align-items-center justify-content-between cursor-pointer">
-                        <span><span className="dropdown-icon"><FaInfoCircle /></span> About TNEBEA</span>
-                        <FaCaretRight style={{ fontSize: '0.8rem', marginLeft: '10px' }} />
-                      </span>
-                      <AnimatePresence>
-                        {openDropdown === 'about_tnebea' && (
-                          <motion.div 
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 10 }}
-                            className="dropdown-menu show position-absolute" 
-                            style={{ left: '100%', top: 0, minWidth: '220px' }}
-                          >
-                            <span className="dropdown-item disabled text-muted" style={{ cursor: 'default' }}>
-                              This page is under development
-                            </span>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                    
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/cec" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaUserTie /></span> CEC & EBF
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/regional" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaUsers /></span> Regional Secretary
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/public-secretary" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaUsers /></span> Branch Secretary
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/role-of-honour" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaTrophy /></span> Roll Of Honour
-                      </Link>
-                    </motion.div>
+                {openDropdown === 'about' && (
+                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu modern-luxury-dropdown show">
+                    <div className="dropdown-items-container">
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="#" onClick={(e) => { e.preventDefault(); closeAllMenus(); }}>
+                          <div className="dropdown-item-icon-box">
+                            <FaInfoCircle />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">About TNEBEA</span>
+                            <span className="dropdown-item-sub-title">History, Vision &amp; Objectives</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/cec" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaUserTie />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">CEC &amp; EBF</span>
+                            <span className="dropdown-item-sub-title">Central &amp; Executive Bodies</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/regional" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaUsers />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Regional Secretary</span>
+                            <span className="dropdown-item-sub-title">Regional Offices &amp; Officials</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/public-secretary" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaUsers />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Branch Secretary</span>
+                            <span className="dropdown-item-sub-title">Branch Wise Details</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/role-of-honour" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaTrophy />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Roll Of Honour</span>
+                            <span className="dropdown-item-sub-title">Our Proud Achievers</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
-            <motion.li 
-              className="nav-item dropdown" 
+            {/* 2. General Info Dropdown */}
+            <motion.li
+              className="nav-item dropdown"
               variants={navItemVariants}
-              onMouseEnter={() => handleDropdownOpen('tnebInfo')} 
+              onMouseEnter={() => handleDropdownOpen('tnebInfo')}
               onMouseLeave={handleDropdownClose}
             >
-              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+              <span className={`nav-link d-flex align-items-center gap-1 cursor-pointer text-light ${openDropdown === 'tnebInfo' ? 'active-dropdown-tab' : ''}`}>
+                <FaInfoCircle className="nav-icon" />
                 General Info
                 <motion.span animate={{ rotate: openDropdown === 'tnebInfo' ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <FaCaretDown />
+                  <FaCaretDown className="nav-caret" />
                 </motion.span>
               </span>
               <AnimatePresence>
                 {openDropdown === 'tnebInfo' && (
-                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/act-regulations" onClick={closeAllMenus}><span className="dropdown-icon"><FaGavel /></span> Act & Regulations</Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/manuals-and-forms-download" onClick={closeAllMenus}><span className="dropdown-icon"><FaFilePdf /></span> Manuals & Forms</Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/contributory-pension-scheme" onClick={closeAllMenus}><span className="dropdown-icon"><FaUserTie /></span> Pension Scheme (CPS)</Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/distribution-related-instructions" onClick={closeAllMenus}><span className="dropdown-icon"><FaClipboardList /></span> Distribution Instructions</Link>
-                    </motion.div>
+                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu modern-luxury-dropdown show">
+                    <div className="dropdown-items-container">
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/act-regulations" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaGavel />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Act &amp; Regulations</span>
+                            <span className="dropdown-item-sub-title">Rules, Acts &amp; Legal Terms</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaFilePdf />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Manuals &amp; Forms</span>
+                            <span className="dropdown-item-sub-title">Downloads &amp; Documentations</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaUserTie />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Pension Scheme (CPS)</span>
+                            <span className="dropdown-item-sub-title">Contributory Pension Details</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/distribution-related-instructions" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaClipboardList />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Distribution Instructions</span>
+                            <span className="dropdown-item-sub-title">Field &amp; Safety Guidelines</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
-            <motion.li 
-              className="nav-item dropdown" 
+            {/* 3. Technical Dropdown */}
+            <motion.li
+              className="nav-item dropdown"
               variants={navItemVariants}
-              onMouseEnter={() => handleDropdownOpen('tech')} 
+              onMouseEnter={() => handleDropdownOpen('tech')}
               onMouseLeave={handleDropdownClose}
             >
-              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+              <span className={`nav-link d-flex align-items-center gap-1 cursor-pointer text-light ${openDropdown === 'tech' ? 'active-dropdown-tab' : ''}`}>
+                <FaCog className="nav-icon" />
                 Technical
                 <motion.span animate={{ rotate: openDropdown === 'tech' ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <FaCaretDown />
+                  <FaCaretDown className="nav-caret" />
                 </motion.span>
               </span>
               <AnimatePresence>
                 {openDropdown === 'tech' && (
-                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-qa" onClick={closeAllMenus}><span className="dropdown-icon"><FaQuestionCircle /></span> Technical Q&A</Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-parameters" onClick={closeAllMenus}><span className="dropdown-icon"><FaChartBar /></span> Technical Parameters</Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/technical-books-and-manuals" onClick={closeAllMenus}><span className="dropdown-icon"><FaBookOpen /></span> Books & Manuals</Link>
-                    </motion.div>
+                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu modern-luxury-dropdown show">
+                    <div className="dropdown-items-container">
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/technical-qa" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaQuestionCircle />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Technical Q&amp;A</span>
+                            <span className="dropdown-item-sub-title">Engineering Questions &amp; Answers</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/technical-parameters" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaChartBar />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Technical Parameters</span>
+                            <span className="dropdown-item-sub-title">Power &amp; Grid Standards</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/technical-books-and-manuals" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaBookOpen />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Books &amp; Manuals</span>
+                            <span className="dropdown-item-sub-title">Engineering Library &amp; Guides</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minnagam" onClick={closeAllMenus}>Minnagam</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/minnagam' ? 'active-nav-link' : ''}`} to="/minnagam" onClick={closeAllMenus}>
+                <FaBuilding className="nav-icon" /> Minnagam
+              </Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/minthiran" onClick={closeAllMenus}>e-Minthiran</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/minthiran' ? 'active-nav-link' : ''}`} to="/minthiran" onClick={closeAllMenus}>
+                <FaBook className="nav-icon" /> e-Minthiran
+              </Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/hand-book" onClick={closeAllMenus}>Hand Book</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/hand-book' ? 'active-nav-link' : ''}`} to="/hand-book" onClick={closeAllMenus}>
+                <FaBook className="nav-icon" /> Hand Book
+              </Link>
             </motion.li>
-            <motion.li 
-              className="nav-item dropdown" 
+
+            {/* 4. Quick Links Dropdown */}
+            <motion.li
+              className="nav-item dropdown"
               variants={navItemVariants}
-              onMouseEnter={() => handleDropdownOpen('quickLinks')} 
+              onMouseEnter={() => handleDropdownOpen('quickLinks')}
               onMouseLeave={handleDropdownClose}
             >
-              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+              <span className={`nav-link d-flex align-items-center gap-1 cursor-pointer text-light ${openDropdown === 'quickLinks' ? 'active-dropdown-tab' : ''}`}>
+                <FaLink className="nav-icon" />
                 Quick Links
                 <motion.span animate={{ rotate: openDropdown === 'quickLinks' ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <FaCaretDown />
+                  <FaCaretDown className="nav-caret" />
                 </motion.span>
               </span>
               <AnimatePresence>
                 {openDropdown === 'quickLinks' && (
-                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show">
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/important-notices" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaBell /></span> Important Notices
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/board-proceedings" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaLandmark /></span> Board Proceedings
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link className="dropdown-item" to="/photo-gallery" onClick={closeAllMenus}>
-                        <span className="dropdown-icon"><FaImages /></span> Photo Gallery
-                      </Link>
-                    </motion.div>
+                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu modern-luxury-dropdown show">
+                    <div className="dropdown-items-container">
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/important-notices" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaBell />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Important Notices</span>
+                            <span className="dropdown-item-sub-title">Official Circulars &amp; Orders</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/board-proceedings" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaLandmark />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Board Proceedings</span>
+                            <span className="dropdown-item-sub-title">Gazettes &amp; Official Records</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/photo-gallery" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaImages />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">Photo Gallery</span>
+                            <span className="dropdown-item-sub-title">Event Photos &amp; Memorabilia</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
-            <motion.li 
-              className="nav-item dropdown" 
+            {/* 5. Enroll Dropdown */}
+            <motion.li
+              className="nav-item dropdown"
               variants={navItemVariants}
-              onMouseEnter={() => handleDropdownOpen('enroll')} 
+              onMouseEnter={() => handleDropdownOpen('enroll')}
               onMouseLeave={handleDropdownClose}
             >
-              <span className="nav-link d-flex align-items-center gap-1 cursor-pointer">
+              <span className={`nav-link d-flex align-items-center gap-1 cursor-pointer text-light ${openDropdown === 'enroll' ? 'active-dropdown-tab' : ''}`}>
+                <FaEdit className="nav-icon" />
                 Enroll
                 <motion.span animate={{ rotate: openDropdown === 'enroll' ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                  <FaCaretDown />
+                  <FaCaretDown className="nav-caret" />
                 </motion.span>
               </span>
               <AnimatePresence>
                 {openDropdown === 'enroll' && (
-                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu show" style={{ minWidth: '220px' }}>
-                    <motion.div variants={itemVariants}>
-                      <span className="dropdown-item disabled text-muted" style={{ cursor: 'default' }}>
-                        This page is under development
-                      </span>
-                    </motion.div>
+                  <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit" className="dropdown-menu modern-luxury-dropdown show" style={{ minWidth: '310px' }}>
+                    <div className="dropdown-items-container">
+                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
+                        <div className="dropdown-timeline-node">
+                          <span className="dropdown-timeline-dot"></span>
+                        </div>
+                        <Link className="dropdown-luxury-item" to="/enroll" onClick={closeAllMenus}>
+                          <div className="dropdown-item-icon-box">
+                            <FaUserPlus />
+                          </div>
+                          <div className="dropdown-item-text-box">
+                            <span className="dropdown-item-main-title">New Membership</span>
+                            <span className="dropdown-item-sub-title">Join TNEBEA Association</span>
+                          </div>
+                          <FaChevronRight className="dropdown-item-chevron" />
+                        </Link>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/tnebea-forms" onClick={closeAllMenus}>Forms</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/tnebea-forms' ? 'active-nav-link' : ''}`} to="/tnebea-forms" onClick={closeAllMenus}>
+                <FaFileAlt className="nav-icon" /> Forms
+              </Link>
             </motion.li>
 
             <motion.li className="nav-item" variants={navItemVariants}>
-              <Link className="nav-link nav-hover-effect" to="/contactus" onClick={closeAllMenus}>Contact</Link>
+              <Link className={`nav-link nav-hover-effect ${location.pathname === '/contactus' ? 'active-nav-link' : ''}`} to="/contactus" onClick={closeAllMenus}>
+                <FaEnvelope className="nav-icon" /> Contact
+              </Link>
             </motion.li>
 
             {isAuthenticated() && (
@@ -743,50 +1027,6 @@ const Navbar = () => {
             )}
 
           </ul>
-          <div className="ms-lg-3" style={{ position: 'relative' }}>
-            <div className="user-menu-container">
-              <motion.div 
-                className="user-profile-icon"
-                onClick={handleUserMenuToggle}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ boxShadow: userMenuOpen ? "0 0 20px rgba(27, 91, 175, 0.5)" : "0 4px 12px rgba(0, 0, 0, 0.1)" }}
-              >
-                <FaUser />
-                <motion.div className="pulse-dot" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
-              </motion.div>
-              
-              <AnimatePresence>
-                {userMenuOpen && (
-                  <motion.div variants={userDropdownVariants} initial="hidden" animate="visible" exit="exit" className="user-dropdown-menu" onMouseLeave={() => setUserMenuOpen(false)}>
-
-                     <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-                      <Link className="user-dropdown-item" to="#" onClick={(e) => { e.preventDefault(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                        <span className="user-menu-icon"><FaClipboardList /></span><span>Grievance</span>
-                      </Link>
-                    </motion.div>
-
-                    {isAuthenticated() ? (
-                      <>
-                        <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                          <Link className="user-dropdown-item" to="/" onClick={() => { localStorage.removeItem('authToken'); localStorage.removeItem('userData'); window.location.reload(); closeAllMenus(); }} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                            <span className="user-menu-icon"><FaUser /></span><span>Logout</span>
-                          </Link>
-                        </motion.div>
-                      </>
-                    ) : (
-                      <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                        <Link className="user-dropdown-item" to="/login" onClick={() => closeAllMenus()} whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
-                          <span className="user-menu-icon"><FaUser /></span><span>Login</span>
-                        </Link>
-                      </motion.div>
-                    )}
-
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
         </motion.div>
       </div>
     </motion.nav>

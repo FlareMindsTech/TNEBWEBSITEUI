@@ -1,107 +1,83 @@
-﻿.qa-container {
-  font-family: 'Merriweather', serif;
+.qa-container {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   min-height: 100vh;
-  background: white;
-  padding: 0;
-  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  padding: 20px;
 }
 
+/* Hero Section with Luxury Theme Background */
 .qa-hero {
-  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
-  color: white;
-  padding: 30px 15px;
-  text-align: center;
   position: relative;
+  background: radial-gradient(ellipse at 50% 20%, #1b5baf 0%, #061c3d 85%, #030e20 100%);
+  padding: 40px 24px;
+  border-radius: 20px;
+  margin-bottom: 35px;
+  text-align: center;
   overflow: hidden;
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 202, 56, 0.2);
 }
 
-
-.qa-hero::before {
-  content: '';
+.qa-hero-ambient-glow {
   position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  filter: blur(40px);
-  animation: float 6s ease-in-out infinite;
-}
-
-.qa-hero::after {
-  content: '';
-  position: absolute;
-  bottom: -10%;
-  left: -5%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  filter: blur(30px);
-  animation: float 8s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(30px); }
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.18) 0%, rgba(27, 91, 175, 0.3) 40%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
 }
 
 .qa-hero-content {
   position: relative;
-  z-index: 1;
-  max-width: 800px;
-  margin: 0 auto;
+  z-index: 2;
 }
 
 .qa-hero h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0 0 13px 0;
-  display: flex;
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .qa-hero-icon {
   font-size: 2rem;
-  animation: bounce 2s infinite;
+  color: #ffca38;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.title-highlight {
+  color: #ffca38;
 }
 
-.qa-hero p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 300;
+.hero-divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #ffca38 50%, transparent 100%);
+  margin: 12px auto;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 202, 56, 0.6);
 }
 
-.qa-timeline-dots {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 30px;
+.qa-hero-tagline {
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  margin-bottom: 0;
 }
 
-.qa-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #cbd5e0;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
+/* Original Accordion Content Styles */
 .qa-content {
-  padding: 60px 40px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
+  padding: 0 10px 40px;
 }
 
 .qa-accordion-container {
@@ -113,32 +89,28 @@
 .qa-accordion-item {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(27, 91, 175, 0.1);
   overflow: hidden;
-  border: 2px solid transparent;
   transition: all 0.3s ease;
 }
 
 .qa-accordion-item:hover {
-  border-color: #1b5baf;
-  box-shadow: 0 12px 32px rgba(27, 91, 175, 0.25);
+  box-shadow: 0 8px 25px rgba(27, 91, 175, 0.15);
+  border-color: rgba(27, 91, 175, 0.3);
 }
 
 .qa-accordion-header {
   width: 100%;
-  padding: 25px 30px;
-  background: white;
+  padding: 24px;
+  background: none;
   border: none;
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  cursor: pointer;
+  text-align: left;
   transition: all 0.3s ease;
-}
-
-.qa-accordion-header:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
 }
 
 .qa-header-content {
@@ -146,11 +118,10 @@
   align-items: center;
   gap: 20px;
   flex: 1;
-  text-align: left;
 }
 
 .qa-accordion-icon {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #1b5baf;
   flex-shrink: 0;
   display: flex;
@@ -162,147 +133,80 @@
 }
 
 .qa-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2d3748;
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #1b5baf;
   margin: 0 0 5px 0;
 }
 
 .qa-subtitle {
   font-size: 0.9rem;
-  color: #718096;
+  color: #666;
   margin: 0;
 }
 
 .qa-doc-icon {
-  font-size: 2rem;
-  color: #1b5baf;
+  font-size: 1.8rem;
+  color: #2a6cc7;
   flex-shrink: 0;
 }
 
-
 .qa-accordion-content {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.03) 100%);
-  border-top: 1px solid #edf2f7;
   overflow: hidden;
+  border-top: 1px solid #edf2f7;
 }
 
 .qa-content-inner {
-  padding: 30px;
+  padding: 24px;
+  background: #f8fafc;
 }
 
 .qa-description {
+  font-size: 0.95rem;
   color: #4a5568;
-  font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.7;
   margin: 0 0 20px 0;
 }
 
 .qa-download-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #1b5baf 0%, #2c7be5 100%);
-  color: white;
-  padding: 12px 28px;
+  gap: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
+  color: white !important;
+  text-decoration: none !important;
   border-radius: 8px;
-  text-decoration: none;
   font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(27, 91, 175, 0.3);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.4);
 }
 
 .qa-download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(27, 91, 175, 0.6);
-  color: white;
+  background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%);
+  box-shadow: 0 6px 20px rgba(27, 91, 175, 0.4);
 }
 
-.qa-download-btn:active {
-  transform: translateY(0);
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .qa-hero {
-    padding: 50px 20px;
+    padding: 30px 16px;
   }
 
   .qa-hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .qa-hero p {
-    font-size: 1.1rem;
-  }
-
-  .qa-content {
-    padding: 40px 20px;
+    font-size: 1.7rem;
   }
 
   .qa-accordion-header {
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .qa-header-content {
-    width: 100%;
-  }
-
-  .qa-doc-icon {
-    align-self: flex-end;
+    padding: 16px;
   }
 
   .qa-title {
-    font-size: 1.1rem;
-  }
-
-  .qa-subtitle {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .qa-hero {
-    padding: 40px 15px;
-  }
-
-  .qa-hero h1 {
-    font-size: 2rem;
-    gap: 10px;
-  }
-
-  .qa-hero-icon {
-    font-size: 2rem;
-  }
-
-  .qa-hero p {
     font-size: 1rem;
   }
 
-  .qa-content {
-    padding: 30px 15px;
-  }
-
-  .qa-accordion-item {
-    border-radius: 8px;
-  }
-
-  .qa-accordion-header {
-    padding: 15px;
-  }
-
-  .qa-content-inner {
-    padding: 20px;
-  }
-
-  .qa-description {
-    font-size: 0.95rem;
-  }
-
-  .qa-download-btn {
-    width: 100%;
-    justify-content: center;
+  .qa-doc-icon {
+    font-size: 1.4rem;
   }
 }

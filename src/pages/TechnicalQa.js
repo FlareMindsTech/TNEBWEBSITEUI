@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBook, FaChevronDown, FaDownload } from 'react-icons/fa';
 import './TechnicalQa.css';
@@ -88,30 +88,17 @@ const TechnicalQa = () => {
 
   return (
     <div className="qa-container">
-      <motion.div
-        className="qa-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      {/* Hero Banner with Theme Background only and exact original text */}
+      <div className="qa-hero">
+        <div className="qa-hero-ambient-glow"></div>
         <div className="qa-hero-content">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <FaBook className="qa-hero-icon" />
-            Technical Q&A
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            Expert technical references and comprehensive guides for TNEB engineers
-          </motion.p>
+          <h1>
+            <FaBook className="qa-hero-icon" /> Technical <span className="title-highlight">Q&amp;A</span>
+          </h1>
+          <div className="hero-divider"></div>
+          <p className="qa-hero-tagline">Expert technical references and comprehensive guides for TNEB engineers</p>
         </div>
-      </motion.div>
+      </div>
 
       <div className="qa-content">
         <div className="qa-accordion-container">

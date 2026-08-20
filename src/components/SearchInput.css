@@ -28,10 +28,11 @@
 .input:focus,
 .input:not(:placeholder-shown) {
   background-color: #fff;
-  border: 1px solid #1b5baf;
+  border: 1px solid #072958;
   width: 180px;
   cursor: text;
   padding: 18px 40px 18px 40px;
+  box-shadow: 0 4px 12px rgba(7, 41, 88, 0.15);
 }
 
 .icon {
@@ -40,13 +41,16 @@
   top: 0;
   height: 40px;
   width: 40px;
-  background-color: #fff;
+  background-color: #072958;
   border-radius: 10px;
-  fill: #1b5baf;
-  border: 1px solid #1b5baf;
+  color: #ffffff;
+  stroke: #ffffff;
+  fill: none;
+  border: 1px solid #072958;
   transition: all .5s ease-in-out;
   pointer-events: none;
   z-index: 1;
+  padding: 9px;
 }
 
 /* Search icon specific - always visible */
@@ -64,12 +68,14 @@
 .input:not(:placeholder-shown) + .icon {
   background-color: transparent;
   border: none;
+  color: #072958;
+  stroke: #072958;
 }
 
 /* Clear Button Styles */
 .clear-button {
   position: absolute;
-  right: 8px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -82,17 +88,16 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   z-index: 10;
-  color: #1b5baf;
 }
 
 .clear-button:hover {
-  background-color: rgba(27, 91, 175, 0.1);
+  background-color: rgba(7, 41, 88, 0.1);
 }
 
 .clear-icon {
   width: 16px;
   height: 16px;
-  stroke: currentColor;
+  stroke: #072958;
 }

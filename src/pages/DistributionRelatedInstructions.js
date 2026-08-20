@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaFilePdf, FaDownload, FaBolt } from 'react-icons/fa';
 import './DistributionRelatedInstructions.css';
@@ -11,19 +11,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2
-    }
-  }
-};
-
-const headerVariants = {
-  hidden: { opacity: 0, y: -30 },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 10
     }
   }
 };
@@ -102,40 +89,23 @@ const DistributionRelatedInstructions = () => {
 
   return (
     <div className="dri-container">
-      <motion.div
-        className="dri-header"
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-      >
-        <motion.h1
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-        >
-          <motion.span
-            whileHover={{ scale: 1.1, rotate: -5 }}
-            style={{ display: 'inline-block' }}
-          >
-            <FaBolt style={{ color: '#ffffff', fontSize: '2rem' }} />
-          </motion.span>
-          {' '}Distribution Related Instructions
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          Important distribution guidelines and instructions
-        </motion.p>
-      </motion.div>
+      {/* Hero Header with requested Luxury Theme */}
+      <div className="dri-hero">
+        <div className="dri-hero-ambient-glow"></div>
+        <div className="dri-hero-content">
+         
+          <h1>Distribution Related <span className="title-highlight">Instructions</span></h1>
+          <div className="hero-divider"></div>
+          <p className="dri-hero-tagline">Important distribution guidelines and instructions</p>
+        </div>
+      </div>
 
       <div className="dri-content">
         <motion.div
           className="dri-document-count"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
           <FaFilePdf style={{ marginRight: '8px', color: '#dc3545' }} />
           Total <strong>{documents.length}</strong> documents available

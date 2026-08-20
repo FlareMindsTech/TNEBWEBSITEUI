@@ -126,14 +126,14 @@ const Cec = () => {
 
   return (
     <div className="cec-container">
-      {/* Hero Section */}
+      {/* Hero Section with Luxury Latest News Theme */}
       <div className="cec-hero">
+        <div className="cec-hero-ambient-glow"></div>
         <div className="cec-hero-content">
-          <FaUsers className="hero-icon" />
-          <h1>TNEB ENGINEERS' ASSOCIATION</h1>
+          <h1>TNEB ENGINEERS' <span className="title-highlight">ASSOCIATION</span></h1>
           <div className="hero-divider"></div>
           <h2>CENTRAL EXECUTIVE COMMITTEE 2025-2027</h2>
-          <p>Leading with Excellence & Integrity</p>
+          <p className="cec-hero-tagline">Leading with Excellence &amp; Integrity • Committed to Engineering Fraternity</p>
         </div>
       </div>
 
@@ -159,17 +159,19 @@ const Cec = () => {
 
       {/* Committee Members Grid */}
       <div className="members-grid-section">
-        <h3><FaUsers /> Executive Committee Members</h3>
-        <p className="section-sub">Click or hover for details</p>
-        
+        <div className="section-title-wrapper text-center mb-4">
+          <h3><FaUsers /> Executive Committee Members</h3>
+          <p className="section-sub">Click or hover for details</p>
+        </div>
+
         <div className="members-grid">
           {filteredMembers.filter((member) => member.id >= 1 && member.id <= 13).map((member) => (
             <div key={member.id} className="member-card">
               <div className="card-front">
                 <img src={member.photo} alt={member.name} />
                 <div className="card-info">
-                    <h5><FaUser style={{ marginRight: '8px', color: '#2a6cc7' }} />{member.name}</h5>
-                    <p><FaBriefcase style={{ marginRight: '6px', color: '#ff6b6b' }} />{member.designation}</p>
+                  <h5><FaUser style={{ marginRight: '8px', color: '#2a6cc7' }} />{member.name}</h5>
+                  <p><FaBriefcase style={{ marginRight: '6px', color: '#ff6b6b' }} />{member.designation}</p>
                 </div>
               </div>
               <div className="card-back">
@@ -186,18 +188,21 @@ const Cec = () => {
 
       {/* EBF Committee Heading and Members Grid */}
       <div className="members-grid-section mt-5">
-        <h3><FaUsers /> EBF Committee</h3>
-        <div className="hero-divider" style={{ backgroundColor: '#2a6cc7', width: '60px', height: '3px', margin: '10px auto 10px' }}></div>
-        <p className="section-sub">Click or hover for details</p>
-        
+        <div className="ebf-header-banner">
+
+          <h3><FaUsers className="me-2 text-gold" /> EBF Committee</h3>
+          <div className="hero-divider"></div>
+          <p className="section-sub">Dedicated to welfare, mutual support, and benevolence</p>
+        </div>
+
         <div className="members-grid">
           {filteredMembers.filter((member) => member.id >= 14 && member.id <= 15).map((member) => (
             <div key={member.id} className="member-card">
               <div className="card-front">
                 <img src={member.photo} alt={member.name} />
                 <div className="card-info">
-                    <h5><FaUser style={{ marginRight: '8px', color: '#2a6cc7' }} />{member.name}</h5>
-                    <p><FaBriefcase style={{ marginRight: '6px', color: '#ff6b6b' }} />{member.designation}</p>
+                  <h5><FaUser style={{ marginRight: '8px', color: '#2a6cc7' }} />{member.name}</h5>
+                  <p><FaBriefcase style={{ marginRight: '6px', color: '#ff6b6b' }} />{member.designation}</p>
                 </div>
               </div>
               <div className="card-back">

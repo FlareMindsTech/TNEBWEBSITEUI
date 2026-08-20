@@ -103,31 +103,28 @@
 
 /* Hero Section */
 .regional-hero {
-  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
-  padding: 40px 20px;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 20%, #1b5baf 0%, #061c3d 85%, #030e20 100%);
+  padding: 44px 24px;
   border-radius: 20px;
   margin-bottom: 40px;
   text-align: center;
-  position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(27, 91, 175, 0.3);
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 202, 56, 0.2);
 }
 
-.regional-hero::before {
-  content: '';
+.regional-hero-ambient-glow {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: float 20s linear infinite;
-}
-
-@keyframes float {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.18) 0%, rgba(27, 91, 175, 0.3) 40%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
 }
 
 .regional-hero-content {
@@ -135,42 +132,72 @@
   z-index: 2;
 }
 
-.hero-icon {
-  font-size: 3rem;
-  color: white;
-  margin-bottom: 20px;
-  animation: bounce 2s infinite;
+.regional-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 202, 56, 0.12);
+  border: 1px solid rgba(255, 202, 56, 0.4);
+  color: #ffca38;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  backdrop-filter: blur(6px);
+  text-transform: uppercase;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.pulse-gold {
+  animation: goldPulse 2s infinite ease-in-out;
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
 }
 
 .regional-hero h1 {
-  color: white;
-  font-size: 2.2rem;
+  color: #ffffff;
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
   margin-bottom: 10px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.title-highlight {
+  color: #ffca38;
 }
 
 .hero-divider {
-  width: 80px;
+  width: 90px;
   height: 3px;
-  background: white;
-  margin: 15px auto;
+  background: linear-gradient(90deg, transparent 0%, #ffca38 50%, transparent 100%);
+  margin: 14px auto;
   border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 202, 56, 0.6);
 }
 
 .regional-hero h2 {
-  color: rgba(255,255,255,0.95);
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
 }
 
-.regional-hero p {
-  color: rgba(255,255,255,0.8);
-  font-size: 1rem;
+.regional-hero-tagline {
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  margin-bottom: 0;
 }
 
 /* Secretaries Grid */

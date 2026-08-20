@@ -109,27 +109,19 @@ const HandBook = () => {
 
   return (
     <div className="handbook-container">
-      <motion.section
-        className="handbook-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="electricity-container">
-          <motion.div className="arc-wire left-wire" />
-          <motion.div className="arc-wire right-wire" />
-          <motion.div className="power-center" animate={{ boxShadow: ["0 0 20px rgba(255,193,7,0.3)", "0 0 40px rgba(255,193,7,0.8)", "0 0 20px rgba(255,193,7,0.3)"] }} transition={{ duration: 2, repeat: Infinity }} />
-        </div>
-        <motion.div className="hero-formal-content" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }}>
-          {/* <div className="formal-header-badge">Government Project</div> */}
-          <h1 className="hero-title-formal">
-            <span className="hero-book-formal">
-              <FaBook />
-            </span>
-            Power Engineer's Handbook
+      {/* Luxury Hero Banner matching Minnagam Theme */}
+      <div className="handbook-hero">
+        <div className="handbook-hero-ambient-glow"></div>
+        <div className="handbook-hero-content">
+          <h1>
+            Power Engineer's <span className="title-highlight">Handbook</span>
           </h1>
-        </motion.div>
-      </motion.section>
+          <div className="hero-divider"></div>
+          <p className="handbook-hero-tagline">
+            Authoritative Technical Reference &amp; Guidelines for Power Engineers
+          </p>
+        </div>
+      </div>
 
       <div className="handbook-main">
         <motion.div

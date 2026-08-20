@@ -48,13 +48,18 @@ export default function ContactUs() {
   }
   return (
     <div className="contact-page">
-      <div className="container mx-auto px-6 py-16">
-        <div className="page-header mb-4">
-          <h1 className="page-title">
-            <FaEnvelope className="title-icon text-light" />
-            Contact Us
-          </h1>
-          <p className="page-subtitle">We'd love to hear from you! Get in touch with us.</p>
+      <div className="container mx-auto px-6 py-10">
+        {/* Luxury Hero Banner */}
+        <div className="contact-hero">
+          <div className="contact-hero-ambient-glow"></div>
+          <div className="contact-hero-content">
+            <h1>
+              <FaEnvelope className="me-2" style={{ verticalAlign: 'middle', fontSize: '0.85em', color: '#ffca38' }} />
+              Contact <span className="title-highlight">Us</span>
+            </h1>
+            <div className="hero-divider"></div>
+            <p className="contact-hero-tagline">We'd love to hear from you! Get in touch with us.</p>
+          </div>
         </div>
 
         <div className="contact-grid">
@@ -125,14 +130,14 @@ export default function ContactUs() {
           </div>
           <div className="contact-info-section">
             <h3 className="info-section-title">Contact Information</h3>
-            
+
             <div className="info-item">
               <div className="info-icon-wrapper">
                 <FaMapMarkerAlt className="contact-info-icon" />
               </div>
               <div className="info-content">
                 <h5>Address</h5>
-                <p>144, Anna Salai, Chennai – 600 002.<br/>(Regn.No.217/94)<br/>(Recognised in G.O.No.854 dated 06.04.1946)</p>
+                <p>144, Anna Salai, Chennai – 600 002.<br />(Regn.No.217/94)<br />(Recognised in G.O.No.854 dated 06.04.1946)</p>
               </div>
             </div>
 

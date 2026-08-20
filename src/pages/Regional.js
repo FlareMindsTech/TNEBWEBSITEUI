@@ -128,14 +128,15 @@ const Regional = () => {
 
   return (
     <div className="regional-container">
-      {/* Hero Section */}
+      {/* Hero Section with Luxury Latest News Theme */}
       <div className="regional-hero">
+        <div className="regional-hero-ambient-glow"></div>
         <div className="regional-hero-content">
-          <FaUsers className="hero-icon" />
-          <h1>REGIONAL SECRETARIES</h1>
+         
+          <h1>REGIONAL <span className="title-highlight">SECRETARIES</span></h1>
           <div className="hero-divider"></div>
           <h2>TNEBEA 2025-2027</h2>
-          <p>Representing Excellence Across Regions</p>
+          <p className="regional-hero-tagline">Representing Excellence &amp; Engineering Interests Across All Regions</p>
         </div>
       </div>
 

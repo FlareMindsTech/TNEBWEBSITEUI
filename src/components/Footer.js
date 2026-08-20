@@ -22,10 +22,10 @@ const Footer = () => {
       try {
         // Get or generate visitor ID
         const visitorId = getVisitorId();
-        
+
         // Track visitor with ID
         const trackResponse = await trackVisitor(visitorId);
-        
+
         // Use count from track
         if (trackResponse && trackResponse.totalVisitors !== undefined) {
           setVisitorCount(trackResponse.totalVisitors);
@@ -140,7 +140,7 @@ const Footer = () => {
               <Link to="/privacy-policy">Privacy Policy</Link>
               <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </div>
-            <motion.div 
+            <motion.div
               className="visitor-count-badge"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -150,8 +150,8 @@ const Footer = () => {
                 <>
                   <span className="visitor-icon-wrap">
                     <svg className="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
                     </svg>
                     <span className="visitor-pulse" aria-hidden="true"></span>
                   </span>

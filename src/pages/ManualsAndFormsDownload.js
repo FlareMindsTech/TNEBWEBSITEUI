@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaFilePdf, FaDownload, FaLock } from 'react-icons/fa';
 import Swal from 'sweetalert2';
@@ -26,43 +26,11 @@ const containerVariants = {
   }
 };
 
-const cardVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 40,
-    scale: 0.9
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12,
-      duration: 0.6
-    }
-  }
-};
-
-const headerVariants = {
-  hidden: { opacity: 0, y: -30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 10
-    }
-  }
-};
-
 // Document Card Component
 const DocumentCard = ({ doc, index }) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isAvailable] = useState(doc.href && doc.href !== '#');
+  const isAvailable = Boolean(doc.href && doc.href !== '#');
 
   const handleDocumentClick = (e) => {
     e.preventDefault();
@@ -236,41 +204,26 @@ const ManualsAndFormsDownload = () => {
 
   return (
     <div className="manuals-container">
-      <motion.div
-        className="manuals-header"
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-      >
-        <motion.h1
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-        >
-          <motion.span
-            whileHover={{ scale: 1.1, rotate: -5 }}
-            style={{ display: 'inline-block' }}
-          >
-            <FaFilePdf className="mr-2" />
-          </motion.span>
-          
-          {' '}TNEB Manuals, Forms & Documents
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          Official TNEB regulated regulations, manuals, and forms download
-        </motion.p>
-      </motion.div>
+      {/* Hero Header with requested Luxury Theme */}
+      <div className="manuals-hero">
+        <div className="manuals-hero-ambient-glow"></div>
+        <div className="manuals-hero-content">
+          <div className="manuals-hero-badge">
+            <FaFilePdf className="badge-icon pulse-gold" />
+            <span>Manuals &amp; Forms</span>
+          </div>
+          <h1>TNEB Manuals, <span className="title-highlight">Forms &amp; Documents</span></h1>
+          <div className="hero-divider"></div>
+          <p className="manuals-hero-tagline">Official TNEB regulated regulations, manuals, and forms download</p>
+        </div>
+      </div>
 
       <div className="manuals-content">
         <motion.div
           className="document-count"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
           <FaFilePdf style={{ marginRight: '8px', color: '#dc3545' }} />
           Total <strong>{documents.length}</strong> documents available

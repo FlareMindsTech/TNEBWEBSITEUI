@@ -158,16 +158,19 @@ const Minnagam = () => {
 
   return (
     <div className="minnagam-container">
+      {/* Luxury Hero Banner matching Reference */}
       <div className="minnagam-hero">
-        <div className="hero-content">
-          <FaHotel className="minnagam-hero-icon" />
-          <h1 className="hero-title1">MINNAGAM</h1>
-          <div className="hero-subtitle">
-            <FaMapMarkerAlt className="location-icon text-light" />
-            <span className='text-light'>APR Mansion, Royapettah High Road, Chennai</span>
+        <div className="minnagam-hero-ambient-glow"></div>
+        <div className="minnagam-hero-content">
+          <h1 className="minnagam-hero-title">
+            MINNA<span className="title-highlight">GAM</span>
+          </h1>
+          <div className="hero-divider"></div>
+          <div className="minnagam-hero-location">
+            <FaMapMarkerAlt className="location-icon" />
+            <span>APR Mansion, Royapettah High Road, Chennai</span>
           </div>
-          <p className="hero-description">Residential Accommodation for Engineers</p>
-          <div className="minnagam-hero-badge">Information Only</div>
+          <p className="minnagam-hero-tagline">Residential Accommodation for Engineers</p>
         </div>
       </div>
 
