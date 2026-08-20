@@ -182,13 +182,15 @@ const Branchsecretary = () => {
 
   return (
     <div className="branch-container">
+      {/* Hero Section with Luxury Latest News Theme */}
       <div className="branch-hero">
+        <div className="branch-hero-ambient-glow"></div>
         <div className="branch-hero-content">
-          <FaUsers className="hero-icon" />
-          <h1>BRANCH SECRETARIES</h1>
+          
+          <h1>BRANCH <span className="title-highlight">SECRETARIES</span></h1>
           <div className="hero-divider"></div>
           <h2>TNEBEA 2025-2027</h2>
-          <p>Serving Excellence Across All Branches</p>
+          <p className="branch-hero-tagline">Serving Excellence &amp; Dedicated Support Across All Branches</p>
         </div>
       </div>
 

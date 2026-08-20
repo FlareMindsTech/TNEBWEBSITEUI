@@ -64,21 +64,19 @@ const Photogallery = () => {
 
   return (
     <div className="act-regulations-container" style={pageStyle}>
-      <div className="page-header">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="header-content"
-        >
-          <div className="header-icon">
-            <FaCamera style={{ color: '#ffffff', fontSize: '2.5rem' }} />
-          </div>
-          <h1>Photo Gallery</h1>
-          <p className="lead">
+      {/* Luxury Hero Banner */}
+      <div className="gallery-hero">
+        <div className="gallery-hero-ambient-glow"></div>
+        <div className="gallery-hero-content">
+          <h1>
+            <FaCamera className="me-2" style={{ verticalAlign: 'middle', fontSize: '0.85em', color: '#ffca38' }} />
+            Photo <span className="title-highlight">Gallery</span>
+          </h1>
+          <div className="hero-divider"></div>
+          <p className="gallery-hero-tagline">
             Explore our collection of memorable moments and events
           </p>
-        </motion.div>
+        </div>
       </div>
 
       <div className="container py-4">

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaFilePdf, FaCalendar, FaDownload, FaHome, FaUser, FaInfoCircle, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
-import { motion, useAnimation } from 'framer-motion';
+import React from 'react';
+import { FaFilePdf, FaCalendar, FaDownload, FaInfoCircle } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import Swal from 'sweetalert2';
 import './ActRegulations.css';
@@ -18,38 +17,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.2
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 30,
-    scale: 0.95
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12,
-      duration: 0.6
-    }
-  }
-};
-
-const headerVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 10
     }
   }
 };
@@ -146,8 +113,6 @@ const DocumentItem = ({ doc, index }) => {
 };
 
 const ActRegulations = () => {
-  const [currentTime, setCurrentTime] = useState('');
-
   // Document links data
   const documents = [
     {
@@ -177,46 +142,6 @@ const ActRegulations = () => {
     }
   ];
 
-  // Update current time
-  useEffect(() => {
-    const updateClock = () => {
-      const now = new Date();
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
-      const day = days[now.getDay()];
-      const date = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      
-      setCurrentTime(`${day}, ${date}-${month}-${year}, ${hours}:${minutes}:${seconds}`);
-    };
-
-    updateClock();
-    const intervalId = setInterval(updateClock, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  // Show welcome message alert
-  useEffect(() => {
-    const hasVisited = sessionStorage.getItem('actRegulationsVisited');
-    if (!hasVisited) {
-      Swal.fire({
-        title: 'Welcome!',
-        html: '<p>Access official TNEB Acts & Regulations</p><small>Click on any document to view or download</small>',
-        icon: 'info',
-        confirmButtonText: 'Got it!',
-        confirmButtonColor: '#1b5baf',
-        timer: 4000,
-        timerProgressBar: true
-      });
-      sessionStorage.setItem('actRegulationsVisited', 'true');
-    }
-  }, []);
-
   const showInfoAlert = () => {
     Swal.fire({
       title: 'Important Information',
@@ -237,83 +162,50 @@ const ActRegulations = () => {
 
   return (
     <div className="act-regulations-container">
+      {/* Hero Header with requested Luxury Theme */}
+      <div className="act-hero">
+        <div className="act-hero-ambient-glow"></div>
+        <div className="act-hero-content">
+        
+          <h1>Act &amp; <span className="title-highlight">Regulations</span></h1>
+          <div className="hero-divider"></div>
+          <p className="act-hero-tagline">Important documents and regulations for TNEB engineers</p>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="act-regulations-content">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
+      <div className="act-regulations-content-wrap">
+        <div className="documents-container">
+          <motion.div 
+            className="card shadow-sm"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <h5 className="mb-0">Official Documents</h5>
+              <button
+                className="btn btn-sm btn-light"
+                onClick={showInfoAlert}
+              >
+                <FaInfoCircle /> Info
+              </button>
+            </div>
+            <div className="card-body">
               <motion.div 
-                className="page-header mb-4"
+                className="documents-list"
+                variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                variants={headerVariants}
               >
-                <motion.h1 
-                  className="text-primary"
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, type: "spring" }}
-                >
-                  <motion.span
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    style={{ display: 'inline-block' }}
-                  >
-                    <FaFilePdf className="mr-2" />
-                  </motion.span>
-                  Act & Regulations
-                </motion.h1>
-                <motion.p 
-                  className="text-muted"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                  Important documents and regulations for TNEB engineers
-                </motion.p>
+                {documents.map((doc, index) => (
+                  <DocumentItem key={doc.id} doc={doc} index={index} />
+                ))}
               </motion.div>
-              
-              <div className="documents-container">
-                <motion.div 
-                  className="card shadow-sm"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                >
-                  <motion.div 
-                    className="card-header bg-primary text-white"
-                    whileHover={{ backgroundColor: '#0d47a1' }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h5 className="mb-0">Official Documents</h5>
-                      <motion.button
-                        className="btn btn-sm btn-light"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={showInfoAlert}
-                      >
-                        <FaInfoCircle /> Info
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                  <div className="card-body">
-                    <motion.div 
-                      className="documents-list"
-                      variants={containerVariants}
-                      initial="hidden"
-                      animate="visible"
-                    >
-                      {documents.map((doc, index) => (
-                        <DocumentItem key={doc.id} doc={doc} index={index} />
-                      ))}
-                    </motion.div>
-                  </div>
-                </motion.div>
-              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

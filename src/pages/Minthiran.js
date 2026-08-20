@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { FaSearch, FaTimes, FaCalendarAlt, FaBookOpen, FaFilter, FaUndo } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 import { getAllMinthirans } from '../api';
@@ -26,9 +27,6 @@ const MONTH_ORDER = [
 
 const Minthiran = () => {
   const navigate = useNavigate();
-  const pageStyle = {
-    background: '#ffffff'
-  };
   const [minthirans, setMinthirans] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState('all');
@@ -151,65 +149,107 @@ const Minthiran = () => {
   };
 
   return (
-    <div className="act-regulations-container" style={pageStyle}>
-      <div className="page-header">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          e-Minthiran
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="lead"
-        >
-          {CURRENT_YEAR} Monthly Magazine Collection
-        </motion.p>
+    <div className="minthiran-container">
+      {/* Luxury Hero Banner matching Minnagam theme */}
+      <div className="minthiran-hero">
+        <div className="minthiran-hero-ambient-glow"></div>
+        <div className="minthiran-hero-content">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="minthiran-hero-title"
+          >
+            e-<span className="title-highlight">Minthiran</span>
+          </motion.h1>
+          <div className="hero-divider"></div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="minthiran-hero-tagline"
+          >
+            {CURRENT_YEAR} Monthly Magazine Collection
+          </motion.p>
+        </div>
       </div>
 
-      <div className="filter-search-container minthiran-toolbar">
-        <div className="filter-group month-filter-group">
-          <label htmlFor="monthFilter">Filter by Month</label>
-          <select
-            id="monthFilter"
-            className="filter-select"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-          >
-            <option value="all">All Months</option>
-            {availableMonths.map((month) => (
-              <option key={month} value={month}>{month}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="search-section search-section-compact">
-          <div className="search-wrapper">
-            <input
-              type="text"
-              className="search-input"
-              placeholder={`🔍 Search ${CURRENT_YEAR} magazines by title, month...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button 
-                className="clear-search"
-                onClick={() => setSearchQuery('')}
+      {/* Professional Floating Filter and Search Card */}
+      <div className="filter-search-container minthiran-toolbar-card">
+        <div className="minthiran-toolbar-grid">
+          {/* Month Filter */}
+          <div className="toolbar-field-group">
+            <label htmlFor="monthFilter" className="toolbar-label">
+              <FaCalendarAlt className="toolbar-label-icon" />
+              <span>Filter by Month</span>
+            </label>
+            <div className="toolbar-select-wrapper">
+              <select
+                id="monthFilter"
+                className="toolbar-select"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
               >
-                ✕
-              </button>
-            )}
+                <option value="all">All Months</option>
+                {availableMonths.map((month) => (
+                  <option key={month} value={month}>{month}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Search Box */}
+          <div className="toolbar-field-group search-field-group">
+            <label htmlFor="magSearchInput" className="toolbar-label">
+              <FaSearch className="toolbar-label-icon" />
+              <span>Search Collection</span>
+            </label>
+            <div className="toolbar-search-box">
+              <FaSearch className="search-box-icon" />
+              <input
+                id="magSearchInput"
+                type="text"
+                className="toolbar-search-input"
+                placeholder={`Search ${CURRENT_YEAR} magazines by title, month...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button 
+                  type="button"
+                  className="search-box-clear"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
+                >
+                  <FaTimes />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="active-filters active-filters-always">
-          <span className="results-count">
-            {filteredMagazines.length} {filteredMagazines.length === 1 ? 'magazine' : 'magazines'} in {CURRENT_YEAR}
-          </span>
+        {/* Toolbar Footer / Active Stats */}
+        <div className="minthiran-toolbar-footer">
+          <div className="toolbar-results-badge">
+            <FaBookOpen className="badge-stat-icon" />
+            <span>
+              <strong>{filteredMagazines.length}</strong> {filteredMagazines.length === 1 ? 'magazine' : 'magazines'} in {CURRENT_YEAR}
+            </span>
+          </div>
+
+          {(selectedMonth !== 'all' || searchQuery) && (
+            <button
+              type="button"
+              className="toolbar-reset-btn"
+              onClick={() => {
+                setSelectedMonth('all');
+                setSearchQuery('');
+              }}
+            >
+              <FaUndo className="reset-icon" />
+              <span>Reset Filters</span>
+            </button>
+          )}
         </div>
       </div>
 

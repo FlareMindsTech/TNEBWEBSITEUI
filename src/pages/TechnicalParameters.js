@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCog, FaTag, FaFilter } from 'react-icons/fa';
+import { FaTag, FaFilter, FaCog } from 'react-icons/fa';
 import './TechnicalParameters.css';
 
 const SpecCard = ({ spec, index }) => {
@@ -101,25 +101,17 @@ const TechnicalParameters = () => {
 
   return (
     <div className="params-container">
-      <motion.div
-        className="params-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <motion.div
-          className="params-hero-content"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
+      {/* Hero Banner with Theme Background only and exact original text */}
+      <div className="params-hero">
+        <div className="params-hero-ambient-glow"></div>
+        <div className="params-hero-content">
           <h1>
-            <FaCog className="params-hero-icon" style={{ color: '#ffffff' }} />
-            Technical Parameters
+            <FaCog className="params-hero-icon" /> Technical <span className="title-highlight">Parameters</span>
           </h1>
-          <p>Industry standards and technical specifications</p>
-        </motion.div>
-      </motion.div>
+          <div className="hero-divider"></div>
+          <p className="params-hero-tagline">Industry standards and technical specifications</p>
+        </div>
+      </div>
 
       <div className="params-content">
         <motion.div
@@ -129,7 +121,7 @@ const TechnicalParameters = () => {
           transition={{ delay: 0.3 }}
         >
           <div className="filter-label">
-            <FaFilter style={{ color: '#ffffff', marginRight: '8px' }} /> Filter by Category
+            <FaFilter style={{ color: '#1b5baf', marginRight: '8px' }} /> Filter by Category
           </div>
           <div className="filter-buttons">
             {filters.map((filter) => (

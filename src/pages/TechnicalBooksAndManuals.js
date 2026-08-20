@@ -49,16 +49,17 @@ const TechnicalBooksAndManuals = () => {
 
   return (
     <div className="books-container">
-      <motion.div
-        className="books-header"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <FaBookOpen className="books-header-icon" />
-        <h1>Technical Library</h1>
-        <p>Explore our collection of technical manuals and guides</p>
-      </motion.div>
+      {/* Hero Banner with Theme Background only and exact original text */}
+      <div className="books-hero">
+        <div className="books-hero-ambient-glow"></div>
+        <div className="books-hero-content">
+          <h1>
+            <FaBookOpen className="books-header-icon" /> Technical <span className="title-highlight">Library</span>
+          </h1>
+          <div className="hero-divider"></div>
+          <p className="books-hero-tagline">Explore our collection of technical manuals and guides</p>
+        </div>
+      </div>
 
       <div className="books-shelf">
         <div className="shelf-wood" />

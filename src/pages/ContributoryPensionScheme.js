@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaFilePdf, FaDownload, FaMoneyBillWave } from 'react-icons/fa';
 import './ContributoryPensionScheme.css';
@@ -17,33 +17,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2
-    }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12
-    }
-  }
-};
-
-const headerVariants = {
-  hidden: { opacity: 0, y: -30 },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 10
     }
   }
 };
@@ -120,40 +93,23 @@ const ContributoryPensionScheme = () => {
 
   return (
     <div className="cps-container">
-      <motion.div
-        className="cps-header"
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-      >
-        <motion.h1
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-        >
-          <motion.span
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            style={{ display: 'inline-block' }}
-          >
-            <FaMoneyBillWave style={{ color: '#ffffff', fontSize: '2rem' }} />
-          </motion.span>
-          {' '}Contributory Pension Scheme
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          Comprehensive CPS documentation and guidelines
-        </motion.p>
-      </motion.div>
+      {/* Hero Header with requested Luxury Theme */}
+      <div className="cps-hero">
+        <div className="cps-hero-ambient-glow"></div>
+        <div className="cps-hero-content">
+         
+          <h1>Contributory <span className="title-highlight">Pension Scheme</span></h1>
+          <div className="hero-divider"></div>
+          <p className="cps-hero-tagline">Comprehensive CPS documentation and guidelines</p>
+        </div>
+      </div>
 
       <div className="cps-content">
         <motion.div
           className="cps-document-count"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
           <FaFilePdf style={{ marginRight: '8px', color: '#dc3545' }} />
           Total <strong>{documents.length}</strong> documents available

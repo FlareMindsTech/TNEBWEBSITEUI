@@ -1,70 +1,47 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaClock } from 'react-icons/fa';
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaUser, FaClipboardList, FaChevronRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import SearchInput from './SearchInput';
 import logo from '../assets/tnebea_logo_cropped2.png';
 import { SidebarContext } from '../context/SidebarContext';
+import { isAuthenticated } from '../api';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Header = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
-  const [currentTime, setCurrentTime] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
-  // Check screen size for responsive search
+  // Close user menu on click outside
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const handleClickOutside = (event) => {
+      if (userMenuOpen && userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
     };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    if (userMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [userMenuOpen]);
 
-  // Update current time and date
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-      const day = days[now.getDay()];
-      const date = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-      
-      // Format date
-      setCurrentDate(`${day}, ${date} ${month} ${year}`);
-      
-      // Convert to 12-hour format for time
-      let hours = now.getHours();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      
-      setCurrentTime(`${hours}:${minutes}:${seconds} ${ampm}`);
-    };
-
-    updateDateTime();
-    const intervalId = setInterval(updateDateTime, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const userDropdownVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: -10 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, scale: 0.95, y: -10, transition: { duration: 0.15 } }
+  };
 
   return (
     <>
       {/* Main Header */}
-      <motion.header 
-        className="main-header" 
-        style={{ position: 'relative' }}
+      <motion.header
+        className="main-header"
+        style={{ position: 'relative', zIndex: 1200 }}
         initial={{ opacity: 0 }}
-        animate={{ 
+        animate={{
           opacity: isSidebarOpen ? 0 : 1,
           height: isSidebarOpen ? 0 : 'auto',
           overflow: isSidebarOpen ? 'hidden' : 'visible',
@@ -72,95 +49,178 @@ const Header = () => {
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <div className="container-fluid" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="row align-items-stretch py-2">
-            {/* Logo and Title */}
-            <div className="col-12 col-md-8 col-lg-9 mb-2 mb-md-0">
-              <div className="header-left d-flex align-items-center h-100">
-                <Link to="/">
-                  <motion.img
-                    src={logo}
-                    alt="TNEBEA Logo"
-                    className="header-logo"
-                    animate={{
-                      filter: [
-                        "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))",
-                        "drop-shadow(0 0 12px rgba(72, 169, 230, 0.5))",
-                        "drop-shadow(0 0 8px rgba(27, 91, 175, 0.3))"
-                      ]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </Link>
-                <motion.div 
-                  className="header-text header-text-centered" 
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  <motion.h1 
-                    className="mb-1 fw-bold text-center header-title"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  >
-                    Tamilnadu Electricity Board Engineers' Association
-                  </motion.h1>
-                  <motion.p 
-                    className="text-secondary sub-heading mb-0 text-center"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.7 }}
-                  >
-                    The association was formed &amp; registered in 1946.
-                  </motion.p>
-                </motion.div>
-              </div>
+        <div className="container-fluid px-3 px-lg-4" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="header-grid-layout">
+            
+            {/* Left: Emblem Logo */}
+            <div className="header-grid-left">
+              <Link to="/">
+                <motion.img
+                  src={logo}
+                  alt="TNEBEA Logo"
+                  className="header-logo-emblem"
+                  animate={{
+                    filter: [
+                      "drop-shadow(0 0 4px rgba(7, 41, 88, 0.2))",
+                      "drop-shadow(0 0 8px rgba(74, 144, 226, 0.4))",
+                      "drop-shadow(0 0 4px rgba(7, 41, 88, 0.2))"
+                    ]
+                  }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </Link>
             </div>
 
-            {/* Date Time and Search */}
-            <motion.div 
-              className="col-12 col-md-4 col-lg-3"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
+            {/* Center: Exact 5-Tier Brand Stack */}
+            <motion.div
+              className="header-grid-center"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="header-right mobile-two-column-layout">
-                {/* Date and Time Display - Left side on mobile */}
-                <motion.div 
-                  className="datetime-display mobile-datetime-left"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                >
-                  {/* Date */}
-                  <div className="datetime-row fw-bold text-start">
-                    <FaCalendarAlt className="datetime-icon fw-bold mobile-icon-shrink" />
-                    <span className="datetime-text fw-bold mobile-date-text">
-                      {currentDate}
-                    </span>
-                  </div>
-                  
-                  {/* Time */}
-                  <div className="datetime-row fw-bold text-start">
-                    <FaClock className="datetime-icon fw-bold mobile-icon-shrink" />
-                    <span className="datetime-time fw-bold mobile-time-text">
-                      {currentTime}
-                    </span>
-                  </div>
-                </motion.div>
+              {/* Tier 1: SINCE 1946 Badge */}
+              <div className="header-since-badge">
+                <span className="gold-taper-line gold-taper-left"></span>
+                <span className="gold-bead"></span>
+                <span className="since-badge-text">SINCE 1946</span>
+                <span className="gold-bead"></span>
+                <span className="gold-taper-line gold-taper-right"></span>
+              </div>
 
-                {/* Search Input - Right side on mobile */}
-                <motion.div
-                  className="mobile-search-right"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.9 }}
-                >
+              {/* Tier 2: Main Title */}
+              <h1 className="header-brand-title">TAMILNADU ELECTRICITY BOARD</h1>
+
+              {/* Tier 3: Association Subtitle with Gold Lines & Beads */}
+              <div className="header-brand-subtitle-wrapper">
+                <span className="gold-taper-line gold-taper-left"></span>
+                <span className="gold-bead"></span>
+                <span className="header-brand-subtitle">ENGINEERS’ ASSOCIATION</span>
+                <span className="gold-bead"></span>
+                <span className="gold-taper-line gold-taper-right"></span>
+              </div>
+
+              {/* Tier 4: Lightning Spark Divider */}
+              <div className="header-spark-divider">
+                <span className="spark-line spark-line-left"></span>
+                <span className="spark-icon">⚡</span>
+                <span className="spark-line spark-line-right"></span>
+              </div>
+
+              {/* Tier 5: Tagline */}
+              <p className="header-tagline mb-0">
+                The association was formed &amp; registered in 1946.
+              </p>
+            </motion.div>
+
+            {/* Right: Search & Profile Icon (Desktop Only - on Mobile it moves to Navbar) */}
+            <motion.div
+              className="header-grid-right d-none d-lg-flex"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="header-right-actions d-flex align-items-center gap-3">
+                <div className="header-search-wrapper">
                   <SearchInput />
-                </motion.div>
+                </div>
+
+                {/* User Profile Icon */}
+                <div className="user-menu-container" ref={userMenuRef}>
+                  <motion.div 
+                    className="user-profile-icon"
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.95 }}
+                    animate={{ boxShadow: userMenuOpen ? "0 0 20px rgba(27, 91, 175, 0.5)" : "0 4px 12px rgba(0, 0, 0, 0.1)" }}
+                  >
+                    <FaUser />
+                    <motion.div className="pulse-dot" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }} />
+                  </motion.div>
+                  
+                  <AnimatePresence>
+                    {userMenuOpen && (
+                      <motion.div 
+                        variants={userDropdownVariants} 
+                        initial="hidden" 
+                        animate="visible" 
+                        exit="exit" 
+                        className="user-profile-floating-dropdown" 
+                        onMouseLeave={() => setUserMenuOpen(false)}
+                      >
+                        <div className="user-dropdown-cards-wrapper">
+                          {/* Grievance */}
+                          <Link 
+                            className="user-dropdown-card" 
+                            to="#" 
+                            onClick={(e) => { 
+                              e.preventDefault(); 
+                              window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); 
+                              setUserMenuOpen(false);
+                            }} 
+                          >
+                            <div className="user-card-icon-circle">
+                              <FaClipboardList />
+                            </div>
+                            <div className="user-card-divider"></div>
+                            <div className="user-card-text">
+                              <span className="user-card-title">Grievance</span>
+                              <span className="user-card-subtitle">Feedback &amp; Complaints</span>
+                            </div>
+                            <div className="user-card-arrow-wedge">
+                              <FaChevronRight />
+                            </div>
+                          </Link>
+
+                          {/* Login / Logout */}
+                          {isAuthenticated() ? (
+                            <Link 
+                              className="user-dropdown-card" 
+                              to="/" 
+                              onClick={() => { 
+                                localStorage.removeItem('authToken'); 
+                                localStorage.removeItem('userData'); 
+                                window.location.reload(); 
+                              }} 
+                            >
+                              <div className="user-card-icon-circle">
+                                <FaUser />
+                              </div>
+                              <div className="user-card-divider"></div>
+                              <div className="user-card-text">
+                                <span className="user-card-title">Logout</span>
+                                <span className="user-card-subtitle">Sign Out of Account</span>
+                              </div>
+                              <div className="user-card-arrow-wedge">
+                                <FaChevronRight />
+                              </div>
+                            </Link>
+                          ) : (
+                            <Link 
+                              className="user-dropdown-card" 
+                              to="/login" 
+                              onClick={() => setUserMenuOpen(false)} 
+                            >
+                              <div className="user-card-icon-circle">
+                                <FaUser />
+                              </div>
+                              <div className="user-card-divider"></div>
+                              <div className="user-card-text">
+                                <span className="user-card-title">Login</span>
+                                <span className="user-card-subtitle">Member Portal Access</span>
+                              </div>
+                              <div className="user-card-arrow-wedge">
+                                <FaChevronRight />
+                              </div>
+                            </Link>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
+
           </div>
         </div>
       </motion.header>
