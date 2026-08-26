@@ -1,38 +1,43 @@
-/* From Uiverse.io by Yaya12085 - Modified */
+/* Clean Uiverse Search Input with 360deg Rotation and Fixed Alignment */
 .input-container {
   position: relative;
   display: flex;
   align-items: center;
+  margin-right: 6px;
 }
 
 .input {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
-  padding: 18px 16px;
+  padding: 8px 12px;
   background-color: transparent;
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  color: #072958;
 }
 
 .input::placeholder {
   color: transparent;
+  transition: color 0.2s ease;
 }
 
 .input:focus::placeholder {
-  color: rgb(131, 128, 128);
+  color: #94a3b8;
 }
 
 .input:focus,
 .input:not(:placeholder-shown) {
-  background-color: #fff;
-  border: 1px solid #072958;
-  width: 180px;
+  background-color: #ffffff;
+  border: 1.5px solid #072958;
+  width: 200px;
   cursor: text;
-  padding: 18px 40px 18px 40px;
-  box-shadow: 0 4px 12px rgba(7, 41, 88, 0.15);
+  padding: 8px 36px 8px 40px;
+  box-shadow: 0 4px 14px rgba(7, 41, 88, 0.18);
 }
 
 .icon {
@@ -47,10 +52,11 @@
   stroke: #ffffff;
   fill: none;
   border: 1px solid #072958;
-  transition: all .5s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   z-index: 1;
-  padding: 9px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 /* Search icon specific - always visible */
@@ -59,9 +65,9 @@
   z-index: 1;
 }
 
+/* 360 Degree Smooth Rotation on Hover, Click, or Focus */
 .input:hover + .icon {
-  transform: rotate(360deg);
-  transition: .2s ease-in-out;
+  transform: rotate(180deg);
 }
 
 .input:focus + .icon,
@@ -70,12 +76,13 @@
   border: none;
   color: #072958;
   stroke: #072958;
+  transform: rotate(360deg);
 }
 
 /* Clear Button Styles */
 .clear-button {
   position: absolute;
-  right: 10px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -97,7 +104,7 @@
 }
 
 .clear-icon {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   stroke: #072958;
 }
