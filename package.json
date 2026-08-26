@@ -43,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jimp": "^1.6.1",
+    "jpeg-js": "^0.4.4",
+    "pngjs": "^7.0.0"
   }
 }

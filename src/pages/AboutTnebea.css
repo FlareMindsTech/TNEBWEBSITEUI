@@ -1,0 +1,2121 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap');
+
+/* ==========================================================================
+   ABOUT TNEBEA - UNIFIED SIGNATURE ROYAL SAPPHIRE & GLOWING GOLD THEME
+   ========================================================================== */
+
+:root {
+  --tneb-navy-hero: radial-gradient(ellipse at 50% 20%, #1b5baf 0%, #061c3d 85%, #030e20 100%);
+  --tneb-navy-dark: #07172e;
+  --tneb-navy-card: #0c203d;
+  --tneb-gold: #ffca38;
+  --tneb-gold-deep: #f59e0b;
+  --tneb-gold-glow: rgba(255, 202, 56, 0.4);
+  --tneb-blue-accent: #1e62c0;
+  --tneb-emerald: #10b981;
+  --tneb-bg-page: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  --tneb-card-shadow: 0 10px 30px rgba(16, 42, 77, 0.08);
+}
+
+.about-tnebea-page {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--tneb-bg-page);
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+/* ==========================================================================
+   1. SIGNATURE 2-COLUMN LUXURY HERO BANNER
+   ========================================================================== */
+.about-hero-wrapper {
+  padding: 24px 20px 10px 20px;
+}
+
+.about-hero-card {
+  position: relative;
+  background: radial-gradient(ellipse at 60% 30%, #153e75 0%, #081d3b 50%, #030e20 100%);
+  padding: 48px 36px 50px 36px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 202, 56, 0.35);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 202, 56, 0.15);
+}
+
+.about-hero-ambient-glow {
+  position: absolute;
+  top: -30%;
+  right: 15%;
+  width: 50vw;
+  height: 350px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.25) 0%, rgba(27, 91, 175, 0.35) 45%, transparent 75%);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+/* Top Pill Badges */
+.hero-gold-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 202, 56, 0.1);
+  border: 1px solid rgba(255, 202, 56, 0.5);
+  color: #ffca38;
+  padding: 5px 16px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(255, 202, 56, 0.15);
+}
+
+.hero-blue-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(30, 64, 175, 0.3);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  color: #93c5fd;
+  padding: 5px 16px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.text-gold-glow {
+  color: #ffca38;
+  filter: drop-shadow(0 0 4px rgba(255, 202, 56, 0.8));
+}
+
+/* Main Heading Typography */
+.hero-majestic-heading {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: #fdfbf7;
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.18;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+}
+
+.hero-gold-serif-line {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: #e5b358;
+  text-shadow: 0 0 24px rgba(229, 179, 88, 0.5);
+}
+
+/* Golden Flourish Ornament Divider */
+.hero-flourish-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 480px;
+}
+
+.hero-flourish-divider::before,
+.hero-flourish-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 202, 56, 0.6) 0%, rgba(255, 202, 56, 0.1) 100%);
+}
+
+.hero-flourish-divider::before {
+  background: linear-gradient(90deg, rgba(255, 202, 56, 0.1) 0%, rgba(255, 202, 56, 0.6) 100%);
+}
+
+.flourish-diamond {
+  color: #ffca38;
+  font-size: 0.9rem;
+  filter: drop-shadow(0 0 6px rgba(255, 202, 56, 0.8));
+}
+
+.hero-description-lead {
+  color: #cbd5e1;
+  font-size: 0.96rem;
+  font-weight: 400;
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+.hero-description-lead strong {
+  color: #ffffff;
+}
+
+/* Right Column Emblem (Prominent Large Majestic Size) */
+.hero-emblem-right-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+}
+
+.hero-emblem-radial-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.3) 0%, rgba(27, 91, 175, 0.35) 45%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.hero-80-split-img {
+  height: 440px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 40px rgba(255, 202, 56, 0.55));
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-80-split-img:hover {
+  transform: scale(1.04) translateY(-8px);
+  filter: drop-shadow(0 28px 50px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 55px rgba(255, 202, 56, 0.75));
+}
+
+/* Hero Action Buttons - Single Row Balanced Arrangement */
+.hero-action-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-gold-hero {
+  background: linear-gradient(180deg, #ffe082 0%, #ffca28 50%, #f5a623 100%) !important;
+  color: #071933 !important;
+  font-weight: 800;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  padding: 10px 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.btn-gold-hero:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5);
+  color: #000000 !important;
+  background: linear-gradient(180deg, #fff0a8 0%, #ffd74a 50%, #f59e0b 100%) !important;
+}
+
+.small-arrow {
+  font-size: 0.75rem;
+}
+
+.btn-outline-hero {
+  background: rgba(7, 25, 51, 0.65);
+  border: 1.5px solid rgba(255, 202, 56, 0.35);
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.btn-outline-hero:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffca38;
+  color: #ffca38 !important;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 991px) {
+  .hero-80-split-img {
+    height: 300px;
+  }
+}
+
+/* ==========================================================================
+   2. KPI STATS CARDS (DARK LUXURY CARD DESIGN - LINING NUMERALS & ALIGNMENT)
+   ========================================================================== */
+.kpi-stat-card-luxury {
+  background: radial-gradient(ellipse at 50% 20%, #0f2d57 0%, #071933 100%);
+  border-radius: 18px;
+  padding: 24px 18px 20px 18px;
+  border: 1.5px solid rgba(255, 202, 56, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 12px rgba(255, 202, 56, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 235px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.kpi-stat-card-luxury:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 22px rgba(255, 202, 56, 0.3);
+  border-color: rgba(255, 202, 56, 0.7);
+}
+
+.kpi-navy-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #183e75 0%, #071933 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  margin-bottom: 8px;
+}
+
+.kpi-gold-icon {
+  color: #ffca38;
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 5px rgba(255, 202, 56, 0.6));
+}
+
+.kpi-val-number {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Outfit', 'Inter', Roboto, sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin: 4px 0 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-val-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.6px;
+  line-height: 1.35;
+  text-transform: uppercase;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.kpi-val-pill {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.kpi-val-pill.amber-pill {
+  background: rgba(245, 158, 11, 0.15);
+  color: #ffca38;
+  border: 1px solid rgba(255, 202, 56, 0.4);
+  box-shadow: 0 0 8px rgba(255, 202, 56, 0.15);
+}
+
+.kpi-val-pill.blue-pill {
+  background: rgba(30, 64, 175, 0.25);
+  color: #93c5fd;
+  border: 1px solid rgba(147, 197, 253, 0.4);
+}
+
+.kpi-val-pill.green-pill {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(110, 231, 183, 0.4);
+}
+
+.kpi-bottom-accent {
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, #ffca38 0%, #f59e0b 100%);
+  margin: 10px auto 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 202, 56, 0.5);
+}
+
+/* ==========================================================================
+   3. STICKY LUXURY NAVIGATION TABS (SAPPHIRE & GLOWING GOLDEN BORDER)
+   ========================================================================== */
+.sticky-nav-strip {
+  position: sticky;
+  top: 0;
+  z-index: 1010;
+  background: radial-gradient(ellipse at 50% 50%, #0d2850 0%, #071933 100%);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 202, 56, 0.35);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 202, 56, 0.25);
+  padding: 10px 0;
+}
+
+.nav-tabs-pill-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 6px;
+  scrollbar-width: none;
+}
+
+.nav-tabs-pill-row::-webkit-scrollbar {
+  display: none;
+}
+
+.pill-tab {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 202, 56, 0.3);
+  color: #d0e1fd;
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pill-tab:hover {
+  background: rgba(255, 202, 56, 0.18);
+  color: #ffca38;
+  border-color: #ffca38;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(255, 202, 56, 0.25);
+}
+
+.pill-tab.active {
+  background: linear-gradient(180deg, #ffe082 0%, #ffca28 50%, #f5a623 100%) !important;
+  color: #071933 !important;
+  font-weight: 800 !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.6) !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
+}
+
+/* ==========================================================================
+   4. UNIFIED THEMED SECTION BANNER
+   ========================================================================== */
+.themed-section-wrapper {
+  position: relative;
+}
+
+.themed-section-banner {
+  position: relative;
+  background: var(--tneb-navy-hero);
+  padding: 32px 20px 36px 20px;
+  border-radius: 20px;
+  text-align: center;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 202, 56, 0.35);
+  border-bottom: 3px solid #ffca38;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 202, 56, 0.15);
+  margin-bottom: 24px;
+}
+
+.section-ambient-glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50vw;
+  height: 180px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.18) 0%, rgba(27, 91, 175, 0.3) 40%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.section-banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.section-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 202, 56, 0.12);
+  border: 1px solid rgba(255, 202, 56, 0.4);
+  color: #ffca38;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  backdrop-filter: blur(6px);
+}
+
+.section-main-heading {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: #fdfbf7;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.section-main-sub {
+  font-size: 0.98rem;
+  color: #d0e1fd;
+  max-width: 740px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   5. RECOGNITION & EVOLUTION CARDS (EXACT DESIGN MATCH)
+   ========================================================================== */
+/* 5. PRE-INDEPENDENCE RECOGNITION (G.O. 854) CARD */
+.recognition-highlight-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(16, 42, 77, 0.04);
+  padding: 30px 26px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.recognition-highlight-card:hover {
+  box-shadow: 0 14px 35px rgba(16, 42, 77, 0.1);
+}
+
+.corner-gold-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75px;
+  height: 75px;
+  background: linear-gradient(135deg, transparent 50%, #fef3c7 50%);
+  border-top-right-radius: 19px;
+  pointer-events: none;
+}
+
+.recognition-navy-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 35%, #153766 0%, #071933 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.25);
+  border: 1px solid rgba(255, 202, 56, 0.25);
+}
+
+.recognition-gold-doc-icon {
+  color: #ffca38;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.4));
+}
+
+.recognition-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #071933;
+  letter-spacing: -0.3px;
+}
+
+.recognition-card-subtitle {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #d97706;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-title-gold-divider {
+  width: 40px;
+  height: 2px;
+  background: #fef3c7;
+  border-radius: 2px;
+}
+
+.title-short-gold-bar {
+  width: 38px;
+  height: 3px;
+  background: #f59e0b;
+  border-radius: 2px;
+}
+
+.recognition-intro-text {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.recognition-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recognition-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #1e293b;
+}
+
+.navy-circle-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #071933;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  box-shadow: 0 2px 6px rgba(7, 25, 51, 0.25);
+  border: 1px solid rgba(255, 202, 56, 0.2);
+}
+
+.gold-check-svg {
+  color: #ffca38;
+  font-size: 0.82rem;
+}
+
+/* Evolution Timeline Card */
+.evolution-timeline-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(16, 42, 77, 0.04);
+  padding: 30px 26px;
+}
+
+.evolution-connected-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  position: relative;
+  padding-left: 6px;
+}
+
+.evolution-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+}
+
+.evolution-timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 48px;
+  bottom: -22px;
+  width: 2px;
+  background: #cbd5e1;
+}
+
+.evolution-year-node {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  color: #1e3a8a;
+  font-weight: 800;
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(30, 98, 192, 0.08);
+}
+
+.evolution-year-node.gold-active {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #ffe082 0%, #ffca28 50%, #f59e0b 100%);
+  color: #071933;
+  font-weight: 900;
+  border: none;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
+}
+
+.node-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #071933;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.node-blue-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #60a5fa;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.node-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.evolution-quote-banner {
+  background: #fffdf5;
+  border: 1px solid #fef3c7;
+  border-left: 4.5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+.quote-gold-mark {
+  font-size: 2.2rem;
+  color: #f59e0b;
+  font-family: Georgia, serif;
+  line-height: 1;
+  font-weight: 900;
+  margin-top: -6px;
+}
+
+.quote-body-text {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: #1e293b;
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   6. BENEVOLENT FUND (EBF) MATRIX
+   ========================================================================== */
+.ebf-highlight-pill-card {
+  background: #ffffff;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #1e62c0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--tneb-card-shadow);
+}
+
+.ebf-highlight-pill-card.highlighted {
+  border-top-color: #ffca38;
+  background: #fffdf5;
+}
+
+.badge-year {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.badge-year.gold {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.ebf-highlight-pill-card h5 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f274a;
+  margin-bottom: 4px;
+}
+
+.ebf-highlight-pill-card p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.scheme-list-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: var(--tneb-card-shadow);
+}
+
+.scheme-list-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f274a;
+}
+
+.scheme-buttons-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scheme-select-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.scheme-select-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.scheme-select-item.active {
+  background: #0f274a;
+  border-color: #0f274a;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 39, 74, 0.25);
+}
+
+.scheme-select-item.active .scheme-year-text {
+  color: #cbd5e1;
+}
+
+.scheme-year-text {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.pill-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.badge-active {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.scheme-select-item.active .badge-active {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.badge-upcoming {
+  background: #fff8e1;
+  color: #d97706;
+}
+
+.scheme-select-item.active .badge-upcoming {
+  background: #f59e0b;
+  color: #000000;
+}
+
+.badge-concluded {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.scheme-select-item.active .badge-concluded {
+  background: rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+
+.scheme-detail-box {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(27, 91, 175, 0.15);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: var(--tneb-card-shadow);
+}
+
+.scheme-detail-box.gold-border-glow {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #ffffff 0%, #fffdf7 100%);
+  box-shadow: 0 14px 35px rgba(245, 158, 11, 0.12);
+}
+
+.scheme-top-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #d97706;
+  text-transform: uppercase;
+}
+
+.scheme-name-title {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #0f274a;
+}
+
+.status-bubble {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.status-bubble.status-green {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.status-bubble.status-grey {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.scheme-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.scheme-kpi-block {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+}
+
+.scheme-kpi-block.relief-block {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.kpi-hdr {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.kpi-amt {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #0f274a;
+  margin: 4px 0;
+}
+
+.kpi-amt.blue-text {
+  color: #1e62c0;
+}
+
+.kpi-amt.green-text {
+  color: #059669;
+}
+
+.kpi-ftr {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.scheme-feature-strip {
+  background: #fffbeb;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: #92400e;
+}
+
+.scheme-active-admission-row {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px 18px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.btn-gold-solid,
+.btn-gold-action {
+  background: linear-gradient(180deg, #ffe082 0%, #ffca28 50%, #f5a623 100%) !important;
+  color: #071933 !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  padding: 7px 16px;
+  border-radius: 9px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+  text-decoration: none;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-gold-solid:hover,
+.btn-gold-action:hover {
+  background: linear-gradient(180deg, #fff0a8 0%, #ffd74a 50%, #f59e0b 100%) !important;
+  color: #000000 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+}
+
+.ebf-empathy-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: var(--tneb-card-shadow);
+}
+
+.empathy-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Tabular Matrix */
+.elite-table-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: var(--tneb-card-shadow);
+}
+
+.table-card-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f274a;
+}
+
+.elite-data-table thead th {
+  background: var(--tneb-navy-hero);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 12px 16px;
+  border: none;
+}
+
+.elite-data-table tbody td {
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  border-color: #f1f5f9;
+}
+
+.table-sub-badge {
+  font-weight: 800;
+  color: #1e62c0;
+}
+
+.table-relief-badge {
+  font-weight: 800;
+  color: #059669;
+}
+
+.table-status-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.table-status-pill.open {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.table-status-pill.upcoming {
+  background: #fff8e1;
+  color: #d97706;
+}
+
+.table-status-pill.closed {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.row-gold-glow {
+  background: #fffdf5 !important;
+}
+
+.row-active-glow {
+  background: #f0fdf4 !important;
+}
+
+/* ==========================================================================
+   7. PUBLICATIONS (HANDBOOK & MINTHIRAN - EXACT DESIGN MATCH)
+   ========================================================================== */
+.publication-master-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(16, 42, 77, 0.04);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.publication-master-card:hover {
+  box-shadow: 0 16px 40px rgba(16, 42, 77, 0.12);
+}
+
+/* Full Width Navy Header Strip */
+.publication-card-header-strip {
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2.5px solid #ffca38;
+}
+
+.publication-gold-ring-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #071933;
+  border: 2px solid #ffca38;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(255, 202, 56, 0.3);
+}
+
+.gold-ring-icon {
+  color: #ffca38;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.5));
+}
+
+.pub-strip-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.pub-strip-subtitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d0e1fd;
+}
+
+.publication-card-body {
+  background: #ffffff;
+}
+
+.publication-intro-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+/* 2x4 Edition Grid (Sapphire & Gold Ring Design) */
+.handbook-edition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 16px;
+  margin-top: 12px;
+}
+
+.handbook-edition-sapphire-box {
+  position: relative;
+  background: radial-gradient(ellipse at 30% 50%, #124080 0%, #061c3d 75%, #030e20 100%);
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  border-radius: 18px;
+  padding: 18px 18px 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 10px rgba(255, 202, 56, 0.1);
+  cursor: pointer;
+}
+
+.handbook-edition-sapphire-box:hover {
+  border-color: #ffca38;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 202, 56, 0.35);
+}
+
+.edition-top-tag {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #ffe082 0%, #ffca28 50%, #f5a623 100%);
+  color: #071933;
+  font-weight: 900;
+  font-size: 0.72rem;
+  padding: 2px 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+
+.edition-gold-ring-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #071933;
+  border: 2px solid #ffca38;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(255, 202, 56, 0.35);
+}
+
+.edition-gold-icon {
+  color: #ffca38;
+  font-size: 1.35rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.5));
+}
+
+.edition-name-white {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  margin-bottom: 2px;
+}
+
+.edition-sub-blue {
+  font-size: 0.8rem;
+  color: #bfdbfe;
+  line-height: 1.35;
+}
+
+.edition-gold-arrow {
+  color: #ffca38;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 6px rgba(255, 202, 56, 0.5));
+}
+
+.handbook-edition-sapphire-box:hover .edition-gold-arrow {
+  transform: translateX(3px);
+}
+
+/* Bottom Golden Laurel Banner */
+.handbook-laurel-banner {
+  background: #fffdf5;
+  border: 1px solid #fef3c7;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.gold-laurel-leaf {
+  font-size: 1.5rem;
+}
+
+.gold-laurel-leaf.flip {
+  transform: scaleX(-1);
+}
+
+.laurel-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #071933;
+}
+
+.laurel-sub {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #92400e;
+}
+
+/* Right Card: Connected Timeline */
+.minthiran-connected-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 4px;
+}
+
+.journal-step-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+}
+
+.journal-pill-badge {
+  background: #071933;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 8px 14px;
+  border-radius: 20px;
+  min-width: 80px;
+  text-align: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(7, 25, 51, 0.25);
+}
+
+.journal-pill-badge.navy-gold {
+  background: #071933;
+  color: #ffca38;
+  border: 1px solid rgba(255, 202, 56, 0.4);
+}
+
+.journal-card-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.journal-card-box.active-blue-box {
+  background: #eff6ff;
+  border: 1.5px solid #60a5fa;
+  box-shadow: 0 4px 14px rgba(96, 165, 250, 0.2);
+}
+
+.journal-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1e62c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.15rem;
+}
+
+.journal-icon-circle.active-blue {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.journal-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #071933;
+}
+
+.journal-title.active-title {
+  color: #1e40af;
+}
+
+.journal-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* Bottom Emerald Laurel Banner */
+.minthiran-laurel-banner {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 16px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.1);
+}
+
+.green-laurel-leaf {
+  font-size: 1.6rem;
+}
+
+.green-laurel-leaf.flip {
+  transform: scaleX(-1);
+}
+
+.green-globe-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+.emerald-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #065f46;
+}
+
+.emerald-sub {
+  font-size: 0.8rem;
+  color: #047857;
+}
+
+/* ==========================================================================
+   8. MINNAGAM GUEST HOUSES
+   ========================================================================== */
+.minnagam-grid-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: var(--tneb-card-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.hub-emoji {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.hub-est-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #d97706;
+  text-transform: uppercase;
+}
+
+.hub-city-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f274a;
+}
+
+.hub-opened-date {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.hub-desc-text {
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.hub-active-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #059669;
+  border-top: 1px solid #f1f5f9;
+}
+
+.green-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.minnagam-portal-banner {
+  background: var(--tneb-navy-hero);
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 202, 56, 0.15);
+}
+
+/* ==========================================================================
+   9. ACHIEVEMENTS SEARCH & GRID
+   ========================================================================== */
+.achievement-search-wrapper {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.achievement-search-box {
+  position: relative;
+}
+
+.search-input-field {
+  width: 100%;
+  padding: 12px 42px;
+  border-radius: 14px;
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  outline: none;
+}
+
+.search-input-field:focus {
+  border-color: #ffca38;
+  box-shadow: 0 0 0 3px rgba(255, 202, 56, 0.25);
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.achievement-elite-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: var(--tneb-card-shadow);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.achievement-elite-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px rgba(16, 42, 77, 0.1);
+}
+
+.achievement-elite-card.active-expanded {
+  border-color: #0f274a;
+  box-shadow: 0 12px 30px rgba(15, 39, 74, 0.12);
+}
+
+.ach-num-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #0f274a;
+  color: #ffca38;
+  font-weight: 900;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ach-cat-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.chevron-rotator {
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+}
+
+.chevron-rotator.rotated {
+  transform: rotate(180deg);
+  color: #0f274a;
+}
+
+.ach-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f274a;
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+
+.ach-summary {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.ach-impact-card {
+  background: #f8fafc;
+  border-left: 3.5px solid #10b981;
+  border-radius: 8px;
+}
+
+.impact-hdr {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0f766e;
+}
+
+.impact-body {
+  font-size: 0.86rem;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   8. MINNAGAM GUEST HOUSE NETWORK
+   ========================================================================== */
+.minnagam-grid-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  border-top: 3.5px solid #ffca38;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 28px 20px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.minnagam-grid-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(16, 42, 77, 0.12);
+}
+
+.hub-navy-circle-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #183e75 0%, #071933 100%);
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  color: #ffca38;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.25);
+  margin-bottom: 8px;
+}
+
+.hub-est-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #d97706;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.hub-city-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #071933;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+  margin: 0 0 6px 0;
+}
+
+.hub-opened-date {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.hub-desc-text {
+  font-size: 0.86rem;
+  color: #475569;
+  line-height: 1.5;
+  min-height: 75px;
+  margin: 0 0 16px 0;
+}
+
+.hub-active-foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.green-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+/* ==========================================================================
+   10. DEMOCRATIC SOVEREIGNTY & AFFILIATIONS
+   ========================================================================== */
+.elite-glass-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 30px 26px;
+  transition: all 0.3s ease;
+}
+
+.elite-glass-card:hover {
+  box-shadow: 0 14px 35px rgba(16, 42, 77, 0.1);
+}
+
+.card-text-lead {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.affiliation-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.affiliation-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8fafc;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.affiliation-row:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.aff-ico-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.aff-ico-box.orange {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #d97706;
+}
+
+.aff-title {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #071933;
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+
+.aff-desc {
+  font-size: 0.84rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.unity-motto-strip {
+  background: #fffdf5;
+  border: 1.5px solid #fef3c7;
+  border-radius: 12px;
+  color: #92400e;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.gold-scale-icon {
+  color: #f59e0b;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   11. ANTHEM BANNER
+   ========================================================================== */
+.about-anthem-wrapper {
+  background: var(--tneb-navy-hero);
+  color: #ffffff;
+  border-top: 3.5px solid #ffca38;
+}
+
+.anthem-seal-circle {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: rgba(255, 202, 56, 0.15);
+  border: 2px solid #ffca38;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gold-seal-ico {
+  font-size: 2rem;
+  color: #ffca38;
+}
+
+.anthem-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.anthem-subtitle {
+  font-size: 1.05rem;
+  color: #d0e1fd;
+  max-width: 650px;
+  margin: 8px auto 0;
+}
+
+/* ==========================================================================
+   12. RESPONSIVE BREAKPOINTS (ALL DEVICES & ORIENTATIONS)
+   ========================================================================== */
+
+/* --- Large Desktops / Laptops (<= 1200px) --- */
+@media (max-width: 1200px) {
+  .hero-majestic-heading {
+    font-size: 2.7rem;
+  }
+  .hero-80-split-img {
+    height: 360px;
+  }
+  .hero-emblem-radial-backdrop {
+    width: 380px;
+    height: 380px;
+  }
+  .kpi-val-number {
+    font-size: 1.85rem;
+  }
+}
+
+/* --- Tablets & Medium Screens (<= 991.98px) --- */
+@media (max-width: 991.98px) {
+  .about-hero-card {
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .about-hero-card .col-lg-7 {
+    text-align: center !important;
+  }
+
+  .about-hero-card .d-flex.align-items-center.gap-2.flex-wrap {
+    justify-content: center;
+  }
+
+  .hero-majestic-heading {
+    font-size: 2.3rem;
+    line-height: 1.22;
+  }
+
+  .hero-flourish-divider {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description-lead {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.94rem;
+  }
+
+  .hero-action-buttons {
+    justify-content: center !important;
+  }
+
+  .hero-80-split-img {
+    height: 290px;
+    margin-top: 10px;
+  }
+
+  .hero-emblem-radial-backdrop {
+    width: 300px;
+    height: 300px;
+  }
+
+  .scheme-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .handbook-edition-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 14px;
+  }
+
+  .publication-card-header-strip {
+    padding: 14px 18px;
+  }
+}
+
+/* --- Small Tablets & Large Phones (<= 767.98px) --- */
+@media (max-width: 767.98px) {
+  .about-hero-wrapper {
+    padding: 14px 10px 6px 10px;
+  }
+
+  .about-hero-card {
+    padding: 32px 16px 36px 16px;
+    border-radius: 18px;
+  }
+
+  .hero-majestic-heading {
+    font-size: 1.85rem;
+    line-height: 1.25;
+  }
+
+  .hero-gold-pill-badge,
+  .hero-blue-pill-badge {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+  }
+
+  .hero-action-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .hero-action-buttons .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 16px;
+    font-size: 0.88rem;
+  }
+
+  .hero-80-split-img {
+    height: 240px;
+  }
+
+  .hero-emblem-radial-backdrop {
+    width: 240px;
+    height: 240px;
+  }
+
+  .section-main-heading {
+    font-size: 1.7rem;
+  }
+
+  .section-main-sub {
+    font-size: 0.88rem;
+  }
+
+  .handbook-edition-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .handbook-edition-sapphire-box {
+    padding: 16px 14px;
+  }
+
+  .edition-name-white {
+    font-size: 0.95rem;
+  }
+
+  .edition-sub-blue {
+    font-size: 0.76rem;
+  }
+
+  .journal-step-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .journal-pill-badge {
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .journal-card-box {
+    width: 100%;
+  }
+
+  .handbook-laurel-banner,
+  .minthiran-laurel-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 14px 12px;
+  }
+
+  .green-globe-circle {
+    margin: 0 auto 6px auto;
+  }
+
+  .corner-gold-ribbon {
+    font-size: 0.62rem;
+    padding: 2px 28px;
+  }
+
+  .anthem-title {
+    font-size: 1.6rem;
+  }
+
+  .anthem-subtitle {
+    font-size: 0.92rem;
+  }
+
+  .anthem-seal-circle {
+    width: 54px;
+    height: 54px;
+  }
+
+  .gold-seal-ico {
+    font-size: 1.6rem;
+  }
+}
+
+/* --- Extra Small Phones (<= 575.98px) --- */
+@media (max-width: 575.98px) {
+  .about-hero-card {
+    padding: 26px 12px 28px 12px;
+  }
+
+  .hero-majestic-heading {
+    font-size: 1.55rem;
+    line-height: 1.25;
+  }
+
+  .hero-description-lead {
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .hero-80-split-img {
+    height: 190px;
+  }
+
+  .hero-emblem-radial-backdrop {
+    width: 190px;
+    height: 190px;
+  }
+
+  .kpi-stat-card-luxury {
+    padding: 20px 14px 16px 14px;
+  }
+
+  .kpi-val-number {
+    font-size: 1.7rem;
+  }
+
+  .kpi-navy-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .kpi-gold-icon {
+    font-size: 1.35rem;
+  }
+
+  .section-mini-badge {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+  }
+
+  .section-main-heading {
+    font-size: 1.45rem;
+  }
+
+  .pub-strip-title {
+    font-size: 1.05rem;
+  }
+
+  .pub-strip-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .publication-gold-ring-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gold-ring-icon {
+    font-size: 1.15rem;
+  }
+
+  .btn-gold-action {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+  }
+}
+
+/* --- Ultra Small Devices (<= 400px) --- */
+@media (max-width: 400px) {
+  .hero-majestic-heading {
+    font-size: 1.38rem;
+  }
+  .hero-80-split-img {
+    height: 160px;
+  }
+  .kpi-val-number {
+    font-size: 1.5rem;
+  }
+}

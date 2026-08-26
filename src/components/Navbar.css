@@ -1152,14 +1152,22 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+.header-right-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
 .header-search-wrapper {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
-.search-form .input-group {
-  max-width: 300px;
-  margin-left: auto;
+.user-menu-container {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .current-time {

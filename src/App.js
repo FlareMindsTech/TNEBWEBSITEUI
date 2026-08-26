@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Cec from './pages/Cec';
@@ -25,6 +24,7 @@ import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
 import TnebeaForms from './pages/TnebeaForms';
 import RoleOf from './pages/RoleOf';
+import AboutTnebea from './pages/AboutTnebea';
 // import IntroScreen from './components/IntroScreen';
 // import ClickSpark from './components/ClickSpark';
 import { SidebarProvider } from './context/SidebarContext';
@@ -119,6 +119,8 @@ function App() {
               <Route path="/photo-gallery" element={<>< Header /><Photogallery /><Footer /></>} />
               <Route path="/gallery-detail/:galleryId" element={<>< Header /><GalleryDetail /><Footer /></>} />
               <Route path="/role-of-honour" element={<>< Header /><RoleOf /><Footer /></>} />
+              <Route path="/about-tnebea" element={<>< Header /><AboutTnebea /><Footer /></>} />
+              <Route path="/about" element={<>< Header /><AboutTnebea /><Footer /></>} />
               <Route path="/login" element={<>< Header /><AuthPage /><Footer /></>} />
             </Routes>
           </div>

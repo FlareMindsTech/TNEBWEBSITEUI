@@ -333,33 +333,9 @@ const Navbar = () => {
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
                             >
-                              <div
-                                className="sidebar-item d-flex align-items-center justify-content-between"
-                                onClick={() => setOpenDropdown(openDropdown === 'about_tnebea' ? 'about' : 'about_tnebea')}
-                                style={{ padding: '8px 20px', color: '#ffffff', cursor: 'pointer', fontSize: '0.95rem' }}
-                              >
-                                <span><FaInfoCircle className="sidebar-icon" /> About TNEBEA</span>
-                                <motion.span animate={{ rotate: openDropdown === 'about_tnebea' ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                  <FaCaretDown />
-                                </motion.span>
-                              </div>
-                              <AnimatePresence>
-                                {openDropdown === 'about_tnebea' && (
-                                  <motion.div
-                                    className="sidebar-submenu"
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    style={{ paddingLeft: '20px' }}
-                                  >
-                                    <span className="sidebar-item disabled text-light-50" style={{ paddingLeft: '45px', cursor: 'default', opacity: 0.7 }}>
-                                      This page is under development
-                                    </span>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-
+                              <Link className="sidebar-item" to="/about-tnebea" onClick={closeAllMenus}>
+                                <FaInfoCircle className="sidebar-icon" /> About TNEBEA (80th Year)
+                              </Link>
                               <Link className="sidebar-item" to="/cec" onClick={closeAllMenus}>
                                 <FaUserTie className="sidebar-icon" /> CEC & EBF
                               </Link>
@@ -641,13 +617,13 @@ const Navbar = () => {
                         <div className="dropdown-timeline-node">
                           <span className="dropdown-timeline-dot"></span>
                         </div>
-                        <Link className="dropdown-luxury-item" to="#" onClick={(e) => { e.preventDefault(); closeAllMenus(); }}>
+                        <Link className="dropdown-luxury-item" to="/about-tnebea" onClick={closeAllMenus}>
                           <div className="dropdown-item-icon-box">
                             <FaInfoCircle />
                           </div>
                           <div className="dropdown-item-text-box">
                             <span className="dropdown-item-main-title">About TNEBEA</span>
-                            <span className="dropdown-item-sub-title">History, Vision &amp; Objectives</span>
+                            <span className="dropdown-item-sub-title">80-Year Legacy &amp; Achievements</span>
                           </div>
                           <FaChevronRight className="dropdown-item-chevron" />
                         </Link>
