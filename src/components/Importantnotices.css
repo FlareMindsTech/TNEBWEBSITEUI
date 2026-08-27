@@ -11,7 +11,7 @@
 .notices-hero {
   position: relative;
   background: radial-gradient(ellipse at 50% 20%, #1b5baf 0%, #061c3d 85%, #030e20 100%);
-  padding: 44px 24px 50px 24px;
+  padding: 40px 24px 46px 24px;
   border-radius: 20px;
   text-align: center;
   overflow: hidden;
@@ -49,7 +49,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   backdrop-filter: blur(6px);
   text-transform: uppercase;
 }
@@ -71,10 +71,10 @@
 
 .notices-hero h1 {
   color: #ffffff;
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: -0.3px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -83,28 +83,28 @@
 }
 
 .hero-divider {
-  width: 90px;
+  width: 80px;
   height: 3px;
   background: linear-gradient(90deg, transparent 0%, #ffca38 50%, transparent 100%);
-  margin: 14px auto;
+  margin: 12px auto;
   border-radius: 2px;
   box-shadow: 0 0 8px rgba(255, 202, 56, 0.6);
 }
 
 .notices-hero-tagline {
   color: #cbd5e1;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   margin-bottom: 0;
 }
 
 /* ==========================================================================
-   2. FLOATING SEARCH BAR (50% Inside Hero Card, 50% Outside)
+   2. FLOATING SEARCH BAR
    ========================================================================== */
 .hero-floating-search-wrapper {
   position: relative;
   z-index: 10;
-  margin-top: -26px; /* Exactly half of 52px height floats over hero bottom border */
-  margin-bottom: 35px;
+  margin-top: -24px;
+  margin-bottom: 30px;
   padding: 0 20px;
   display: flex;
   justify-content: center;
@@ -138,7 +138,7 @@
 
 .floating-search-input {
   width: 100%;
-  height: 50px;
+  height: 48px;
   padding: 0 45px 0 52px;
   border: none;
   background: transparent;
@@ -226,7 +226,7 @@
 }
 
 .advanced-table-row td {
-  padding: 17px 22px;
+  padding: 16px 22px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
 }
@@ -239,7 +239,7 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #f1f5f9;
+  background: #edf4fc;
   color: #1e3a8a;
   font-weight: 700;
   font-size: 0.88rem;
@@ -252,7 +252,7 @@
 }
 
 .advanced-title-link {
-  color: #0f172a;
+  color: #072958;
   font-weight: 600;
   font-size: 0.94rem;
   text-decoration: none;
@@ -270,7 +270,7 @@
 .advanced-title-link .external-icon {
   font-size: 0.78rem;
   color: #1b5baf;
-  opacity: 0.7;
+  opacity: 0.75;
   transition: opacity 0.2s ease;
 }
 
@@ -279,7 +279,7 @@
 }
 
 .title-text-plain {
-  color: #1e293b;
+  color: #072958;
   font-weight: 600;
   font-size: 0.94rem;
 }
@@ -467,46 +467,327 @@
   background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%);
 }
 
-/* Responsive */
+/* ==========================================================================
+   6. PROFESSIONAL CENTERED RESPONSIVE MOBILE CARD LAYOUT (MOBILE ONLY)
+   ========================================================================== */
+
+/* Tablets and Mobile Devices (<= 768px) */
 @media (max-width: 768px) {
+  .notices-container {
+    padding: 14px 12px 40px 12px;
+  }
+
   .notices-hero {
-    padding: 32px 16px 40px 16px;
+    padding: 24px 16px 30px 16px;
+    border-radius: 16px;
+    border-bottom: 3px solid #ffca38;
+    text-align: center;
+  }
+
+  .notices-hero-badge {
+    font-size: 0.74rem;
+    padding: 4px 12px;
+    margin-bottom: 8px;
   }
 
   .notices-hero h1 {
-    font-size: 1.7rem;
+    font-size: 1.55rem;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 2.5px;
+    margin: 8px auto;
+  }
+
+  .notices-hero-tagline {
+    font-size: 0.84rem;
+    color: #cbd5e1;
+    text-align: center;
   }
 
   .hero-floating-search-wrapper {
-    margin-top: -24px;
-    margin-bottom: 24px;
+    margin-top: -18px;
+    margin-bottom: 18px;
+    padding: 0 6px;
+    justify-content: center;
+  }
+
+  .hero-floating-search {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(27, 91, 175, 0.12);
   }
 
   .floating-search-input {
     height: 44px;
     font-size: 0.88rem;
+    padding: 0 38px 0 44px;
+  }
+
+  .floating-search-icon {
+    left: 16px;
+    font-size: 0.95rem;
+  }
+
+  /* Transform table into clean centered executive cards */
+  .table-luxury-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .table-responsive {
+    overflow: visible;
+  }
+
+  .advanced-notices-table {
+    display: block;
+    width: 100%;
+    border: none;
   }
 
   .advanced-notices-table thead {
     display: none;
   }
 
-  .advanced-table-row {
-    display: block;
-    padding: 16px;
-    border-bottom: 2px solid #e2e8f0;
-  }
-
-  .advanced-table-row td {
+  .advanced-notices-table tbody {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: none;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
   }
 
+  /* Centered Mobile Card Row */
+  .advanced-table-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    background: #ffffff !important;
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1px solid #e2e8f0;
+    border-top: 3.5px solid #1b5baf !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .advanced-table-row:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  .advanced-table-row:hover {
+    transform: translateY(-2px);
+    border-top-color: #dfb064 !important;
+    box-shadow: 0 8px 24px rgba(27, 91, 175, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Top Bar (S.No on left, Date on right) */
+  .advanced-table-row td.sno-cell {
+    order: 1;
+    padding: 0 !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .serial-pill {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 6px;
+    background: #edf4fc;
+    color: #1b5baf;
+    border: 1px solid rgba(27, 91, 175, 0.25);
+  }
+
+  .advanced-table-row td.date-cell {
+    order: 2;
+    padding: 0 !important;
+    border: none !important;
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    width: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .date-badge-pill {
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* 2. Notice Title (CENTERED on mobile) */
+  .advanced-table-row td.title-cell {
+    order: 3;
+    padding: 2px 0 0 0 !important;
+    border: none !important;
+    width: 100%;
+    text-align: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .advanced-title-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    color: #072958 !important;
+    font-size: 0.96rem !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .advanced-title-link .title-text {
+    color: #072958 !important;
+    font-size: 0.96rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .advanced-title-link .external-icon {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    color: #1b5baf !important;
+    font-size: 0.82rem !important;
+    opacity: 0.9 !important;
+  }
+
+  .advanced-title-link:hover .title-text,
+  .advanced-title-link:hover {
+    color: #1b5baf !important;
+  }
+
+  .title-text-plain {
+    color: #072958 !important;
+    font-size: 0.96rem !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    text-align: center !important;
+    display: block;
+    width: 100%;
+  }
+
+  /* 3. Type Pill (CENTERED on mobile) */
+  .advanced-table-row td.type-cell {
+    order: 4;
+    padding: 2px 0 0 0 !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .type-badge-pill {
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 16px;
+    background: #f0f7ff;
+    color: #15458a;
+    border: 1px solid rgba(27, 91, 175, 0.2);
+    text-align: center;
+  }
+
+  /* Responsive Pagination Footer (CENTERED) */
   .table-pagination-footer {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+    text-align: center;
+  }
+
+  .pagination-summary {
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  .pagination-nav-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .num-btn,
+  .icon-nav-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra Small Mobile Devices (<= 480px) */
+@media (max-width: 480px) {
+  .notices-hero {
+    padding: 20px 12px 26px 12px;
+  }
+
+  .notices-hero h1 {
+    font-size: 1.35rem;
+  }
+
+  .notices-hero-tagline {
+    font-size: 0.8rem;
+  }
+
+  .advanced-table-row {
+    padding: 14px 14px;
+    border-radius: 12px;
+  }
+
+  .advanced-title-link,
+  .title-text-plain,
+  .advanced-title-link .title-text {
+    font-size: 0.92rem !important;
+    text-align: center !important;
+  }
+
+  .advanced-table-row td.date-cell {
+    top: 14px;
+    right: 14px;
+  }
+
+  .date-badge-pill {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+  }
+
+  .type-badge-pill {
+    font-size: 0.72rem;
+    padding: 3px 10px;
   }
 }

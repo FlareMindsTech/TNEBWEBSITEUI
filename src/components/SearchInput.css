@@ -1,86 +1,133 @@
-/* Clean Uiverse Search Input with 360deg Rotation and Fixed Alignment */
+/* ==========================================================================
+   NAVY THEME 2X ROTATING SEARCH BAR (720deg Rotation & High Visibility)
+   ========================================================================== */
+
 .input-container {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   margin-right: 6px;
+  height: 40px;
+  max-width: 100%;
 }
 
-.input {
+.search-form-inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base Collapsed Input */
+.input-container .search-text-input {
   width: 40px;
   height: 40px;
-  border-radius: 10px;
-  border: 1px solid transparent;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
   outline: none;
-  padding: 8px 12px;
   background-color: transparent;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
   box-sizing: border-box;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: #072958;
+  padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
-.input::placeholder {
+.input-container .search-text-input::placeholder {
   color: transparent;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
-.input:focus::placeholder {
-  color: #94a3b8;
-}
-
-.input:focus,
-.input:not(:placeholder-shown) {
+/* Expanded Input Style (Active / Focused / Typing) */
+.input-container.is-expanded .search-text-input,
+.input-container .search-text-input:focus,
+.input-container .search-text-input:not(:placeholder-shown) {
+  width: 220px;
   background-color: #ffffff;
-  border: 1.5px solid #072958;
-  width: 200px;
+  border: 1.5px solid #dfb064;
+  border-radius: 12px;
   cursor: text;
   padding: 8px 36px 8px 40px;
-  box-shadow: 0 4px 14px rgba(7, 41, 88, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 10px rgba(223, 176, 100, 0.3);
 }
 
-.icon {
+.input-container.is-expanded .search-text-input::placeholder,
+.input-container .search-text-input:focus::placeholder {
+  color: #8da2bd;
+}
+
+/* Search Icon Wrapper - Navy Button with Gold Border & 2x (720deg) Rotation */
+.input-container .search-icon-wrapper {
   position: absolute;
   left: 0;
   top: 0;
-  height: 40px;
   width: 40px;
+  height: 40px;
   background-color: #072958;
-  border-radius: 10px;
+  border: 1.5px solid #dfb064;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(223, 176, 100, 0.45), 0 3px 10px rgba(0, 0, 0, 0.4);
+  transform-origin: center center;
+  transition: transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
+              background-color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+/* Search SVG Icon - Crisp High Visibility */
+.input-container .search-svg-icon {
+  width: 20px;
+  height: 20px;
   color: #ffffff;
   stroke: #ffffff;
-  fill: none;
-  border: 1px solid #072958;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 1;
-  padding: 10px;
-  box-sizing: border-box;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.65));
+  flex-shrink: 0;
+  display: block;
+  transform-origin: center center;
+  transition: color 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
 }
 
-/* Search icon specific - always visible */
-.search-icon {
-  opacity: 1;
-  z-index: 1;
-}
-
-/* 360 Degree Smooth Rotation on Hover, Click, or Focus */
-.input:hover + .icon {
+/* Hover effect on collapsed button: rotate 180deg */
+.input-container:not(.is-expanded):hover .search-icon-wrapper {
   transform: rotate(180deg);
+  border-color: #ffca38;
+  box-shadow: 0 0 14px rgba(255, 202, 56, 0.7), 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
-.input:focus + .icon,
-.input:not(:placeholder-shown) + .icon {
+/* When Clicked / Focused / Expanded: Rotate 2 Full Times (720deg) and become transparent inside input */
+.input-container.is-expanded .search-icon-wrapper,
+.input-container .search-text-input:focus ~ .search-icon-wrapper {
+  transform: rotate(720deg);
   background-color: transparent;
-  border: none;
+  border-color: transparent;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.input-container.is-expanded .search-svg-icon,
+.input-container .search-text-input:focus ~ .search-icon-wrapper .search-svg-icon {
   color: #072958;
   stroke: #072958;
-  transform: rotate(360deg);
+  filter: none;
 }
 
-/* Clear Button Styles */
-.clear-button {
+/* Clear (Cross) Button - Positioned on the Right */
+.input-container .clear-button {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -88,23 +135,150 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
+  color: #64748b;
   transition: background-color 0.2s ease, color 0.2s ease;
-  z-index: 10;
+  z-index: 5;
 }
 
-.clear-button:hover {
+.input-container .clear-button:hover {
   background-color: rgba(7, 41, 88, 0.1);
+  color: #072958;
 }
 
-.clear-icon {
-  width: 15px;
-  height: 15px;
-  stroke: #072958;
+.input-container .clear-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS
+   ========================================================================== */
+
+/* Tablets (< 992px) */
+@media (max-width: 991.98px) {
+  .input-container {
+    height: 38px;
+    margin-right: 4px;
+  }
+
+  .input-container .search-text-input {
+    width: 38px;
+    height: 38px;
+    font-size: 0.88rem;
+  }
+
+  .input-container.is-expanded .search-text-input,
+  .input-container .search-text-input:focus,
+  .input-container .search-text-input:not(:placeholder-shown) {
+    width: 175px;
+    padding: 6px 30px 6px 36px;
+  }
+
+  .input-container .search-icon-wrapper {
+    width: 38px;
+    height: 38px;
+  }
+
+  .input-container .search-svg-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Standard Mobile Devices (< 576px) */
+@media (max-width: 575.98px) {
+  .input-container {
+    height: 38px;
+  }
+
+  .input-container .search-text-input {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .input-container.is-expanded .search-text-input,
+  .input-container .search-text-input:focus,
+  .input-container .search-text-input:not(:placeholder-shown) {
+    width: 155px;
+    padding: 6px 28px 6px 34px;
+  }
+
+  .input-container .search-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border: 1.5px solid #dfb064;
+    box-shadow: 0 0 10px rgba(223, 176, 100, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .input-container .search-svg-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .input-container .clear-button {
+    right: 6px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .input-container .clear-icon {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Small Screen Mobile Devices (< 380px) */
+@media (max-width: 379.98px) {
+  .input-container {
+    height: 36px;
+    margin-right: 2px;
+  }
+
+  .input-container .search-text-input {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+  }
+
+  .input-container.is-expanded .search-text-input,
+  .input-container .search-text-input:focus,
+  .input-container .search-text-input:not(:placeholder-shown) {
+    width: 130px;
+    border-radius: 10px;
+    padding: 5px 24px 5px 30px;
+  }
+
+  .input-container .search-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1.5px solid #dfb064;
+    box-shadow: 0 0 8px rgba(223, 176, 100, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  .input-container .search-svg-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .input-container .clear-button {
+    right: 4px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .input-container .clear-icon {
+    width: 12px;
+    height: 12px;
+  }
 }
