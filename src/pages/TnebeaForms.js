@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { FaDownload } from 'react-icons/fa';
+import { FaDownload, FaFileAlt, FaFileContract, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import './TnebeaForms.css';
 // pdf imports
 import joiningReportDoc from '../assets/tnebea-forms/joining-report.doc';
@@ -94,115 +94,114 @@ const TnebeaForms = () => {
       <div className="scroll-progress"></div>
 
       <motion.div 
-        className="forms-hero" 
+        className="forms-hero-fluid-banner" 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
         transition={{ duration: 0.8 }}
       >
-        <div className="hero-overlay" />
+        {/* Background Swirl Graphics & Wave Backdrops */}
+        <div className="fluid-wave-bg-left"></div>
+        <div className="fluid-wave-bg-right"></div>
+        <div className="gold-accent-swirl-left"></div>
+        <div className="gold-accent-swirl-right"></div>
+        <div className="hero-grid-pattern"></div>
 
-        <div className="hero-decor">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="hero-particle"
-              initial={{ 
-                x: Math.random() * 100 - 50,
-                y: Math.random() * 100 - 50,
-                opacity: 0 
-              }}
-              animate={{ 
-                x: Math.random() * 200 - 100,
-                y: Math.random() * 200 - 100,
-                opacity: [0, 0.5, 0]
-              }}
-              transition={{
-                duration: Math.random() * 4 + 3,
-                repeat: Infinity,
-                repeatType: "reverse",
-                delay: Math.random() * 2
-              }}
-              style={{
-                position: 'absolute',
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                background: themeColor,
-                borderRadius: '50%',
-                filter: 'blur(1px)'
-              }}
-            />
-          ))}
-          <motion.div className="hero-orb orb-1" animate={{ y: [0, -10, 0], x: [0, 12, 0], opacity: [0.9, 1, 0.9] }} transition={{ repeat: Infinity, duration: 5 }} />
-          <motion.div className="hero-orb orb-2" animate={{ y: [0, -8, 0], x: [0, -10, 0], opacity: [0.9, 1, 0.9] }} transition={{ repeat: Infinity, duration: 6 }} />
-          <motion.div className="hero-orb orb-3" animate={{ y: [0, -6, 0], x: [0, 8, 0], opacity: [0.9, 1, 0.9] }} transition={{ repeat: Infinity, duration: 7 }} />
-          <motion.div className="hero-spark" animate={{ scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }} transition={{ repeat: Infinity, duration: 3 }} />
-        </div>
-
-        <div className="hero-header">
-          <motion.span 
-            className="hero-badge" 
-            initial={{ y: 18, opacity: 0 }} 
+        <div className="forms-hero-inner-content">
+          {/* Top TNEBEA Badge with Gold Flourishes */}
+          <motion.div 
+            className="forms-top-badge-wrap"
+            initial={{ y: 15, opacity: 0 }} 
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
           >
-            TNEBEA
-          </motion.span>
+            <span className="badge-gold-flourish-line left"></span>
+            <span className="forms-tnebea-badge">TNEBEA</span>
+            <span className="badge-gold-flourish-line right"></span>
+          </motion.div>
+
+          {/* Main Serif Header */}
           <motion.h1 
-            className="hero-title" 
-            initial={{ y: 18, opacity: 0 }} 
+            className="forms-hero-main-title" 
+            initial={{ y: 15, opacity: 0 }} 
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            TAMILNADU ELECTRICITY BOARD
+            TAMILNADU<br />
+            ELECTRICITY BOARD
           </motion.h1>
-          <motion.h2 
-            className="hero-subtitle" 
-            initial={{ y: 16, opacity: 0 }} 
+
+          <motion.div 
+            className="forms-hero-sub-title-wrap"
+            initial={{ y: 15, opacity: 0 }} 
             animate={{ y: 0, opacity: 1 }} 
             transition={{ delay: 0.28 }}
           >
-            FORMS
-          </motion.h2>
+            <span className="title-gold-line left"></span>
+            <span className="title-gold-diamond">❖</span>
+            <h2 className="forms-hero-word">FORMS</h2>
+            <span className="title-gold-diamond">❖</span>
+            <span className="title-gold-line right"></span>
+          </motion.div>
+
           <motion.p 
-            className="hero-tagline" 
-            initial={{ y: 14, opacity: 0 }} 
+            className="forms-hero-tagline" 
+            initial={{ y: 12, opacity: 0 }} 
             animate={{ y: 0, opacity: 1 }} 
             transition={{ delay: 0.36 }}
           >
             Centralized access to official forms and advances
           </motion.p>
+
+          {/* 2 Metric Highlight Cards */}
+          <motion.div 
+            className="forms-hero-stats-row" 
+            initial={{ opacity: 0, y: 15 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.42 }}
+          >
+            {/* Card 1: 8 Forms */}
+            <div className="forms-stat-card">
+              <div className="stat-corner-ribbon"></div>
+              <div className="stat-circle-icon">
+                <FaFileAlt />
+              </div>
+              <div className="stat-card-info text-start">
+                <span className="stat-big-num">{forms.length}</span>
+                <span className="stat-main-lbl">Forms</span>
+                <span className="stat-sub-desc">Official Forms</span>
+              </div>
+            </div>
+
+            {/* Card 2: 5 Advances */}
+            <div className="forms-stat-card">
+              <div className="stat-corner-ribbon"></div>
+              <div className="stat-circle-icon">
+                <FaFileContract />
+              </div>
+              <div className="stat-card-info text-start">
+                <span className="stat-big-num">{loans.length}</span>
+                <span className="stat-main-lbl">Advances</span>
+                <span className="stat-sub-desc">Advance Requests</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 3D Navy Gold-Border Button */}
+          <motion.button 
+            className="forms-hero-cta-btn" 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            whileHover={{ y: -3, scale: 1.03 }} 
+            whileTap={{ scale: 0.98 }} 
+            onClick={() => {
+              const el = document.getElementById('forms-content');
+              el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            Browse Forms <FaArrowRight className="ms-2" />
+          </motion.button>
         </div>
-
-        <motion.div 
-          className="hero-stats" 
-          initial={{ opacity: 0, y: 16 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ delay: 0.42 }}
-        >
-          <div className="stat">
-            <span className="stat-icon">🗂️</span>
-            <span className="stat-text">{forms.length} Forms</span>
-          </div>
-          <div className="stat">
-            <span className="stat-icon">💼</span>
-            <span className="stat-text">{loans.length} Advances</span>
-          </div>
-        </motion.div>
-
-        <motion.button 
-          className="hero-cta" 
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          whileHover={{ y: -4, scale: 1.05 }} 
-          whileTap={{ scale: 0.98 }} 
-          onClick={() => {
-            const el = document.getElementById('forms-content');
-            el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-        >
-          Browse Forms
-        </motion.button>
       </motion.div>
 
       <div id="forms-content" className="forms-content container">
@@ -214,7 +213,7 @@ const TnebeaForms = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="section-header">
-            <span className="section-kicker">FORMS:</span>
+            <span className="section-kicker">FORMS</span>
             <div className="section-line" />
           </div>
 
@@ -241,7 +240,9 @@ const TnebeaForms = () => {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.04, duration: 0.25 }}
                   >
-                    <td className="serial-cell">{i + 1}</td>
+                    <td className="serial-cell">
+                      <span className="sno-circle-badge">{i + 1}</span>
+                    </td>
                     <td className="name-cell">{item.title}</td>
                     <td className="download-cell" onClick={(e) => e.stopPropagation()}>
                       <a href={item.url} download={item.title} className="btn-download" title="Download File">
@@ -263,7 +264,7 @@ const TnebeaForms = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="section-header">
-            <span className="section-kicker">LOANS AND ADVANCES:</span>
+            <span className="section-kicker">LOANS AND ADVANCES</span>
             <div className="section-line" />
           </div>
 
@@ -290,7 +291,9 @@ const TnebeaForms = () => {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.04, duration: 0.25 }}
                   >
-                    <td className="serial-cell">{i + 1}</td>
+                    <td className="serial-cell">
+                      <span className="sno-circle-badge">{i + 1}</span>
+                    </td>
                     <td className="name-cell">{item.title}</td>
                     <td className="download-cell" onClick={(e) => e.stopPropagation()}>
                       <a href={item.url} download={item.title} className="btn-download" title="Download File">
@@ -313,11 +316,11 @@ const TnebeaForms = () => {
         >
           <motion.button 
             className="back-btn" 
-            whileHover={{ x: -4, scale: 1.05 }} 
+            whileHover={{ y: -3, scale: 1.03 }} 
             whileTap={{ scale: 0.98 }} 
             onClick={() => navigate(-1)}
           >
-            ← Back to Previous Page
+            <FaArrowLeft className="me-2" /> Back to Previous Page
           </motion.button>
         </motion.div>
       </div>
