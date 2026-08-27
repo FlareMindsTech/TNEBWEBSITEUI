@@ -8,7 +8,7 @@ import {
   FaFileContract, FaNewspaper, FaBalanceScale, FaUsersCog,
   FaLightbulb, FaHeart, FaChevronDown, FaTimes, FaChevronRight, FaCheck,
   FaBookOpen, FaBroadcastTower, FaCogs, FaLeaf, FaIndustry, FaCopy, FaPenNib, FaBullhorn, FaFileAlt,
-  FaUniversity, FaHome, FaBolt, FaHotel
+  FaUniversity, FaHome, FaBolt, FaHotel, FaMoneyCheckAlt, FaUsers, FaMedal
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './AboutTnebea.css';
@@ -22,9 +22,13 @@ const ebfSchemes = [
     effectiveDate: '13.04.1977',
     subscription: '₹ 203',
     reliefAmount: '₹ 10,000',
+    multiplier: 'Foundation Tier',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'Pioneered mutual-aid benevolent protection for electricity engineers.'
+    isOpen: false,
+    highlight: 'Pioneered mutual-aid benevolent protection for electricity engineers.',
+    corpusNote: 'Inaugural mutual-aid fund established through voluntary contributions.',
+    disbursalTrust: '100% claim disbursement achieved for all registered pioneer member families.'
   },
   {
     id: 'ebf2',
@@ -33,9 +37,13 @@ const ebfSchemes = [
     effectiveDate: '01.07.1984',
     subscription: '₹ 500',
     reliefAmount: '₹ 25,000',
+    multiplier: '2.5x Growth Multiplier',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'Scaled membership relief amidst growing state grid expansion.'
+    isOpen: false,
+    highlight: 'Scaled membership relief amidst growing state grid expansion.',
+    corpusNote: 'Expanded protection matching the rapid expansion of thermal & hydro cadres.',
+    disbursalTrust: 'Timely disbursement executed across all state distribution circles.'
   },
   {
     id: 'ebf3',
@@ -44,9 +52,13 @@ const ebfSchemes = [
     effectiveDate: '01.01.1989',
     subscription: '₹ 1,000',
     reliefAmount: '₹ 50,000',
+    multiplier: '5.0x Growth Multiplier',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'Doubled protection cover ensuring economic stability for bereaved families.'
+    isOpen: false,
+    highlight: 'Doubled protection cover ensuring economic stability for bereaved families.',
+    corpusNote: 'Corpus upgraded to counter inflation and increased cost of living.',
+    disbursalTrust: 'Guaranteed financial safety net honoring long-standing engineering service.'
   },
   {
     id: 'ebf4',
@@ -55,9 +67,13 @@ const ebfSchemes = [
     effectiveDate: '01.01.1995',
     subscription: '₹ 2,000',
     reliefAmount: '₹ 1,00,000',
+    multiplier: '10.0x Landmark Growth',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'First ₹1-Lakh landmark welfare milestone in TNEB history.'
+    isOpen: false,
+    highlight: 'First ₹1-Lakh landmark welfare milestone in TNEB history.',
+    corpusNote: 'Pioneered the six-figure safety threshold for power engineers.',
+    disbursalTrust: 'Disbursed in record time under stringent CEC audit oversight.'
   },
   {
     id: 'ebf5',
@@ -66,9 +82,13 @@ const ebfSchemes = [
     effectiveDate: '01.01.2001',
     subscription: '₹ 4,000',
     reliefAmount: '₹ 2,00,000',
+    multiplier: '20.0x Growth Multiplier',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'Millennium upgrade doubling the corpus security net for engineers.'
+    isOpen: false,
+    highlight: 'Millennium upgrade doubling the corpus security net for engineers.',
+    corpusNote: 'Millennium milestone doubling the family security umbrella to ₹2 Lakhs.',
+    disbursalTrust: '100% claim settlement achieved with zero administrative deductions.'
   },
   {
     id: 'ebf6',
@@ -77,9 +97,13 @@ const ebfSchemes = [
     effectiveDate: '01.01.2010',
     subscription: '₹ 6,000',
     reliefAmount: '₹ 3,00,000',
+    multiplier: '30.0x Growth Multiplier',
     status: 'Concluded',
     isLatest: false,
-    highlight: 'Strengthened financial resilience during economic shifts.'
+    isOpen: false,
+    highlight: 'Strengthened financial resilience during economic shifts.',
+    corpusNote: 'Extended robust protection during major board unbundling reforms.',
+    disbursalTrust: 'Maintained seamless relief disbursements without single interruption.'
   },
   {
     id: 'ebf7',
@@ -88,10 +112,13 @@ const ebfSchemes = [
     effectiveDate: '08.02.2020',
     subscription: '₹ 15,000',
     reliefAmount: '₹ 5,00,000',
+    multiplier: '50.0x Growth Multiplier',
     status: 'Active (Open for Admission)',
     isLatest: false,
     isOpen: true,
-    highlight: 'Present active admission scheme providing half a million rupees in immediate family relief.'
+    highlight: 'Present active admission scheme providing half a million rupees in immediate family relief.',
+    corpusNote: 'Active high-corpus fund providing ₹5 Lakhs immediate family relief.',
+    disbursalTrust: 'Direct expedited disbursement to bereaved engineer nominees.'
   },
   {
     id: 'ebf8',
@@ -100,10 +127,13 @@ const ebfSchemes = [
     effectiveDate: 'Rollout Phase',
     subscription: '₹ 30,000',
     reliefAmount: '₹ 10,00,000',
+    multiplier: '100.0x Mega Shield',
     status: 'Upcoming with Add-on Benefits',
     isLatest: true,
     isOpen: true,
-    highlight: 'Next-generation mega relief offering ₹10 Lakhs safety shield with enhanced welfare privileges.'
+    highlight: 'Next-generation mega relief offering ₹10 Lakhs safety shield with enhanced welfare privileges.',
+    corpusNote: 'Historic ₹10 Lakhs cover with expanded comprehensive welfare privileges.',
+    disbursalTrust: 'State-of-the-art digital enrollment and expedited disbursement.'
   }
 ];
 
@@ -348,7 +378,7 @@ const AboutTnebea = () => {
                 >
                   <div className="hero-emblem-radial-backdrop"></div>
                   <img
-                    src={`${process.env.PUBLIC_URL}/assets/tnebea_80_emblem.png`}
+                    src={`${process.env.PUBLIC_URL}/assets/tnebea_80_emblem.webp`}
                     alt="TNEBEA 80 Years (1946 - 2026)"
                     className="hero-80-split-img"
                   />
@@ -512,7 +542,7 @@ const AboutTnebea = () => {
                     <div className="navy-circle-check">
                       <FaCheck className="gold-check-svg" />
                     </div>
-                    <div>
+                    <div className="recognition-checklist-text text-start">
                       <strong>Prior to Indian Independence:</strong> Established and recognized on 04.06.1946, well ahead of August 15, 1947.
                     </div>
                   </li>
@@ -520,7 +550,7 @@ const AboutTnebea = () => {
                     <div className="navy-circle-check">
                       <FaCheck className="gold-check-svg" />
                     </div>
-                    <div>
+                    <div className="recognition-checklist-text text-start">
                       <strong>Prior to Board Constitution:</strong> Pre-dates the formation of Madras State Electricity Board (01.07.1957) by over a decade.
                     </div>
                   </li>
@@ -528,7 +558,7 @@ const AboutTnebea = () => {
                     <div className="navy-circle-check">
                       <FaCheck className="gold-check-svg" />
                     </div>
-                    <div>
+                    <div className="recognition-checklist-text text-start">
                       <strong>Diamond Jubilee Milestone:</strong> Proudly celebrated its Diamond Jubilee on <strong>06.04.2006</strong>.
                     </div>
                   </li>
@@ -536,7 +566,7 @@ const AboutTnebea = () => {
                     <div className="navy-circle-check">
                       <FaCheck className="gold-check-svg" />
                     </div>
-                    <div>
+                    <div className="recognition-checklist-text text-start">
                       <strong>Sole Privilege:</strong> No other union or association functioning in the Board possesses such a long-cherished, uninterrupted history of 80 years.
                     </div>
                   </li>
@@ -640,13 +670,18 @@ const AboutTnebea = () => {
           </div>
 
           {/* Interactive Scheme Matrix */}
-          <div className="row g-4">
-            <div className="col-lg-4">
-              <div className="scheme-list-card p-3">
-                <h4 className="scheme-list-heading mb-3">
-                  <FaShieldAlt className="me-2 text-warning" /> Select EBF Generation
-                </h4>
-                <div className="scheme-buttons-stack">
+          <div className="row g-4 align-items-stretch">
+            {/* Left Column: Select EBF Generation */}
+            <div className="col-lg-4 d-flex">
+              <div className="scheme-list-card p-3 w-100 d-flex flex-column">
+                <div className="scheme-list-heading-wrap mb-3 text-center position-relative">
+                  <span className="heading-gold-taper left"></span>
+                  <h4 className="scheme-list-heading d-inline-flex align-items-center gap-2 m-0">
+                    <FaShieldAlt className="text-warning" /> Select EBF Generation
+                  </h4>
+                  <span className="heading-gold-taper right"></span>
+                </div>
+                <div className="scheme-buttons-stack flex-grow-1">
                   {ebfSchemes.map((scheme) => (
                     <button
                       key={scheme.id}
@@ -654,13 +689,21 @@ const AboutTnebea = () => {
                       onClick={() => setSelectedScheme(scheme.id)}
                     >
                       <div className="d-flex justify-content-between align-items-center w-100">
-                        <div>
-                          <strong className="d-block text-start">{scheme.title}</strong>
-                          <span className="scheme-year-text">{scheme.year}</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="scheme-item-ring-circle">
+                            <FaShieldAlt className="scheme-item-gold-icon" />
+                          </div>
+                          <div>
+                            <strong className="d-block text-start scheme-item-title">{scheme.title}</strong>
+                            <span className="scheme-year-text">{scheme.year}</span>
+                          </div>
                         </div>
-                        <span className={`pill-badge ${scheme.isLatest ? 'badge-upcoming' : scheme.isOpen ? 'badge-active' : 'badge-concluded'}`}>
-                          {scheme.isLatest ? 'Upcoming' : scheme.isOpen ? 'Active' : 'Archived'}
-                        </span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className={`pill-badge ${scheme.isLatest ? 'badge-upcoming' : scheme.isOpen ? 'badge-active' : 'badge-concluded'}`}>
+                            {scheme.isLatest ? 'Upcoming' : scheme.isOpen ? 'Active' : 'Archived'}
+                          </span>
+                          <FaChevronRight className="scheme-item-gold-arrow" />
+                        </div>
                       </div>
                     </button>
                   ))}
@@ -668,64 +711,142 @@ const AboutTnebea = () => {
               </div>
             </div>
 
-            <div className="col-lg-8">
-              <div className={`scheme-detail-box p-4 ${selectedSchemeData.isLatest ? 'gold-border-glow' : ''}`}>
-                <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-                  <div>
-                    <span className="scheme-top-tag">{selectedSchemeData.year}</span>
-                    <h3 className="scheme-name-title m-0 mt-1">{selectedSchemeData.title}</h3>
+            {/* Right Column: Exact Mockup Scheme Detail Card & Empathy Banner */}
+            <div className="col-lg-8 d-flex flex-column">
+              <div className={`scheme-detail-box p-4 flex-grow-1 d-flex flex-column justify-content-between ${selectedSchemeData.isLatest ? 'gold-border-glow' : ''}`}>
+                <div>
+                  {/* Card Header: Top Year Badge, Multiplier Pill, and Status */}
+                  <div className="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+                    <div>
+                      <div className="d-flex align-items-center gap-2 mb-1">
+                        <span className="scheme-year-badge-orange">{selectedSchemeData.year}</span>
+                        <span className="scheme-tier-pill-sky">{selectedSchemeData.multiplier}</span>
+                      </div>
+                      <h2 className="scheme-main-title m-0">{selectedSchemeData.title}</h2>
+                    </div>
+                    <div>
+                      <span className={`status-bubble-pill ${selectedSchemeData.isLatest ? 'status-upcoming-gold' : selectedSchemeData.isOpen ? 'status-green' : 'status-grey'}`}>
+                        <FaCheck className="me-1 check-status-icon" /> {selectedSchemeData.status}
+                      </span>
+                    </div>
                   </div>
-                  <span className={`status-bubble ${selectedSchemeData.isOpen ? 'status-green' : 'status-grey'}`}>
-                    {selectedSchemeData.status}
-                  </span>
+
+                  {/* 3 KPI Blocks */}
+                  <div className="scheme-kpi-grid">
+                    <div className="scheme-kpi-block-luxury">
+                      <div className="kpi-circle-icon blue">
+                        <FaMoneyCheckAlt />
+                      </div>
+                      <div className="kpi-block-details">
+                        <span className="kpi-hdr">SUBSCRIPTION AMOUNT</span>
+                        <span className="kpi-amt blue-text">{selectedSchemeData.subscription}</span>
+                        <span className="kpi-ftr">One-time / Scheduled Deposit</span>
+                      </div>
+                    </div>
+                    <div className="scheme-kpi-block-luxury relief-block">
+                      <div className="kpi-circle-icon green">
+                        <FaUsers />
+                      </div>
+                      <div className="kpi-block-details">
+                        <span className="kpi-hdr">FAMILY RELIEF AMOUNT</span>
+                        <span className="kpi-amt green-text">{selectedSchemeData.reliefAmount}</span>
+                        <span className="kpi-ftr">Immediate Distress Disbursement</span>
+                      </div>
+                    </div>
+                    <div className="scheme-kpi-block-luxury">
+                      <div className="kpi-circle-icon purple">
+                        <FaCalendarAlt />
+                      </div>
+                      <div className="kpi-block-details">
+                        <span className="kpi-hdr">EFFECTIVE DATE</span>
+                        <span className="kpi-amt dark-text">{selectedSchemeData.effectiveDate}</span>
+                        <span className="kpi-ftr">Implementation Timeline</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Feature Highlight */}
+                  <div className="scheme-feature-strip mt-3 position-relative overflow-hidden">
+                    <FaMedal className="text-warning me-2 flex-shrink-0 fs-5" />
+                    <span className="feature-text-content">
+                      <strong className="text-amber-title">Key Feature:</strong> {selectedSchemeData.highlight}
+                    </span>
+                    <div className="feature-strip-dots-pattern"></div>
+                  </div>
+
+                  {/* 2-Column Welfare Pillars */}
+                  <div className="row g-3 mt-1">
+                    <div className="col-md-6">
+                      <div className="scheme-pillar-box-luxury h-100 position-relative overflow-hidden">
+                        <div className="d-flex align-items-start gap-3 position-relative" style={{ zIndex: 2 }}>
+                          <div className="pillar-circle-icon blue flex-shrink-0">
+                            <FaShieldAlt />
+                          </div>
+                          <div>
+                            <h6 className="pillar-box-title m-0 mb-1">Corpus & Security Shield</h6>
+                            <p className="pillar-box-desc m-0">{selectedSchemeData.corpusNote}</p>
+                          </div>
+                        </div>
+                        <FaShieldAlt className="pillar-bg-watermark" />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="scheme-pillar-box-luxury h-100 position-relative overflow-hidden">
+                        <div className="d-flex align-items-start gap-3 position-relative" style={{ zIndex: 2 }}>
+                          <div className="pillar-circle-icon purple flex-shrink-0">
+                            <FaBalanceScale />
+                          </div>
+                          <div>
+                            <h6 className="pillar-box-title m-0 mb-1">Trustee Settlement Record</h6>
+                            <p className="pillar-box-desc m-0">{selectedSchemeData.disbursalTrust}</p>
+                          </div>
+                        </div>
+                        <FaLandmark className="pillar-bg-watermark" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="scheme-kpi-grid">
-                  <div className="scheme-kpi-block">
-                    <span className="kpi-hdr">Subscription Amount</span>
-                    <span className="kpi-amt blue-text">{selectedSchemeData.subscription}</span>
-                    <span className="kpi-ftr">One-time / Scheduled Deposit</span>
-                  </div>
-                  <div className="scheme-kpi-block relief-block">
-                    <span className="kpi-hdr">Family Relief Amount</span>
-                    <span className="kpi-amt green-text">{selectedSchemeData.reliefAmount}</span>
-                    <span className="kpi-ftr">Immediate Distress Disbursement</span>
-                  </div>
-                  <div className="scheme-kpi-block">
-                    <span className="kpi-hdr">Effective Date</span>
-                    <span className="kpi-amt">{selectedSchemeData.effectiveDate}</span>
-                    <span className="kpi-ftr">Implementation Timeline</span>
-                  </div>
-                </div>
-
-                <div className="scheme-feature-strip mt-4">
-                  <FaLightbulb className="me-2 text-warning" />
-                  <span><strong>Key Feature:</strong> {selectedSchemeData.highlight}</span>
-                </div>
-
-                {selectedSchemeData.isOpen && (
-                  <div className="scheme-active-admission-row mt-4 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                {/* Bottom Action & Historic Benchmark Strip */}
+                {selectedSchemeData.isOpen ? (
+                  <div className="scheme-active-admission-row mt-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
                     <div className="d-flex align-items-center gap-2">
-                      <FaCheckCircle className="text-success" />
+                      <div className="historic-check-circle green">
+                        <FaCheck />
+                      </div>
                       <span>Fresh Admission is actively facilitated under <strong>{selectedSchemeData.title}</strong></span>
                     </div>
                     <Link to="/cec" className="btn btn-sm btn-gold-solid">
                       View CEC Trustees <FaArrowRight className="ms-1" />
                     </Link>
                   </div>
+                ) : (
+                  <div className="scheme-active-admission-row scheme-archived-row mt-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="historic-check-circle green">
+                        <FaCheck />
+                      </div>
+                      <span className="text-dark"><strong>Historic Record:</strong> All member relief claims under {selectedSchemeData.title} were disbursed in record time with 100% solvency.</span>
+                    </div>
+                    <span className="badge-settled-pill">100% Settled</span>
+                  </div>
                 )}
               </div>
 
-              <div className="ebf-empathy-card mt-3 p-3 d-flex align-items-center gap-3">
-                <div className="empathy-icon">
-                  <FaHeart />
+              {/* Bottom Empathy Ribbon Banner (Navy Luxury with Laurel Badge) */}
+              <div className="ebf-empathy-banner-luxury mt-3 position-relative overflow-hidden">
+                <div className="d-flex align-items-center gap-3 px-3 py-2 position-relative" style={{ zIndex: 2 }}>
+                  <div className="empathy-gold-laurel-badge flex-shrink-0">
+                    <FaHeart className="gold-heart-icon" />
+                  </div>
+                  <div className="flex-grow-1 text-start">
+                    <h6 className="empathy-banner-title m-0 mb-1">Unwavering Commitment to Bereaved Families</h6>
+                    <p className="empathy-banner-sub m-0">
+                      Even as market interest rates plummeted and unforeseen eventualities mounted, the Association has never failed to disburse the relief in record time.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h6 className="m-0 fw-bold">Unwavering Commitment to Bereaved Families</h6>
-                  <p className="m-0 text-muted small">
-                    Even as market interest rates plummeted and unforeseen eventualities mounted, the Association has never failed to disburse the relief in record time.
-                  </p>
-                </div>
+                <FaLandmark className="empathy-bg-landmark" />
               </div>
             </div>
           </div>
@@ -798,7 +919,7 @@ const AboutTnebea = () => {
                         <span className="pub-strip-subtitle">6 Editions & 2 Reprints • Worldwide Acclaim</span>
                       </div>
                     </div>
-                    <Link to="/hand-book" className="btn-gold-action">
+                    <Link to="/hand-book" className="btn-pub-gold-button">
                       View Handbook <FaExternalLinkAlt className="ms-1" />
                     </Link>
                   </div>
@@ -919,12 +1040,16 @@ const AboutTnebea = () => {
 
                     {/* Bottom Golden Laurel Banner */}
                     <div className="handbook-laurel-banner mt-4">
-                      <span className="gold-laurel-leaf">🌾</span>
-                      <div className="text-center">
+                      <div className="laurel-side-badge">
+                        <FaAward className="laurel-side-icon" />
+                      </div>
+                      <div className="text-center flex-grow-1">
                         <h6 className="laurel-title m-0">A Trusted Companion for Generations of Power Engineers</h6>
                         <span className="laurel-sub">Authoritative • Practical • Timeless</span>
                       </div>
-                      <span className="gold-laurel-leaf flip">🌾</span>
+                      <div className="laurel-side-badge">
+                        <FaAward className="laurel-side-icon" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -946,7 +1071,7 @@ const AboutTnebea = () => {
                         <span className="pub-strip-subtitle">Unbroken Publication Since 1961</span>
                       </div>
                     </div>
-                    <Link to="/minthiran" className="btn-gold-action">
+                    <Link to="/minthiran" className="btn-pub-gold-button">
                       Browse <FaExternalLinkAlt className="ms-1" />
                     </Link>
                   </div>
@@ -1006,7 +1131,6 @@ const AboutTnebea = () => {
 
                     {/* Bottom Emerald Laurel Banner */}
                     <div className="minthiran-laurel-banner mt-4">
-                      <span className="green-laurel-leaf">🌿</span>
                       <div className="d-flex align-items-center gap-3">
                         <div className="green-globe-circle">
                           <FaGlobe />
@@ -1018,7 +1142,9 @@ const AboutTnebea = () => {
                           </span>
                         </div>
                       </div>
-                      <span className="green-laurel-leaf flip">🌿</span>
+                      <div className="emerald-side-badge">
+                        <FaAward className="emerald-side-icon" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1067,13 +1193,13 @@ const AboutTnebea = () => {
             })}
           </div>
 
-          <div className="minnagam-portal-banner text-center mt-4 p-4">
-            <h4 className="text-white mb-2">Plan Your Stay or View Amenities</h4>
-            <p className="text-light-50 mb-3 small">
-              Explore room availability, transit accommodations, and booking details.
+          <div className="minnagam-portal-banner text-center mt-4">
+            <h4 className="minnagam-portal-title mb-2">Plan Your Stay or View Amenities</h4>
+            <p className="minnagam-portal-subtitle mb-3">
+              Explore room availability, transit accommodations, and booking details across all Association guest houses.
             </p>
-            <Link to="/minnagam" className="btn btn-gold-solid">
-              <FaBuilding className="me-2" /> Go to Minnagam Booking Portal
+            <Link to="/minnagam" className="btn-minnagam-portal-action">
+              <FaBuilding className="me-2" /> Go to Minnagam Booking Portal <FaArrowRight className="ms-2" />
             </Link>
           </div>
         </section>
@@ -1094,8 +1220,8 @@ const AboutTnebea = () => {
             </div>
           </div>
 
-          {/* Floating Search Bar */}
-          <div className="achievement-search-wrapper my-4">
+          {/* Overlapping Floating Search Bar (Half-in Half-out on Banner Border) */}
+          <div className="achievement-search-wrapper">
             <div className="achievement-search-box">
               <FaSearch className="search-icon" />
               <input
@@ -1106,12 +1232,12 @@ const AboutTnebea = () => {
                 className="search-input-field"
               />
               {searchTerm && (
-                <button className="clear-btn" onClick={() => setSearchTerm('')}>
+                <button className="clear-btn" onClick={() => setSearchTerm('')} title="Clear search">
                   <FaTimes />
                 </button>
               )}
             </div>
-            <div className="search-count-text text-end text-muted small mt-1">
+            <div className="search-count-text text-center text-muted small mt-2">
               Showing <strong>{filteredAchievements.length}</strong> of <strong>{achievements.length}</strong> landmark achievements
             </div>
           </div>
@@ -1120,8 +1246,9 @@ const AboutTnebea = () => {
           <div className="row g-3 g-md-4">
             {filteredAchievements.map((item, index) => {
               const isExpanded = expandedAchievement === item.id;
+              const isLastSingle = (filteredAchievements.length % 2 !== 0) && (index === filteredAchievements.length - 1);
               return (
-                <div key={item.id} className="col-lg-6">
+                <div key={item.id} className={`col-lg-6 ${isLastSingle ? 'offset-lg-3 mx-auto' : ''}`}>
                   <motion.div
                     className={`achievement-elite-card ${isExpanded ? 'active-expanded' : ''}`}
                     onClick={() => setExpandedAchievement(isExpanded ? null : item.id)}

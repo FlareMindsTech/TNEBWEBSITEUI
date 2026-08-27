@@ -228,6 +228,12 @@
   transform: translateX(3px);
 }
 
+.events-set-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .vertical-carousel-container {
   position: relative;
   width: 100%;
@@ -236,6 +242,7 @@
   overflow-x: hidden;
   padding: 14px 10px 14px 34px;
   scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: #cca362 rgba(7, 29, 63, 0.4);
 }
@@ -575,8 +582,8 @@
 /* Mobile Optimizations for Latest Events */
 @media (max-width: 768px) {
   .carousel-events-wrapper {
-    height: 340px;
-    min-height: 300px;
+    height: 400px;
+    min-height: 360px;
     border-radius: 14px;
     margin-top: 10px;
     margin-bottom: 18px;
@@ -635,8 +642,9 @@
 
 @media (max-width: 576px) {
   .carousel-events-wrapper {
-    height: 310px;
-    min-height: 290px;
+    height: 390px;
+    min-height: 350px;
+    max-height: 65vh;
     border-radius: 12px;
     margin-top: 8px;
     margin-bottom: 15px;

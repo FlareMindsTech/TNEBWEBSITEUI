@@ -255,7 +255,7 @@ const Importantnotices = () => {
                           className="advanced-table-row"
                         >
                           {/* 1. S.No */}
-                          <td className="text-center">
+                          <td className="sno-cell text-center">
                             <span className="serial-pill">
                               {serialNum}
                             </span>

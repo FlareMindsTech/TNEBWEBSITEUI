@@ -12,7 +12,9 @@ import './LatestEvents.css';
 
 const LatestEvents = ({ events = [], loading = false }) => {
   const scrollRef = useRef(null);
+  const firstSetRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const touchTimeoutRef = useRef(null);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -23,13 +25,19 @@ const LatestEvents = ({ events = [], loading = false }) => {
 
     const step = () => {
       if (!isHovered && container) {
-        accumulatedScroll += 0.65;
-        const maxHalf = container.scrollHeight / 2;
-        if (events.length > 2 && maxHalf > 0 && accumulatedScroll >= maxHalf) {
-          accumulatedScroll -= maxHalf;
+        // Continuous smooth subpixel increment
+        accumulatedScroll += 0.6;
+        
+        // Exact pixel height of one full set of items
+        const firstSetHeight = firstSetRef.current ? firstSetRef.current.offsetHeight : container.scrollHeight / 2;
+        
+        if (firstSetHeight > 0 && accumulatedScroll >= firstSetHeight) {
+          accumulatedScroll -= firstSetHeight;
         }
+        
         container.scrollTop = accumulatedScroll;
       } else if (container) {
+        // Sync position when user scrolls manually
         accumulatedScroll = container.scrollTop;
       }
       animationFrameId = requestAnimationFrame(step);
@@ -39,8 +47,26 @@ const LatestEvents = ({ events = [], loading = false }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      if (touchTimeoutRef.current) {
+        clearTimeout(touchTimeoutRef.current);
+      }
     };
   }, [isHovered, events, loading]);
+
+  const handleTouchStart = () => {
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+    setIsHovered(true);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+    touchTimeoutRef.current = setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollTop;
+      }
+      setIsHovered(false);
+    }, 1200);
+  };
 
   const getEventIcon = (title = '', index = 0) => {
     const lower = title.toLowerCase();
@@ -57,7 +83,6 @@ const LatestEvents = ({ events = [], loading = false }) => {
       return <FaClipboardList className="news-icon" />;
     }
 
-    // Rotating contextual icons
     const defaultIcons = [
       <FaClipboardList className="news-icon" />,
       <FaBell className="news-icon" />,
@@ -67,6 +92,59 @@ const LatestEvents = ({ events = [], loading = false }) => {
     ];
     return defaultIcons[index % defaultIcons.length];
   };
+
+  const renderEventList = (items, prefix = 'main') => (
+    items.map((event, index) => (
+      <div key={`${prefix}-${event.id || index}-${index}`} className="carousel-event-item">
+        {/* Left: Golden Timeline Connector Node */}
+        <div className="timeline-connector-track">
+          <span className="timeline-node-bead"></span>
+          <span className="timeline-horizontal-stem"></span>
+        </div>
+
+        {/* News Card */}
+        <div className="news-card-item">
+          {/* Left: Circular Icon */}
+          <div className="news-icon-circle">
+            {getEventIcon(event.title, index)}
+          </div>
+
+          {/* Center: News Title & Badge */}
+          <div className="news-content-box">
+            <div className="news-title-row">
+              {event.link ? (
+                <a
+                  href={event.link.startsWith('http') ? event.link : `https://tnebeaengineers.in/${event.link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="news-title-link"
+                >
+                  {event.title}
+                </a>
+              ) : (
+                <span className="news-title-text">{event.title}</span>
+              )}
+              {event.isNew && (
+                <span className="news-badge-new">New</span>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Calendar Date Card */}
+          <div className="news-calendar-badge">
+            <span className="calendar-binder-ring ring-left"></span>
+            <span className="calendar-binder-ring ring-right"></span>
+            <div className="calendar-header-bar">
+              {event.monthYear}
+            </div>
+            <div className="calendar-day-number">
+              {event.day}
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  );
 
   return (
     <motion.div
@@ -90,8 +168,8 @@ const LatestEvents = ({ events = [], loading = false }) => {
           ref={scrollRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={() => setIsHovered(true)}
-          onTouchEnd={() => setIsHovered(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <div className="vertical-carousel">
             {loading ? (
@@ -125,56 +203,16 @@ const LatestEvents = ({ events = [], loading = false }) => {
                 </div>
               </div>
             ) : (
-              events.concat(events).map((event, index) => (
-                <div key={`${event.id}-${index}`} className="carousel-event-item">
-                  {/* Left: Golden Timeline Connector Node */}
-                  <div className="timeline-connector-track">
-                    <span className="timeline-node-bead"></span>
-                    <span className="timeline-horizontal-stem"></span>
-                  </div>
-
-                  {/* News Card */}
-                  <div className="news-card-item">
-                    {/* Left: Circular Icon */}
-                    <div className="news-icon-circle">
-                      {getEventIcon(event.title, index)}
-                    </div>
-
-                    {/* Center: News Title & Badge */}
-                    <div className="news-content-box">
-                      <div className="news-title-row">
-                        {event.link ? (
-                          <a
-                            href={event.link.startsWith('http') ? event.link : `https://tnebeaengineers.in/${event.link}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="news-title-link"
-                          >
-                            {event.title}
-                          </a>
-                        ) : (
-                          <span className="news-title-text">{event.title}</span>
-                        )}
-                        {event.isNew && (
-                          <span className="news-badge-new">New</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Right: Calendar Date Card */}
-                    <div className="news-calendar-badge">
-                      <span className="calendar-binder-ring ring-left"></span>
-                      <span className="calendar-binder-ring ring-right"></span>
-                      <div className="calendar-header-bar">
-                        {event.monthYear}
-                      </div>
-                      <div className="calendar-day-number">
-                        {event.day}
-                      </div>
-                    </div>
-                  </div>
+              <>
+                {/* Primary Set */}
+                <div ref={firstSetRef} className="events-set-block">
+                  {renderEventList(events, 'set1')}
                 </div>
-              ))
+                {/* Seamless Duplicate Set for Infinite Scroll */}
+                <div className="events-set-block" aria-hidden="true">
+                  {renderEventList(events, 'set2')}
+                </div>
+              </>
             )}
           </div>
         </div>

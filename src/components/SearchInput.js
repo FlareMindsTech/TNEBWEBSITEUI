@@ -45,37 +45,44 @@ const SearchInput = ({ placeholder = "Search..." }) => {
     setIsFocused(false);
   };
 
+  const isExpanded = isFocused || Boolean(localValue && localValue.trim().length > 0);
+
   return (
-    <div className="input-container">
-      <form onSubmit={handleSearchSubmit} style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+    <div className={`input-container ${isExpanded ? 'is-expanded' : ''}`}>
+      <form onSubmit={handleSearchSubmit} className="search-form-inner">
         <input
           ref={inputRef}
           type="text"
           name="text"
-          className="input"
+          className="input search-text-input"
           placeholder={placeholder}
           value={localValue}
           onChange={handleSearchChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
-        {/* Search Icon - Always visible */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          className="icon search-icon"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        {/* Search Icon - Perfectly placed on the left */}
+        <div
+          className="search-icon-wrapper"
+          onClick={() => inputRef.current && inputRef.current.focus()}
         >
-          <circle cx="11" cy="11" r="7.5" />
-          <line x1="21" y1="21" x2="16.5" y2="16.5" />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="search-svg-icon"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="7.5" />
+            <line x1="21" y1="21" x2="16.5" y2="16.5" />
+          </svg>
+        </div>
         
-        {/* Clear (Cross) Icon - Proper X icon */}
-        {(localValue || isFocused) && (
+        {/* Clear (Cross) Icon - Shown on the right when expanded or has text */}
+        {isExpanded && (
           <button
             type="button"
             className="clear-button"
