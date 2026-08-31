@@ -511,14 +511,16 @@
 
 /* Top Step Badge (01, 02...) */
 .edition-step-badge {
-  background: #071933;
-  color: #ffffff;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  color: #ffca38;
   font-weight: 800;
   font-size: 0.88rem;
   padding: 4px 16px;
   border-radius: 0 0 10px 10px;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(7, 25, 51, 0.25);
+  border: 1px solid rgba(255, 202, 56, 0.35);
+  border-top: none;
+  box-shadow: 0 2px 8px rgba(7, 25, 51, 0.3);
   z-index: 2;
 }
 
@@ -547,16 +549,18 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #071933;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  border: 2px solid #ffca38;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.2);
+  box-shadow: 0 4px 14px rgba(7, 25, 51, 0.25), 0 0 10px rgba(255, 202, 56, 0.3);
 }
 
 .edition-white-book-icon {
-  color: #ffffff;
+  color: #ffca38;
   font-size: 1.35rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.45));
 }
 
 /* Title */
@@ -578,21 +582,26 @@
   margin: 8px auto 0;
 }
 
-/* Bottom Solid Navy Year Banner with Gold Text */
+/* Bottom Radial Navy Year Banner with Gold Accent */
 .edition-bottom-year-banner {
   width: 100%;
-  background: #071933;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
   padding: 8px 0;
   border-radius: 0 0 14px 14px;
   text-align: center;
   margin-top: 10px;
+  border-top: 1px solid rgba(255, 202, 56, 0.25);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.25);
 }
 
 .edition-year-text {
-  color: #ffca28;
+  color: #ffca38;
   font-size: 1.35rem;
   font-weight: 900;
   letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.25));
 }
 
 /* BACK OF CARD (Hover Flip State - Electric Blue Sapphire Theme) */
@@ -730,16 +739,18 @@
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: #071933;
-  color: #ffca28;
-  border: 1.5px solid #ffca28;
-  padding: 4px 18px;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  color: #ffca38;
+  border: 1.5px solid #ffca38;
+  border-bottom: 2.5px solid #ffca38;
+  padding: 5px 20px;
   border-radius: 20px;
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.3);
+  box-shadow: 0 4px 14px rgba(7, 25, 51, 0.35), 0 0 10px rgba(255, 202, 56, 0.25);
   z-index: 3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .pricing-header-wrap {
@@ -750,21 +761,28 @@
 }
 
 .pricing-icon-circle {
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: #071933;
-  border: 2.5px solid #ffca28;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  border: 2.5px solid #ffca38;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  box-shadow: 0 4px 12px rgba(7, 25, 51, 0.2);
+  box-shadow: 0 6px 16px rgba(7, 25, 51, 0.28), 0 0 12px rgba(255, 202, 56, 0.35);
+  transition: all 0.3s ease;
+}
+
+.pricing-option:hover .pricing-icon-circle {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(7, 25, 51, 0.35), 0 0 16px rgba(255, 202, 56, 0.5);
 }
 
 .pricing-top-icon {
-  color: #ffca28;
-  font-size: 1.35rem;
+  color: #ffca38;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.5));
 }
 
 .price-category {
@@ -855,16 +873,26 @@
 
 .price-note-banner {
   width: 100%;
-  background: #071933;
-  color: #ffca28;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 0.86rem;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  color: #ffca38;
+  padding: 11px 18px;
+  border-radius: 14px;
+  font-size: 0.88rem;
   font-weight: 700;
   text-align: center;
-  border: 1px solid rgba(255, 202, 40, 0.35);
-  box-shadow: 0 2px 8px rgba(7, 25, 51, 0.2);
+  border: 1px solid rgba(255, 202, 56, 0.3);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 6px 16px rgba(7, 25, 51, 0.22), 0 0 10px rgba(21, 62, 117, 0.2);
   margin-top: auto;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.pricing-option:hover .price-note-banner {
+  border-color: rgba(255, 202, 56, 0.6);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 8px 20px rgba(7, 25, 51, 0.3), 0 0 12px rgba(255, 202, 56, 0.3);
 }
 
 /* ==========================================================================
@@ -920,12 +948,18 @@
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: #071933;
-  border: 3px solid #d99a26;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
+  border: 2.5px solid #ffca38;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(7, 25, 51, 0.25), 0 0 10px rgba(217, 154, 38, 0.25);
+  box-shadow: 0 6px 16px rgba(7, 25, 51, 0.28), 0 0 12px rgba(255, 202, 56, 0.35);
+  transition: all 0.3s ease;
+}
+
+.contact-navy-icon-circle:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(7, 25, 51, 0.35), 0 0 16px rgba(255, 202, 56, 0.5);
 }
 
 .contact-white-icon {
@@ -947,11 +981,12 @@
 }
 
 .contact-gold-dash {
-  width: 24px;
+  width: 28px;
   height: 3px;
-  background: #ffca28;
+  background: #ffca38;
   border-radius: 2px;
   margin: 8px auto 14px;
+  box-shadow: 0 0 8px rgba(255, 202, 56, 0.4);
 }
 
 .contact-col-body {
@@ -980,20 +1015,21 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #f1f5f9;
+  background: #f8fafc;
   color: #071933;
   font-weight: 700;
   font-size: 0.8rem;
   padding: 4px 14px;
   border-radius: 20px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(255, 202, 56, 0.4);
   margin-top: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .contact-regn-icon {
-  color: #d99a26;
+  color: #ffca38;
   font-size: 0.85rem;
+  filter: drop-shadow(0 1px 3px rgba(255, 202, 56, 0.4));
 }
 
 .contact-phone-group {
@@ -1014,36 +1050,41 @@
   font-weight: 600;
 }
 
-/* Solid Navy Contact Button Pill */
+/* Radial Navy Contact Button Pill with Gold Bottom Accent */
 .contact-solid-navy-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: #071933;
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
   color: #ffffff;
   padding: 10px 24px;
   border-radius: 30px;
   text-decoration: none;
-  box-shadow: 0 6px 18px rgba(7, 25, 51, 0.22);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1.5px solid #071933;
+  border: 1px solid rgba(255, 202, 56, 0.25);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 6px 18px rgba(7, 25, 51, 0.25), 0 0 10px rgba(21, 62, 117, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .contact-solid-navy-btn:hover {
-  background: #0d2a54;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(7, 25, 51, 0.3);
+  background: radial-gradient(ellipse at 50% 20%, #1c5299 0%, #0a2347 100%);
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(255, 202, 56, 0.6);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 10px 24px rgba(7, 25, 51, 0.32), 0 0 14px rgba(255, 202, 56, 0.35);
   color: #ffffff;
 }
 
 .contact-btn-gold-icon {
-  color: #ffca28;
+  color: #ffca38;
   font-size: 1.05rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.5));
 }
 
 .contact-btn-separator {
-  color: rgba(255, 255, 255, 0.35);
+  color: #ffca38;
+  opacity: 0.65;
   font-weight: 300;
   font-size: 1.1rem;
 }
@@ -1081,22 +1122,23 @@
   height: 12px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #ffca28;
+  border: 2px solid #ffca38;
   margin: 8px 0;
-  box-shadow: 0 0 0 3px rgba(255, 202, 40, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 202, 56, 0.2);
 }
 
 /* Bottom Full-Width Sapphire Banner */
 .contact-bottom-sapphire-banner {
-  background: radial-gradient(ellipse at 50% 50%, #0d346b 0%, #071f42 50%, #04142d 100%);
+  background: radial-gradient(ellipse at 50% 20%, #153e75 0%, #071933 100%);
   border-radius: 18px;
-  padding: 14px 28px;
+  padding: 16px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(7, 25, 51, 0.22);
+  border-bottom: 2.5px solid #ffca38;
+  box-shadow: 0 12px 30px rgba(7, 25, 51, 0.25), 0 2px 8px rgba(16, 42, 77, 0.08);
 }
 
 .banner-left-content {
@@ -1109,35 +1151,38 @@
 }
 
 .banner-gold-circle-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #ffca28;
+  background: #071933;
+  border: 2px solid #ffca38;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(255, 202, 40, 0.4);
+  box-shadow: 0 0 10px rgba(255, 202, 56, 0.35);
 }
 
 .banner-paperplane-icon {
-  color: #071933;
-  font-size: 1.15rem;
+  color: #ffca38;
+  font-size: 1.2rem;
   transform: rotate(-10deg);
+  filter: drop-shadow(0 2px 4px rgba(255, 202, 56, 0.5));
 }
 
 .banner-gold-vertical-divider {
   width: 2px;
-  height: 24px;
-  background: rgba(255, 202, 40, 0.6);
+  height: 26px;
+  background: #ffca38;
   border-radius: 1px;
   flex-shrink: 0;
+  opacity: 0.85;
 }
 
 .banner-message-text {
   color: #ffffff;
   font-weight: 600;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   margin: 0;
   line-height: 1.5;
   letter-spacing: 0.1px;

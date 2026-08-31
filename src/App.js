@@ -4,7 +4,6 @@ import Cec from './pages/Cec';
 import Regional from './pages/Regional';
 import Branchsecretary from './pages/Branchsecretary';
 import ActRegulations from './pages/ActRegulations';
-import ManualsAndFormsDownload from './pages/ManualsAndFormsDownload';
 import ContributoryPensionScheme from './pages/ContributoryPensionScheme';
 import DistributionRelatedInstructions from './pages/DistributionRelatedInstructions';
 import Minnagam from './pages/Minnagam';
@@ -96,7 +95,6 @@ function App() {
               <Route path="/regional" element={<>< Header /><Regional /><Footer /></>} />
               <Route path="/public-secretary" element={<>< Header /><Branchsecretary/><Footer /></>} />
               <Route path="/act-regulations" element={<>< Header /><ActRegulations /><Footer /></>} />
-              <Route path="/manuals-and-forms-download" element={<>< Header /><ManualsAndFormsDownload /><Footer /></>} />
               <Route path="/contributory-pension-scheme" element={<>< Header /><ContributoryPensionScheme /><Footer /></>} />
               <Route path="/distribution-related-instructions" element={<>< Header /><DistributionRelatedInstructions /><Footer /></>} />
               <Route path="/Minnagam" element={<>< Header /><Minnagam /><Footer /></>} />
