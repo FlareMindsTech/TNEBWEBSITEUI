@@ -378,9 +378,6 @@ const Navbar = () => {
                               <Link className="sidebar-item" to="/act-regulations" onClick={closeAllMenus}>
                                 <FaGavel className="sidebar-icon" /> Act & Regulations
                               </Link>
-                              <Link className="sidebar-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
-                                <FaFilePdf className="sidebar-icon" /> Manuals & Forms
-                              </Link>
                               <Link className="sidebar-item" to="/contributory-pension-scheme" onClick={closeAllMenus}>
                                 <FaUserTie className="sidebar-icon" /> Pension Scheme (CPS)
                               </Link>
@@ -732,21 +729,6 @@ const Navbar = () => {
                         </Link>
                       </motion.div>
 
-                      <motion.div variants={itemVariants} className="dropdown-timeline-row">
-                        <div className="dropdown-timeline-node">
-                          <span className="dropdown-timeline-dot"></span>
-                        </div>
-                        <Link className="dropdown-luxury-item" to="/manuals-and-forms-download" onClick={closeAllMenus}>
-                          <div className="dropdown-item-icon-box">
-                            <FaFilePdf />
-                          </div>
-                          <div className="dropdown-item-text-box">
-                            <span className="dropdown-item-main-title">Manuals &amp; Forms</span>
-                            <span className="dropdown-item-sub-title">Downloads &amp; Documentations</span>
-                          </div>
-                          <FaChevronRight className="dropdown-item-chevron" />
-                        </Link>
-                      </motion.div>
 
                       <motion.div variants={itemVariants} className="dropdown-timeline-row">
                         <div className="dropdown-timeline-node">

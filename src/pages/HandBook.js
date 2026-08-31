@@ -478,7 +478,7 @@ const HandBook = () => {
                 <div className="contact-col-body">
                   <div className="contact-phone-group">
                     <p className="contact-sub-text">Vice President-I</p>
-                    <a href="tel:9444355336" className="contact-solid-navy-btn">
+                    <a href="tel:9444355366" className="contact-solid-navy-btn">
                       <FaPhone className="contact-btn-gold-icon phone-icon-flipped" />
                       <span className="contact-btn-separator">|</span>
                       <span className="contact-btn-label">94443 55336</span>
