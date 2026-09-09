@@ -242,29 +242,23 @@
 .stat-card-info {
   display: flex;
   flex-direction: column;
-}
-
-.stat-big-num {
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: #072048;
-  line-height: 1;
-  display: block;
+  justify-content: center;
 }
 
 .stat-main-lbl {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #072048;
   display: block;
-  margin-top: 2px;
+  line-height: 1.2;
 }
 
 .stat-sub-desc {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   color: #64748b;
   font-weight: 500;
   display: block;
+  margin-top: 3px;
 }
 
 /* 3D Navy Gold-Border Button */
@@ -347,6 +341,40 @@
   height: 6px;
   background: #ffca38;
   border-radius: 3px;
+}
+
+/* Empty State Box */
+.forms-empty-box {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px dashed rgba(13, 42, 84, 0.2);
+  border-radius: 14px;
+  padding: 42px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(7, 25, 51, 0.03);
+}
+
+.forms-empty-box .empty-icon {
+  font-size: 2.4rem;
+  color: #1254ba;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.forms-empty-box .empty-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #072048;
+  margin: 0 0 4px 0;
+}
+
+.forms-empty-box .empty-subtext {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
 }
 
 /* Forms Table */

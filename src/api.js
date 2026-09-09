@@ -513,3 +513,105 @@ export const updateMinnagamStatus = async (id, status) => {
     throw error;
   }
 };
+
+
+// ==================== COMMITTEE & WINGS APIs ====================
+
+/**
+ * Get Public Committee Data (CEC, EBF, REGIONAL, BRANCH)
+ * @param {string} type - Committee type ('CEC', 'EBF', 'REGIONAL', 'BRANCH')
+ * @returns {Promise} Committee details, members, term, and responsibilities
+ */
+export const getCommitteeData = async (type = 'CEC') => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/committees/${type}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching ${type} committee data:`, error);
+    throw error;
+  }
+};
+
+// ==================== BOARD PROCEEDINGS APIs ====================
+
+/**
+ * Get all Board Proceedings with optional category & search filter
+ * @param {Object} params - Query parameters (category, search, sortBy, order)
+ * @returns {Promise<Array>} Array of Board Proceeding objects
+ */
+export const getAllBoardProceedings = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.category && params.category !== 'ALL') {
+      query.append('category', params.category);
+    }
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    const response = await fetch(`${API_BASE_URL}/api/board-proceedings${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching board proceedings:', error);
+    throw error;
+  }
+};
+
+// ==================== FORMS, LOANS & MEMBERSHIP APIs ====================
+
+/**
+ * Get all Forms / Loans / Membership documents
+ * @param {string} [type] - Optional filter by type ('form', 'loan', 'membership')
+ * @returns {Promise<Array>} Array of Form documents
+ */
+export const getAllForms = async (type = '') => {
+  try {
+    const queryString = type ? `?type=${encodeURIComponent(type)}` : '';
+    const response = await fetch(`${API_BASE_URL}/api/forms${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching forms:', error);
+    throw error;
+  }
+};
+

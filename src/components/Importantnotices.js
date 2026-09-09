@@ -8,7 +8,8 @@ import {
   FaTimes,
   FaExternalLinkAlt,
   FaChevronLeft,
-  FaChevronRight
+  FaChevronRight,
+  FaTag
 } from 'react-icons/fa';
 import { getAllImportantNotices } from '../api';
 import './Importantnotices.css';
@@ -17,6 +18,32 @@ const MONTH_NAMES = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
+
+const detectCategoryFromTitle = (text) => {
+  if (!text) return 'Notice';
+  const lower = text.toLowerCase();
+  if (/transfer|posting|promotion|modification/i.test(lower)) return 'Transfer & Posting';
+  if (/establishment/i.test(lower)) return 'Establishment';
+  if (/seniority|panel/i.test(lower)) return 'Seniority List';
+  if (/order|proceeding|b\.p\./i.test(lower)) return 'Official Order';
+  if (/circular/i.test(lower)) return 'Circular';
+  if (/recruitment|appointment/i.test(lower)) return 'Recruitment';
+  if (/retirement|superannuation/i.test(lower)) return 'Retirement';
+  if (/pay|allowance|bonus|pension/i.test(lower)) return 'Finance & Pay';
+  if (/manpower/i.test(lower)) return 'Manpower';
+  return 'Official Notice';
+};
+
+const cleanNoticeType = (type, title) => {
+  if (!type || typeof type !== 'string' || type.trim() === '') {
+    return detectCategoryFromTitle(title);
+  }
+  const trimmed = type.trim();
+  if (trimmed.length > 25 || trimmed.toLowerCase() === (title || '').trim().toLowerCase()) {
+    return detectCategoryFromTitle(title || trimmed);
+  }
+  return trimmed;
+};
 
 const parseItemDate = (item) => {
   const title = item.Notice_title || item.title || item.name || '';
@@ -92,7 +119,7 @@ const Importantnotices = () => {
         const title = item.Notice_title || item.title || 'Untitled Notice';
         const link = item.docUrl || item.link || item.pdfUrl || item.url || '';
         const dateInfo = parseItemDate(item);
-        const rawType = item.Type || item.type || 'Notice';
+        const rawType = item.Type || item.type || 'Official Notice';
 
         return {
           id: item._id || item.id || `notice-${idx}`,
@@ -160,24 +187,23 @@ const Importantnotices = () => {
       <div className="notices-hero">
         <div className="notices-hero-ambient-glow"></div>
         <div className="notices-hero-content">
-          
           <h1>
             Important <span className="title-highlight">Notices</span>
           </h1>
           <div className="hero-divider"></div>
           <p className="notices-hero-tagline">
-            Important documents and circulars for TNEB engineers
+            Official announcements, orders, circulars, and notifications for TNEB engineers
           </p>
         </div>
       </div>
 
-      {/* 2. FLOATING SEARCH BAR (Half inside hero card, half outside) */}
+      {/* 2. FLOATING SEARCH BAR */}
       <div className="hero-floating-search-wrapper">
         <div className="hero-floating-search">
           <FaSearch className="floating-search-icon" />
           <input
             type="text"
-            placeholder="Search by title, type, or date..."
+            placeholder="Search by title, category, or date..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="floating-search-input"
@@ -233,10 +259,11 @@ const Importantnotices = () => {
               <table className="table advanced-notices-table align-middle">
                 <thead>
                   <tr>
-                    <th style={{ width: '75px' }} className="text-center">S.No</th>
-                    <th>Notice Title</th>
-                    <th style={{ width: '230px' }}>Type</th>
-                    <th style={{ width: '160px' }} className="text-center">Date</th>
+                    <th className="th-sno text-center">S.No</th>
+                    <th className="th-title">Notice Title</th>
+                    <th className="th-type">Category</th>
+                    <th className="th-date text-center">Date</th>
+                    <th className="th-action text-center">Document</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -257,44 +284,68 @@ const Importantnotices = () => {
                           {/* 1. S.No */}
                           <td className="sno-cell text-center">
                             <span className="serial-pill">
-                              {serialNum}
+                              {serialNum < 10 ? `0${serialNum}` : serialNum}
                             </span>
                           </td>
 
                           {/* 2. Notice Title */}
                           <td className="title-cell">
-                            {hasDocument ? (
-                              <a
-                                href={item.link.startsWith('http') ? item.link : `https://tnebeaengineers.in/${item.link}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="advanced-title-link"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  openDocument(item.link);
-                                }}
-                              >
-                                <span className="title-text">{item.title}</span>
-                                <FaExternalLinkAlt className="external-icon" />
-                              </a>
-                            ) : (
-                              <span className="title-text-plain">{item.title}</span>
-                            )}
+                            <div className="title-content-wrapper">
+                              {hasDocument ? (
+                                <a
+                                  href={item.link.startsWith('http') ? item.link : `https://tnebeaengineers.in/${item.link}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="advanced-title-link"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    openDocument(item.link);
+                                  }}
+                                  title="Click to view document"
+                                >
+                                  <span className="title-text">{item.title}</span>
+                                </a>
+                              ) : (
+                                <span className="title-text-plain">{item.title}</span>
+                              )}
+                            </div>
                           </td>
 
-                          {/* 3. Type */}
+                          {/* 3. Category / Type */}
                           <td className="type-cell">
-                            <span className="type-badge-pill">
-                              {item.rawType}
-                            </span>
+                            <div className="category-block">
+                              <span className="category-text-content">
+                                {item.rawType}
+                              </span>
+                            </div>
                           </td>
 
                           {/* 4. Date */}
                           <td className="date-cell text-center">
                             <span className="date-badge-pill">
                               <FaCalendarAlt className="date-icon" />
-                              {item.dateInfo.formatted}
+                              <span>{item.dateInfo.formatted}</span>
                             </span>
+                          </td>
+
+                          {/* 5. Document Action Button */}
+                          <td className="action-cell text-center">
+                            {hasDocument ? (
+                              <button
+                                type="button"
+                                className="notice-doc-btn"
+                                onClick={() => openDocument(item.link)}
+                                title="Open PDF Document"
+                              >
+                                <FaFilePdf className="doc-pdf-icon" />
+                                <span className="doc-btn-text">View PDF</span>
+                                <FaExternalLinkAlt className="doc-link-icon" />
+                              </button>
+                            ) : (
+                              <span className="notice-no-doc-label">
+                                No Document
+                              </span>
+                            )}
                           </td>
                         </motion.tr>
                       );
