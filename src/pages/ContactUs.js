@@ -19,8 +19,8 @@ export default function ContactUs() {
     e.preventDefault()
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!form.name.trim() || !form.email.trim() || !form.service.trim() || !form.message.trim()) {
-      setStatus('Please fill in all fields.')
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus('Please fill in all required fields.')
       return
     }
     if (!emailPattern.test(form.email)) {
@@ -30,7 +30,7 @@ export default function ContactUs() {
     const templateParams = {
       name: form.name,
       email: form.email,
-      service: form.service,
+      service: form.service.trim() || 'General Inquiry',
       message: form.message,
     }
     emailjs
@@ -66,30 +66,37 @@ export default function ContactUs() {
 
           {/* FORM SECTION */}
           <div className="contact-form-section">
-            <h3 className="form-section-title">Send us a Message</h3>
-            <form onSubmit={onSubmit} className="space-y-4">
+            <div className="form-header">
+              <h3 className="form-section-title">Send us a Message</h3>
+              <p className="form-section-subtitle">Have queries or need assistance? Fill out the form below and our team will get back to you promptly.</p>
+              <div className="form-title-divider"></div>
+            </div>
+
+            <form onSubmit={onSubmit} className="contact-form-body">
               <div className="form-field">
-                <label className="form-label">
-                  <FaUser className="label-icon" />
-                  Name
+                <label className="form-label" htmlFor="contact-name">
+                  <span className="label-icon-wrap"><FaUser /></span>
+                  <span>Full Name</span>
                 </label>
                 <input
+                  id="contact-name"
                   required
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={onChange}
-                  placeholder="Enter your full name"
+                  placeholder="Enter your name"
                   className="form-input"
                 />
               </div>
 
               <div className="form-field">
-                <label className="form-label">
-                  <FaEnvelope className="label-icon" />
-                  Email
+                <label className="form-label" htmlFor="contact-email">
+                  <span className="label-icon-wrap"><FaEnvelope /></span>
+                  <span>Email Address</span>
                 </label>
                 <input
+                  id="contact-email"
                   required
                   type="email"
                   name="email"
@@ -101,88 +108,124 @@ export default function ContactUs() {
               </div>
 
               <div className="form-field">
-                <label className="form-label">
-                  <FaCommentDots className="label-icon" />
-                  Message
+                <label className="form-label" htmlFor="contact-service">
+                  <span className="label-icon-wrap"><FaBuilding /></span>
+                  <span>Subject / Purpose</span>
+                </label>
+                <input
+                  id="contact-service"
+                  type="text"
+                  name="service"
+                  value={form.service}
+                  onChange={onChange}
+                  placeholder="Enter subject or purpose"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-field">
+                <label className="form-label" htmlFor="contact-message">
+                  <span className="label-icon-wrap"><FaCommentDots /></span>
+                  <span>Your Message</span>
                 </label>
                 <textarea
+                  id="contact-message"
                   required
                   name="message"
                   value={form.message}
                   onChange={onChange}
-                  rows={6}
-                  placeholder="Type your message here..."
+                  rows={5}
+                  placeholder="Write your message here..."
                   className="form-textarea"
                 />
               </div>
 
               <button type="submit" className="submit-btn">
+                <span>Send Message</span>
                 <FaPaperPlane className="btn-icon" />
-                Send Message
               </button>
 
               {status && (
-                <p className={`status-msg ${status.startsWith('✅') ? 'success' : 'error'}`}>
+                <div className={`status-msg-banner ${status.startsWith('✅') ? 'success' : 'error'}`}>
                   {status}
-                </p>
+                </div>
               )}
             </form>
           </div>
+
+          {/* CONTACT INFO SECTION */}
           <div className="contact-info-section">
-            <h3 className="info-section-title">Contact Information</h3>
+            <div className="info-header-block">
+              <h3 className="info-section-title">Contact Information</h3>
+              <p className="info-section-subtitle">Official Headquarters &amp; Association Desk</p>
+              <div className="info-title-divider"></div>
+            </div>
 
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <FaMapMarkerAlt className="contact-info-icon" />
+            <div className="info-cards-list">
+              <div className="info-item">
+                <div className="info-icon-wrapper">
+                  <FaMapMarkerAlt className="contact-info-icon" />
+                </div>
+                <div className="info-content">
+                  <span className="info-label">Headquarters Address</span>
+                  <h5>144, Anna Salai, Chennai – 600 002.</h5>
+                  <p className="info-subtext">(Regn. No. 217/94 | Recognised in G.O. No. 854 dt 06.04.1946)</p>
+                </div>
               </div>
-              <div className="info-content">
-                <h5>Address</h5>
-                <p>144, Anna Salai, Chennai – 600 002.<br />(Regn.No.217/94)<br />(Recognised in G.O.No.854 dated 06.04.1946)</p>
+
+              <div className="info-item">
+                <div className="info-icon-wrapper">
+                  <FaBuilding className="contact-info-icon" />
+                </div>
+                <div className="info-content">
+                  <span className="info-label">Organization</span>
+                  <h5>General Secretary, TNEBEA</h5>
+                  <p className="info-subtext">Tamil Nadu Electricity Board Engineers' Association</p>
+                </div>
+              </div>
+
+              <div className="info-row-grid">
+                <a href="tel:+919489774341" className="info-item info-link-card">
+                  <div className="info-icon-wrapper">
+                    <FaPhone className="contact-info-icon phone-flipped" />
+                  </div>
+                  <div className="info-content">
+                    <span className="info-label">Phone Support</span>
+                    <h5>+91 94897 74341</h5>
+                  </div>
+                </a>
+
+                <a href="mailto:tnebea@gmail.com" className="info-item info-link-card">
+                  <div className="info-icon-wrapper">
+                    <FaEnvelope className="contact-info-icon" />
+                  </div>
+                  <div className="info-content">
+                    <span className="info-label">Official Email</span>
+                    <h5>tnebea@gmail.com</h5>
+                  </div>
+                </a>
               </div>
             </div>
 
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <FaBuilding className="contact-info-icon" />
+            {/* Google Map Card */}
+            <div className="map-container-wrap">
+              <div className="map-badge-header">
+                <FaMapMarkerAlt className="map-pin-icon" />
+                <span>Locate Us on Google Maps</span>
               </div>
-              <div className="info-content">
-                <h5>Organization</h5>
-                <p>GS TNEBEA</p>
-              </div>
-            </div>
-
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <FaPhone className="contact-info-icon" />
-              </div>
-              <div className="info-content">
-                <h5>Phone</h5>
-                <p>+91 94897 74341</p>
-              </div>
-            </div>
-
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <FaEnvelope className="contact-info-icon" />
-              </div>
-              <div className="info-content">
-                <h5>Email</h5>
-                <p>tnebea@gmail.com</p>
+              <div className="map-frame-box">
+                <iframe
+                  title="TNEBEA Location Map"
+                  src="https://www.google.com/maps/embed?pb=!4v1767466880327!6m8!1m7!1swyXhCUG8lD2rbTGSVGIdFw!2m2!1d13.06383379565387!2d80.26517472916669!3f310.9484141426706!4f-8.443127516870291!5f0.7820865974627469"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </div>
-
-            <div className="map-container" style={{ width: "100%", height: "300px", marginTop: "30px" }}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!4v1767466880327!6m8!1m7!1swyXhCUG8lD2rbTGSVGIdFw!2m2!1d13.06383379565387!2d80.26517472916669!3f310.9484141426706!4f-8.443127516870291!5f0.7820865974627469"
-                width="100%"
-                height="100%"
-                style={{ border: 0, borderRadius: "12px" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-
           </div>
 
         </div>
