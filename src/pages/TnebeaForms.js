@@ -251,19 +251,19 @@ const TnebeaForms = () => {
             {/* Card 1: Membership */}
             {memberships.length > 0 && (
               <div 
-                className="term-info-row"
+                className="forms-stat-card"
                 role="button"
                 tabIndex={0}
                 onClick={() => scrollToSection('section-membership')}
               >
-                <div className="term-icon-box">
+                <div className="forms-stat-icon-box">
                   <FaIdCard />
                 </div>
-                <div className="term-content-col">
-                  <span className="term-label">CURRENT MEMBERSHIP</span>
-                  <strong className="term-val">Membership Forms</strong>
+                <div className="forms-stat-content-col">
+                  <span className="forms-stat-label">CURRENT MEMBERSHIP</span>
+                  <strong className="forms-stat-val">Membership Forms</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="forms-stat-chevron-btn">
                   <FaChevronRight />
                 </div>
               </div>
@@ -272,19 +272,19 @@ const TnebeaForms = () => {
             {/* Card 2: Forms */}
             {formsList.length > 0 && (
               <div 
-                className="term-info-row"
+                className="forms-stat-card"
                 role="button"
                 tabIndex={0}
                 onClick={() => scrollToSection('section-forms')}
               >
-                <div className="term-icon-box">
+                <div className="forms-stat-icon-box">
                   <FaFileAlt />
                 </div>
-                <div className="term-content-col">
-                  <span className="term-label">OFFICIAL FORMS</span>
-                  <strong className="term-val">Forms & Applications</strong>
+                <div className="forms-stat-content-col">
+                  <span className="forms-stat-label">OFFICIAL FORMS</span>
+                  <strong className="forms-stat-val">Forms & Applications</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="forms-stat-chevron-btn">
                   <FaChevronRight />
                 </div>
               </div>
@@ -293,19 +293,19 @@ const TnebeaForms = () => {
             {/* Card 3: Loan and Advance */}
             {loansList.length > 0 && (
               <div 
-                className="term-info-row"
+                className="forms-stat-card"
                 role="button"
                 tabIndex={0}
                 onClick={() => scrollToSection('section-loan')}
               >
-                <div className="term-icon-box">
+                <div className="forms-stat-icon-box">
                   <FaFileContract />
                 </div>
-                <div className="term-content-col">
-                  <span className="term-label">LOANS & ADVANCES</span>
-                  <strong className="term-val">Advances & Loans</strong>
+                <div className="forms-stat-content-col">
+                  <span className="forms-stat-label">LOANS & ADVANCES</span>
+                  <strong className="forms-stat-val">Advances & Loans</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="forms-stat-chevron-btn">
                   <FaChevronRight />
                 </div>
               </div>
@@ -314,19 +314,19 @@ const TnebeaForms = () => {
             {/* Card 4: Wage Division */}
             {wageDivisionList.length > 0 && (
               <div 
-                className="term-info-row"
+                className="forms-stat-card"
                 role="button"
                 tabIndex={0}
                 onClick={() => scrollToSection('section-wage-division')}
               >
-                <div className="term-icon-box">
+                <div className="forms-stat-icon-box">
                   <FaMoneyBillWave />
                 </div>
-                <div className="term-content-col">
-                  <span className="term-label">WAGE DIVISION</span>
-                  <strong className="term-val">Wage & Related Forms</strong>
+                <div className="forms-stat-content-col">
+                  <span className="forms-stat-label">WAGE DIVISION</span>
+                  <strong className="forms-stat-val">Wage & Related Forms</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="forms-stat-chevron-btn">
                   <FaChevronRight />
                 </div>
               </div>
@@ -335,19 +335,19 @@ const TnebeaForms = () => {
             {/* Card 5: NOC Format */}
             {nocList.length > 0 && (
               <div 
-                className="term-info-row"
+                className="forms-stat-card"
                 role="button"
                 tabIndex={0}
                 onClick={() => scrollToSection('section-noc')}
               >
-                <div className="term-icon-box">
+                <div className="forms-stat-icon-box">
                   <FaFileSignature />
                 </div>
-                <div className="term-content-col">
-                  <span className="term-label">NOC FORMAT</span>
-                  <strong className="term-val">NOC Documents</strong>
+                <div className="forms-stat-content-col">
+                  <span className="forms-stat-label">NOC FORMAT</span>
+                  <strong className="forms-stat-val">NOC Documents</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="forms-stat-chevron-btn">
                   <FaChevronRight />
                 </div>
               </div>

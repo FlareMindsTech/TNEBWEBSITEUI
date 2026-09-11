@@ -199,7 +199,7 @@
   margin-right: auto;
 }
 
-.term-info-row {
+.forms-stat-card {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -216,13 +216,13 @@
   text-decoration: none;
 }
 
-.term-info-row:hover {
+.forms-stat-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(7, 42, 96, 0.12), 0 0 12px rgba(250, 184, 30, 0.2);
   border-color: #fab81e;
 }
 
-.term-icon-box {
+.forms-stat-icon-box {
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -238,12 +238,12 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.term-info-row:hover .term-icon-box {
+.forms-stat-card:hover .forms-stat-icon-box {
   transform: scale(1.08);
   box-shadow: 0 4px 12px rgba(7, 42, 96, 0.35);
 }
 
-.term-content-col {
+.forms-stat-content-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -251,7 +251,7 @@
   text-align: left;
 }
 
-.term-label {
+.forms-stat-label {
   font-size: 0.68rem;
   font-weight: 800;
   color: #64748b;
@@ -259,7 +259,7 @@
   text-transform: uppercase;
 }
 
-.term-val {
+.forms-stat-val {
   font-size: 0.98rem;
   font-weight: 800;
   color: #072a60;
@@ -267,11 +267,11 @@
   transition: color 0.2s ease;
 }
 
-.term-info-row:hover .term-val {
+.forms-stat-card:hover .forms-stat-val {
   color: #0c4794;
 }
 
-.term-chevron-btn {
+.forms-stat-chevron-btn {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -286,7 +286,7 @@
   transition: all 0.22s ease;
 }
 
-.term-info-row:hover .term-chevron-btn {
+.forms-stat-card:hover .forms-stat-chevron-btn {
   background: #072a60;
   color: #fab81e;
   border-color: #fab81e;
