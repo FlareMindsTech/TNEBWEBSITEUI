@@ -565,9 +565,9 @@ const Cec = () => {
                 </div>
                 <div className="term-content-col">
                   <span className="term-label">CURRENT TERM</span>
-                  <strong className="term-val">{termData.currentTerm || "2025 - 2027"}</strong>
+                  <strong className="term-val">{termData.currentTerm || "2025-2027"}</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="term-chevron-btn blue">
                   <FaChevronRight />
                 </div>
               </div>
@@ -580,7 +580,7 @@ const Cec = () => {
                   <span className="term-label">ELECTED</span>
                   <strong className="term-val">{termData.electedDate || "October 2025"}</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="term-chevron-btn amber">
                   <FaChevronRight />
                 </div>
               </div>
@@ -593,7 +593,7 @@ const Cec = () => {
                   <span className="term-label">NEXT ELECTION</span>
                   <strong className="term-val">{termData.nextElectionDate || "October 2027"}</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="term-chevron-btn highlight">
                   <FaChevronRight />
                 </div>
               </div>
@@ -606,7 +606,7 @@ const Cec = () => {
                   <span className="term-label">TOTAL MEMBERS</span>
                   <strong className="term-val">{termData.totalMembers || cecMembers.length || 14}</strong>
                 </div>
-                <div className="term-chevron-btn">
+                <div className="term-chevron-btn purple">
                   <FaChevronRight />
                 </div>
               </div>
