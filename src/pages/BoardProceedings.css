@@ -813,6 +813,129 @@
   gap: 10px;
 }
 
+/* Year Filter Toggle Button */
+.bp-year-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  padding: 9px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.bp-year-toggle-btn:hover,
+.bp-year-toggle-btn.open {
+  background: rgba(255, 202, 56, 0.18);
+  border-color: #ffca38;
+  color: #ffca38;
+}
+
+.bp-year-toggle-btn.active-filter {
+  background: #ffca38;
+  color: #061c3d;
+  border-color: #ffca38;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(255, 202, 56, 0.4);
+}
+
+.bp-chevron-icon {
+  font-size: 0.72rem;
+  transition: transform 0.22s ease;
+}
+
+.bp-chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Expandable Year Filter Panel directly below Search */
+.bp-year-filter-panel {
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.bp-year-filter-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: rgba(3, 14, 32, 0.65);
+  border: 1.5px solid rgba(255, 202, 56, 0.35);
+  padding: 12px 18px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bp-year-pills-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.bp-year-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e2e8f0;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bp-year-pill:hover {
+  background: rgba(255, 202, 56, 0.2);
+  border-color: #ffca38;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.bp-year-pill.active {
+  background: #ffca38;
+  color: #061c3d;
+  border-color: #ffca38;
+  font-weight: 800;
+  box-shadow: 0 2px 10px rgba(255, 202, 56, 0.35);
+}
+
+.year-pill-count {
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+.bp-year-clear-btn {
+  background: rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.bp-year-clear-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
 .bp-sort-btn {
   background: rgba(255, 255, 255, 0.12);
   border: 1.5px solid rgba(255, 202, 56, 0.4);
