@@ -19,7 +19,8 @@ import {
   FaArrowRight,
   FaFileAlt,
   FaUsers,
-  FaInfoCircle
+  FaInfoCircle,
+  FaChevronDown
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getAllBoardProceedings } from '../api';
@@ -57,6 +58,8 @@ const BoardProceedings = () => {
   // Navigation & Filter States
   // selectedCategory: null (home) | "BP's & Orders" | "Panels & Promotion" | "ALL"
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [showYearFilter, setShowYearFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'table'
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' (newest) | 'asc' (oldest)
@@ -113,8 +116,23 @@ const BoardProceedings = () => {
     [proceedings]
   );
 
+  // Available unique years sorted descending
+  const availableYears = useMemo(() => {
+    const yearsSet = new Set();
+    proceedings.forEach((item) => {
+      const dateVal = item.date || item.createdAt || item.updatedAt;
+      if (dateVal) {
+        const y = new Date(dateVal).getFullYear();
+        if (!isNaN(y) && y > 1900 && y < 2100) {
+          yearsSet.add(y);
+        }
+      }
+    });
+    return Array.from(yearsSet).sort((a, b) => b - a);
+  }, [proceedings]);
+
   // Determines whether to show the documents view or the home selection cards
-  const isDocumentsView = Boolean(selectedCategory || searchQuery.trim());
+  const isDocumentsView = Boolean(selectedCategory || searchQuery.trim() || selectedYear);
 
   // Filtered and Sorted list
   const filteredProceedings = useMemo(() => {
@@ -127,6 +145,14 @@ const BoardProceedings = () => {
           (item.category &&
             item.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase());
 
+        // Year Filter
+        const dateVal = item.date || item.createdAt || item.updatedAt;
+        const itemYear = dateVal ? new Date(dateVal).getFullYear() : null;
+        const matchesYear =
+          !selectedYear ||
+          selectedYear === 'ALL' ||
+          (itemYear && itemYear === parseInt(selectedYear, 10));
+
         // Search Filter
         const query = searchQuery.trim().toLowerCase();
         const matchesSearch =
@@ -135,14 +161,14 @@ const BoardProceedings = () => {
           (item.category && item.category.toLowerCase().includes(query)) ||
           (item.description && item.description.toLowerCase().includes(query));
 
-        return matchesCategory && matchesSearch;
+        return matchesCategory && matchesYear && matchesSearch;
       })
       .sort((a, b) => {
-        const timeA = new Date(a.createdAt || a.updatedAt || 0).getTime();
-        const timeB = new Date(b.createdAt || b.updatedAt || 0).getTime();
+        const timeA = new Date(a.date || a.createdAt || a.updatedAt || 0).getTime();
+        const timeB = new Date(b.date || b.createdAt || b.updatedAt || 0).getTime();
         return sortOrder === 'asc' ? timeA - timeB : timeB - timeA;
       });
-  }, [proceedings, selectedCategory, searchQuery, sortOrder]);
+  }, [proceedings, selectedCategory, selectedYear, searchQuery, sortOrder]);
 
   const handleOpenDoc = (url, title) => {
     if (url) {
@@ -164,6 +190,8 @@ const BoardProceedings = () => {
 
   const handleResetToCategories = () => {
     setSelectedCategory(null);
+    setSelectedYear(null);
+    setShowYearFilter(false);
     setSearchQuery('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -539,6 +567,18 @@ const BoardProceedings = () => {
                 </div>
 
                 <div className="bp-action-btns">
+                  {/* Calendar / Year Filter Button */}
+                  <button
+                    type="button"
+                    className={`bp-year-toggle-btn ${selectedYear ? 'active-filter' : ''} ${showYearFilter ? 'open' : ''}`}
+                    onClick={() => setShowYearFilter(!showYearFilter)}
+                    title="Filter by Year"
+                  >
+                    <FaCalendarAlt className="me-1" />
+                    <span>{selectedYear ? `Year: ${selectedYear}` : 'Year'}</span>
+                    <FaChevronDown className={`ms-1 bp-chevron-icon ${showYearFilter ? 'rotated' : ''}`} />
+                  </button>
+
                   {/* Sort Order Toggle */}
                   <button
                     type="button"
@@ -587,6 +627,58 @@ const BoardProceedings = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Expandable Year Selection Bar Directly Below Search Row */}
+              <AnimatePresence>
+                {showYearFilter && (
+                  <motion.div
+                    className="bp-year-filter-panel"
+                    initial={{ opacity: 0, height: 0, y: -6 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -6 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                  >
+                    <div className="bp-year-filter-inner">
+                      <div className="bp-year-pills-list">
+                        <button
+                          type="button"
+                          className={`bp-year-pill ${!selectedYear ? 'active' : ''}`}
+                          onClick={() => setSelectedYear(null)}
+                        >
+                          All Years ({proceedings.length})
+                        </button>
+                        {availableYears.map((year) => {
+                          const count = proceedings.filter((p) => {
+                            const d = p.date || p.createdAt || p.updatedAt;
+                            return d && new Date(d).getFullYear() === year;
+                          }).length;
+                          return (
+                            <button
+                              key={year}
+                              type="button"
+                              className={`bp-year-pill ${selectedYear === String(year) ? 'active' : ''}`}
+                              onClick={() => setSelectedYear(selectedYear === String(year) ? null : String(year))}
+                            >
+                              <FaCalendarAlt className="me-1 small-icon" />
+                              {year} <span className="year-pill-count">({count})</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {selectedYear && (
+                        <button
+                          type="button"
+                          className="bp-year-clear-btn"
+                          onClick={() => setSelectedYear(null)}
+                          title="Clear Year Filter"
+                        >
+                          <FaTimes className="me-1" /> Clear ({selectedYear})
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Dynamic Content: Loading / Error / Empty / Grid / Table */}
@@ -668,7 +760,7 @@ const BoardProceedings = () => {
 
                           <span className="bp-date-badge">
                             <FaCalendarAlt className="me-1" />
-                            {formatDate(item.createdAt || item.updatedAt)}
+                            {formatDate(item.date || item.createdAt || item.updatedAt)}
                           </span>
                         </div>
 
@@ -774,7 +866,7 @@ const BoardProceedings = () => {
                             <td className="td-date">
                               <div className="date-with-icon">
                                 <FaCalendarAlt className="me-1 text-muted" />
-                                {formatDate(item.createdAt || item.updatedAt)}
+                                {formatDate(item.date || item.createdAt || item.updatedAt)}
                               </div>
                             </td>
                             <td className="td-actions" onClick={(e) => e.stopPropagation()}>
