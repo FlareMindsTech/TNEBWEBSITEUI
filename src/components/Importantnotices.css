@@ -1,110 +1,119 @@
-.notices-container {
-  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+/* ==========================================================================
+   ROYAL PARCHMENT SCROLL THEME - IMPORTANT NOTICES
+   ========================================================================== */
+
+.royal-notices-container {
+  font-family: 'Cinzel', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background: linear-gradient(180deg, #f0f4f9 0%, #e8eef6 50%, #dfebf8 100%);
   min-height: 100vh;
-  padding: 20px;
+  padding: 30px 20px 80px 20px;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* ==========================================================================
-   1. HERO BANNER MATCHING EXECUTIVE NAVY & GOLD THEME
+   1. ROYAL HERO BANNER
    ========================================================================== */
-.notices-hero {
+.royal-hero-banner {
   position: relative;
-  background: radial-gradient(ellipse at 50% 20%, #103a73 0%, #072a60 60%, #031430 100%);
-  padding: 40px 24px 46px 24px;
+  background: radial-gradient(ellipse at 50% 20%, #123d7a 0%, #08295c 60%, #031430 100%);
+  padding: 36px 20px 42px 20px;
   border-radius: 20px;
   text-align: center;
-  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
   border: 1.5px solid rgba(250, 184, 30, 0.4);
   border-bottom: 3.5px solid #fab81e;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(250, 184, 30, 0.2);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 30px rgba(250, 184, 30, 0.18);
+  overflow: hidden;
 }
 
-.notices-hero-ambient-glow {
+.royal-hero-ambient-glow {
   position: absolute;
-  top: -40%;
+  top: -50%;
   left: 50%;
   transform: translateX(-50%);
-  width: 70vw;
+  width: 80%;
   height: 250px;
-  background: radial-gradient(circle, rgba(250, 184, 30, 0.18) 0%, rgba(27, 91, 175, 0.3) 40%, transparent 75%);
+  background: radial-gradient(circle, rgba(250, 184, 30, 0.22) 0%, rgba(27, 91, 175, 0.35) 50%, transparent 80%);
   filter: blur(50px);
   pointer-events: none;
 }
 
-.notices-hero-content {
+.royal-hero-content {
   position: relative;
   z-index: 2;
 }
 
-.notices-hero h1 {
+.royal-hero-content h1 {
   color: #ffffff;
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   font-weight: 800;
-  letter-spacing: -0.3px;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-.title-highlight {
+.title-gold-text {
   color: #fab81e;
+  text-shadow: 0 0 16px rgba(250, 184, 30, 0.6);
 }
 
-.hero-divider {
-  width: 80px;
+.royal-hero-divider {
+  width: 90px;
   height: 3px;
   background: linear-gradient(90deg, transparent 0%, #fab81e 50%, transparent 100%);
   margin: 12px auto;
   border-radius: 2px;
-  box-shadow: 0 0 8px rgba(250, 184, 30, 0.6);
+  box-shadow: 0 0 10px rgba(250, 184, 30, 0.8);
 }
 
-.notices-hero-tagline {
+.royal-hero-tagline {
   color: #cbd5e1;
   font-size: 0.95rem;
   margin-bottom: 0;
+  letter-spacing: 0.2px;
 }
 
 /* ==========================================================================
-   2. FLOATING SEARCH BAR
+   2. ROYAL SEARCH BAR
    ========================================================================== */
-.hero-floating-search-wrapper {
+.royal-search-wrapper {
   position: relative;
   z-index: 10;
   margin-top: -24px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   padding: 0 20px;
   display: flex;
   justify-content: center;
 }
 
-.hero-floating-search {
+.royal-search-bar {
   position: relative;
   width: 100%;
   max-width: 580px;
   background: #ffffff;
   border-radius: 50px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(7, 42, 96, 0.15);
-  border: 2px solid #ffffff;
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(7, 42, 96, 0.12), 0 0 0 1.5px rgba(250, 184, 30, 0.4);
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
-.hero-floating-search:focus-within {
-  border-color: #fab81e;
-  box-shadow: 0 12px 35px rgba(7, 42, 96, 0.22), 0 0 0 4px rgba(250, 184, 30, 0.2);
+.royal-search-bar:focus-within {
+  box-shadow: 0 10px 30px rgba(7, 42, 96, 0.18), 0 0 0 3px rgba(250, 184, 30, 0.7);
   transform: translateY(-2px);
 }
 
-.floating-search-icon {
+.royal-search-icon {
   position: absolute;
   left: 20px;
   color: #072a60;
   font-size: 1.05rem;
 }
 
-.floating-search-input {
+.royal-search-input {
   width: 100%;
   height: 48px;
   padding: 0 45px 0 52px;
@@ -117,17 +126,16 @@
   outline: none;
 }
 
-.floating-search-input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
+.royal-search-input::placeholder {
+  color: #8395a7;
 }
 
-.floating-search-clear {
+.royal-search-clear {
   position: absolute;
   right: 16px;
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #8395a7;
   font-size: 0.95rem;
   cursor: pointer;
   padding: 6px;
@@ -137,684 +145,743 @@
   transition: color 0.2s ease;
 }
 
-.floating-search-clear:hover {
+.royal-search-clear:hover {
   color: #ef4444;
 }
 
 /* ==========================================================================
-   3. EXECUTIVE PROFESSIONAL TABLE SECTION
+   3. ROYAL PARCHMENT SCROLL ARCHITECTURE
    ========================================================================== */
-.notices-content-wrapper {
-  max-width: 1280px;
+.royal-scroll-main-wrapper {
+  max-width: 1220px;
   margin: 0 auto;
-  padding-bottom: 50px;
-}
-
-.table-luxury-card {
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 12px 35px rgba(7, 42, 96, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e2e8f0;
-  border-top: 3.5px solid #fab81e;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-/* Table Responsive Wrapper */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Main Table Structure */
-.advanced-notices-table {
-  margin-bottom: 0;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.advanced-notices-table thead th {
-  background: linear-gradient(90deg, #072a60 0%, #0c397c 100%) !important;
-  color: #ffffff !important;
-  font-weight: 700;
-  font-size: 0.84rem;
-  letter-spacing: 0.8px;
-  padding: 15px 18px;
-  border: none;
-  border-bottom: 2.5px solid #fab81e;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.advanced-notices-table thead th.th-sno {
-  width: 65px;
-}
-
-.advanced-notices-table thead th.th-title {
-  width: 36%;
-  min-width: 260px;
-}
-
-.advanced-notices-table thead th.th-type {
-  width: 34%;
-  min-width: 240px;
-}
-
-.advanced-notices-table thead th.th-date {
-  width: 140px;
-}
-
-.advanced-notices-table thead th.th-action {
-  width: 120px;
-}
-
-/* Table Row Styling */
-.advanced-table-row {
-  transition: all 0.2s ease;
-  border-bottom: 1px solid #edf2f7;
+  padding: 10px 15px 40px 15px;
   position: relative;
 }
 
-.advanced-table-row:nth-child(even) {
-  background-color: #fbfdff;
+.royal-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  filter: drop-shadow(0 18px 45px rgba(0, 0, 0, 0.65));
 }
 
-.advanced-table-row:hover {
-  background-color: #f1f6ff !important;
-  box-shadow: inset 4px 0 0 #fab81e;
+/* Top and Bottom Cylindrical Roller Rods */
+.royal-scroll-roller {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
 }
 
-.advanced-table-row td {
-  padding: 16px 18px;
-  border-bottom: 1px solid #edf2f7;
-  vertical-align: middle;
+.royal-scroll-roller.roller-top {
+  margin-bottom: -10px;
 }
 
-/* 1. S.No Cell */
-.serial-pill {
-  display: inline-flex;
+.royal-scroll-roller.roller-bottom {
+  margin-top: -10px;
+}
+
+/* 3D Cylindrical Wooden / Parchment Roller */
+.scroll-roller-cylinder {
+  flex: 1;
+  height: 38px;
+  border-radius: 4px;
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    #b28537 0%,
+    #e9cd8f 18%,
+    #fff5dc 38%,
+    #f2db9d 60%,
+    #bd8d3f 88%,
+    #7a5214 100%
+  );
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.7),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45),
+    0 4px 15px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  border-top: 1px solid #ffd875;
+  border-bottom: 1.5px solid #5a3804;
+}
+
+.scroll-roller-cylinder.cylinder-bottom {
+  background: linear-gradient(
+    180deg,
+    #7a5214 0%,
+    #bd8d3f 15%,
+    #f2db9d 42%,
+    #fff5dc 65%,
+    #e9cd8f 82%,
+    #b28537 100%
+  );
+}
+
+.cylinder-highlight {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+  filter: blur(1px);
+}
+
+.cylinder-texture {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 24px,
+    rgba(140, 95, 20, 0.08) 25px
+  );
+  opacity: 0.6;
+}
+
+/* Knob Finials (Left and Right) */
+.scroll-roller-knob {
+  width: 52px;
+  height: 62px;
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: #edf4fc;
-  color: #072a60;
-  font-weight: 700;
-  font-size: 0.85rem;
-  border: 1px solid #d4e2f5;
-  box-shadow: 0 1px 3px rgba(7, 42, 96, 0.06);
+  position: relative;
+  z-index: 12;
 }
 
-/* 2. Notice Title Cell */
-.title-cell {
-  line-height: 1.5;
-  text-align: left;
+.knob-left {
+  margin-right: -4px;
 }
 
-.title-content-wrapper {
+.knob-right {
+  margin-left: -4px;
+}
+
+.knob-svg {
+  width: 100%;
+  height: 100%;
   display: block;
+}
+
+/* ==========================================================================
+   4. PARCHMENT BODY & TEXTURE
+   ========================================================================== */
+.royal-parchment-sheet {
+  position: relative;
+  background: linear-gradient(180deg, #f7ecd5 0%, #fbf3e4 15%, #f6ebd6 50%, #faeed8 85%, #eddabb 100%);
+  box-shadow: 
+    inset 0 15px 30px -10px rgba(100, 65, 10, 0.35),
+    inset 0 -15px 30px -10px rgba(100, 65, 10, 0.35),
+    inset 15px 0 25px -10px rgba(120, 80, 20, 0.25),
+    inset -15px 0 25px -10px rgba(120, 80, 20, 0.25);
+  padding: 16px 28px 18px 28px;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Deckled Edge Jagged Cutouts on Left and Right */
+.parchment-deckle-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.parchment-deckle-edge.left-edge {
+  left: 0;
+}
+
+.parchment-deckle-edge.right-edge {
+  right: 0;
+}
+
+.deckle-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.parchment-inner-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+/* ==========================================================================
+   5. ROYAL PARCHMENT TABLE & STYLING
+   ========================================================================== */
+.royal-table-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(60, 40, 10, 0.12);
+  margin-bottom: 12px;
+  
+  /* Custom antique scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #c9a456 #f2e2c2;
+}
+
+.royal-table-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  width: 10px;
+}
+
+.royal-table-scroll-container::-webkit-scrollbar-track {
+  background: #f2e2c2;
+  border-radius: 4px;
+}
+
+.royal-table-scroll-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d4af37 0%, #a27419 100%);
+  border-radius: 4px;
+  border: 1.5px solid #f2e2c2;
+}
+
+.royal-scroll-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Header Bar: Deep Royal Blue with Gold Borders matching the exact theme */
+.royal-scroll-table thead tr {
+  background: radial-gradient(ellipse at 50% 0%, #0d3d7e 0%, #072a60 50%, #021636 100%);
+  border-top: 3px solid #fab81e;
+  border-bottom: 2px solid rgba(250, 184, 30, 0.7);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.royal-scroll-table thead th {
+  color: #fab81e !important;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  padding: 15px 22px;
+  text-transform: uppercase;
+  border: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.th-content-flex {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.th-content-flex.justify-center {
+  justify-content: center;
+}
+
+.th-icon {
+  font-size: 1rem;
+  color: #fab81e;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+.th-notice-title {
+  width: 65%;
+  min-width: 300px;
   text-align: left;
 }
 
-.advanced-title-link {
-  color: #072a60;
-  font-weight: 700;
-  font-size: 0.94rem;
-  text-decoration: none;
-  transition: color 0.2s ease;
-  line-height: 1.55;
-  display: inline;
+.th-date {
+  width: 170px;
+  min-width: 140px;
 }
 
-.advanced-title-link:hover {
-  color: #1b5baf;
+.th-document {
+  width: 160px;
+  min-width: 140px;
+}
+
+/* Parchment Rows */
+.parchment-row {
+  border-bottom: 1px solid rgba(185, 145, 80, 0.28);
+  transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.parchment-row:nth-child(even) {
+  background-color: rgba(248, 238, 218, 0.55);
+}
+
+.parchment-row:hover {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: inset 4px 0 0 #fab81e, 0 2px 8px rgba(90, 60, 10, 0.1);
+}
+
+.parchment-row td {
+  padding: 14px 18px;
+  vertical-align: middle;
+  font-size: 0.92rem;
+}
+
+/* 1. Title Link */
+.td-notice-title {
+  text-align: left;
+  line-height: 1.5;
+}
+
+.notice-title-wrap {
+  display: block;
+}
+
+.parchment-title-link {
+  color: #04357c;
+  font-weight: 600;
+  font-size: 0.93rem;
+  text-decoration: none;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.parchment-title-link:hover {
+  color: #0950b3;
   text-decoration: underline;
 }
 
-.advanced-title-link .title-text {
+.parchment-title-text {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+/* 2. Date Pill */
+.td-date {
+  text-align: center;
+}
+
+.parchment-date-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(225, 238, 255, 0.75);
+  color: #073a7e;
+  border: 1px solid rgba(165, 200, 245, 0.85);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(7, 42, 96, 0.05);
+}
+
+.date-pill-icon {
+  font-size: 0.85rem;
+  color: #1b5baf;
+}
+
+.date-pill-text {
   color: inherit;
 }
 
-.title-text-plain {
-  color: #1e293b;
-  font-weight: 700;
-  font-size: 0.94rem;
-  line-height: 1.55;
+/* 3. View PDF Button */
+.td-document {
+  text-align: center;
 }
 
-/* 3. Category / Type Cell (Full, Multi-line, Professional Box) */
-.type-cell {
-  text-align: left;
-}
-
-.category-block {
-  background: #f4f8fe;
-  border: 1px solid #d8e6f8;
-  border-left: 3px solid #1b5baf;
-  border-radius: 8px;
-  padding: 9px 13px;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(7, 42, 96, 0.03);
-  display: block;
-}
-
-.advanced-table-row:hover .category-block {
-  background: #ffffff;
-  border-color: #c5dcf7;
-  border-left-color: #fab81e;
-  box-shadow: 0 2px 8px rgba(7, 42, 96, 0.08);
-}
-
-.category-text-content {
-  color: #1e293b;
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.45;
-  white-space: normal;
-  word-break: break-word;
-  text-align: left;
-  display: block;
-}
-
-/* 4. Date Cell */
-.date-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: #f8fafc;
-  color: #475569;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 1px solid #e2e8f0;
-  white-space: nowrap;
-}
-
-.date-badge-pill .date-icon {
-  color: #072a60;
-  font-size: 0.8rem;
-}
-
-/* 5. Document Action Button */
-.notice-doc-btn {
+.parchment-pdf-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 14px;
-  background: linear-gradient(135deg, #072a60 0%, #15458a 100%);
+  gap: 7px;
+  padding: 6px 16px;
+  background: radial-gradient(ellipse at 50% 0%, #0d3d7e 0%, #072a60 50%, #021636 100%);
   color: #ffffff;
-  border: 1px solid #fab81e;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  font-weight: 600;
+  border: 1.5px solid #fab81e;
+  border-radius: 6px;
+  font-size: 0.83rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(7, 42, 96, 0.18);
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   white-space: nowrap;
   text-decoration: none;
 }
 
-.notice-doc-btn:hover {
-  background: linear-gradient(135deg, #15458a 0%, #072a60 100%);
+.parchment-pdf-btn:hover {
+  background: radial-gradient(ellipse at 50% 0%, #1551a3 0%, #0d3d7e 50%, #072a60 100%);
   color: #fab81e;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(7, 42, 96, 0.28);
+  border-color: #ffd700;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), 0 0 10px rgba(250, 184, 30, 0.45);
 }
 
-.doc-pdf-icon {
-  color: #ff6b6b;
-  font-size: 0.88rem;
+.btn-pdf-icon {
+  color: #fab81e;
+  font-size: 0.92rem;
+  transition: transform 0.2s ease;
 }
 
-.doc-btn-text {
+.parchment-pdf-btn:hover .btn-pdf-icon {
+  transform: scale(1.1);
+}
+
+.btn-pdf-text {
+  color: inherit;
+  letter-spacing: 0.3px;
+}
+
+.btn-ext-icon {
+  font-size: 0.72rem;
+  opacity: 0.9;
   color: inherit;
 }
 
-.doc-link-icon {
-  font-size: 0.68rem;
-  opacity: 0.85;
-}
-
-.notice-no-doc-label {
+.no-doc-tag {
   color: #94a3b8;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-style: italic;
 }
 
 /* ==========================================================================
-   4. PAGINATION CONTROLS
+   6. PARCHMENT FOOTER & PAGINATION
    ========================================================================== */
-.table-pagination-footer {
-  padding: 16px 24px;
-  background: #fafbfc;
-  border-top: 1px solid #e2e8f0;
+.parchment-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 14px 12px 6px 12px;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 16px;
 }
 
-.pagination-summary {
-  font-size: 0.86rem;
-  color: #64748b;
+.parchment-footer-count {
+  font-size: 0.88rem;
+  color: #5c431b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.pagination-summary strong {
+.parchment-footer-count strong {
   color: #072a60;
   font-weight: 700;
 }
 
-.pagination-nav-group {
+/* Center Gold Flourish in Footer */
+.scroll-footer-flourish {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.flourish-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(140, 95, 20, 0.4), transparent);
+}
+
+.footer-flourish-svg {
+  height: 16px;
+  width: 100px;
+  display: block;
+}
+
+/* Pagination Buttons */
+.parchment-pagination {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.nav-btn {
-  background: #ffffff;
-  border: 1.5px solid #cbd5e1;
-  color: #334155;
-  font-size: 0.84rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.parchment-page-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1.2px solid #b89352;
+  background: rgba(255, 255, 255, 0.7);
+  color: #072a60;
+  font-size: 0.78rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(80, 50, 10, 0.1);
 }
 
-.icon-nav-btn {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  font-size: 0.82rem;
-}
-
-.nav-btn:hover:not(:disabled) {
+.parchment-page-nav-btn:hover:not(:disabled) {
   background: #072a60;
   color: #fab81e;
   border-color: #fab81e;
 }
 
-.nav-btn:disabled {
+.parchment-page-nav-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  background: #f8fafc;
-  border-color: #e2e8f0;
+  border-color: #d1b88a;
+  background: rgba(255, 255, 255, 0.3);
 }
 
-.nav-numbers {
+.parchment-page-numbers {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
-.num-btn {
-  min-width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1.5px solid #cbd5e1;
-  background: #ffffff;
-  color: #334155;
+.parchment-num-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1.2px solid #b89352;
+  background: rgba(255, 255, 255, 0.75);
+  color: #072a60;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(80, 50, 10, 0.08);
 }
 
-.num-btn:hover {
+.parchment-num-btn:hover {
   border-color: #072a60;
-  color: #072a60;
+  background: #ffffff;
 }
 
-.num-btn.active {
-  background: linear-gradient(135deg, #072a60 0%, #15458a 100%);
-  color: #ffffff;
+.parchment-num-btn.active {
+  background: linear-gradient(180deg, #072a60 0%, #021a42 100%);
+  color: #fab81e;
   border-color: #fab81e;
-  box-shadow: 0 2px 8px rgba(7, 42, 96, 0.3);
+  box-shadow: 0 2px 8px rgba(7, 42, 96, 0.4);
 }
 
-.nav-dots {
-  color: #94a3b8;
-  padding: 0 4px;
+.parchment-dots {
+  color: #8c6828;
+  padding: 0 2px;
 }
 
 /* ==========================================================================
-   5. LOADING & EMPTY STATES
+   7. STATE BOXES (LOADING, ERROR, EMPTY)
    ========================================================================== */
-.table-state-box {
+.parchment-state-box {
   text-align: center;
   padding: 60px 20px;
 }
 
-.luxury-spinner {
+.royal-spinner {
   width: 44px;
   height: 44px;
-  border: 4px solid rgba(7, 42, 96, 0.15);
+  border: 4px solid rgba(7, 42, 96, 0.18);
   border-top-color: #072a60;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 18px auto;
+  animation: royalSpin 0.8s linear infinite;
+  margin: 0 auto 16px auto;
 }
 
-@keyframes spin {
+@keyframes royalSpin {
   100% {
     transform: rotate(360deg);
   }
 }
 
-.state-icon {
-  font-size: 3rem;
+.state-title {
+  color: #072a60;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.state-desc {
+  color: #5c431b;
+  font-size: 0.9rem;
   margin-bottom: 14px;
 }
 
-.retry-btn,
-.reset-search-btn {
-  margin-top: 12px;
-  background: linear-gradient(135deg, #072a60 0%, #15458a 100%);
-  color: #ffffff;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 8px;
-  border: 1px solid #fab81e;
+.state-icon {
+  font-size: 2.8rem;
+  margin-bottom: 14px;
 }
 
-.retry-btn:hover,
-.reset-search-btn:hover {
+.error-icon {
+  color: #d9383a;
+}
+
+.empty-icon {
+  color: #8c6d37;
+}
+
+.parchment-retry-btn {
+  background: linear-gradient(180deg, #072a60 0%, #021a42 100%);
+  color: #ffffff;
+  border: 1.2px solid #fab81e;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parchment-retry-btn:hover {
   color: #fab81e;
-  background: linear-gradient(135deg, #15458a 0%, #072a60 100%);
+  background: linear-gradient(180deg, #103c80 0%, #072a60 100%);
+  box-shadow: 0 2px 10px rgba(7, 42, 96, 0.3);
 }
 
 /* ==========================================================================
-   6. RESPONSIVE MOBILE CARD TRANSFORMATION (<= 768px)
+   8. MOBILE RESPONSIVENESS
    ========================================================================== */
+
+
 @media (max-width: 768px) {
-  .notices-container {
-    padding: 14px 12px 40px 12px;
+  .royal-notices-container {
+    padding: 16px 10px 50px 10px;
   }
 
-  .notices-hero {
-    padding: 24px 16px 30px 16px;
+  .royal-hero-banner {
+    padding: 24px 16px 28px 16px;
     border-radius: 16px;
   }
 
-  .notices-hero h1 {
-    font-size: 1.55rem;
-    line-height: 1.25;
-    margin-bottom: 4px;
+  .royal-hero-banner h1 {
+    font-size: 1.6rem;
   }
 
-  .hero-divider {
-    width: 60px;
-    height: 2.5px;
-    margin: 8px auto;
-  }
-
-  .notices-hero-tagline {
+  .royal-hero-tagline {
     font-size: 0.84rem;
   }
 
-  .hero-floating-search-wrapper {
+  .royal-search-wrapper {
     margin-top: -18px;
-    margin-bottom: 18px;
-    padding: 0 6px;
+    margin-bottom: 22px;
+    padding: 0 10px;
   }
 
-  .floating-search-input {
+  .royal-search-input {
     height: 44px;
     font-size: 0.88rem;
-    padding: 0 38px 0 44px;
   }
 
-  .floating-search-icon {
-    left: 16px;
-    font-size: 0.95rem;
+  .royal-scroll-roller {
+    height: 44px;
   }
 
-  /* Transform table into clean executive mobile cards */
-  .table-luxury-card {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    overflow: visible;
+  .scroll-roller-cylinder {
+    height: 30px;
   }
 
-  .table-responsive {
-    overflow: visible;
+  .scroll-roller-knob {
+    width: 42px;
+    height: 50px;
   }
 
-  .advanced-notices-table {
-    display: block;
-    width: 100%;
-    border: none;
+  .royal-parchment-sheet {
+    padding: 12px 14px 14px 14px;
   }
 
-  .advanced-notices-table thead {
+  .scroll-footer-flourish {
     display: none;
   }
 
-  .advanced-notices-table tbody {
-    display: flex;
+  .parchment-footer {
     flex-direction: column;
-    gap: 14px;
-    width: 100%;
-  }
-
-  /* Stacked Responsive Card */
-  .advanced-table-row {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-    position: relative;
-    background: #ffffff !important;
-    border-radius: 14px;
-    padding: 16px;
-    border: 1px solid #e2e8f0;
-    border-top: 3.5px solid #072a60 !important;
-    box-shadow: 0 4px 14px rgba(7, 42, 96, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
-    gap: 12px;
-    margin-bottom: 0;
-  }
-
-  .advanced-table-row:hover {
-    transform: translateY(-2px);
-    border-top-color: #fab81e !important;
-    box-shadow: 0 8px 24px rgba(7, 42, 96, 0.12);
-  }
-
-  /* 1. S.No & Date Row */
-  .advanced-table-row td.sno-cell {
-    order: 1;
-    padding: 0 !important;
-    border: none !important;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: auto;
-  }
-
-  .serial-pill {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    border-radius: 6px;
-  }
-
-  .advanced-table-row td.date-cell {
-    order: 2;
-    padding: 0 !important;
-    border: none !important;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .date-badge-pill {
-    font-size: 0.76rem;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 6px;
-  }
-
-  /* 2. Notice Title in Mobile Card */
-  .advanced-table-row td.title-cell {
-    order: 3;
-    padding: 0 !important;
-    border: none !important;
-    width: 100%;
-    text-align: left;
-    display: block;
-  }
-
-  .title-content-wrapper {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    text-align: left;
-  }
-
-  .advanced-title-link {
-    font-size: 0.94rem;
-    font-weight: 700;
-    color: #072a60;
-    line-height: 1.45;
-    text-align: left;
-    display: block;
-  }
-
-  .title-text-plain {
-    font-size: 0.94rem;
-    font-weight: 700;
-    color: #1e293b;
-    line-height: 1.45;
-    text-align: left;
-    display: block;
-  }
-
-  /* 3. Category Box in Mobile Card */
-  .advanced-table-row td.type-cell {
-    order: 4;
-    padding: 0 !important;
-    border: none !important;
-    display: block !important;
-    width: 100% !important;
-  }
-
-  .category-block {
-    padding: 8px 10px;
-    border-radius: 8px;
-  }
-
-  .category-text-content {
-    font-size: 0.82rem;
-  }
-
-  /* 4. Action Button in Mobile Card */
-  .advanced-table-row td.action-cell {
-    order: 5;
-    padding: 8px 0 0 0 !important;
-    border: none !important;
-    border-top: 1px solid #f1f5f9 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    width: 100% !important;
-  }
-
-  .notice-doc-btn {
-    padding: 6px 14px;
-    font-size: 0.8rem;
-  }
-
-  /* Responsive Pagination Footer */
-  .table-pagination-footer {
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 12px;
-    padding: 14px;
-    border-radius: 14px;
-    margin-top: 10px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
     text-align: center;
-  }
-
-  .pagination-summary {
-    font-size: 0.82rem;
-    text-align: center;
-  }
-
-  .pagination-nav-group {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-  }
-
-  .num-btn,
-  .icon-nav-btn {
-    min-width: 32px;
-    height: 32px;
-    font-size: 0.8rem;
   }
 }
 
-/* Extra Small Mobile Devices (<= 480px) */
 @media (max-width: 480px) {
-  .notices-hero {
-    padding: 20px 12px 26px 12px;
-  }
-
-  .notices-hero h1 {
+  .royal-hero-banner h1 {
     font-size: 1.35rem;
   }
 
-  .notices-hero-tagline {
-    font-size: 0.8rem;
+  .scroll-roller-knob {
+    width: 34px;
+    height: 42px;
   }
 
-  .advanced-table-row {
-    padding: 14px;
-    border-radius: 12px;
+  .royal-scroll-roller {
+    height: 36px;
   }
 
-  .advanced-title-link,
-  .title-text-plain {
-    font-size: 0.9rem !important;
+  .scroll-roller-cylinder {
+    height: 24px;
   }
 
-  .date-badge-pill {
-    font-size: 0.72rem;
-    padding: 2px 7px;
+  .royal-parchment-sheet {
+    padding: 10px 8px 12px 8px;
   }
 
-  .category-text-content {
+  .royal-scroll-table thead th {
+    padding: 10px 10px;
     font-size: 0.78rem;
   }
 
-  .notice-doc-btn {
-    font-size: 0.76rem;
-    padding: 5px 12px;
+  .parchment-row td {
+    padding: 10px 8px;
   }
+
+  .parchment-title-link,
+  .parchment-title-text {
+    font-size: 0.85rem;
+  }
+
+  .parchment-pdf-btn {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+  }
+
+  .parchment-date-pill {
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+}
+
+/* ==========================================================================
+   9. ROYAL BACK BUTTON STYLING
+   ========================================================================== */
+.back-row {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.back-btn {
+  background: radial-gradient(ellipse at 50% 0%, #0d3d7e 0%, #072a60 50%, #021636 100%);
+  border: 2px solid #fab81e;
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 11px 36px;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(7, 42, 96, 0.35), 0 0 14px rgba(250, 184, 30, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+}
+
+.back-btn:hover {
+  background: radial-gradient(ellipse at 50% 0%, #1551a3 0%, #0d3d7e 50%, #072a60 100%);
+  color: #fab81e !important;
+  border-color: #ffd700;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(7, 42, 96, 0.45), 0 0 20px rgba(250, 184, 30, 0.65);
 }

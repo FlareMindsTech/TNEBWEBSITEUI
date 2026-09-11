@@ -615,3 +615,84 @@ export const getAllForms = async (type = '') => {
   }
 };
 
+// ==================== ACT & REGULATIONS APIs ====================
+
+/**
+ * Get all Act & Regulations with optional search & sorting filter
+ * @param {Object} params - Query parameters (search, sortBy, order)
+ * @returns {Promise<Array>} Array of Act & Regulation objects
+ */
+export const getAllActRegulations = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    const response = await fetch(`${API_BASE_URL}/api/act-regulations${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching Act & Regulations:', error);
+    throw error;
+  }
+};
+
+// ==================== DISTRIBUTION RELATED INSTRUCTIONS APIs ====================
+
+/**
+ * Get all Distribution Related Instructions with optional search & sorting filter
+ * @param {Object} params - Query parameters (search, sortBy, order)
+ * @returns {Promise<Array>} Array of Distribution Instruction objects
+ */
+export const getAllDistributionInstructions = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    const response = await fetch(`${API_BASE_URL}/api/distribution-instructions${queryString}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching Distribution Instructions:', error);
+    throw error;
+  }
+};
+
+
