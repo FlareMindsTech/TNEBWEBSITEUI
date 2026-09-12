@@ -4,6 +4,37 @@ const API_BASE_URL = process.env.BACKEND_API || 'https://tnebserver-u7qr.onrende
 export const BASE_URL = API_BASE_URL;
 export const MAIL_URL = API_BASE_URL;
 
+// ==================== FAST IN-MEMORY API CACHE ====================
+const apiCache = new Map();
+const CACHE_TTL_MS = 30000; // 30s cache TTL for lightning-fast page switches
+
+export const fetchWithCache = async (url, options = {}) => {
+  const isGet = !options.method || options.method === 'GET';
+  const now = Date.now();
+  if (isGet && apiCache.has(url)) {
+    const entry = apiCache.get(url);
+    if (now - entry.timestamp < CACHE_TTL_MS) {
+      return entry.data;
+    }
+  }
+
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (isGet) {
+    apiCache.set(url, { timestamp: now, data });
+  }
+  return data;
+};
+
+// Clear cache helper if data is updated
+export const clearApiCache = () => {
+  apiCache.clear();
+};
+
 // ==================== GALLERY APIs ====================
 
 /**
@@ -694,5 +725,96 @@ export const getAllDistributionInstructions = async (params = {}) => {
     throw error;
   }
 };
+
+// ==================== TECHNICAL Q&A APIs ====================
+
+/**
+ * Get all Technical Q&A documents
+ * @param {Object} [params] - Optional query parameters (search, sortBy, order)
+ * @returns {Promise<Array>} Array of Technical Q&A objects
+ */
+export const getAllTechnicalQA = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    return await fetchWithCache(`${API_BASE_URL}/api/technical-qa${queryString}`);
+  } catch (error) {
+    console.error('Error fetching Technical Q&A:', error);
+    throw error;
+  }
+};
+
+// ==================== TECHNICAL PARAMETERS APIs ====================
+
+/**
+ * Get all Technical Parameters
+ * @param {Object} [params] - Optional query parameters (category, search, sortBy, order)
+ * @returns {Promise<Array>} Array of Technical Parameter objects
+ */
+export const getAllTechnicalParameters = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.category && params.category !== 'all') {
+      query.append('category', params.category);
+    }
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    return await fetchWithCache(`${API_BASE_URL}/api/technical-parameters${queryString}`);
+  } catch (error) {
+    console.error('Error fetching Technical Parameters:', error);
+    throw error;
+  }
+};
+
+// ==================== TECHNICAL BOOKS & MANUALS APIs ====================
+
+/**
+ * Get all Technical Books & Manuals
+ * @param {Object} [params] - Optional query parameters (tag, search, sortBy, order)
+ * @returns {Promise<Array>} Array of Technical Book objects
+ */
+export const getAllTechnicalBooks = async (params = {}) => {
+  try {
+    const query = new URLSearchParams();
+    if (params.tag && params.tag !== 'all') {
+      query.append('tag', params.tag);
+    }
+    if (params.search) {
+      query.append('search', params.search);
+    }
+    if (params.sortBy) {
+      query.append('sortBy', params.sortBy);
+    }
+    if (params.order) {
+      query.append('order', params.order);
+    }
+
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    return await fetchWithCache(`${API_BASE_URL}/api/technical-books${queryString}`);
+  } catch (error) {
+    console.error('Error fetching Technical Books:', error);
+    throw error;
+  }
+};
+
 
 

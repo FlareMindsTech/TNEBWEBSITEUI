@@ -4,13 +4,9 @@ import Swal from 'sweetalert2';
 import {
   FaFilePdf,
   FaSearch,
-  FaDownload,
   FaExternalLinkAlt,
   FaCalendarAlt,
-  FaAward,
   FaFolderOpen,
-  FaThLarge,
-  FaList,
   FaSyncAlt,
   FaTimes,
   FaSortAmountDown,
@@ -26,28 +22,35 @@ import { useNavigate } from 'react-router-dom';
 import { getAllBoardProceedings } from '../api';
 import './BoardProceedings.css';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.08,
-    },
-  },
+
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+// Helper to extract clean Month & Year info
+const getMonthYearInfo = (dateString) => {
+  if (!dateString) {
+    return { key: 'no-date', label: 'Other Documents', month: 'Other', year: '', timestamp: 0 };
+  }
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) {
+      return { key: 'no-date', label: 'Other Documents', month: 'Other', year: '', timestamp: 0 };
+    }
+    const month = MONTH_NAMES[d.getMonth()];
+    const year = d.getFullYear();
+    return {
+      key: `${year}-${String(d.getMonth() + 1).padStart(2, '0')}`,
+      label: `${month} ${year}`,
+      month: month,
+      year: year,
+      timestamp: new Date(year, d.getMonth(), 1).getTime()
+    };
+  } catch {
+    return { key: 'no-date', label: 'Other Documents', month: 'Other', year: '', timestamp: 0 };
+  }
 };
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.32, ease: 'easeOut' },
-  },
-  exit: { opacity: 0, scale: 0.96, transition: { duration: 0.18 } },
-};
-
-
 
 const BoardProceedings = () => {
   const navigate = useNavigate();
@@ -59,9 +62,9 @@ const BoardProceedings = () => {
   // selectedCategory: null (home) | "BP's & Orders" | "Panels & Promotion" | "ALL"
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null); // 'YYYY-MM' or null for all
   const [showYearFilter, setShowYearFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'table'
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' (newest) | 'asc' (oldest)
 
   useEffect(() => {
@@ -131,14 +134,46 @@ const BoardProceedings = () => {
     return Array.from(yearsSet).sort((a, b) => b - a);
   }, [proceedings]);
 
+  // Available months based on category / search / year filter
+  const availableMonths = useMemo(() => {
+    const monthMap = new Map();
+    proceedings.forEach((item) => {
+      // Category Filter check
+      const matchesCategory =
+        !selectedCategory ||
+        selectedCategory === 'ALL' ||
+        (item.category &&
+          item.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase());
+
+      const dateVal = item.date || item.createdAt || item.updatedAt;
+      const itemYear = dateVal ? new Date(dateVal).getFullYear() : null;
+      const matchesYear =
+        !selectedYear ||
+        selectedYear === 'ALL' ||
+        (itemYear && itemYear === parseInt(selectedYear, 10));
+
+      if (matchesCategory && matchesYear) {
+        const { key, label, timestamp } = getMonthYearInfo(dateVal);
+        if (key !== 'no-date') {
+          if (!monthMap.has(key)) {
+            monthMap.set(key, { key, label, timestamp, count: 0 });
+          }
+          monthMap.get(key).count += 1;
+        }
+      }
+    });
+
+    return Array.from(monthMap.values()).sort((a, b) => b.timestamp - a.timestamp);
+  }, [proceedings, selectedCategory, selectedYear]);
+
   // Determines whether to show the documents view or the home selection cards
-  const isDocumentsView = Boolean(selectedCategory || searchQuery.trim() || selectedYear);
+  const isDocumentsView = Boolean(selectedCategory || searchQuery.trim() || selectedYear || selectedMonth);
 
   // Filtered and Sorted list
   const filteredProceedings = useMemo(() => {
     return proceedings
       .filter((item) => {
-        // Category Filter (only applies if a specific category is chosen, or default to all if searching without category)
+        // Category Filter
         const matchesCategory =
           !selectedCategory ||
           selectedCategory === 'ALL' ||
@@ -153,6 +188,10 @@ const BoardProceedings = () => {
           selectedYear === 'ALL' ||
           (itemYear && itemYear === parseInt(selectedYear, 10));
 
+        // Month Filter
+        const monthInfo = getMonthYearInfo(dateVal);
+        const matchesMonth = !selectedMonth || monthInfo.key === selectedMonth;
+
         // Search Filter
         const query = searchQuery.trim().toLowerCase();
         const matchesSearch =
@@ -161,14 +200,39 @@ const BoardProceedings = () => {
           (item.category && item.category.toLowerCase().includes(query)) ||
           (item.description && item.description.toLowerCase().includes(query));
 
-        return matchesCategory && matchesYear && matchesSearch;
+        return matchesCategory && matchesYear && matchesMonth && matchesSearch;
       })
       .sort((a, b) => {
         const timeA = new Date(a.date || a.createdAt || a.updatedAt || 0).getTime();
         const timeB = new Date(b.date || b.createdAt || b.updatedAt || 0).getTime();
         return sortOrder === 'asc' ? timeA - timeB : timeB - timeA;
       });
-  }, [proceedings, selectedCategory, selectedYear, searchQuery, sortOrder]);
+  }, [proceedings, selectedCategory, selectedYear, selectedMonth, searchQuery, sortOrder]);
+
+  // Group filtered proceedings by Month & Year for rendering Month Cards
+  const groupedByMonth = useMemo(() => {
+    const groups = {};
+    filteredProceedings.forEach((item) => {
+      const dateVal = item.date || item.createdAt || item.updatedAt;
+      const { key, label, month, year, timestamp } = getMonthYearInfo(dateVal);
+
+      if (!groups[key]) {
+        groups[key] = {
+          key,
+          label,
+          month,
+          year,
+          timestamp: timestamp || 0,
+          items: []
+        };
+      }
+      groups[key].items.push(item);
+    });
+
+    return Object.values(groups).sort((a, b) => {
+      return sortOrder === 'asc' ? a.timestamp - b.timestamp : b.timestamp - a.timestamp;
+    });
+  }, [filteredProceedings, sortOrder]);
 
   const handleOpenDoc = (url, title) => {
     if (url) {
@@ -191,6 +255,7 @@ const BoardProceedings = () => {
   const handleResetToCategories = () => {
     setSelectedCategory(null);
     setSelectedYear(null);
+    setSelectedMonth(null);
     setShowYearFilter(false);
     setSearchQuery('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -597,26 +662,6 @@ const BoardProceedings = () => {
                     )}
                   </button>
 
-                  {/* View Switcher */}
-                  <div className="bp-view-switcher">
-                    <button
-                      type="button"
-                      className={`bp-view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                      onClick={() => setViewMode('grid')}
-                      title="Grid Cards View"
-                    >
-                      <FaThLarge />
-                    </button>
-                    <button
-                      type="button"
-                      className={`bp-view-btn ${viewMode === 'table' ? 'active' : ''}`}
-                      onClick={() => setViewMode('table')}
-                      title="List Table View"
-                    >
-                      <FaList />
-                    </button>
-                  </div>
-
                   <button
                     type="button"
                     className="bp-refresh-sync-btn small"
@@ -679,9 +724,49 @@ const BoardProceedings = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Quick Month Filter Bar */}
+              {availableMonths.length > 0 && (
+                <div className="bp-month-filter-panel mt-3">
+                  <div className="bp-month-filter-inner">
+                    <span className="bp-month-filter-label">
+                      <FaCalendarAlt className="me-1" /> Filter Month:
+                    </span>
+                    <div className="bp-month-pills-list">
+                      <button
+                        type="button"
+                        className={`bp-month-pill ${!selectedMonth ? 'active' : ''}`}
+                        onClick={() => setSelectedMonth(null)}
+                      >
+                        All Months
+                      </button>
+                      {availableMonths.map((m) => (
+                        <button
+                          key={m.key}
+                          type="button"
+                          className={`bp-month-pill ${selectedMonth === m.key ? 'active' : ''}`}
+                          onClick={() => setSelectedMonth(selectedMonth === m.key ? null : m.key)}
+                        >
+                          {m.label} <span className="month-pill-count">({m.count})</span>
+                        </button>
+                      ))}
+                    </div>
+                    {selectedMonth && (
+                      <button
+                        type="button"
+                        className="bp-month-clear-btn"
+                        onClick={() => setSelectedMonth(null)}
+                        title="Clear Month Filter"
+                      >
+                        <FaTimes className="me-1" /> Clear
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Dynamic Content: Loading / Error / Empty / Grid / Table */}
+            {/* Dynamic Content: Loading / Error / Empty / Month Groups */}
             {loading ? (
               <div className="bp-loading-state">
                 <div className="bp-spinner"></div>
@@ -731,176 +816,95 @@ const BoardProceedings = () => {
                   </button>
                 </div>
               </motion.div>
-            ) : viewMode === 'grid' ? (
-              /* ================= GRID VIEW ================= */
-              <motion.div
-                className="bp-grid-container"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <AnimatePresence>
-                  {filteredProceedings.map((item, index) => {
-                    const isBP =
-                      item.category && item.category.toLowerCase().includes('bp');
-                    return (
-                      <motion.div
-                        key={item._id || index}
-                        className="bp-doc-card"
-                        variants={itemVariants}
-                        layout
-                        whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                        onClick={() => handleOpenDoc(item.docUrl, item.title)}
-                      >
-                        <div className="bp-card-top">
-                          <span className={`bp-category-badge ${isBP ? 'bp-badge' : 'promo-badge'}`}>
-                            {isBP ? <FaFolderOpen className="me-1" /> : <FaAward className="me-1" />}
-                            {item.category || "BP's & Orders"}
-                          </span>
-
-                          <span className="bp-date-badge">
-                            <FaCalendarAlt className="me-1" />
-                            {formatDate(item.date || item.createdAt || item.updatedAt)}
-                          </span>
-                        </div>
-
-                        <div className="bp-card-body">
-                          <div className="bp-doc-icon-pill">
-                            <FaFilePdf className="pdf-symbol" />
-                          </div>
-                          <div className="bp-title-wrap">
-                            <h3 className="bp-card-title">{item.title}</h3>
-                            {item.description && (
-                              <p className="bp-card-desc">{item.description}</p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="bp-card-footer" onClick={(e) => e.stopPropagation()}>
-                          {item.docUrl ? (
-                            <>
-                              <a
-                                href={item.docUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bp-btn-view"
-                                title="View document in new tab"
-                              >
-                                <FaExternalLinkAlt className="me-1" /> View
-                              </a>
-                              <a
-                                href={item.docUrl}
-                                download={item.title}
-                                className="bp-btn-download"
-                                title="Download document"
-                              >
-                                <FaDownload className="me-1" /> Download
-                              </a>
-                            </>
-                          ) : (
-                            <span className="bp-no-doc-tag">Digital Copy Pending</span>
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </motion.div>
             ) : (
-              /* ================= TABLE VIEW ================= */
-              <motion.div
-                className={`bp-table-card ${
-                  selectedCategory === "BP's & Orders"
-                    ? 'theme-blue'
-                    : selectedCategory === 'Panels & Promotion'
-                    ? 'theme-amber'
-                    : 'theme-navy'
-                }`}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <div className="bp-table-responsive">
-                  <table className="bp-table">
-                    <thead>
-                      <tr>
-                        <th className="th-sno">S.No</th>
-                        <th className="th-title">Proceeding Title &amp; Subject</th>
-                        <th className="th-category">Category</th>
-                        <th className="th-date">Published Date</th>
-                        <th className="th-actions">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredProceedings.map((item, index) => {
-                        const isBP =
-                          item.category && item.category.toLowerCase().includes('bp');
-                        return (
-                          <motion.tr
-                            key={item._id || index}
-                            className="bp-table-row"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: index * 0.03 }}
-                            onClick={() => handleOpenDoc(item.docUrl, item.title)}
-                          >
-                            <td className="td-sno">
-                              <span className="bp-sno-badge">{index + 1}</span>
-                            </td>
-                            <td className="td-title">
-                              <div className="title-with-icon">
-                                <FaFilePdf className="table-pdf-icon" />
-                                <div>
-                                  <span className="table-doc-title">{item.title}</span>
-                                  {item.description && (
-                                    <p className="table-doc-subdesc">{item.description}</p>
-                                  )}
-                                </div>
-                              </div>
-                            </td>
-                            <td className="td-category">
-                              <span className={`bp-category-badge ${isBP ? 'bp-badge' : 'promo-badge'}`}>
-                                {item.category || "BP's & Orders"}
-                              </span>
-                            </td>
-                            <td className="td-date">
-                              <div className="date-with-icon">
-                                <FaCalendarAlt className="me-1 text-muted" />
-                                {formatDate(item.date || item.createdAt || item.updatedAt)}
-                              </div>
-                            </td>
-                            <td className="td-actions" onClick={(e) => e.stopPropagation()}>
-                              {item.docUrl ? (
-                                <div className="table-btn-group">
-                                  <a
-                                    href={item.docUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="table-action-btn view"
-                                    title="Open in new tab"
-                                  >
-                                    <FaExternalLinkAlt /> View
-                                  </a>
-                                  <a
-                                    href={item.docUrl}
-                                    download={item.title}
-                                    className="table-action-btn download"
-                                    title="Download PDF"
-                                  >
-                                    <FaDownload /> Download
-                                  </a>
-                                </div>
-                              ) : (
-                                <span className="text-muted small">Not Available</span>
-                              )}
-                            </td>
-                          </motion.tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </motion.div>
+              /* ================= MONTH CARDS VIEW ================= */
+              <div className="bp-month-groups-wrapper">
+                {groupedByMonth.map((group, gIdx) => (
+                  <motion.div
+                    key={group.key || gIdx}
+                    className="bp-month-group-card"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: gIdx * 0.05 }}
+                  >
+                    {/* Month Card Header */}
+                    <div className="bp-month-card-header">
+                      <div className="bp-month-header-left">
+                        <div className="bp-month-calendar-badge">
+                          <FaCalendarAlt />
+                        </div>
+                        <div className="bp-month-header-text">
+                          <h3 className="bp-month-heading">{group.label}</h3>
+                          <span className="bp-month-subtext">
+                            Official Archive &bull; {group.items.length} {group.items.length === 1 ? 'Uploaded Document' : 'Uploaded Documents'}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="bp-month-header-right">
+                        <span className="bp-month-items-count-pill">
+                          <FaFileAlt className="me-1" /> {group.items.length} {group.items.length === 1 ? 'Document' : 'Documents'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Month Documents Clean Table */}
+                    <div className="bp-month-card-content p-0">
+                      <div className="bp-clean-table-wrap">
+                        <table className="bp-clean-table">
+                          <thead>
+                            <tr>
+                              <th className="th-clean-sno">S.No</th>
+                              <th className="th-clean-title">Document Title</th>
+                              <th className="th-clean-date text-end">Published Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {group.items.map((item, index) => {
+                              return (
+                                <motion.tr
+                                  key={item._id || index}
+                                  className="bp-clean-row"
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.2, delay: index * 0.02 }}
+                                  onClick={() => handleOpenDoc(item.docUrl, item.title)}
+                                  title={`Click to open PDF: ${item.title}`}
+                                >
+                                  <td className="td-clean-sno">
+                                    <span className="bp-clean-sno-badge">{index + 1}</span>
+                                  </td>
+                                  <td className="td-clean-title">
+                                    <div className="bp-clean-title-flex">
+                                      <div className="bp-clean-pdf-badge">
+                                        <FaFilePdf />
+                                      </div>
+                                      <div className="bp-clean-text-wrap">
+                                        <span className="bp-clean-main-title">{item.title}</span>
+                                        {item.description && (
+                                          <span className="bp-clean-sub-desc">{item.description}</span>
+                                        )}
+                                      </div>
+                                      <span className="bp-clean-click-hint">
+                                        <FaExternalLinkAlt className="me-1" /> Open PDF
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="td-clean-date text-end">
+                                    <span className="bp-clean-date-tag">
+                                      <FaCalendarAlt className="me-1" />
+                                      {formatDate(item.date || item.createdAt || item.updatedAt)}
+                                    </span>
+                                  </td>
+                                </motion.tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             )}
           </motion.div>
         )}

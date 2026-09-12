@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTag, FaFilter, FaCog } from 'react-icons/fa';
+import { getAllTechnicalParameters } from '../api';
 import './TechnicalParameters.css';
 
 const SpecCard = ({ spec, index }) => {
+
   return (
     <motion.div
       className="spec-card"
@@ -23,7 +25,7 @@ const SpecCard = ({ spec, index }) => {
 
         <h3 className="spec-card-title">{spec.title}</h3>
         <div className="spec-tags">
-          {spec.tags.map((tag, idx) => (
+          {(spec.tags || []).map((tag, idx) => (
             <motion.span
               key={idx}
               className="spec-tag"
@@ -55,39 +57,50 @@ const SpecCard = ({ spec, index }) => {
 
 const TechnicalParameters = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [specifications, setSpecifications] = useState([]);
 
-  const specifications = [
-    {
-      id: 1,
-      title: 'MOEF Environmental Parameters',
-      tags: ['Environment', 'Standards', 'Compliance'],
-      href: './documents/MOEF-7th-Dec-2015.pdf',
-      category: 'environment'
-    },
-    {
-      id: 2,
-      title: 'FGD Technology Selection Guide',
-      tags: ['Technology', 'Equipment', 'Selection'],
-      href: './documents/Advice_on_-FGD_technology_selection_for_different_units_size.pdf',
-      category: 'technology'
-    },
-    {
-      id: 3,
-      title: 'Disaster Management Guidelines',
-      tags: ['Safety', 'Management', 'Guidelines'],
-      href: './documents/DisastermanagementGuidelinesconsolidated.pdf',
-      category: 'safety'
-    },
-    {
-      id: 4,
-      title: 'Distribution Standard Performance',
-      tags: ['Performance', 'Standards', 'Distribution'],
-      href: './documents/Distribution-Standard-Performance-1.pdf',
-      category: 'performance'
-    }
-  ];
+  useEffect(() => {
+    const fetchParams = async () => {
+      try {
+        const data = await getAllTechnicalParameters();
+        if (Array.isArray(data)) {
 
-  const filters = [
+          const formatted = data.map((spec, index) => {
+            let tags = [];
+            if (Array.isArray(spec.tags) && spec.tags.length > 0) {
+              tags = spec.tags;
+            } else if (typeof spec.tags === 'string' && spec.tags.trim()) {
+              try {
+                const parsed = JSON.parse(spec.tags);
+                tags = Array.isArray(parsed) ? parsed : spec.tags.split(',').map(t => t.trim()).filter(Boolean);
+              } catch {
+                tags = spec.tags.split(',').map(t => t.trim()).filter(Boolean);
+              }
+            } else if (spec.tag) {
+              tags = spec.tag.split(',').map(t => t.trim()).filter(Boolean);
+            } else {
+              tags = ['Standards', 'Guidelines'];
+            }
+
+            return {
+              id: spec._id || spec.id || index + 1,
+              title: spec.title,
+              tags: tags,
+              href: spec.docUrl || spec.href || '#',
+              category: (spec.category || 'technology').toLowerCase().trim()
+            };
+          });
+          setSpecifications(formatted);
+        }
+      } catch (err) {
+        console.error('Error fetching technical parameters from backend:', err);
+      }
+    };
+
+    fetchParams();
+  }, []);
+
+  const baseFilters = [
     { label: 'All', value: 'all' },
     { label: 'Environment', value: 'environment' },
     { label: 'Technology', value: 'technology' },
@@ -95,9 +108,25 @@ const TechnicalParameters = () => {
     { label: 'Performance', value: 'performance' }
   ];
 
+  // Dynamically include any additional categories from backend
+  const existingValues = new Set(baseFilters.map(f => f.value));
+  const extraFilters = [];
+  specifications.forEach(spec => {
+    const cat = (spec.category || '').toLowerCase().trim();
+    if (cat && !existingValues.has(cat)) {
+      existingValues.add(cat);
+      extraFilters.push({
+        label: cat.charAt(0).toUpperCase() + cat.slice(1),
+        value: cat
+      });
+    }
+  });
+
+  const filters = [...baseFilters, ...extraFilters];
+
   const filteredSpecs = selectedFilter === 'all' 
     ? specifications 
-    : specifications.filter(spec => spec.category === selectedFilter);
+    : specifications.filter(spec => (spec.category || '').toLowerCase() === selectedFilter.toLowerCase());
 
   return (
     <div className="params-container">
@@ -163,4 +192,4 @@ const TechnicalParameters = () => {
   );
 };
 
-export default TechnicalParameters;
+export default TechnicalParameters;
