@@ -1433,6 +1433,367 @@
   color: #ffffff;
   border-color: #0f172a;
 }
+/* ==========================================================================
+   8.5. MONTH GROUP CARDS & MONTH FILTER BAR
+   ========================================================================== */
+
+/* Month Filter Panel */
+.bp-month-filter-panel {
+  overflow: hidden;
+}
+
+.bp-month-filter-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: rgba(3, 14, 32, 0.65);
+  border: 1.5px solid rgba(255, 202, 56, 0.35);
+  padding: 10px 18px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bp-month-filter-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffca38;
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bp-month-pills-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.bp-month-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e2e8f0;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bp-month-pill:hover {
+  background: rgba(255, 202, 56, 0.2);
+  border-color: #ffca38;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.bp-month-pill.active {
+  background: #ffca38;
+  color: #061c3d;
+  border-color: #ffca38;
+  font-weight: 800;
+  box-shadow: 0 2px 10px rgba(255, 202, 56, 0.35);
+}
+
+.month-pill-count {
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+.bp-month-clear-btn {
+  background: rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.bp-month-clear-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+/* Month Groups Wrapper */
+.bp-month-groups-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Month Group Card Container */
+.bp-month-group-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease;
+}
+
+.bp-month-group-card:hover {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.09);
+}
+
+/* Month Card Header */
+.bp-month-card-header {
+  background: linear-gradient(135deg, #091f42 0%, #0f326a 60%, #174894 100%);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 2.5px solid #fab81e;
+  color: #ffffff;
+}
+
+.bp-month-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bp-month-calendar-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(250, 184, 30, 0.18);
+  border: 1.5px solid rgba(250, 184, 30, 0.6);
+  color: #fab81e;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bp-month-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.bp-month-heading {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.bp-month-subtext {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-top: 3px;
+}
+
+.bp-month-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.bp-month-items-count-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 202, 56, 0.45);
+  color: #ffca38;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
+/* Month Documents Body */
+.bp-month-card-content {
+  padding: 24px;
+  background: #f8fafc;
+}
+
+.bp-month-card-content.p-0 {
+  padding: 0 !important;
+  background: #ffffff;
+}
+
+/* Clean Title Table (Click to Open PDF) */
+.bp-clean-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.bp-clean-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bp-clean-table thead {
+  background: #f1f5f9;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.bp-clean-table th {
+  padding: 12px 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #475569;
+  text-align: left;
+}
+
+.th-clean-sno {
+  width: 70px;
+  text-align: center !important;
+}
+
+.th-clean-date {
+  width: 170px;
+}
+
+.bp-clean-row {
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bp-clean-row:last-child {
+  border-bottom: none;
+}
+
+.bp-clean-row:hover {
+  background: #f0f7ff;
+}
+
+.bp-clean-row td {
+  padding: 14px 20px;
+  vertical-align: middle;
+}
+
+.td-clean-sno {
+  text-align: center;
+}
+
+.bp-clean-sno-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.bp-clean-row:hover .bp-clean-sno-badge {
+  background: #091f42;
+  color: #ffca38;
+}
+
+.bp-clean-title-flex {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bp-clean-pdf-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.bp-clean-row:hover .bp-clean-pdf-badge {
+  background: #dc2626;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.bp-clean-text-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bp-clean-main-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.bp-clean-row:hover .bp-clean-main-title {
+  color: #1d72fe;
+}
+
+.bp-clean-sub-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.bp-clean-click-hint {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1d72fe;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  background: #e0f2fe;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.bp-clean-row:hover .bp-clean-click-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bp-clean-date-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f8fafc;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
 
 /* ==========================================================================
    9. RESPONSIVE BREAKPOINTS

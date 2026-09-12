@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBook, FaChevronDown, FaDownload } from 'react-icons/fa';
+import { FaBook, FaChevronDown, FaDownload, FaBookOpen } from 'react-icons/fa';
+import { getAllTechnicalQA } from '../api';
+import FlipBookModal from '../components/FlipBookModal';
 import './TechnicalQa.css';
 
-const DocumentAccordion = ({ doc, index, isOpen, onToggle }) => {
+const DocumentAccordion = ({ doc, index, isOpen, onToggle, onOpenReader }) => {
   return (
     <motion.div
       className="qa-accordion-item"
@@ -26,7 +28,7 @@ const DocumentAccordion = ({ doc, index, isOpen, onToggle }) => {
           </motion.div>
           <div className="qa-header-text">
             <h4 className="qa-title">{doc.title}</h4>
-            <p className="qa-subtitle">{doc.subtitle}</p>
+            {doc.subtitle ? <p className="qa-subtitle">{doc.subtitle}</p> : null}
           </div>
         </div>
         <motion.div
@@ -48,16 +50,37 @@ const DocumentAccordion = ({ doc, index, isOpen, onToggle }) => {
           >
             <div className="qa-content-inner">
               <p className="qa-description">{doc.description}</p>
-              <motion.a
-                href={doc.path}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="qa-download-btn"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaDownload /> Download PDF
-              </motion.a>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <motion.button
+                  onClick={() => onOpenReader(doc)}
+                  className="qa-download-btn"
+                  style={{
+                    background: 'linear-gradient(135deg, #ffca38 0%, #e5b020 100%)',
+                    color: '#061c3d',
+                    border: 'none',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 15px rgba(255, 202, 56, 0.35)'
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaBookOpen /> 3D FlipBook
+                </motion.button>
+
+                {doc.path && (
+                  <motion.a
+                    href={doc.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="qa-download-btn"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaDownload /> Download PDF
+                  </motion.a>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
@@ -68,23 +91,36 @@ const DocumentAccordion = ({ doc, index, isOpen, onToggle }) => {
 
 const TechnicalQa = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [documents, setDocuments] = useState([]);
+  const [selectedDoc, setSelectedDoc] = useState(null);
 
-  const documents = [
-    {
-      id: 1,
-      title: 'Handbook on Power System Maintenance and Operations',
-      subtitle: 'Complete Reference Guide',
-      description: 'Comprehensive handbook containing practical guidelines for power system maintenance and operational procedures specifically designed for TNEB engineers. This resource covers essential maintenance protocols, troubleshooting techniques, and operational best practices.',
-      path: './documents/CKP-sir-NOTES-COMPILATION-VOL-1.pdf'
-    },
-    {
-      id: 2,
-      title: 'CKP Sir Notes Compilation',
-      subtitle: 'Volume 1 - Technical Compilation',
-      description: 'Expert compiled technical notes from CKP Sir covering various aspects of power systems. This document provides in-depth technical knowledge and practical insights for TNEB engineers.',
-      path: './documents/CKP-sir-NOTES-COMPILATION-VOL-1.pdf'
-    }
-  ];
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const data = await getAllTechnicalQA();
+        if (Array.isArray(data)) {
+          const formatted = data.map((doc, i) => {
+            const title = doc.title || 'Technical Document';
+            const path = doc.docUrl || doc.path || doc.href || doc.file || '';
+
+            return {
+              id: doc._id || doc.id || i + 1,
+              title: title,
+              subtitle: doc.subtitle || '',
+              description: doc.description || '',
+              docUrl: path,
+              path: path
+            };
+          });
+          setDocuments(formatted);
+        }
+      } catch (err) {
+        console.error('Error loading Technical Q&A from backend:', err);
+      }
+    };
+
+    fetchDocuments();
+  }, []);
 
   return (
     <div className="qa-container">
@@ -109,12 +145,25 @@ const TechnicalQa = () => {
               index={index}
               isOpen={openIndex === index}
               onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+              onOpenReader={(d) => setSelectedDoc(d)}
             />
           ))}
         </div>
       </div>
+
+      {/* ── 3D FlipBook Interactive Reader Modal ── */}
+      <AnimatePresence>
+        {selectedDoc && (
+          <FlipBookModal
+            book={selectedDoc}
+            onClose={() => setSelectedDoc(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default TechnicalQa;
+
+
