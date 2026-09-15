@@ -10,7 +10,6 @@ import {
   FaMagnifyingGlassMinus,
   FaMagnifyingGlassPlus,
   FaArrowUpRightFromSquare,
-  FaDownload,
   FaFilePdf,
   FaSpinner,
   FaExpand,
@@ -426,28 +425,8 @@ const FlipBookModal = ({ book, onClose }) => {
           </div>
 
           <div className="tbm-header-actions">
-            {/* View Mode Switcher */}
-            {docUrl && (
-              <div className="tbm-mode-toggle">
-                <button
-                  className={`tbm-toggle-btn ${viewMode === 'flip' ? 'active' : ''}`}
-                  onClick={() => setViewMode('flip')}
-                  title="3D FlipBook View"
-                >
-                  <FaBookOpen /> <span>3D FlipBook</span>
-                </button>
-                <button
-                  className={`tbm-toggle-btn ${viewMode === 'pdf' ? 'active' : ''}`}
-                  onClick={() => setViewMode('pdf')}
-                  title="Standard PDF View"
-                >
-                  <FaFilePdf /> <span>PDF View</span>
-                </button>
-              </div>
-            )}
-
             {/* Zoom Controls */}
-            {viewMode === 'flip' && !loading && (
+            {!loading && (
               <div className="tbm-zoom-pill">
                 <button
                   onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.1).toFixed(2)))}
@@ -479,20 +458,6 @@ const FlipBookModal = ({ book, onClose }) => {
             >
               {isFullscreen ? <FaCompress /> : <FaExpand />}
             </button>
-
-            {/* Download Button */}
-            {docUrl && (
-              <a
-                href={docUrl}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tbm-action-btn"
-                title="Download Document"
-              >
-                <FaDownload />
-              </a>
-            )}
 
             {/* Open in New Tab */}
             {docUrl && (
