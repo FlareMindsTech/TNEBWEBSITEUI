@@ -840,6 +840,11 @@ const BoardProceedings = () => {
                           </span>
                         </div>
                       </div>
+                      <div className="bp-month-header-right">
+                        <span className="bp-month-items-count-pill">
+                          <FaFileAlt className="me-1" /> {group.items.length} {group.items.length === 1 ? 'Document' : 'Documents'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Month Documents Clean Table */}
@@ -848,7 +853,9 @@ const BoardProceedings = () => {
                         <table className="bp-clean-table">
                           <thead>
                             <tr>
+                              <th className="th-clean-sno">S.No</th>
                               <th className="th-clean-title">Document Title</th>
+                              <th className="th-clean-date text-end">Published Date</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -863,8 +870,14 @@ const BoardProceedings = () => {
                                   onClick={() => handleOpenDoc(item.docUrl, item.title)}
                                   title={`Click to open PDF: ${item.title}`}
                                 >
+                                  <td className="td-clean-sno">
+                                    <span className="bp-clean-sno-badge">{index + 1}</span>
+                                  </td>
                                   <td className="td-clean-title">
                                     <div className="bp-clean-title-flex">
+                                      <div className="bp-clean-pdf-badge">
+                                        <FaFilePdf />
+                                      </div>
                                       <div className="bp-clean-text-wrap">
                                         <span className="bp-clean-main-title">{item.title}</span>
                                         {item.description && (
@@ -875,6 +888,12 @@ const BoardProceedings = () => {
                                         <FaExternalLinkAlt className="me-1" /> Open PDF
                                       </span>
                                     </div>
+                                  </td>
+                                  <td className="td-clean-date text-end">
+                                    <span className="bp-clean-date-tag">
+                                      <FaCalendarAlt className="me-1" />
+                                      {formatDate(item.date || item.createdAt || item.updatedAt)}
+                                    </span>
                                   </td>
                                 </motion.tr>
                               );

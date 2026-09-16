@@ -1,21 +1,25 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PageFlip } from 'page-flip';
 import {
-  FaAngleLeft,
-  FaAngleRight,
+  FaBookOpen,
   FaAnglesLeft,
   FaAnglesRight,
+  FaAngleLeft,
+  FaAngleRight,
   FaXmark,
   FaMagnifyingGlassMinus,
   FaMagnifyingGlassPlus,
+  FaArrowUpRightFromSquare,
+  FaFilePdf,
   FaSpinner,
   FaExpand,
   FaCompress
 } from 'react-icons/fa6';
-import './FlipBookModal.css';
+import { PageFlip } from 'page-flip';
+import '../pages/TechnicalBooksAndManuals.css';
 
-/* ── PDF.js Dynamic Loader ── */
+
+/* ── Helper to dynamically load PDF.js from CDN ── */
 const loadPdfJs = () => {
   return new Promise((resolve, reject) => {
     if (window.pdfjsLib) {
@@ -45,19 +49,10 @@ const loadPdfJs = () => {
   });
 };
 
+// In-memory document render cache to make re-opening instant without re-rendering
 const pdfRenderCache = new Map();
 
-/* ── Helper to ensure Cloudinary & Web images load at HD print quality ── */
-const enhanceImageUrl = (url) => {
-  if (!url || typeof url !== 'string') return url;
-  if (url.includes('cloudinary.com') && url.includes('/upload/')) {
-    if (!url.includes('dn_300') && !url.includes('w_2400')) {
-      return url.replace('/upload/', '/upload/dn_300,q_auto:best,w_2400,c_limit,f_auto/');
-    }
-  }
-  return url;
-};
-
+/* ── Helper to convert canvas to lightweight Blob URL ── */
 const canvasToBlobUrl = (canvas) => {
   return new Promise((resolve) => {
     canvas.toBlob(
@@ -65,11 +60,11 @@ const canvasToBlobUrl = (canvas) => {
         if (blob) {
           resolve(URL.createObjectURL(blob));
         } else {
-          resolve(canvas.toDataURL('image/jpeg', 0.98));
+          resolve(canvas.toDataURL('image/jpeg', 0.88));
         }
       },
       'image/jpeg',
-      0.98
+      0.88
     );
   });
 };
@@ -77,18 +72,18 @@ const canvasToBlobUrl = (canvas) => {
 const FlipBookModal = ({ book, onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [viewMode, setViewMode] = useState('flip'); // 'flip' | 'pdf'
+  const [jumpPageInput, setJumpPageInput] = useState('1');
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingError, setLoadingError] = useState(null);
   const [pageImages, setPageImages] = useState([]);
-  const [zoom, setZoom] = useState(1);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [pageInputVal, setPageInputVal] = useState('1');
+  const [zoom, setZoom] = useState(0.8);
+  const [isFullscreen, setIsFullscreen] = useState(true);
 
   const bookContainerRef = useRef(null);
-  const pageFlipRef = useRef(null);
-
-  const docUrl = book?.docUrl || book?.pdf?.url || book?.path || book?.href || null;
+  const pageFlipInstanceRef = useRef(null);
+  const docUrl = book?.docUrl || book?.path || book?.href || null;
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -102,21 +97,7 @@ const FlipBookModal = ({ book, onClose }) => {
     }
   };
 
-  const handleOpenInNewTab = () => {
-    if (docUrl && docUrl !== '#') {
-      window.open(docUrl, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  const zoomIn = () => {
-    setZoom((prev) => Math.min(2.0, +(prev + 0.15).toFixed(2)));
-  };
-
-  const zoomOut = () => {
-    setZoom((prev) => Math.max(0.5, +(prev - 0.15).toFixed(2)));
-  };
-
-  // 1. High-Performance PDF / Image Page Extraction
+  // 1. High-Performance PDF Page Extraction
   useEffect(() => {
     let isMounted = true;
 
@@ -125,7 +106,7 @@ const FlipBookModal = ({ book, onClose }) => {
       setLoadingError(null);
       setLoadingProgress(0);
 
-      // Check cache first
+      // Check in-memory cache first for instant 0ms load
       if (docUrl && pdfRenderCache.has(docUrl)) {
         const cached = pdfRenderCache.get(docUrl);
         if (isMounted) {
@@ -136,91 +117,122 @@ const FlipBookModal = ({ book, onClose }) => {
         return;
       }
 
-      // If we have docUrl (original vector PDF), render directly from PDF at native 320 DPI
-      if (docUrl && docUrl !== '#') {
-        try {
-          const pdfjs = await loadPdfJs();
-          const loadingTask = pdfjs.getDocument({
-            url: docUrl,
-            cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
-            cMapPacked: true,
-            enableXfa: true,
-          });
-
-          const doc = await loadingTask.promise;
-          const count = doc.numPages;
-
-          if (isMounted) {
-            setTotalPages(count);
-          }
-
-          const images = [];
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d', { alpha: false });
-
-          for (let i = 1; i <= count; i++) {
-            if (!isMounted) return;
-
-            const page = await doc.getPage(i);
-            const viewport = page.getViewport({ scale: 3.2 });
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            context.imageSmoothingEnabled = true;
-            context.imageSmoothingQuality = 'high';
-
-            await page.render({
-              canvasContext: context,
-              viewport: viewport,
-              intent: 'print',
-            }).promise;
-
-            const blobUrl = await canvasToBlobUrl(canvas);
-            images.push(blobUrl);
-
-            if (isMounted) {
-              setLoadingProgress(Math.round((i / count) * 100));
-            }
-
-            await new Promise((r) => setTimeout(r, 0));
-          }
-
-          if (docUrl) {
-            pdfRenderCache.set(docUrl, {
-              images,
-              totalPages: count,
-            });
-          }
-
-          if (isMounted) {
-            setPageImages(images);
-            setLoading(false);
-          }
-          return;
-        } catch (err) {
-          console.warn('Direct PDF.js extraction error, falling back to pre-rendered pages:', err);
-        }
-      }
-
-      // Fallback to pre-rendered pages
-      const rawDirectPages = Array.isArray(book?.pages) && book.pages.length > 0 
-        ? book.pages 
-        : (Array.isArray(book?.pdf?.pages) && book.pdf.pages.length > 0 ? book.pdf.pages : []);
-
-      if (rawDirectPages.length > 0) {
-        const directPages = rawDirectPages.map(enhanceImageUrl);
+      // If pre-rendered pages exist
+      if (Array.isArray(book?.pages) && book.pages.length > 0) {
         if (isMounted) {
-          setPageImages(directPages);
-          setTotalPages(directPages.length);
+          setPageImages(book.pages);
+          setTotalPages(book.pages.length);
           setLoading(false);
         }
         return;
       }
 
-      if (isMounted) {
-        setLoadingError('Could not load document pages.');
-        setLoading(false);
+      if (!docUrl || docUrl === '#') {
+        if (isMounted) {
+          setLoadingError('No document file attached.');
+          setLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const pdfjs = await loadPdfJs();
+        const loadingTask = pdfjs.getDocument({
+          url: docUrl,
+          cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+          cMapPacked: true,
+        });
+
+        const doc = await loadingTask.promise;
+        const count = doc.numPages;
+
+        if (isMounted) {
+          setTotalPages(count);
+        }
+
+        const images = [];
+
+        // Off-screen reusable canvas for high efficiency
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d', { alpha: false });
+
+        for (let i = 1; i <= count; i++) {
+          if (!isMounted) return;
+
+          const page = await doc.getPage(i);
+          // Scale 1.6: Optimal sharpness while keeping rendering speed fast and memory footprint low
+          const viewport = page.getViewport({ scale: 1.6 });
+
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          await page.render({
+            canvasContext: context,
+            viewport: viewport,
+          }).promise;
+
+          const blobUrl = await canvasToBlobUrl(canvas);
+          images.push(blobUrl);
+
+          if (isMounted) {
+            setLoadingProgress(Math.round((i / count) * 100));
+          }
+
+          // Yield to main event loop to keep animations silky smooth
+          await new Promise((r) => setTimeout(r, 0));
+        }
+
+        // If single page document, pad with a clean back page so it renders as a complete 2-page book spread
+        if (images.length === 1) {
+          const blankCanvas = document.createElement('canvas');
+          blankCanvas.width = canvas.width || 1000;
+          blankCanvas.height = canvas.height || 1400;
+          const ctx = blankCanvas.getContext('2d');
+          ctx.fillStyle = '#fafafc';
+          ctx.fillRect(0, 0, blankCanvas.width, blankCanvas.height);
+          const blankBlobUrl = await canvasToBlobUrl(blankCanvas);
+          images.push(blankBlobUrl);
+        }
+
+        // Save to cache for instant re-loads
+        if (docUrl) {
+          pdfRenderCache.set(docUrl, {
+            images,
+            totalPages: count,
+          });
+        }
+
+        if (isMounted) {
+          setPageImages(images);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.warn('PDF.js loading issue:', err);
+        // Fallback for Cloudinary generated images if URL format matches
+        if (docUrl && docUrl.includes('cloudinary.com')) {
+          const total = Math.max(2, book?.pageCount || 6);
+          const images = [];
+          for (let i = 1; i <= total; i++) {
+            let pUrl = docUrl
+              .replace('/raw/upload/', '/image/upload/')
+              .replace(/\.pdf$/i, '.jpg');
+            if (pUrl.includes('/upload/')) {
+              pUrl = pUrl.replace('/upload/', `/upload/pg_${i}/`);
+            }
+            images.push(pUrl);
+          }
+          if (isMounted) {
+            setPageImages(images);
+            setTotalPages(total);
+            setLoading(false);
+          }
+        } else {
+          if (isMounted) {
+            setLoadingError('Could not load flipbook pages. Switching to PDF view.');
+            setLoading(false);
+            setViewMode('pdf');
+          }
+        }
       }
     };
 
@@ -228,156 +240,170 @@ const FlipBookModal = ({ book, onClose }) => {
 
     return () => {
       isMounted = false;
+      if (pageFlipInstanceRef.current) {
+        try {
+          pageFlipInstanceRef.current.destroy();
+        } catch (e) {}
+        pageFlipInstanceRef.current = null;
+      }
     };
   }, [book, docUrl]);
 
-  // 2. Instantiate realistic 3D StPageFlip Engine
+  // 2. Initialize PageFlip when images and container are ready
   useEffect(() => {
-    if (loading || pageImages.length === 0 || !bookContainerRef.current) return;
+    if (loading || viewMode !== 'flip' || pageImages.length === 0 || !bookContainerRef.current) {
+      return;
+    }
 
-    let pageFlipInstance = null;
+    if (pageFlipInstanceRef.current) {
+      try {
+        pageFlipInstanceRef.current.destroy();
+      } catch (e) {}
+      pageFlipInstanceRef.current = null;
+    }
+
+    const container = bookContainerRef.current;
+    container.innerHTML = '';
 
     try {
-      bookContainerRef.current.innerHTML = '';
-
-      pageFlipInstance = new PageFlip(bookContainerRef.current, {
-        width: 595,
-        height: 842,
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 700;
+      const pageFlip = new PageFlip(container, {
+        width: 550, // width of 1 page -> 2-page spread = 1100px
+        height: 780, // height of page
         size: 'stretch',
-        minWidth: 320,
-        maxWidth: 1600,
-        minHeight: 420,
-        maxHeight: 2200,
-        maxShadowOpacity: 0.6,
-        showCover: true,
+        minWidth: 280,
+        maxWidth: 1400,
+        minHeight: 380,
+        maxHeight: 1600,
+        maxShadowOpacity: 0.65,
+        showCover: false, // Immediately display full 2-page open book spread
         mobileScrollSupport: false,
-        usePortrait: true,
-        startPage: 0,
+        usePortrait: isMobile,
+        flippingTime: 600,
+        startPage: currentPage,
         drawShadow: true,
-        flippingTime: 850,
+        autoSize: true,
         useMouseEvents: true,
-        swipeDistance: 25
+        swipeDistance: 30,
+        showPageCorners: true,
       });
 
-      pageFlipInstance.loadFromImages(pageImages);
+      pageFlip.loadFromImages(pageImages);
 
-      // Override PageFlip's default hardcoded white canvas clear color with transparent
-      const renderInstance = pageFlipInstance.getRender();
-      if (renderInstance) {
-        renderInstance.clear = function () {
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        };
-        if (renderInstance.constructor && renderInstance.constructor.prototype) {
-          renderInstance.constructor.prototype.clear = function () {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-          };
-        }
-      }
-
-      pageFlipInstance.on('flip', (e) => {
-        const pageIdx = e.data;
-        setCurrentPage(pageIdx);
-        setPageInputVal(String(pageIdx + 1));
+      pageFlip.on('flip', (e) => {
+        setCurrentPage(e.data);
+        setJumpPageInput(String(e.data + 1));
       });
 
-      pageFlipRef.current = pageFlipInstance;
-    } catch (err) {
-      console.error('Error initializing PageFlip:', err);
-    }
-
-    return () => {
-      if (pageFlipInstance) {
+      // Recalculate size to ensure the book fills available viewport smoothly
+      const timer = setTimeout(() => {
         try {
-          pageFlipInstance.destroy();
+          if (pageFlipInstanceRef.current) {
+            pageFlipInstanceRef.current.update();
+          }
         } catch (e) {}
-      }
-      pageFlipRef.current = null;
-    };
-  }, [loading, pageImages]);
+      }, 100);
 
-  // Spread Navigation Handlers
-  const flipPrev = () => {
-    if (pageFlipRef.current) {
-      pageFlipRef.current.flipPrev();
-    }
-  };
+      let resizeTimeout;
+      const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          try {
+            if (pageFlipInstanceRef.current) {
+              pageFlipInstanceRef.current.update();
+            }
+          } catch (e) {}
+        }, 150);
+      };
 
-  const flipNext = () => {
-    if (pageFlipRef.current) {
-      pageFlipRef.current.flipNext();
-    }
-  };
+      window.addEventListener('resize', handleResize);
+      pageFlipInstanceRef.current = pageFlip;
 
-  const goToFirst = () => {
-    if (pageFlipRef.current) {
-      pageFlipRef.current.turnToPage(0);
-    }
-  };
-
-  const goToLast = () => {
-    if (pageFlipRef.current && totalPages > 0) {
-      pageFlipRef.current.turnToPage(totalPages - 1);
-    }
-  };
-
-  const handlePageInputSubmit = (e) => {
-    if (e.key === 'Enter' || e.type === 'blur') {
-      const parsed = parseInt(pageInputVal, 10);
-      if (!isNaN(parsed) && parsed >= 1 && parsed <= totalPages) {
-        if (pageFlipRef.current) {
-          pageFlipRef.current.turnToPage(parsed - 1);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(resizeTimeout);
+        window.removeEventListener('resize', handleResize);
+        if (pageFlipInstanceRef.current) {
+          try {
+            pageFlipInstanceRef.current.destroy();
+          } catch (e) {}
+          pageFlipInstanceRef.current = null;
         }
-      } else {
-        setPageInputVal(String(currentPage + 1));
-      }
+      };
+    } catch (err) {
+      console.error('PageFlip initialization error:', err);
+    }
+  }, [loading, viewMode, pageImages]);
+
+  // Page Turn Handlers
+  const turnNext = () => {
+    if (pageFlipInstanceRef.current) {
+      pageFlipInstanceRef.current.flipNext();
     }
   };
+
+  const turnPrev = () => {
+    if (pageFlipInstanceRef.current) {
+      pageFlipInstanceRef.current.flipPrev();
+    }
+  };
+
+  const turnToFirst = () => {
+    if (pageFlipInstanceRef.current) {
+      pageFlipInstanceRef.current.turnToPage(0);
+    }
+  };
+
+  const turnToLast = () => {
+    if (pageFlipInstanceRef.current && totalPages > 0) {
+      pageFlipInstanceRef.current.turnToPage(totalPages - 1);
+    }
+  };
+
+  const handleJumpSubmit = (e) => {
+    e.preventDefault();
+    const pNum = parseInt(jumpPageInput, 10);
+    if (!isNaN(pNum) && pNum >= 1 && pNum <= totalPages) {
+      if (pageFlipInstanceRef.current) {
+        pageFlipInstanceRef.current.turnToPage(pNum - 1);
+      }
+    } else {
+      setJumpPageInput(String(currentPage + 1));
+    }
+  };
+
+  // Listen for browser fullscreen change
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+      setTimeout(() => {
+        try {
+          if (pageFlipInstanceRef.current) {
+            pageFlipInstanceRef.current.update();
+          }
+        } catch (e) {}
+      }, 100);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && !document.fullscreenElement) {
-        onClose();
-      }
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
-        e.preventDefault();
-        flipNext();
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault();
-        flipPrev();
-      }
-      if (e.key === 'Home') {
-        e.preventDefault();
-        goToFirst();
-      }
-      if (e.key === 'End') {
-        e.preventDefault();
-        goToLast();
-      }
-      if (e.key.toLowerCase() === 'f') {
-        toggleFullscreen();
-      }
-    };
-
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      if (e.key === 'Escape' && !document.fullscreenElement) onClose();
+      if (e.key === 'ArrowRight') turnNext();
+      if (e.key === 'ArrowLeft') turnPrev();
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    };
-  }, [onClose, totalPages]);
-
-  const bookTitle = book?.title || (book?.month && book?.year ? `e-Minthiran — ${book.month} ${book.year}` : 'Document Reader');
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   return (
     <motion.div
-      className="reader-overlay"
+      className="tbm-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -385,170 +411,214 @@ const FlipBookModal = ({ book, onClose }) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="reader-modal-wrapper">
-        {/* ── Top Bar (Matching Screenshot) ── */}
-        <div className="reader-top-bar">
-          <div className="reader-title-box">
-            <h3 className="reader-book-title" title={bookTitle}>
-              {bookTitle}
-            </h3>
+      <motion.div
+        className={`tbm-modal-content ${isFullscreen ? 'fullscreen' : ''}`}
+        initial={{ scale: 0.9, y: 20, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.92, y: 20, opacity: 0 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+      >
+        {/* ── Modal Header Bar ── */}
+        <div className="tbm-modal-header">
+          <div className="tbm-header-left">
+            <h2 className="tbm-modal-title" title={book?.title}>{book?.title}</h2>
           </div>
 
-          <div className="reader-top-controls">
-            {/* Zoom Out */}
-            <button
-              className="reader-tool-btn"
-              onClick={zoomOut}
-              disabled={zoom <= 0.5}
-              title="Zoom Out"
-            >
-              <FaMagnifyingGlassMinus />
-            </button>
+          <div className="tbm-header-actions">
+            {/* Zoom Controls */}
+            {!loading && (
+              <div className="tbm-zoom-pill">
+                <button
+                  onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.1).toFixed(2)))}
+                  title="Zoom Out"
+                >
+                  <FaMagnifyingGlassMinus />
+                </button>
+                <button
+                  className="tbm-zoom-value"
+                  onClick={() => setZoom(0.8)}
+                  title="Reset to 80% Default"
+                >
+                  {Math.round(zoom * 100)}%
+                </button>
+                <button
+                  onClick={() => setZoom((z) => Math.min(1.5, +(z + 0.1).toFixed(2)))}
+                  title="Zoom In"
+                >
+                  <FaMagnifyingGlassPlus />
+                </button>
+              </div>
+            )}
 
-            {/* Zoom Percentage */}
-            <span className="reader-zoom-badge">{Math.round(zoom * 100)}%</span>
-
-            {/* Zoom In */}
+            {/* Fullscreen Button */}
             <button
-              className="reader-tool-btn"
-              onClick={zoomIn}
-              disabled={zoom >= 2.0}
-              title="Zoom In"
-            >
-              <FaMagnifyingGlassPlus />
-            </button>
-
-            {/* Fullscreen Toggle */}
-            <button
-              className="reader-tool-btn"
+              className="tbm-action-btn"
               onClick={toggleFullscreen}
-              title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
             >
               {isFullscreen ? <FaCompress /> : <FaExpand />}
             </button>
 
+            {/* Open in New Tab */}
+            {docUrl && (
+              <a
+                href={docUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tbm-action-btn"
+                title="Open PDF in new tab"
+              >
+                <FaArrowUpRightFromSquare />
+              </a>
+            )}
+
             {/* Close Button */}
-            <button
-              className="reader-tool-btn reader-close-btn"
-              onClick={onClose}
-              title="Close Viewer (Esc)"
-            >
+            <button className="tbm-close-btn" onClick={onClose} title="Close Reader (Esc)">
               <FaXmark />
             </button>
           </div>
         </div>
 
-        {/* ── Main 3D PageFlip Book Stage ── */}
-        <div className="reader-main-stage">
-          {loading ? (
-            <div className="reader-loading-card">
-              <FaSpinner className="reader-spinner" />
-              <h5 className="mt-3">Rendering High-Definition Pages… {loadingProgress}%</h5>
+
+        {/* ── Reader Main Area ── */}
+        <div className="tbm-reader-body">
+          {viewMode === 'pdf' ? (
+            /* Direct PDF View */
+            <div className="tbm-pdf-frame-wrapper">
+              <iframe
+                title={book?.title}
+                src={docUrl}
+                className="tbm-pdf-frame"
+              />
             </div>
-          ) : pageImages.length > 0 ? (
-            <div className="reader-stage-inner">
-              {/* Left Arrow */}
-              <button
-                className="reader-arrow-pill left-arrow"
-                onClick={flipPrev}
-                disabled={currentPage === 0}
-                aria-label="Previous Page"
-                title="Previous Page (←)"
-              >
-                <FaAngleLeft />
-              </button>
-
-              {/* Interactive 3D StPageFlip Viewport with Zoom Scale */}
-              <div
-                className="reader-spread-viewport"
-                style={{ transform: `scale(${zoom})` }}
-              >
-                <div
-                  ref={bookContainerRef}
-                  className="stpageflip-book-wrapper"
-                />
+          ) : loading ? (
+            /* Loading State with Progress percentage */
+            <div className="tbm-loading-container">
+              <div className="tbm-loader-spinner">
+                <FaSpinner className="tbm-spin-icon" />
               </div>
-
-              {/* Right Arrow */}
-              <button
-                className="reader-arrow-pill right-arrow"
-                onClick={flipNext}
-                disabled={currentPage >= totalPages - 1}
-                aria-label="Next Page"
-                title="Next Page (→)"
-              >
-                <FaAngleRight />
-              </button>
+              <h3>Preparing 3D FlipBook</h3>
+              <p>Rendering book pages… {loadingProgress}%</p>
             </div>
           ) : (
-            <div className="reader-error-card">
-              <h5>{loadingError || 'No pages available for this document.'}</h5>
+            /* 3D Realistic Double Page Flip Stage */
+            <div className="tbm-flip-stage">
+              {totalPages > 0 ? (
+                <>
+                  <div className="tbm-book-scene" style={{ transform: `scale(${zoom})`, transition: 'transform 0.2s ease' }}>
+                    {/* Navigation Arrow Left */}
+                    <motion.button
+                      className="tbm-nav-arrow left"
+                      onClick={turnPrev}
+                      disabled={currentPage === 0}
+                      whileHover={{ scale: 1.1, x: -3 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="Previous Page"
+                      title="Previous Page (←)"
+                    >
+                      <FaAngleLeft />
+                    </motion.button>
+
+                    {/* StPageFlip Interactive Container */}
+                    <div className="tbm-stpageflip-wrapper" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <div ref={bookContainerRef} className="tbm-stpageflip-book" />
+                    </div>
+
+                    {/* Navigation Arrow Right */}
+                    <motion.button
+                      className="tbm-nav-arrow right"
+                      onClick={turnNext}
+                      disabled={currentPage >= totalPages - 1}
+                      whileHover={{ scale: 1.1, x: 3 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="Next Page"
+                      title="Next Page (→)"
+                    >
+                      <FaAngleRight />
+                    </motion.button>
+                  </div>
+
+                  {/* ── Bottom Controls Toolbar ── */}
+                  <div className="tbm-controls-toolbar">
+                    <button
+                      className="tbm-ctrl-btn"
+                      onClick={turnToFirst}
+                      disabled={currentPage === 0}
+                      title="First Page"
+                      aria-label="First Page"
+                    >
+                      <FaAnglesLeft />
+                    </button>
+
+                    <button
+                      className="tbm-ctrl-btn"
+                      onClick={turnPrev}
+                      disabled={currentPage === 0}
+                      title="Previous Page (←)"
+                      aria-label="Previous Page"
+                    >
+                      <FaAngleLeft />
+                    </button>
+
+                    {/* Page Jump Form */}
+                    <form onSubmit={handleJumpSubmit} className="tbm-page-jump-form">
+                      <span className="tbm-page-label">Page</span>
+                      <input
+                        type="number"
+                        min="1"
+                        max={totalPages}
+                        value={jumpPageInput}
+                        onChange={(e) => setJumpPageInput(e.target.value)}
+                        onBlur={handleJumpSubmit}
+                        className="tbm-page-input"
+                        title="Type page number and press Enter"
+                      />
+                      <span className="tbm-page-total">of {totalPages}</span>
+                    </form>
+
+                    <button
+                      className="tbm-ctrl-btn"
+                      onClick={turnNext}
+                      disabled={currentPage >= totalPages - 1}
+                      title="Next Page (→)"
+                      aria-label="Next Page"
+                    >
+                      <FaAngleRight />
+                    </button>
+
+                    <button
+                      className="tbm-ctrl-btn"
+                      onClick={turnToLast}
+                      disabled={currentPage >= totalPages - 1}
+                      title="Last Page"
+                      aria-label="Last Page"
+                    >
+                      <FaAnglesRight />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                /* Fallback if no pages */
+                <div className="tbm-fallback-viewer">
+                  <div className="tbm-fallback-card">
+                    <FaFilePdf className="tbm-fallback-icon" />
+                    <h3>{book?.title}</h3>
+                    <p>{loadingError || 'Direct PDF reader is available.'}</p>
+                    <div className="tbm-fallback-actions">
+                      <button
+                        className="tbm-btn primary"
+                        onClick={() => setViewMode('pdf')}
+                      >
+                        <FaBookOpen /> Open PDF Reader
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
-
-        {/* ── Bottom Floating Pill Navigation Toolbar ── */}
-        {totalPages > 0 && (
-          <div className="reader-bottom-bar">
-            <div className="reader-nav-pill">
-              {/* First Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={goToFirst}
-                disabled={currentPage === 0}
-                title="First Page"
-              >
-                <FaAnglesLeft />
-              </button>
-
-              {/* Prev Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={flipPrev}
-                disabled={currentPage === 0}
-                title="Previous Page"
-              >
-                <FaAngleLeft />
-              </button>
-
-              {/* Page Number Box */}
-              <div className="reader-page-counter-box">
-                <span className="reader-page-text">Page</span>
-                <input
-                  type="text"
-                  className="reader-page-input"
-                  value={pageInputVal}
-                  onChange={(e) => setPageInputVal(e.target.value)}
-                  onKeyDown={handlePageInputSubmit}
-                  onBlur={handlePageInputSubmit}
-                  aria-label="Current Page Number"
-                />
-                <span className="reader-page-text">of {totalPages}</span>
-              </div>
-
-              {/* Next Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={flipNext}
-                disabled={currentPage >= totalPages - 1}
-                title="Next Page"
-              >
-                <FaAngleRight />
-              </button>
-
-              {/* Last Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={goToLast}
-                disabled={currentPage >= totalPages - 1}
-                title="Last Page"
-              >
-                <FaAnglesRight />
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
