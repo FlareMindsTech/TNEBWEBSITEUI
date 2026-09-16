@@ -1,0 +1,385 @@
+/* ==========================================================================
+   2-PAGE OPEN SPREAD FLIPBOOK READER MODAL (Matching Exact Screenshot UI)
+   ========================================================================== */
+
+/* ── Fullscreen Dark Overlay ── */
+.reader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #091322;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+}
+
+.reader-modal-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Top Bar ── */
+.reader-top-bar {
+  padding: 10px 24px 6px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.reader-title-box {
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-book-title {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.reader-top-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.75);
+  padding: 4px 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.reader-tool-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  outline: none;
+}
+
+.reader-tool-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.reader-tool-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.reader-zoom-badge {
+  color: #ffca38;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0 8px;
+  min-width: 44px;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+.reader-close-btn {
+  background: rgba(220, 38, 38, 0.45) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #ffffff !important;
+  margin-left: 2px;
+}
+
+.reader-close-btn:hover {
+  background: #dc2626 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+  transform: scale(1.05);
+}
+
+/* ── Center Book Stage ── */
+.reader-main-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.reader-stage-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.reader-spread-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  transform-origin: center center;
+  position: relative;
+}
+
+/* ── StPageFlip 3D Book Container (Full Page Spread) ── */
+.stpageflip-book-wrapper {
+  width: 96vw;
+  max-width: 1440px;
+  height: calc(100vh - 105px);
+  max-height: 89vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  perspective: 2500px;
+  background: transparent !important;
+}
+
+.stpageflip-book-wrapper .stf__parent {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.stpageflip-book-wrapper .stf__wrapper {
+  border-radius: 4px;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.stpageflip-book-wrapper .stf__item {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.stpageflip-book-wrapper .stf__item.--left {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.stpageflip-book-wrapper .stf__item.--right {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.stpageflip-book-wrapper canvas,
+.stpageflip-book-wrapper .stf__canvas {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.stpageflip-book-wrapper img {
+  border-radius: 3px;
+  user-select: none;
+  background: #ffffff;
+}
+
+/* ── Navigation Arrow Pills (Exact Matching Screenshot) ── */
+.reader-arrow-pill {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 202, 56, 0.45);
+  color: #ffca38;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 60;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  outline: none;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.reader-arrow-pill:hover:not(:disabled) {
+  background: rgba(255, 202, 56, 0.22);
+  color: #ffffff;
+  border-color: #ffca38;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 0 20px rgba(255, 202, 56, 0.5);
+}
+
+.reader-arrow-pill:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.reader-arrow-pill.left-arrow {
+  left: 20px;
+}
+
+.reader-arrow-pill.right-arrow {
+  right: 20px;
+}
+
+/* ── Bottom Floating Pill Navigation Toolbar ── */
+.reader-bottom-bar {
+  padding: 4px 16px 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.reader-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.88);
+  padding: 6px 16px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.reader-nav-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.reader-nav-btn:hover:not(:disabled) {
+  color: #38bdf8;
+  transform: scale(1.15);
+}
+
+.reader-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.reader-page-counter-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.reader-page-text {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+}
+
+.reader-page-input {
+  width: 44px;
+  height: 30px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 202, 56, 0.6);
+  color: #ffca38;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.reader-page-input:focus {
+  border-color: #ffca38;
+  box-shadow: 0 0 0 2px rgba(255, 202, 56, 0.25);
+}
+
+/* ── Loading / Error Cards ── */
+.reader-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+}
+
+.reader-spinner {
+  font-size: 2.5rem;
+  color: #38bdf8;
+  animation: spin 1s linear infinite;
+}
+
+.reader-error-card {
+  color: #ef4444;
+  text-align: center;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 24px 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Responsive Behavior ── */
+@media (max-width: 768px) {
+  .reader-top-bar {
+    padding: 12px 16px;
+  }
+  .reader-book-title {
+    font-size: 0.95rem;
+  }
+  .reader-book-page {
+    height: min(65vh, 500px);
+  }
+  .reader-open-book.double-spread-view .reader-book-page.left-page {
+    display: none;
+  }
+  .reader-book-center-spine {
+    display: none;
+  }
+  .reader-nav-pill {
+    padding: 4px 10px;
+    gap: 8px;
+  }
+}
