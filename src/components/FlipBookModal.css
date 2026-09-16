@@ -196,12 +196,17 @@
   box-shadow: none !important;
   border-radius: 3px;
   user-select: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .stpageflip-book-wrapper img {
   border-radius: 3px;
   user-select: none;
   background: #ffffff;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* ── Navigation Arrow Pills (Exact Matching Screenshot) ── */
@@ -361,6 +366,113 @@
   }
 }
 
+/* ── Mode Toggle Button in Header ── */
+.reader-mode-toggle-btn {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  outline: none;
+}
+
+.reader-mode-toggle-btn:hover {
+  background: rgba(56, 189, 248, 0.28);
+  color: #ffffff;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.reader-mode-toggle-btn.active {
+  background: #38bdf8;
+  color: #091322;
+  border-color: #38bdf8;
+}
+
+/* ── Crisp HD Vertical Scroll Stage ── */
+.reader-hd-scroll-stage {
+  width: 100%;
+  height: calc(100vh - 110px);
+  overflow-y: auto;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px 80px 16px;
+  scroll-behavior: smooth;
+}
+
+.reader-hd-scroll-stage::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.reader-hd-scroll-stage::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.reader-hd-scroll-stage::-webkit-scrollbar-thumb {
+  background: rgba(255, 202, 56, 0.4);
+  border-radius: 4px;
+}
+
+.reader-hd-scroll-stage::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 202, 56, 0.7);
+}
+
+.reader-hd-pages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  transform-origin: top center;
+  max-width: 100%;
+}
+
+.reader-hd-page-card {
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reader-hd-page-img {
+  display: block;
+  max-width: min(92vw, 860px);
+  width: auto;
+  height: auto;
+  user-select: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+}
+
+.reader-hd-page-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #ffca38;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 202, 56, 0.3);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
 /* ── Responsive Behavior ── */
 @media (max-width: 768px) {
   .reader-top-bar {
@@ -381,5 +493,8 @@
   .reader-nav-pill {
     padding: 4px 10px;
     gap: 8px;
+  }
+  .reader-hd-page-img {
+    max-width: 96vw;
   }
 }

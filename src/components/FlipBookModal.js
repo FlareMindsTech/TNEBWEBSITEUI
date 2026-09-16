@@ -11,7 +11,10 @@ import {
   FaMagnifyingGlassPlus,
   FaSpinner,
   FaExpand,
-  FaCompress
+  FaCompress,
+  FaArrowUpRightFromSquare,
+  FaBookOpen,
+  FaFileLines
 } from 'react-icons/fa6';
 import './FlipBookModal.css';
 
@@ -58,6 +61,7 @@ const enhanceImageUrl = (url) => {
   return url;
 };
 
+/* ── Lossless PNG conversion for razor-sharp vector-grade clarity ── */
 const canvasToBlobUrl = (canvas) => {
   return new Promise((resolve) => {
     canvas.toBlob(
@@ -65,11 +69,10 @@ const canvasToBlobUrl = (canvas) => {
         if (blob) {
           resolve(URL.createObjectURL(blob));
         } else {
-          resolve(canvas.toDataURL('image/jpeg', 0.98));
+          resolve(canvas.toDataURL('image/png'));
         }
       },
-      'image/jpeg',
-      0.98
+      'image/png'
     );
   });
 };
@@ -84,9 +87,12 @@ const FlipBookModal = ({ book, onClose }) => {
   const [zoom, setZoom] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [pageInputVal, setPageInputVal] = useState('1');
+  const [viewMode, setViewMode] = useState('flipbook'); // 'flipbook' | 'hd-scroll'
 
   const bookContainerRef = useRef(null);
   const pageFlipRef = useRef(null);
+  const scrollStageRef = useRef(null);
+  const pageCardRefs = useRef([]);
 
   const docUrl = book?.docUrl || book?.pdf?.url || book?.path || book?.href || null;
 
@@ -116,7 +122,7 @@ const FlipBookModal = ({ book, onClose }) => {
     setZoom((prev) => Math.max(0.5, +(prev - 0.15).toFixed(2)));
   };
 
-  // 1. High-Performance PDF / Image Page Extraction
+  // 1. High-Performance PDF / Image Page Extraction at 4.0x DPI (350+ DPI)
   useEffect(() => {
     let isMounted = true;
 
@@ -136,7 +142,7 @@ const FlipBookModal = ({ book, onClose }) => {
         return;
       }
 
-      // If we have docUrl (original vector PDF), render directly from PDF at native 320 DPI
+      // If we have docUrl (original vector PDF), render directly from PDF at native ultra HD DPI
       if (docUrl && docUrl !== '#') {
         try {
           const pdfjs = await loadPdfJs();
@@ -158,11 +164,14 @@ const FlipBookModal = ({ book, onClose }) => {
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d', { alpha: false });
 
+          // Scale factor: 4.0 provides ultra-crisp vector-like clarity on all screens
+          const renderScale = 4.0;
+
           for (let i = 1; i <= count; i++) {
             if (!isMounted) return;
 
             const page = await doc.getPage(i);
-            const viewport = page.getViewport({ scale: 3.2 });
+            const viewport = page.getViewport({ scale: renderScale });
 
             canvas.height = viewport.height;
             canvas.width = viewport.width;
@@ -233,7 +242,7 @@ const FlipBookModal = ({ book, onClose }) => {
 
   // 2. Instantiate realistic 3D StPageFlip Engine
   useEffect(() => {
-    if (loading || pageImages.length === 0 || !bookContainerRef.current) return;
+    if (loading || pageImages.length === 0 || viewMode !== 'flipbook' || !bookContainerRef.current) return;
 
     let pageFlipInstance = null;
 
@@ -241,18 +250,18 @@ const FlipBookModal = ({ book, onClose }) => {
       bookContainerRef.current.innerHTML = '';
 
       pageFlipInstance = new PageFlip(bookContainerRef.current, {
-        width: 595,
-        height: 842,
+        width: 1000,
+        height: 1414,
         size: 'stretch',
         minWidth: 320,
-        maxWidth: 1600,
+        maxWidth: 2400,
         minHeight: 420,
-        maxHeight: 2200,
-        maxShadowOpacity: 0.6,
+        maxHeight: 3400,
+        maxShadowOpacity: 0.5,
         showCover: true,
         mobileScrollSupport: false,
         usePortrait: true,
-        startPage: 0,
+        startPage: currentPage,
         drawShadow: true,
         flippingTime: 850,
         useMouseEvents: true,
@@ -261,15 +270,19 @@ const FlipBookModal = ({ book, onClose }) => {
 
       pageFlipInstance.loadFromImages(pageImages);
 
-      // Override PageFlip's default hardcoded white canvas clear color with transparent
+      // Ensure smooth rendering and transparent canvas background
       const renderInstance = pageFlipInstance.getRender();
       if (renderInstance) {
         renderInstance.clear = function () {
           this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.ctx.imageSmoothingEnabled = true;
+          this.ctx.imageSmoothingQuality = 'high';
         };
         if (renderInstance.constructor && renderInstance.constructor.prototype) {
           renderInstance.constructor.prototype.clear = function () {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.imageSmoothingEnabled = true;
+            this.ctx.imageSmoothingQuality = 'high';
           };
         }
       }
@@ -293,30 +306,58 @@ const FlipBookModal = ({ book, onClose }) => {
       }
       pageFlipRef.current = null;
     };
-  }, [loading, pageImages]);
+  }, [loading, pageImages, viewMode]);
+
+  // Scroll to page helper for HD reader mode
+  const scrollToHdPage = (pageIndex) => {
+    if (pageCardRefs.current[pageIndex]) {
+      pageCardRefs.current[pageIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // Spread Navigation Handlers
   const flipPrev = () => {
-    if (pageFlipRef.current) {
+    if (viewMode === 'flipbook' && pageFlipRef.current) {
       pageFlipRef.current.flipPrev();
+    } else if (currentPage > 0) {
+      const prevIdx = currentPage - 1;
+      setCurrentPage(prevIdx);
+      setPageInputVal(String(prevIdx + 1));
+      scrollToHdPage(prevIdx);
     }
   };
 
   const flipNext = () => {
-    if (pageFlipRef.current) {
+    if (viewMode === 'flipbook' && pageFlipRef.current) {
       pageFlipRef.current.flipNext();
+    } else if (currentPage < totalPages - 1) {
+      const nextIdx = currentPage + 1;
+      setCurrentPage(nextIdx);
+      setPageInputVal(String(nextIdx + 1));
+      scrollToHdPage(nextIdx);
     }
   };
 
   const goToFirst = () => {
-    if (pageFlipRef.current) {
+    if (viewMode === 'flipbook' && pageFlipRef.current) {
       pageFlipRef.current.turnToPage(0);
+    } else {
+      setCurrentPage(0);
+      setPageInputVal('1');
+      scrollToHdPage(0);
     }
   };
 
   const goToLast = () => {
-    if (pageFlipRef.current && totalPages > 0) {
-      pageFlipRef.current.turnToPage(totalPages - 1);
+    if (totalPages > 0) {
+      const lastIdx = totalPages - 1;
+      if (viewMode === 'flipbook' && pageFlipRef.current) {
+        pageFlipRef.current.turnToPage(lastIdx);
+      } else {
+        setCurrentPage(lastIdx);
+        setPageInputVal(String(totalPages));
+        scrollToHdPage(lastIdx);
+      }
     }
   };
 
@@ -324,8 +365,12 @@ const FlipBookModal = ({ book, onClose }) => {
     if (e.key === 'Enter' || e.type === 'blur') {
       const parsed = parseInt(pageInputVal, 10);
       if (!isNaN(parsed) && parsed >= 1 && parsed <= totalPages) {
-        if (pageFlipRef.current) {
-          pageFlipRef.current.turnToPage(parsed - 1);
+        const targetIdx = parsed - 1;
+        setCurrentPage(targetIdx);
+        if (viewMode === 'flipbook' && pageFlipRef.current) {
+          pageFlipRef.current.turnToPage(targetIdx);
+        } else {
+          scrollToHdPage(targetIdx);
         }
       } else {
         setPageInputVal(String(currentPage + 1));
@@ -339,7 +384,7 @@ const FlipBookModal = ({ book, onClose }) => {
       if (e.key === 'Escape' && !document.fullscreenElement) {
         onClose();
       }
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && viewMode === 'flipbook')) {
         e.preventDefault();
         flipNext();
       }
@@ -371,7 +416,7 @@ const FlipBookModal = ({ book, onClose }) => {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
-  }, [onClose, totalPages]);
+  }, [onClose, totalPages, viewMode, currentPage]);
 
   const bookTitle = book?.title || (book?.month && book?.year ? `e-Minthiran — ${book.month} ${book.year}` : 'Document Reader');
 
@@ -386,7 +431,7 @@ const FlipBookModal = ({ book, onClose }) => {
       }}
     >
       <div className="reader-modal-wrapper">
-        {/* ── Top Bar (Matching Screenshot) ── */}
+        {/* ── Top Bar ── */}
         <div className="reader-top-bar">
           <div className="reader-title-box">
             <h3 className="reader-book-title" title={bookTitle}>
@@ -395,6 +440,25 @@ const FlipBookModal = ({ book, onClose }) => {
           </div>
 
           <div className="reader-top-controls">
+            {/* View Mode Switcher */}
+            <button
+              className={`reader-mode-toggle-btn ${viewMode === 'hd-scroll' ? 'active' : ''}`}
+              onClick={() => setViewMode(viewMode === 'flipbook' ? 'hd-scroll' : 'flipbook')}
+              title={viewMode === 'flipbook' ? 'Switch to Crisp HD Full-Page Reader' : 'Switch to 3D FlipBook'}
+            >
+              {viewMode === 'flipbook' ? (
+                <>
+                  <FaFileLines />
+                  <span>HD Reader</span>
+                </>
+              ) : (
+                <>
+                  <FaBookOpen />
+                  <span>3D FlipBook</span>
+                </>
+              )}
+            </button>
+
             {/* Zoom Out */}
             <button
               className="reader-tool-btn"
@@ -427,6 +491,17 @@ const FlipBookModal = ({ book, onClose }) => {
               {isFullscreen ? <FaCompress /> : <FaExpand />}
             </button>
 
+            {/* Open Original Vector PDF in New Tab */}
+            {docUrl && docUrl !== '#' && (
+              <button
+                className="reader-tool-btn"
+                onClick={handleOpenInNewTab}
+                title="Open Original Vector PDF in New Tab"
+              >
+                <FaArrowUpRightFromSquare />
+              </button>
+            )}
+
             {/* Close Button */}
             <button
               className="reader-tool-btn reader-close-btn"
@@ -438,48 +513,77 @@ const FlipBookModal = ({ book, onClose }) => {
           </div>
         </div>
 
-        {/* ── Main 3D PageFlip Book Stage ── */}
+        {/* ── Main Book Stage ── */}
         <div className="reader-main-stage">
           {loading ? (
             <div className="reader-loading-card">
               <FaSpinner className="reader-spinner" />
-              <h5 className="mt-3">Rendering High-Definition Pages… {loadingProgress}%</h5>
+              <h5 className="mt-3">Rendering Ultra-Crisp Pages… {loadingProgress}%</h5>
             </div>
           ) : pageImages.length > 0 ? (
-            <div className="reader-stage-inner">
-              {/* Left Arrow */}
-              <button
-                className="reader-arrow-pill left-arrow"
-                onClick={flipPrev}
-                disabled={currentPage === 0}
-                aria-label="Previous Page"
-                title="Previous Page (←)"
-              >
-                <FaAngleLeft />
-              </button>
+            viewMode === 'flipbook' ? (
+              /* 3D Interactive FlipBook View */
+              <div className="reader-stage-inner">
+                {/* Left Arrow */}
+                <button
+                  className="reader-arrow-pill left-arrow"
+                  onClick={flipPrev}
+                  disabled={currentPage === 0}
+                  aria-label="Previous Page"
+                  title="Previous Page (←)"
+                >
+                  <FaAngleLeft />
+                </button>
 
-              {/* Interactive 3D StPageFlip Viewport with Zoom Scale */}
-              <div
-                className="reader-spread-viewport"
-                style={{ transform: `scale(${zoom})` }}
-              >
+                {/* Interactive 3D StPageFlip Viewport with Zoom Scale */}
                 <div
-                  ref={bookContainerRef}
-                  className="stpageflip-book-wrapper"
-                />
-              </div>
+                  className="reader-spread-viewport"
+                  style={{ transform: `scale(${zoom})` }}
+                >
+                  <div
+                    ref={bookContainerRef}
+                    className="stpageflip-book-wrapper"
+                  />
+                </div>
 
-              {/* Right Arrow */}
-              <button
-                className="reader-arrow-pill right-arrow"
-                onClick={flipNext}
-                disabled={currentPage >= totalPages - 1}
-                aria-label="Next Page"
-                title="Next Page (→)"
-              >
-                <FaAngleRight />
-              </button>
-            </div>
+                {/* Right Arrow */}
+                <button
+                  className="reader-arrow-pill right-arrow"
+                  onClick={flipNext}
+                  disabled={currentPage >= totalPages - 1}
+                  aria-label="Next Page"
+                  title="Next Page (→)"
+                >
+                  <FaAngleRight />
+                </button>
+              </div>
+            ) : (
+              /* Full Crisp HD Reader View (Pixel-perfect reading matching screenshot) */
+              <div ref={scrollStageRef} className="reader-hd-scroll-stage">
+                <div
+                  className="reader-hd-pages-container"
+                  style={{ transform: `scale(${zoom})` }}
+                >
+                  {pageImages.map((imgSrc, idx) => (
+                    <div
+                      key={idx}
+                      ref={(el) => (pageCardRefs.current[idx] = el)}
+                      className="reader-hd-page-card"
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`Page ${idx + 1}`}
+                        className="reader-hd-page-img"
+                        loading="lazy"
+                      />
+                      <div className="reader-hd-page-badge">
+                        Page {idx + 1} of {totalPages}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
           ) : (
             <div className="reader-error-card">
               <h5>{loadingError || 'No pages available for this document.'}</h5>
