@@ -70,11 +70,11 @@
    ========================================================================== */
 .filter-search-container.minthiran-toolbar-card {
   max-width: 1200px;
-  margin: -55px auto 35px;
-  padding: 24px 30px 18px 30px;
+  margin: -50px auto 35px;
+  padding: 22px 28px 18px 28px;
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 16px 40px rgba(6, 28, 61, 0.12), 0 2px 10px rgba(27, 91, 175, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(6, 28, 61, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(226, 232, 240, 0.9);
   position: relative;
   z-index: 10;
@@ -82,7 +82,7 @@
 
 .minthiran-toolbar-grid {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 22px;
   align-items: flex-start;
 }
@@ -96,9 +96,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #334155;
+  color: #1e293b;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   margin-bottom: 8px;
@@ -116,7 +116,7 @@
 
 .toolbar-select {
   width: 100%;
-  height: 48px;
+  height: 46px;
   padding: 0 16px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
@@ -157,7 +157,7 @@
 
 .toolbar-search-input {
   width: 100%;
-  height: 48px;
+  height: 46px;
   padding: 0 44px 0 46px;
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
@@ -188,8 +188,8 @@
 .search-box-clear {
   position: absolute;
   right: 12px;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border: none;
   background: #e2e8f0;
   border-radius: 50%;
@@ -197,7 +197,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
   transition: all 0.2s ease;
   padding: 0;
@@ -209,21 +209,25 @@
   transform: scale(1.08);
 }
 
+/* Footer / Actions */
 .minthiran-toolbar-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
-  padding-top: 14px;
+  margin-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .toolbar-results-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(27, 91, 175, 0.08);
-  color: #1b5baf;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -231,8 +235,8 @@
 }
 
 .badge-stat-icon {
-  color: #ffca38;
-  font-size: 0.95rem;
+  color: #f59e0b;
+  font-size: 1rem;
 }
 
 .toolbar-results-badge strong {
@@ -240,11 +244,75 @@
   color: #0f172a;
 }
 
+.toolbar-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.minthiran-year-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  padding: 4px 6px;
+  border-radius: 40px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.year-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: transparent;
+  color: #475569;
+  border: none;
+  border-radius: 30px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  outline: none;
+}
+
+.year-tab-btn:hover {
+  background: #ffffff;
+  color: #114e9e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.year-tab-btn.active {
+  background: #114e9e;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(17, 78, 158, 0.35);
+  transform: translateY(-1px);
+}
+
+.current-year-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: #ffc107;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.year-tab-btn.active .current-year-badge {
+  background: #ffc107;
+  color: #0f172a;
+}
+
 .toolbar-reset-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: transparent;
+  background: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #64748b;
   padding: 6px 14px;
@@ -293,32 +361,163 @@
   box-shadow: 0 6px 20px rgba(27, 91, 175, 0.4);
 }
 
+/* ==========================================================================
+   SPECIAL EDITION (80TH YEAR CELEBRATION)
+   ========================================================================== */
+.special-edition-section {
+  margin-bottom: 4rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1.5px dashed #e2e8f0;
+  position: relative;
+}
+
+.special-edition-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.special-edition-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  color: #b45309;
+  border: 1px solid #fcd34d;
+  padding: 5px 16px;
+  border-radius: 30px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12);
+}
+
+.special-edition-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0b2545;
+  margin-bottom: 6px;
+  letter-spacing: -0.4px;
+}
+
+.special-edition-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 0;
+  max-width: 600px;
+}
+
+.special-edition-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.special-real-book .special-book-cover {
+  background: linear-gradient(145deg, #091e3a 0%, #0f3460 45%, #16213e 100%);
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 215, 0, 0.35),
+    inset 0 0 30px rgba(0, 0, 0, 0.5),
+    5px 5px 18px rgba(0, 0, 0, 0.4);
+}
+
+.special-book-spine {
+  background: linear-gradient(to right, #051326 0%, #091e3a 40%, #0f3460 100%) !important;
+}
+
+.special-gold-badge {
+  background: linear-gradient(135deg, #ffd700 0%, #f59e0b 100%) !important;
+  color: #071933 !important;
+  font-weight: 800 !important;
+  font-size: 0.75rem !important;
+  padding: 4px 10px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.35) !important;
+}
+
+.special-date-box {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+  backdrop-filter: blur(4px);
+}
+
+.special-anniversary-number {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #ffd700 45%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(255, 215, 0, 0.3));
+}
+
+.special-anniversary-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fef3c7;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.special-gold-years {
+  color: #ffd700 !important;
+  font-weight: 800 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.4px;
+}
+
 .year-section {
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
+}
+
+.year-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  text-align: center;
 }
 
 .year-title {
   background: linear-gradient(135deg, #1b5baf 0%, #2a6cc7 50%, #15458a 100%);
   color: white;
   font-weight: 700;
-  font-size: 2rem;
-  padding: 12px 20px;
+  font-size: 1.8rem;
+  padding: 10px 22px;
   border: none;
-  border-radius: 8px;
-  display: inline-block;
-  box-shadow: 0 4px 12px rgba(27, 91, 175, 0.3);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0;
+  box-shadow: 0 4px 14px rgba(27, 91, 175, 0.25);
   position: relative;
   overflow: hidden;
 }
 
-.year-title::after {
-  content: '';
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.8rem;
-  opacity: 0.3;
+.year-count-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: rgba(27, 91, 175, 0.09);
+  color: #1b5baf;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 20px;
+  border: 1px solid rgba(27, 91, 175, 0.2);
+  letter-spacing: 0.3px;
 }
 
 .magazines-grid {
@@ -634,6 +833,13 @@
 }
 
 /* Responsive Design */
+@media (max-width: 992px) {
+  .minthiran-toolbar-grid {
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .minthiran-hero {
     padding: 36px 16px 55px;
@@ -654,6 +860,10 @@
   .minthiran-toolbar-grid {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .search-field-group {
+    grid-column: span 1;
   }
 
   .minthiran-toolbar-footer {

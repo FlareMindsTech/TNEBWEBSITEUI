@@ -1528,11 +1528,19 @@
   border-color: #dc2626;
 }
 
-/* Month Groups Wrapper */
+/* Month Groups Wrapper (2 Month Cards side-by-side per row) */
 .bp-month-groups-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .bp-month-groups-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 /* Month Group Card Container */
@@ -1542,11 +1550,15 @@
   border: 1.5px solid #e2e8f0;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
   overflow: hidden;
-  transition: box-shadow 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .bp-month-group-card:hover {
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.09);
+  transform: translateY(-2px);
 }
 
 /* Month Card Header */
@@ -1555,7 +1567,8 @@
   padding: 16px 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   gap: 16px;
   border-bottom: 2.5px solid #fab81e;
   color: #ffffff;
@@ -1564,6 +1577,7 @@
 .bp-month-header-left {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
 }
 
@@ -1585,6 +1599,8 @@
 .bp-month-header-text {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .bp-month-heading {
@@ -1712,7 +1728,9 @@
 .bp-clean-title-flex {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
+  width: 100%;
 }
 
 .bp-clean-pdf-badge {
