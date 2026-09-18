@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { PageFlip } from 'page-flip';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaAngleLeft,
   FaAngleRight,
@@ -12,9 +11,7 @@ import {
   FaSpinner,
   FaExpand,
   FaCompress,
-  FaArrowUpRightFromSquare,
-  FaBookOpen,
-  FaFileLines
+  FaTableCellsLarge
 } from 'react-icons/fa6';
 import './FlipBookModal.css';
 
@@ -48,9 +45,7 @@ const loadPdfJs = () => {
   });
 };
 
-const pdfRenderCache = new Map();
-
-/* ── Helper to ensure Cloudinary & Web images load at HD print quality ── */
+/* ── Helper for Image-Only Documents ── */
 const enhanceImageUrl = (url) => {
   if (!url || typeof url !== 'string') return url;
   if (url.includes('cloudinary.com') && url.includes('/upload/')) {
@@ -61,41 +56,116 @@ const enhanceImageUrl = (url) => {
   return url;
 };
 
-/* ── Lossless PNG conversion for razor-sharp vector-grade clarity ── */
-const canvasToBlobUrl = (canvas) => {
-  return new Promise((resolve) => {
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          resolve(URL.createObjectURL(blob));
-        } else {
-          resolve(canvas.toDataURL('image/png'));
-        }
-      },
-      'image/png'
-    );
-  });
+/* ── Global In-Memory Render Cache for 0ms Instant Slide Transitions ── */
+const globalPageCache = new Map();
+const activePreloadJobs = new Set();
+
+const calculateSlideDimensions = (unscaledViewport, stageW, stageH, zoom) => {
+  const isMobile = window.innerWidth <= 768;
+  const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+  const paddingV = isMobile ? 8 : 16;
+  const paddingH = isMobile ? 12 : (isTablet ? 70 : 130);
+
+  const availH = Math.max(stageH - paddingV * 2, 320);
+  const availW = Math.max(stageW - paddingH * 2, 240);
+
+  const pdfAspect = unscaledViewport.width / unscaledViewport.height;
+
+  let targetH = availH;
+  let targetW = targetH * pdfAspect;
+
+  if (targetW > availW) {
+    targetW = availW;
+    targetH = targetW / pdfAspect;
+  }
+
+  const baseDisplayScale = targetH / unscaledViewport.height;
+  const effectiveScale = baseDisplayScale * zoom;
+
+  const displayW = Math.round(unscaledViewport.width * effectiveScale);
+  const displayH = Math.round(unscaledViewport.height * effectiveScale);
+
+  return { displayW, displayH, effectiveScale };
+};
+
+const renderPdfPageToCache = async (pdfDoc, pageIndex, stageDimensions, zoom) => {
+  const cacheKey = `p_${pageIndex}_${Math.round(stageDimensions.width)}_${Math.round(stageDimensions.height)}_${zoom}`;
+  if (globalPageCache.has(cacheKey)) {
+    return globalPageCache.get(cacheKey);
+  }
+  if (activePreloadJobs.has(cacheKey)) {
+    return null;
+  }
+
+  activePreloadJobs.add(cacheKey);
+
+  try {
+    const page = await pdfDoc.getPage(pageIndex + 1);
+    const stageW = stageDimensions.width || (window.innerWidth - 32);
+    const stageH = stageDimensions.height || (window.innerHeight - 120);
+
+    const unscaledViewport = page.getViewport({ scale: 1.0 });
+    const { displayW, displayH, effectiveScale } = calculateSlideDimensions(unscaledViewport, stageW, stageH, zoom);
+
+    const dpr = window.devicePixelRatio || 1;
+    const outputScale = Math.max(dpr, 1.5);
+    const renderViewport = page.getViewport({ scale: effectiveScale * outputScale });
+
+    const offscreen = document.createElement('canvas');
+    offscreen.width = Math.floor(renderViewport.width);
+    offscreen.height = Math.floor(renderViewport.height);
+
+    const ctx = offscreen.getContext('2d', { alpha: false });
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    await page.render({
+      canvasContext: ctx,
+      viewport: renderViewport,
+      intent: 'print',
+    }).promise;
+
+    const entry = {
+      canvas: offscreen,
+      displayW,
+      displayH,
+      width: offscreen.width,
+      height: offscreen.height,
+    };
+
+    globalPageCache.set(cacheKey, entry);
+    activePreloadJobs.delete(cacheKey);
+    return entry;
+  } catch (e) {
+    activePreloadJobs.delete(cacheKey);
+    return null;
+  }
 };
 
 const FlipBookModal = ({ book, onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [pdfDoc, setPdfDoc] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingError, setLoadingError] = useState(null);
-  const [pageImages, setPageImages] = useState([]);
+  const [fallbackImages, setFallbackImages] = useState([]);
+  const [thumbnailUrls, setThumbnailUrls] = useState([]);
   const [zoom, setZoom] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [pageInputVal, setPageInputVal] = useState('1');
-  const [viewMode, setViewMode] = useState('flipbook'); // 'flipbook' | 'hd-scroll'
+  const [showThumbnails, setShowThumbnails] = useState(false);
+  const [stageDimensions, setStageDimensions] = useState({ width: 0, height: 0 });
 
-  const bookContainerRef = useRef(null);
-  const pageFlipRef = useRef(null);
-  const scrollStageRef = useRef(null);
-  const pageCardRefs = useRef([]);
+  const [direction, setDirection] = useState(1);
+
+  const stageRef = useRef(null);
+  const thumbnailsTrackRef = useRef(null);
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
   const docUrl = book?.docUrl || book?.pdf?.url || book?.path || book?.href || null;
 
+  // 1. Fullscreen Toggle & Safe Exit
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -108,41 +178,68 @@ const FlipBookModal = ({ book, onClose }) => {
     }
   };
 
-  const handleOpenInNewTab = () => {
-    if (docUrl && docUrl !== '#') {
-      window.open(docUrl, '_blank', 'noopener,noreferrer');
+  const handleCloseModal = useCallback(() => {
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
     }
-  };
+    setIsFullscreen(false);
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose]);
+
+  // Ensure fullscreen is always exited if modal unmounts
+  useEffect(() => {
+    return () => {
+      if (document.fullscreenElement) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    };
+  }, []);
 
   const zoomIn = () => {
-    setZoom((prev) => Math.min(2.0, +(prev + 0.15).toFixed(2)));
+    setZoom((prev) => Math.min(3.0, +(prev + 0.25).toFixed(2)));
   };
 
   const zoomOut = () => {
-    setZoom((prev) => Math.max(0.5, +(prev - 0.15).toFixed(2)));
+    setZoom((prev) => Math.max(0.6, +(prev - 0.25).toFixed(2)));
   };
 
-  // 1. High-Performance PDF / Image Page Extraction at 4.0x DPI (350+ DPI)
+  const resetZoom = () => {
+    setZoom(1);
+  };
+
+  // 2. Measure available stage dimensions dynamically using ResizeObserver
+  useEffect(() => {
+    if (!stageRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          setStageDimensions({
+            width: Math.floor(width),
+            height: Math.floor(height)
+          });
+        }
+      }
+    });
+
+    observer.observe(stageRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. Load PDF Document Instance
   useEffect(() => {
     let isMounted = true;
 
-    const extractPages = async () => {
+    const loadDocument = async () => {
       setLoading(true);
       setLoadingError(null);
-      setLoadingProgress(0);
 
-      // Check cache first
-      if (docUrl && pdfRenderCache.has(docUrl)) {
-        const cached = pdfRenderCache.get(docUrl);
-        if (isMounted) {
-          setPageImages(cached.images);
-          setTotalPages(cached.totalPages);
-          setLoading(false);
-        }
-        return;
-      }
-
-      // If we have docUrl (original vector PDF), render directly from PDF at native ultra HD DPI
       if (docUrl && docUrl !== '#') {
         try {
           const pdfjs = await loadPdfJs();
@@ -154,65 +251,21 @@ const FlipBookModal = ({ book, onClose }) => {
           });
 
           const doc = await loadingTask.promise;
-          const count = doc.numPages;
+          if (!isMounted) return;
 
-          if (isMounted) {
-            setTotalPages(count);
-          }
+          setPdfDoc(doc);
+          setTotalPages(doc.numPages);
+          setLoading(false);
 
-          const images = [];
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d', { alpha: false });
-
-          // Scale factor: 4.0 provides ultra-crisp vector-like clarity on all screens
-          const renderScale = 4.0;
-
-          for (let i = 1; i <= count; i++) {
-            if (!isMounted) return;
-
-            const page = await doc.getPage(i);
-            const viewport = page.getViewport({ scale: renderScale });
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            context.imageSmoothingEnabled = true;
-            context.imageSmoothingQuality = 'high';
-
-            await page.render({
-              canvasContext: context,
-              viewport: viewport,
-              intent: 'print',
-            }).promise;
-
-            const blobUrl = await canvasToBlobUrl(canvas);
-            images.push(blobUrl);
-
-            if (isMounted) {
-              setLoadingProgress(Math.round((i / count) * 100));
-            }
-
-            await new Promise((r) => setTimeout(r, 0));
-          }
-
-          if (docUrl) {
-            pdfRenderCache.set(docUrl, {
-              images,
-              totalPages: count,
-            });
-          }
-
-          if (isMounted) {
-            setPageImages(images);
-            setLoading(false);
-          }
+          // Generate lightweight thumbnail previews in background
+          generateThumbnails(doc);
           return;
         } catch (err) {
-          console.warn('Direct PDF.js extraction error, falling back to pre-rendered pages:', err);
+          console.warn('PDF.js loading failed, falling back to pre-rendered pages:', err);
         }
       }
 
-      // Fallback to pre-rendered pages
+      // Fallback for image-only books
       const rawDirectPages = Array.isArray(book?.pages) && book.pages.length > 0 
         ? book.pages 
         : (Array.isArray(book?.pdf?.pages) && book.pdf.pages.length > 0 ? book.pdf.pages : []);
@@ -220,7 +273,8 @@ const FlipBookModal = ({ book, onClose }) => {
       if (rawDirectPages.length > 0) {
         const directPages = rawDirectPages.map(enhanceImageUrl);
         if (isMounted) {
-          setPageImages(directPages);
+          setFallbackImages(directPages);
+          setThumbnailUrls(directPages);
           setTotalPages(directPages.length);
           setLoading(false);
         }
@@ -233,164 +287,168 @@ const FlipBookModal = ({ book, onClose }) => {
       }
     };
 
-    extractPages();
+    const generateThumbnails = async (doc) => {
+      const thumbs = [];
+      const thumbCanvas = document.createElement('canvas');
+      const thumbCtx = thumbCanvas.getContext('2d');
+      const thumbScale = 0.22;
+
+      for (let i = 1; i <= Math.min(doc.numPages, 100); i++) {
+        if (!isMounted) return;
+        try {
+          const page = await doc.getPage(i);
+          const viewport = page.getViewport({ scale: thumbScale });
+          thumbCanvas.width = viewport.width;
+          thumbCanvas.height = viewport.height;
+
+          await page.render({
+            canvasContext: thumbCtx,
+            viewport: viewport,
+          }).promise;
+
+          thumbs.push(thumbCanvas.toDataURL('image/jpeg', 0.8));
+          if (isMounted) {
+            setThumbnailUrls([...thumbs]);
+          }
+        } catch (e) {
+          // ignore thumb generation err
+        }
+      }
+    };
+
+    loadDocument();
 
     return () => {
       isMounted = false;
     };
   }, [book, docUrl]);
 
-  // 2. Instantiate realistic 3D StPageFlip Engine
+  // Proactive Background Pre-Rendering Queue (+1, -1, +2, +3, -2)
   useEffect(() => {
-    if (loading || pageImages.length === 0 || viewMode !== 'flipbook' || !bookContainerRef.current) return;
+    if (!pdfDoc || totalPages <= 0) return;
 
-    let pageFlipInstance = null;
+    let isSubscribed = true;
 
-    try {
-      bookContainerRef.current.innerHTML = '';
+    const preloadSurroundingPages = async () => {
+      // Prioritize next page first, then previous, then 2-3 pages ahead
+      const priorityIndices = [
+        currentPage + 1,
+        currentPage - 1,
+        currentPage + 2,
+        currentPage + 3,
+        currentPage - 2
+      ];
 
-      pageFlipInstance = new PageFlip(bookContainerRef.current, {
-        width: 1000,
-        height: 1414,
-        size: 'stretch',
-        minWidth: 320,
-        maxWidth: 2400,
-        minHeight: 420,
-        maxHeight: 3400,
-        maxShadowOpacity: 0.5,
-        showCover: true,
-        mobileScrollSupport: false,
-        usePortrait: true,
-        startPage: currentPage,
-        drawShadow: true,
-        flippingTime: 850,
-        useMouseEvents: true,
-        swipeDistance: 25
-      });
-
-      pageFlipInstance.loadFromImages(pageImages);
-
-      // Ensure smooth rendering and transparent canvas background
-      const renderInstance = pageFlipInstance.getRender();
-      if (renderInstance) {
-        renderInstance.clear = function () {
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-          this.ctx.imageSmoothingEnabled = true;
-          this.ctx.imageSmoothingQuality = 'high';
-        };
-        if (renderInstance.constructor && renderInstance.constructor.prototype) {
-          renderInstance.constructor.prototype.clear = function () {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.imageSmoothingEnabled = true;
-            this.ctx.imageSmoothingQuality = 'high';
-          };
+      for (const idx of priorityIndices) {
+        if (!isSubscribed) break;
+        if (idx >= 0 && idx < totalPages) {
+          await renderPdfPageToCache(pdfDoc, idx, stageDimensions, zoom);
         }
       }
+    };
 
-      pageFlipInstance.on('flip', (e) => {
-        const pageIdx = e.data;
-        setCurrentPage(pageIdx);
-        setPageInputVal(String(pageIdx + 1));
-      });
-
-      pageFlipRef.current = pageFlipInstance;
-    } catch (err) {
-      console.error('Error initializing PageFlip:', err);
-    }
+    // Run slightly deferred to allow the active page render priority
+    const timer = setTimeout(preloadSurroundingPages, 40);
 
     return () => {
-      if (pageFlipInstance) {
-        try {
-          pageFlipInstance.destroy();
-        } catch (e) {}
-      }
-      pageFlipRef.current = null;
+      isSubscribed = false;
+      clearTimeout(timer);
     };
-  }, [loading, pageImages, viewMode]);
+  }, [pdfDoc, currentPage, totalPages, stageDimensions, zoom]);
 
-  // Scroll to page helper for HD reader mode
-  const scrollToHdPage = (pageIndex) => {
-    if (pageCardRefs.current[pageIndex]) {
-      pageCardRefs.current[pageIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  // Spread Navigation Handlers
-  const flipPrev = () => {
-    if (viewMode === 'flipbook' && pageFlipRef.current) {
-      pageFlipRef.current.flipPrev();
-    } else if (currentPage > 0) {
-      const prevIdx = currentPage - 1;
-      setCurrentPage(prevIdx);
-      setPageInputVal(String(prevIdx + 1));
-      scrollToHdPage(prevIdx);
-    }
-  };
-
-  const flipNext = () => {
-    if (viewMode === 'flipbook' && pageFlipRef.current) {
-      pageFlipRef.current.flipNext();
-    } else if (currentPage < totalPages - 1) {
-      const nextIdx = currentPage + 1;
-      setCurrentPage(nextIdx);
-      setPageInputVal(String(nextIdx + 1));
-      scrollToHdPage(nextIdx);
-    }
-  };
-
-  const goToFirst = () => {
-    if (viewMode === 'flipbook' && pageFlipRef.current) {
-      pageFlipRef.current.turnToPage(0);
-    } else {
-      setCurrentPage(0);
-      setPageInputVal('1');
-      scrollToHdPage(0);
-    }
-  };
-
-  const goToLast = () => {
-    if (totalPages > 0) {
-      const lastIdx = totalPages - 1;
-      if (viewMode === 'flipbook' && pageFlipRef.current) {
-        pageFlipRef.current.turnToPage(lastIdx);
-      } else {
-        setCurrentPage(lastIdx);
-        setPageInputVal(String(totalPages));
-        scrollToHdPage(lastIdx);
+  // Keep thumbnail in view when current page changes
+  useEffect(() => {
+    if (showThumbnails && thumbnailsTrackRef.current) {
+      const activeThumb = thumbnailsTrackRef.current.querySelector(`.slide-thumb-item.active`);
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
     }
-  };
+  }, [currentPage, showThumbnails]);
+
+  // Slide Navigation Handlers with Direction Tracking
+  const goToSlide = useCallback((pageIndex, customDir = null) => {
+    if (pageIndex < 0 || pageIndex >= totalPages) return;
+    const dir = customDir !== null ? customDir : (pageIndex > currentPage ? 1 : -1);
+    setDirection(dir);
+    setCurrentPage(pageIndex);
+    setPageInputVal(String(pageIndex + 1));
+  }, [currentPage, totalPages]);
+
+  const nextSlide = useCallback(() => {
+    if (currentPage < totalPages - 1) {
+      goToSlide(currentPage + 1, 1);
+    }
+  }, [currentPage, totalPages, goToSlide]);
+
+  const prevSlide = useCallback(() => {
+    if (currentPage > 0) {
+      goToSlide(currentPage - 1, -1);
+    }
+  }, [currentPage, goToSlide]);
+
+  const goToFirst = useCallback(() => {
+    goToSlide(0, -1);
+  }, [goToSlide]);
+
+  const goToLast = useCallback(() => {
+    if (totalPages > 0) {
+      goToSlide(totalPages - 1, 1);
+    }
+  }, [totalPages, goToSlide]);
 
   const handlePageInputSubmit = (e) => {
     if (e.key === 'Enter' || e.type === 'blur') {
       const parsed = parseInt(pageInputVal, 10);
       if (!isNaN(parsed) && parsed >= 1 && parsed <= totalPages) {
-        const targetIdx = parsed - 1;
-        setCurrentPage(targetIdx);
-        if (viewMode === 'flipbook' && pageFlipRef.current) {
-          pageFlipRef.current.turnToPage(targetIdx);
-        } else {
-          scrollToHdPage(targetIdx);
-        }
+        goToSlide(parsed - 1);
       } else {
         setPageInputVal(String(currentPage + 1));
       }
     }
   };
 
+  // Touch Swipe Support for Mobile/Tablets
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches.length === 1) {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - touchEndX;
+    const diffY = touchStartY.current - touchEndY;
+
+    // Ensure horizontal gesture is dominant
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && !document.fullscreenElement) {
-        onClose();
-      }
-      if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && viewMode === 'flipbook')) {
+      if (e.key === 'Escape') {
         e.preventDefault();
-        flipNext();
+        handleCloseModal();
+      }
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && e.target.tagName !== 'INPUT')) {
+        e.preventDefault();
+        nextSlide();
       }
       if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault();
-        flipPrev();
+        prevSlide();
       }
       if (e.key === 'Home') {
         e.preventDefault();
@@ -400,8 +458,23 @@ const FlipBookModal = ({ book, onClose }) => {
         e.preventDefault();
         goToLast();
       }
-      if (e.key.toLowerCase() === 'f') {
+      if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        zoomIn();
+      }
+      if (e.key === '-') {
+        e.preventDefault();
+        zoomOut();
+      }
+      if (e.key === '0') {
+        e.preventDefault();
+        resetZoom();
+      }
+      if (e.key.toLowerCase() === 'f' && e.target.tagName !== 'INPUT') {
         toggleFullscreen();
+      }
+      if (e.key.toLowerCase() === 't' && e.target.tagName !== 'INPUT') {
+        setShowThumbnails((prev) => !prev);
       }
     };
 
@@ -416,9 +489,9 @@ const FlipBookModal = ({ book, onClose }) => {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
-  }, [onClose, totalPages, viewMode, currentPage]);
+  }, [handleCloseModal, nextSlide, prevSlide, goToFirst, goToLast]);
 
-  const bookTitle = book?.title || (book?.month && book?.year ? `e-Minthiran — ${book.month} ${book.year}` : 'Document Reader');
+  const bookTitle = book?.title || (book?.month && book?.year ? `e-Minthiran — ${book.month} ${book.year}` : 'Document Slide Viewer');
 
   return (
     <motion.div
@@ -427,57 +500,54 @@ const FlipBookModal = ({ book, onClose }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) handleCloseModal();
       }}
     >
       <div className="reader-modal-wrapper">
         {/* ── Top Bar ── */}
         <div className="reader-top-bar">
           <div className="reader-title-box">
+            <span className="reader-badge-pill">PDF SLIDE VIEWER</span>
             <h3 className="reader-book-title" title={bookTitle}>
               {bookTitle}
             </h3>
           </div>
 
           <div className="reader-top-controls">
-            {/* View Mode Switcher */}
+            {/* Thumbnail Strip Toggle */}
             <button
-              className={`reader-mode-toggle-btn ${viewMode === 'hd-scroll' ? 'active' : ''}`}
-              onClick={() => setViewMode(viewMode === 'flipbook' ? 'hd-scroll' : 'flipbook')}
-              title={viewMode === 'flipbook' ? 'Switch to Crisp HD Full-Page Reader' : 'Switch to 3D FlipBook'}
+              className={`reader-tool-btn ${showThumbnails ? 'active-tool' : ''}`}
+              onClick={() => setShowThumbnails((prev) => !prev)}
+              title="Toggle Thumbnails Grid (T)"
             >
-              {viewMode === 'flipbook' ? (
-                <>
-                  <FaFileLines />
-                  <span>HD Reader</span>
-                </>
-              ) : (
-                <>
-                  <FaBookOpen />
-                  <span>3D FlipBook</span>
-                </>
-              )}
+              <FaTableCellsLarge />
             </button>
 
             {/* Zoom Out */}
             <button
               className="reader-tool-btn"
               onClick={zoomOut}
-              disabled={zoom <= 0.5}
-              title="Zoom Out"
+              disabled={zoom <= 0.6}
+              title="Zoom Out (-)"
             >
               <FaMagnifyingGlassMinus />
             </button>
 
-            {/* Zoom Percentage */}
-            <span className="reader-zoom-badge">{Math.round(zoom * 100)}%</span>
+            {/* Zoom Percentage / Reset */}
+            <button
+              className="reader-zoom-badge-btn"
+              onClick={resetZoom}
+              title="Reset Zoom to 100% (0)"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
 
             {/* Zoom In */}
             <button
               className="reader-tool-btn"
               onClick={zoomIn}
-              disabled={zoom >= 2.0}
-              title="Zoom In"
+              disabled={zoom >= 3.0}
+              title="Zoom In (+)"
             >
               <FaMagnifyingGlassPlus />
             </button>
@@ -486,26 +556,15 @@ const FlipBookModal = ({ book, onClose }) => {
             <button
               className="reader-tool-btn"
               onClick={toggleFullscreen}
-              title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+              title={isFullscreen ? 'Exit Fullscreen (F)' : 'Fullscreen (F)'}
             >
               {isFullscreen ? <FaCompress /> : <FaExpand />}
             </button>
 
-            {/* Open Original Vector PDF in New Tab */}
-            {docUrl && docUrl !== '#' && (
-              <button
-                className="reader-tool-btn"
-                onClick={handleOpenInNewTab}
-                title="Open Original Vector PDF in New Tab"
-              >
-                <FaArrowUpRightFromSquare />
-              </button>
-            )}
-
             {/* Close Button */}
             <button
               className="reader-tool-btn reader-close-btn"
-              onClick={onClose}
+              onClick={handleCloseModal}
               title="Close Viewer (Esc)"
             >
               <FaXmark />
@@ -513,77 +572,69 @@ const FlipBookModal = ({ book, onClose }) => {
           </div>
         </div>
 
-        {/* ── Main Book Stage ── */}
-        <div className="reader-main-stage">
+        {/* ── Main Presentation Slide Stage ── */}
+        <div
+          className="reader-main-stage"
+          ref={stageRef}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {loading ? (
             <div className="reader-loading-card">
               <FaSpinner className="reader-spinner" />
-              <h5 className="mt-3">Rendering Ultra-Crisp Pages… {loadingProgress}%</h5>
+              <h5 className="mt-3">Loading Original Vector PDF…</h5>
             </div>
-          ) : pageImages.length > 0 ? (
-            viewMode === 'flipbook' ? (
-              /* 3D Interactive FlipBook View */
-              <div className="reader-stage-inner">
-                {/* Left Arrow */}
-                <button
-                  className="reader-arrow-pill left-arrow"
-                  onClick={flipPrev}
-                  disabled={currentPage === 0}
-                  aria-label="Previous Page"
-                  title="Previous Page (←)"
-                >
-                  <FaAngleLeft />
-                </button>
+          ) : totalPages > 0 ? (
+            /* 3D Carousel Slide Deck View with Smooth Continuous Slide-In Motion */
+            <div className="reader-3d-stage">
+              {/* Left Chevron Button */}
+              <button
+                className="reader-chevron-btn left-chevron"
+                onClick={prevSlide}
+                disabled={currentPage === 0}
+                aria-label="Previous Page"
+                title="Previous Page (← / PageUp)"
+              >
+                <FaAngleLeft />
+              </button>
 
-                {/* Interactive 3D StPageFlip Viewport with Zoom Scale */}
-                <div
-                  className="reader-spread-viewport"
-                  style={{ transform: `scale(${zoom})` }}
-                >
-                  <div
-                    ref={bookContainerRef}
-                    className="stpageflip-book-wrapper"
-                  />
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                  className="reader-arrow-pill right-arrow"
-                  onClick={flipNext}
-                  disabled={currentPage >= totalPages - 1}
-                  aria-label="Next Page"
-                  title="Next Page (→)"
-                >
-                  <FaAngleRight />
-                </button>
-              </div>
-            ) : (
-              /* Full Crisp HD Reader View (Pixel-perfect reading matching screenshot) */
-              <div ref={scrollStageRef} className="reader-hd-scroll-stage">
-                <div
-                  className="reader-hd-pages-container"
-                  style={{ transform: `scale(${zoom})` }}
-                >
-                  {pageImages.map((imgSrc, idx) => (
-                    <div
-                      key={idx}
-                      ref={(el) => (pageCardRefs.current[idx] = el)}
-                      className="reader-hd-page-card"
-                    >
-                      <img
-                        src={imgSrc}
-                        alt={`Page ${idx + 1}`}
-                        className="reader-hd-page-img"
-                        loading="lazy"
-                      />
-                      <div className="reader-hd-page-badge">
-                        Page {idx + 1} of {totalPages}
-                      </div>
-                    </div>
+              {/* 3D Coverflow Deck Container */}
+              <div className="reader-3d-deck-container">
+                {[-2, -1, 0, 1, 2]
+                  .map((d) => currentPage + d)
+                  .filter((idx) => idx >= 0 && idx < totalPages)
+                  .map((pageIdx) => (
+                    <SlideDeckCard
+                      key={pageIdx}
+                      pdfDoc={pdfDoc}
+                      pageIndex={pageIdx}
+                      delta={pageIdx - currentPage}
+                      fallbackImg={fallbackImages[pageIdx]}
+                      thumbImg={thumbnailUrls[pageIdx]}
+                      zoom={zoom}
+                      stageDimensions={stageDimensions}
+                      totalPages={totalPages}
+                      isMobile={window.innerWidth <= 768}
+                      onClick={() => {
+                        if (pageIdx !== currentPage) {
+                          goToSlide(pageIdx);
+                        }
+                      }}
+                    />
                   ))}
-                </div>
               </div>
-            )
+
+              {/* Right Chevron Button */}
+              <button
+                className="reader-chevron-btn right-chevron"
+                onClick={nextSlide}
+                disabled={currentPage >= totalPages - 1}
+                aria-label="Next Page"
+                title="Next Page (→ / PageDown / Space)"
+              >
+                <FaAngleRight />
+              </button>
+            </div>
           ) : (
             <div className="reader-error-card">
               <h5>{loadingError || 'No pages available for this document.'}</h5>
@@ -591,64 +642,53 @@ const FlipBookModal = ({ book, onClose }) => {
           )}
         </div>
 
-        {/* ── Bottom Floating Pill Navigation Toolbar ── */}
+        {/* ── Bottom Thumbnail Drawer Filmstrip ── */}
+        <AnimatePresence>
+          {showThumbnails && totalPages > 0 && (
+            <motion.div
+              className="reader-thumbnails-drawer"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 110, opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="thumbnails-scroll-track" ref={thumbnailsTrackRef}>
+                {Array.from({ length: totalPages }, (_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`slide-thumb-item ${idx === currentPage ? 'active' : ''}`}
+                    onClick={() => goToSlide(idx)}
+                    title={`Go to Slide ${idx + 1}`}
+                  >
+                    <div className="thumb-preview-box">
+                      {thumbnailUrls[idx] ? (
+                        <img src={thumbnailUrls[idx]} alt={`Thumb ${idx + 1}`} className="thumb-img" />
+                      ) : (
+                        <div className="thumb-placeholder">{idx + 1}</div>
+                      )}
+                    </div>
+                    <span className="thumb-label">{idx + 1}</span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ── Bottom Scrubber Progress Bar Matching Reference Screenshot ── */}
         {totalPages > 0 && (
           <div className="reader-bottom-bar">
-            <div className="reader-nav-pill">
-              {/* First Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={goToFirst}
-                disabled={currentPage === 0}
-                title="First Page"
-              >
-                <FaAnglesLeft />
-              </button>
-
-              {/* Prev Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={flipPrev}
-                disabled={currentPage === 0}
-                title="Previous Page"
-              >
-                <FaAngleLeft />
-              </button>
-
-              {/* Page Number Box */}
-              <div className="reader-page-counter-box">
-                <span className="reader-page-text">Page</span>
-                <input
-                  type="text"
-                  className="reader-page-input"
-                  value={pageInputVal}
-                  onChange={(e) => setPageInputVal(e.target.value)}
-                  onKeyDown={handlePageInputSubmit}
-                  onBlur={handlePageInputSubmit}
-                  aria-label="Current Page Number"
-                />
-                <span className="reader-page-text">of {totalPages}</span>
-              </div>
-
-              {/* Next Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={flipNext}
-                disabled={currentPage >= totalPages - 1}
-                title="Next Page"
-              >
-                <FaAngleRight />
-              </button>
-
-              {/* Last Page */}
-              <button
-                className="reader-nav-btn"
-                onClick={goToLast}
-                disabled={currentPage >= totalPages - 1}
-                title="Last Page"
-              >
-                <FaAnglesRight />
-              </button>
+            <div className="reader-bottom-scrubber-wrapper">
+              <input
+                type="range"
+                min="0"
+                max={totalPages - 1}
+                value={currentPage}
+                onChange={(e) => goToSlide(Number(e.target.value))}
+                className="reader-scrubber-slider"
+                aria-label="Slide scrubber"
+              />
             </div>
           </div>
         )}
@@ -657,4 +697,171 @@ const FlipBookModal = ({ book, onClose }) => {
   );
 };
 
+/* ── Unified 3D Slide Deck Card with Continuous Slide-In Motion ── */
+const SlideDeckCard = ({
+  pdfDoc,
+  pageIndex,
+  delta,
+  fallbackImg,
+  thumbImg,
+  zoom,
+  stageDimensions,
+  totalPages,
+  isMobile,
+  onClick,
+}) => {
+  const canvasRef = useRef(null);
+  const [rendered, setRendered] = useState(false);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    const displayPage = async () => {
+      if (!pdfDoc || !canvasRef.current) return;
+      const canvas = canvasRef.current;
+      const cacheKey = `p_${pageIndex}_${Math.round(stageDimensions.width)}_${Math.round(stageDimensions.height)}_${zoom}`;
+
+      // 1. Instant 0ms draw from pre-render memory cache
+      if (globalPageCache.has(cacheKey)) {
+        const entry = globalPageCache.get(cacheKey);
+        canvas.width = entry.width;
+        canvas.height = entry.height;
+        canvas.style.width = `${entry.displayW}px`;
+        canvas.style.height = `${entry.displayH}px`;
+        const ctx = canvas.getContext('2d', { alpha: false });
+        ctx.drawImage(entry.canvas, 0, 0);
+        setRendered(true);
+        return;
+      }
+
+      // 2. Render and cache
+      const entry = await renderPdfPageToCache(pdfDoc, pageIndex, stageDimensions, zoom);
+      if (!isCurrent || !entry || !canvasRef.current) return;
+
+      canvas.width = entry.width;
+      canvas.height = entry.height;
+      canvas.style.width = `${entry.displayW}px`;
+      canvas.style.height = `${entry.displayH}px`;
+      const ctx = canvas.getContext('2d', { alpha: false });
+      ctx.drawImage(entry.canvas, 0, 0);
+      setRendered(true);
+    };
+
+    displayPage();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [pdfDoc, pageIndex, zoom, stageDimensions]);
+
+  const stageW = stageDimensions.width || (window.innerWidth - 32);
+
+  // Position, 3D Rotation, Scale, and Opacity calculations based on delta (offset from active page)
+  let targetX = 0;
+  let targetScale = 1;
+  let targetRotateY = 0;
+  let targetOpacity = 1;
+  let zIndex = 25;
+
+  if (delta === 0) {
+    targetX = 0;
+    targetScale = 1;
+    targetRotateY = 0;
+    targetOpacity = 1;
+    zIndex = 25;
+  } else if (delta === 1) {
+    targetX = isMobile ? stageW * 0.95 : Math.min(stageW * 0.38, 430);
+    targetScale = 0.88;
+    targetRotateY = -22;
+    targetOpacity = isMobile ? 0 : 0.72;
+    zIndex = 15;
+  } else if (delta === 2) {
+    targetX = isMobile ? stageW * 1.5 : Math.min(stageW * 0.68, 760);
+    targetScale = 0.76;
+    targetRotateY = -28;
+    targetOpacity = isMobile ? 0 : 0.42;
+    zIndex = 10;
+  } else if (delta === -1) {
+    targetX = isMobile ? -stageW * 0.95 : -Math.min(stageW * 0.38, 430);
+    targetScale = 0.88;
+    targetRotateY = 22;
+    targetOpacity = isMobile ? 0 : 0.72;
+    zIndex = 15;
+  } else if (delta === -2) {
+    targetX = isMobile ? -stageW * 1.5 : -Math.min(stageW * 0.68, 760);
+    targetScale = 0.76;
+    targetRotateY = 28;
+    targetOpacity = isMobile ? 0 : 0.42;
+    zIndex = 10;
+  } else {
+    targetX = delta > 0 ? stageW * 1.2 : -stageW * 1.2;
+    targetScale = 0.65;
+    targetRotateY = delta > 0 ? -32 : 32;
+    targetOpacity = 0;
+    zIndex = 2;
+  }
+
+  return (
+    <motion.div
+      className={`reader-deck-card ${delta === 0 ? 'active-deck-card' : 'neighbor-deck-card'}`}
+      initial={false}
+      animate={{
+        x: targetX,
+        scale: targetScale,
+        rotateY: targetRotateY,
+        opacity: targetOpacity,
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 270,
+        damping: 26,
+        mass: 0.65,
+      }}
+      style={{
+        zIndex,
+        pointerEvents: delta === 0 ? 'auto' : (targetOpacity > 0 ? 'auto' : 'none'),
+      }}
+      onClick={onClick}
+      title={delta !== 0 ? `Go to Page ${pageIndex + 1}` : undefined}
+    >
+      {/* Instant thumbnail backdrop */}
+      {thumbImg && pdfDoc && !rendered && (
+        <img
+          src={thumbImg}
+          alt=""
+          className="reader-slide-thumb-backdrop"
+          aria-hidden="true"
+        />
+      )}
+
+      {pdfDoc ? (
+        <canvas ref={canvasRef} className="reader-pdf-canvas" />
+      ) : fallbackImg ? (
+        <img
+          src={fallbackImg}
+          alt={`Slide ${pageIndex + 1}`}
+          className="reader-slide-img"
+          draggable={false}
+        />
+      ) : (
+        <div className="reader-slide-loading-placeholder">
+          <FaSpinner className="reader-spinner small" />
+          <span>Slide {pageIndex + 1}…</span>
+        </div>
+      )}
+
+      {delta !== 0 && <div className="reader-neighbor-overlay-glass" />}
+
+      {delta === 0 && (
+        <div className="reader-slide-floating-badge">
+          Slide {pageIndex + 1} of {totalPages}
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
 export default FlipBookModal;
+
+
+

@@ -47,6 +47,9 @@ const MinthiranBookDetail = () => {
   }, [bookId, state?.book]);
 
   const handleClose = () => {
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
     navigate("/minthiran");
   };
 
@@ -55,11 +58,11 @@ const MinthiranBookDetail = () => {
       <div
         style={{
           minHeight: "100vh",
-          background: "#091322",
+          background: "#f8fafc",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#fff",
+          color: "#0f172a",
         }}
       >
         <h4>Loading e-Minthiran Edition…</h4>

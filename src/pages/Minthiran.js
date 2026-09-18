@@ -510,7 +510,7 @@ const Minthiran = () => {
         )}
       </div>
 
-      {/* 3D Realistic FlipBook Modal */}
+      {/* PDF Slide Viewer Modal */}
       <AnimatePresence>
         {selectedMagazineForFlip && (
           <FlipBookModal
