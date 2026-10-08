@@ -345,12 +345,12 @@ const Regional = () => {
                   <span className="ps-back-info-text">{secretary.contact2}</span>
                 </div>
               )}
-              <div className="ps-back-info-item">
-                <div className="ps-back-info-icon"><FaEnvelope /></div>
-                <span className="ps-back-info-text">
-                  {(secretary.name || 'member').toLowerCase().replace(/[^a-z0-9]/g, '')}@tnebea.org
-                </span>
-              </div>
+              {secretary.email && (
+                <div className="ps-back-info-item">
+                  <div className="ps-back-info-icon"><FaEnvelope /></div>
+                  <span className="ps-back-info-text">{secretary.email}</span>
+                </div>
+              )}
             </div>
 
             {/* View Details Button */}

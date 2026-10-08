@@ -371,12 +371,14 @@ const Cec = () => {
                   <span className="ps-back-info-text">{member.contact}</span>
                 </div>
               )}
-              <div className="ps-back-info-item">
-                <div className="ps-back-info-icon"><FaEnvelope /></div>
-                <span className="ps-back-info-text">
-                  {member.email || `${(member.name || 'member').toLowerCase().replace(/[^a-z0-9]/g, '')}@tnebea.org`}
-                </span>
-              </div>
+              {member.email && (
+                <div className="ps-back-info-item">
+                  <div className="ps-back-info-icon"><FaEnvelope /></div>
+                  <span className="ps-back-info-text">
+                    {member.email}
+                  </span>
+                </div>
+              )}
               <div className="ps-back-info-item">
                 <div className="ps-back-info-icon"><FaMapMarkerAlt /></div>
                 <span className="ps-back-info-text">{member.location || 'Chennai, Tamil Nadu'}</span>
