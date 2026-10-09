@@ -1,4 +1,6 @@
-const API_BASE_URL = process.env.BACKEND_API || 'https://tnebserver-u7qr.onrender.com';
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://tnebserver-u7qr.onrender.com' 
+  : 'http://localhost:5000';
 
 
 export const BASE_URL = API_BASE_URL;
