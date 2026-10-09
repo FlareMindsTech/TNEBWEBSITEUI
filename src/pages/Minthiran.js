@@ -8,7 +8,7 @@ import { getAllMinthirans } from '../api';
 import FlipBookModal from '../components/FlipBookModal';
 import './Minthiran.css';
 
-import minthiran80thPdf from '../assets/documents/Minthiran 80th year_Edit_V4 by Prasad.pdf-compressed-compressed (1)_repaired.pdf';
+import minthiran80thPdf from '../assets/documents/Minthiran_80th_Year_Special_Edition.pdf';
 
 const CURRENT_YEAR = new Date().getFullYear();
 

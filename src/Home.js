@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
@@ -14,6 +14,7 @@ import tnpgcl from "./assets/icons/TNPGCL.jpeg"
 
 
 const Home = () => {
+  const [currentTime, setCurrentTime] = useState('');
   const [carouselImages, setCarouselImages] = useState([]);
   const [loadingCarousel, setLoadingCarousel] = useState(true);
   const [latestEvents, setLatestEvents] = useState([]);
@@ -21,9 +22,9 @@ const Home = () => {
   const [logoIndexBySite, setLogoIndexBySite] = useState({});
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleSelect = useCallback((selectedIndex) => {
+  const handleSelect = (selectedIndex) => {
     setActiveIndex(selectedIndex);
-  }, []);
+  };
 
   const trustedWebsites = [
     {
@@ -276,7 +277,28 @@ const Home = () => {
   }, []);
 
 
+  // Update current time
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+      const day = days[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      setCurrentTime(`${day}, ${date}-${month}-${year}, ${hours}:${minutes}:${seconds}`);
+    };
+
+    updateClock();
+    const intervalId = setInterval(updateClock, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="home-container">
@@ -295,16 +317,7 @@ const Home = () => {
                   </div>
                 ) : carouselImages.length > 0 ? (
                   <>
-                    <Carousel
-                      activeIndex={activeIndex}
-                      onSelect={handleSelect}
-                      className="premium-electric-carousel"
-                      fade={true}
-                      interval={5000}
-                      pause="hover"
-                      wrap={true}
-                      touch={true}
-                    >
+                    <Carousel activeIndex={activeIndex} onSelect={handleSelect} className="premium-electric-carousel" touch={true}>
                       {carouselImages.map((image) => (
                         <Carousel.Item key={image.id}>
                           <div className="carousel-spotlight-stage">

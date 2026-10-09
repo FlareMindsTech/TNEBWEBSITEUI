@@ -1,539 +1,119 @@
 /* ==========================================================================
-   ENROLLMENT - EBF VII APPLICATION & NOMINATION FORM
-   Exact replication of Document Format
+   ENROLLMENT - UNDER DEVELOPMENT PAGE
    ========================================================================== */
 
-.ebf-container {
-  background: #e9ecef;
-  min-height: 100vh;
-  padding: 40px 20px;
+.enroll-page-wrapper {
+  min-height: 72vh;
+  background: linear-gradient(180deg, #e4effd 0%, #edf5fe 50%, #e2effd 100%);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #000;
+  justify-content: center;
+  padding: 60px 20px;
 }
 
-.ebf-paper {
+.enroll-card {
+  position: relative;
   background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(18, 55, 107, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
   width: 100%;
-  max-width: 900px;
-}
-
-.form-shadow {
-  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-}
-
-.ebf-page {
-  padding: 50px 60px;
-  position: relative;
-}
-
-.page-break {
-  height: 20px;
-  background: #e9ecef;
-  margin: 0 -60px;
-  border-top: 1px dashed #ced4da;
-  border-bottom: 1px dashed #ced4da;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.d-flex { display: flex; }
-.flex-wrap { flex-wrap: wrap; }
-.align-items-center { align-items: center; }
-.gap-2 { gap: 8px; }
-.gap-3 { gap: 16px; }
-.flex-1 { flex: 1; }
-.mt-3 { margin-top: 1rem; }
-.mt-4 { margin-top: 1.5rem; }
-.mt-5 { margin-top: 3rem; }
-.mb-3 { margin-bottom: 1rem; }
-.mb-4 { margin-bottom: 1.5rem; }
-.ml-4 { margin-left: 1.5rem; }
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.w-20 { width: 20%; }
-.w-30 { width: 30%; }
-.w-100 { width: 100%; }
-.w-150 { width: 250px; }
-.border-btm { border-bottom: 1px dotted #666; }
-.mr-2 { margin-right: 0.5rem; }
-.pt-4 { padding-top: 1.5rem; }
-.border-top { border-top: 1px solid #000; }
-.lh-2 { line-height: 1.8; }
-
-.ebf-header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.ebf-logo-area {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 120px;
-  display: flex;
-}
-
-/* For page 2 which might not have the logo, verify header still centers its content */
-
-.ebf-logo {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-}
-
-.ebf-header-text {
+  max-width: 520px;
   text-align: center;
-  width: 100%;
-}
-
-.ebf-header-text h2 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.reg-text, .address-text, .admin-text {
-  font-size: 0.8rem;
-  margin: 2px 0;
-}
-
-.app-title-box {
-  display: inline-block;
-  border: 1px solid #000;
-  padding: 5px 15px;
-  margin-top: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.ebf-office-no {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: flex;
-  align-items: flex-start;
-  font-size: 0.85rem;
-}
-
-.ebf-office-no span {
-  white-space: nowrap;
-  margin-right: 5px;
-}
-
-.inline-input {
-  border: none;
-  border-bottom: 1px dotted #000;
-  background: transparent;
-  outline: none;
-  padding: 0 5px;
-}
-
-.inline-input:disabled {
-  background: transparent;
-}
-
-.no-border-btm {
-  border-bottom: 1px solid #000;
-}
-
-/* Fields formatting */
-.field-row {
-  margin-bottom: 12px;
-  align-items: flex-start;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-.sno {
-  width: 30px;
-  flex-shrink: 0;
-}
-
-.field-row > label:nth-child(2) {
-  width: 260px;
-  flex-shrink: 0;
-  margin: 0;
-}
-
-.radio-inline {
-  width: auto !important;
-  margin: 0 10px 0 0 !important;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-
-.sub-label {
-  font-size: 0.8rem;
-}
-
-.colon {
-  width: 20px;
-  flex-shrink: 0;
-  text-align: center;
-}
-
-.form-input {
-  border: none;
-  border-bottom: 1px dotted #999;
-  background: #fafafa;
-  padding: 4px 8px;
-  outline: none;
-  border-radius: 4px;
-}
-
-.form-input:focus {
-  border-bottom: 1px solid #000;
-  background: #fdfdfd;
-}
-
-.dotted-bg {
-  border: 1px solid #ccc;
-}
-
-input[type="radio"] {
-  margin-right: 5px;
-}
-
-/* Photo Upload Layout */
-.photo-container {
-  display: flex;
-  margin-top: 20px;
-  gap: 20px;
-  width: 100%;
-}
-
-.fields-col {
-  flex: 1;
-  min-width: 0;
-}
-
-.photo-box {
-  width: 140px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.photo-inner {
-  border: 1px solid #000;
-  width: 140px;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.8rem;
-  position: relative;
+  padding: 44px 36px 42px;
   overflow: hidden;
-  cursor: pointer;
-  background: #f9f9f9;
+  border-top: 5.5px solid #144485;
 }
 
-.photo-inner span {
-  pointer-events: none;
-}
-
-.sig-upload-inner {
-  border: 1px dashed #000;
-  width: 220px;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.75rem;
+.enroll-icon-wrapper {
   position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  background: #fdfdfd;
-}
-
-.sig-upload-inner span {
-  pointer-events: none;
-}
-
-.sig-upload-inner small {
-  color: #c92a2a;
-  font-weight: bold;
-}
-
-.spec-sig-box {
-  width: 100%;
-  max-width: 350px;
-  height: 80px;
-}
-
-.photo-upload {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* Payments row */
-.payment-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 15px;
-  row-gap: 10px;
-}
-
-/* Labels and Texts */
-.bold-text {
-  font-weight: 700;
-}
-
-.note-small {
-  font-size: 0.85rem;
-}
-
-.section-main-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-/* Witness Table elements */
-.witness-grid .row {
-  display: flex;
-  font-size: 0.95rem;
-  gap: 20px;
-}
-.col-4 { flex: 1; }
-
-/* Office Use Table */
-.office-tables {
-  display: flex;
-  gap: 20px;
-}
-
-.ebf-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.ebf-table th, .ebf-table td {
-  border: 1px solid #000;
-  padding: 4px;
-  text-align: center;
-  font-size: 0.85rem;
-}
-
-.ebf-table input {
-  width: 100%;
-  border: none;
-  background: transparent;
-  text-align: center;
-}
-
-/* Utilities */
-.text-uppercase { text-transform: uppercase; }
-
-/* Submit Button */
-.submit-btn-ebf {
-  background-color: #144485;
-  color: white;
-  padding: 12px 30px;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.submit-btn-ebf:hover {
-  background-color: #0d2c56;
-}
-
-.signatures-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.signature-upload-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media (max-width: 768px) {
-  .flex-between, .photo-container {
-    flex-direction: column;
-  }
-  .photo-box {
-    margin-top: 20px;
-    justify-content: flex-start;
-  }
-  .ebf-header-text { margin: 20px 0; }
-  .field-row {
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  .field-row label {
-    width: 100%;
-    margin: 5px 0 5px 30px;
-  }
-  .colon { display: none; }
-  .sno { position: absolute; }
-  .form-input.flex-1 { margin-left: 30px; width: calc(100% - 30px); }
-  .ebf-page { padding: 30px 20px; }
-  
-  .witness-grid .row { flex-direction: column; gap: 10px; }
-  .wit-header { display: none; }
-  .office-tables { flex-direction: column; }
-}
-
-/* Selection Screen Styles */
-.enrollment-hub-wrapper {
-  min-height: 100vh;
-  background: transparent;
-}
-
-.selection-screen {
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.selection-header {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.selection-header h2 {
-  color: #144485;
-  font-weight: 700;
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.selection-header p {
-  color: #6c757d;
-  font-size: 1.1rem;
-}
-
-.cards-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.enroll-option-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 40px 30px;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  cursor: pointer;
-  border-top: 5px solid #144485;
-  transition: all 0.3s ease;
-}
-
-.card-icon-circle {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  background: #f0f4ff;
-  color: #144485;
-  font-size: 35px;
+  margin: 0 auto 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
 }
 
-.card-title {
-  color: #333;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 15px;
+.enroll-gear-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 74px;
+  color: #e5effa;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.card-desc {
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 25px;
-  min-height: 45px;
-}
-
-.card-action {
+.enroll-main-icon {
+  position: relative;
+  font-size: 38px;
   color: #144485;
+  z-index: 2;
+}
+
+.enroll-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #144485;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.enroll-subtitle {
+  font-family: Georgia, 'Times New Roman', serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.25rem;
   font-weight: 600;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #1668e3;
+  margin: 0 0 28px 0;
 }
 
-.form-head-actions {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 15px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.back-btn {
-  background: #144485;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
+.enroll-home-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  font-weight: bold;
-}
-.back-btn:hover {
-  background: #0d2c56;
-}
-
-.life-mem-body {
-  padding: 0 40px;
-}
-
-.office-use-grid {
-  display: flex;
-}
-
-.office-col {
-  flex: 1;
+  background-color: #144485;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 10px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(20, 68, 133, 0.28);
+  transition: all 0.25s ease;
+  border: none;
+  outline: none;
 }
 
-.border-box-group {
-  display: flex;
-}
-.border-box-label {
-  cursor: pointer;
+.enroll-home-btn:hover {
+  background-color: #0f3568;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(20, 68, 133, 0.38);
+  color: #ffffff !important;
 }
 
-.box-inputs {
-  display: flex;
+.enroll-home-btn:active {
+  transform: translateY(0);
 }
-.box-char {
-  width: 25px;
-  height: 35px;
-  border: 1px solid #000;
-  text-align: center;
-  font-size: 1rem;
-  margin-right: -1px;
+
+@media (max-width: 576px) {
+  .enroll-page-wrapper {
+    padding: 40px 16px;
+    min-height: 65vh;
+  }
+
+  .enroll-card {
+    padding: 36px 20px 34px;
+  }
+
+  .enroll-title {
+    font-size: 1.85rem;
+  }
+
+  .enroll-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+  }
 }
-.text-nowrap { white-space: nowrap; }
-.fs-85 { font-size: 0.85rem; }
