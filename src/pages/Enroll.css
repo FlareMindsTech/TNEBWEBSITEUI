@@ -1,0 +1,119 @@
+/* ==========================================================================
+   ENROLLMENT - UNDER DEVELOPMENT PAGE
+   ========================================================================== */
+
+.enroll-page-wrapper {
+  min-height: 72vh;
+  background: linear-gradient(180deg, #e4effd 0%, #edf5fe 50%, #e2effd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.enroll-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(18, 55, 107, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  padding: 44px 36px 42px;
+  overflow: hidden;
+  border-top: 5.5px solid #144485;
+}
+
+.enroll-icon-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enroll-gear-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 74px;
+  color: #e5effa;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.enroll-main-icon {
+  position: relative;
+  font-size: 38px;
+  color: #144485;
+  z-index: 2;
+}
+
+.enroll-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: #144485;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.enroll-subtitle {
+  font-family: Georgia, 'Times New Roman', serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1668e3;
+  margin: 0 0 28px 0;
+}
+
+.enroll-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #144485;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 10px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(20, 68, 133, 0.28);
+  transition: all 0.25s ease;
+  border: none;
+  outline: none;
+}
+
+.enroll-home-btn:hover {
+  background-color: #0f3568;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(20, 68, 133, 0.38);
+  color: #ffffff !important;
+}
+
+.enroll-home-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 576px) {
+  .enroll-page-wrapper {
+    padding: 40px 16px;
+    min-height: 65vh;
+  }
+
+  .enroll-card {
+    padding: 36px 20px 34px;
+  }
+
+  .enroll-title {
+    font-size: 1.85rem;
+  }
+
+  .enroll-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+  }
+}

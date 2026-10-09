@@ -1,0 +1,212 @@
+.qa-container {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  padding: 20px;
+}
+
+/* Hero Section with Luxury Theme Background */
+.qa-hero {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 20%, #1b5baf 0%, #061c3d 85%, #030e20 100%);
+  padding: 40px 24px;
+  border-radius: 20px;
+  margin-bottom: 35px;
+  text-align: center;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 202, 56, 0.4);
+  border-bottom: 3.5px solid #ffca38;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 202, 56, 0.2);
+}
+
+.qa-hero-ambient-glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 202, 56, 0.18) 0%, rgba(27, 91, 175, 0.3) 40%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.qa-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.qa-hero h1 {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.qa-hero-icon {
+  font-size: 2rem;
+  color: #ffca38;
+}
+
+.title-highlight {
+  color: #ffca38;
+}
+
+.hero-divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #ffca38 50%, transparent 100%);
+  margin: 12px auto;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 202, 56, 0.6);
+}
+
+.qa-hero-tagline {
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  margin-bottom: 0;
+}
+
+/* Original Accordion Content Styles */
+.qa-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 10px 40px;
+}
+
+.qa-accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.qa-accordion-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(27, 91, 175, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.qa-accordion-item:hover {
+  box-shadow: 0 8px 25px rgba(27, 91, 175, 0.15);
+  border-color: rgba(27, 91, 175, 0.3);
+}
+
+.qa-accordion-header {
+  width: 100%;
+  padding: 24px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.qa-header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.qa-accordion-icon {
+  font-size: 1.3rem;
+  color: #1b5baf;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.qa-header-text {
+  flex: 1;
+}
+
+.qa-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #1b5baf;
+  margin: 0 0 5px 0;
+}
+
+.qa-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.qa-doc-icon {
+  font-size: 1.8rem;
+  color: #2a6cc7;
+  flex-shrink: 0;
+}
+
+.qa-accordion-content {
+  overflow: hidden;
+  border-top: 1px solid #edf2f7;
+}
+
+.qa-content-inner {
+  padding: 24px;
+  background: #f8fafc;
+}
+
+.qa-description {
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.7;
+  margin: 0 0 20px 0;
+}
+
+.qa-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #1b5baf 0%, #15458a 100%);
+  color: white !important;
+  text-decoration: none !important;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(27, 91, 175, 0.3);
+  transition: all 0.3s ease;
+}
+
+.qa-download-btn:hover {
+  background: linear-gradient(135deg, #15458a 0%, #2a6cc7 100%);
+  box-shadow: 0 6px 20px rgba(27, 91, 175, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .qa-hero {
+    padding: 30px 16px;
+  }
+
+  .qa-hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .qa-accordion-header {
+    padding: 16px;
+  }
+
+  .qa-title {
+    font-size: 1rem;
+  }
+
+  .qa-doc-icon {
+    font-size: 1.4rem;
+  }
+}
