@@ -26,6 +26,17 @@ const Home = () => {
     setActiveIndex(selectedIndex);
   };
 
+  // Auto slide carousel every 5000ms (5 seconds)
+  useEffect(() => {
+    if (!carouselImages || carouselImages.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [carouselImages, activeIndex]);
+
   const trustedWebsites = [
     {
       id: 1,
@@ -240,7 +251,7 @@ const Home = () => {
         const normalized = rawEvents.map((item, index) => {
           const title = item.title || item.name || item.eventTitle || item.eventname || 'Untitled Event';
           const description = item.description || item.content || item.summary || item.details || item.subtitle || '';
-          const link = item.pdfUrl || item.link || item.url || item.fileUrl || item.documentUrl || '';
+          const link = item.pdfUrl || item.pdf || item.docUrl || item.documentUrl || item.fileUrl || item.link || item.url || '';
 
           const dateInfo = parseEventDate(item);
 
@@ -317,7 +328,14 @@ const Home = () => {
                   </div>
                 ) : carouselImages.length > 0 ? (
                   <>
-                    <Carousel activeIndex={activeIndex} onSelect={handleSelect} className="premium-electric-carousel" touch={true}>
+                    <Carousel 
+                      activeIndex={activeIndex} 
+                      onSelect={handleSelect} 
+                      interval={null} 
+                      slide={true} 
+                      className="premium-electric-carousel" 
+                      touch={true}
+                    >
                       {carouselImages.map((image) => (
                         <Carousel.Item key={image.id}>
                           <div className="carousel-spotlight-stage">

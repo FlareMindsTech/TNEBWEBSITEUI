@@ -93,57 +93,77 @@ const LatestEvents = ({ events = [], loading = false }) => {
     return defaultIcons[index % defaultIcons.length];
   };
 
+  const handleOpenPdf = (link, e) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    if (!link) return;
+    const url = link.startsWith('http') ? link : `https://tnebeaengineers.in/${link}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   const renderEventList = (items, prefix = 'main') => (
-    items.map((event, index) => (
-      <div key={`${prefix}-${event.id || index}-${index}`} className="carousel-event-item">
-        {/* Left: Golden Timeline Connector Node */}
-        <div className="timeline-connector-track">
-          <span className="timeline-node-bead"></span>
-          <span className="timeline-horizontal-stem"></span>
+    items.map((event, index) => {
+      const hasLink = Boolean(event.link);
+      return (
+        <div key={`${prefix}-${event.id || index}-${index}`} className="carousel-event-item">
+          {/* Left: Golden Timeline Connector Node */}
+          <div className="timeline-connector-track">
+            <span className="timeline-node-bead"></span>
+            <span className="timeline-horizontal-stem"></span>
+          </div>
+
+          {/* News Card */}
+          <div
+            className={`news-card-item ${hasLink ? 'has-pdf-link' : ''}`}
+            onClick={(e) => hasLink && handleOpenPdf(event.link, e)}
+            style={{ cursor: hasLink ? 'pointer' : 'default' }}
+            title={hasLink ? 'Click to open PDF document' : event.title}
+          >
+            {/* Left: Circular Icon */}
+            <div className="news-icon-circle">
+              {getEventIcon(event.title, index)}
+            </div>
+
+            {/* Center: News Title & Badge */}
+            <div className="news-content-box">
+              <div className="news-title-row">
+                {hasLink ? (
+                  <a
+                    href={event.link.startsWith('http') ? event.link : `https://tnebeaengineers.in/${event.link}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="news-title-link"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    {event.title}
+                  </a>
+                ) : (
+                  <span className="news-title-text">{event.title}</span>
+                )}
+                {event.isNew && (
+                  <span className="news-badge-new">New</span>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Calendar Date Card */}
+            <div className="news-calendar-badge">
+              <span className="calendar-binder-ring ring-left"></span>
+              <span className="calendar-binder-ring ring-right"></span>
+              <div className="calendar-header-bar">
+                {event.monthYear}
+              </div>
+              <div className="calendar-day-number">
+                {event.day}
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* News Card */}
-        <div className="news-card-item">
-          {/* Left: Circular Icon */}
-          <div className="news-icon-circle">
-            {getEventIcon(event.title, index)}
-          </div>
-
-          {/* Center: News Title & Badge */}
-          <div className="news-content-box">
-            <div className="news-title-row">
-              {event.link ? (
-                <a
-                  href={event.link.startsWith('http') ? event.link : `https://tnebeaengineers.in/${event.link}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="news-title-link"
-                >
-                  {event.title}
-                </a>
-              ) : (
-                <span className="news-title-text">{event.title}</span>
-              )}
-              {event.isNew && (
-                <span className="news-badge-new">New</span>
-              )}
-            </div>
-          </div>
-
-          {/* Right: Calendar Date Card */}
-          <div className="news-calendar-badge">
-            <span className="calendar-binder-ring ring-left"></span>
-            <span className="calendar-binder-ring ring-right"></span>
-            <div className="calendar-header-bar">
-              {event.monthYear}
-            </div>
-            <div className="calendar-day-number">
-              {event.day}
-            </div>
-          </div>
-        </div>
-      </div>
-    ))
+      );
+    })
   );
 
   return (

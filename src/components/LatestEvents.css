@@ -352,6 +352,17 @@
   position: relative;
 }
 
+.news-card-item.has-pdf-link {
+  cursor: pointer;
+}
+
+.news-card-item.has-pdf-link:hover {
+  cursor: pointer;
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.18);
+  transform: translateY(-2px);
+}
+
 .news-card-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(27, 91, 175, 0.12);
