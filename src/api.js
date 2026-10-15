@@ -377,12 +377,41 @@ export const loginUser = async (credentials) => {
     // Store token in localStorage if login is successful
     if (data.token) {
       localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify({
+      const initialUser = {
         _id: data._id,
         name: data.name,
         email: data.email,
-        role: data.role
-      }));
+        role: data.role,
+        phone_no: data.phone_no || '',
+        date_of_birth: data.date_of_birth || '',
+        emp_id: data.emp_id || '',
+        pbo_number: data.pbo_number || '',
+        lm_number: data.lm_number || '',
+        city: data.city || ''
+      };
+      localStorage.setItem('userData', JSON.stringify(initialUser));
+
+      // Asynchronously fetch and store the full profile (phone_no, date_of_birth, emp_id, etc.)
+      try {
+        const profRes = await fetch(`${API_BASE_URL}/api/users/${data._id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+        if (profRes.ok) {
+          const profile = await profRes.json();
+          if (profile) {
+            localStorage.setItem('userData', JSON.stringify({
+              ...initialUser,
+              ...profile
+            }));
+          }
+        }
+      } catch (profErr) {
+        console.warn('Could not auto-fetch full user profile during login:', profErr);
+      }
     }
 
     return data;
@@ -462,6 +491,48 @@ export const getUserData = () => {
  */
 export const isAuthenticated = () => {
   return !!getAuthToken();
+};
+
+const userProfileCache = new Map();
+
+/**
+ * Fetch full user profile from backend
+ * @param {string} [userId]
+ * @returns {Promise<Object|null>}
+ */
+export const getUserProfile = async (userId) => {
+  try {
+    const token = getAuthToken();
+    if (!token) return null;
+    const current = getUserData() || {};
+    const uid = userId || current?._id;
+    if (!uid) return null;
+
+    if (userProfileCache.has(uid)) {
+      return userProfileCache.get(uid);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/users/${uid}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) return null;
+    const profile = await response.json();
+    if (profile) {
+      userProfileCache.set(uid, profile);
+      if (!userId || userId === current?._id) {
+        localStorage.setItem('userData', JSON.stringify({ ...current, ...profile }));
+      }
+    }
+    return profile;
+  } catch (error) {
+    console.warn('Could not fetch user profile:', error);
+    return null;
+  }
 };
 
 /**

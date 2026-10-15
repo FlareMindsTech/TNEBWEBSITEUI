@@ -1,0 +1,464 @@
+/* ==========================================================================
+   MINNAGAM CERTIFICATE MODAL STYLES (EXACT TEMPLATE OVERLAY)
+   ========================================================================== */
+
+/* Modal Backdrop */
+.minnagam-cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 20, 42, 0.88);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  animation: certFadeIn 0.3s ease-out;
+}
+
+@keyframes certFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.minnagam-cert-modal-wrapper {
+  background: #111d33;
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+  width: 100%;
+  max-width: 1100px;
+  max-height: 96vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(201, 155, 53, 0.4);
+  animation: certSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes certSlideUp {
+  from { opacity: 0; transform: translateY(25px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Modal Header Bar */
+.minnagam-cert-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #091e38 0%, #113462 100%);
+  color: #ffffff;
+  border-bottom: 2px solid #c99b35;
+}
+
+.cert-header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cert-header-icon {
+  font-size: 24px;
+  color: #ffcf40;
+}
+
+.cert-header-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.cert-header-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 207, 64, 0.2);
+  color: #ffd859;
+  border: 1px solid rgba(255, 207, 64, 0.4);
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.cert-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cert-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.cert-btn-edit {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cert-btn-edit:hover, .cert-btn-edit.active {
+  background: rgba(255, 255, 255, 0.28);
+  color: #ffdf79;
+}
+
+.cert-btn-print {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cert-btn-print:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.cert-btn-png {
+  background: linear-gradient(135deg, #1b74e4, #0f58b6);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(15, 88, 182, 0.3);
+}
+
+.cert-btn-png:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.cert-btn-download {
+  background: linear-gradient(135deg, #d4a017, #b8860b);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35);
+}
+
+.cert-btn-download:hover {
+  background: linear-gradient(135deg, #e5b128, #c99616);
+  transform: translateY(-1px);
+}
+
+.cert-btn-download:disabled, .cert-btn-png:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cert-btn-close {
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 6px;
+}
+
+.cert-btn-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Inline Verification / Edit Panel */
+.cert-edit-panel {
+  background: #f4f8fd;
+  border-bottom: 2px solid #dbe7f5;
+  padding: 16px 24px;
+  animation: certSlideDown 0.25s ease-out;
+}
+
+@keyframes certSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cert-edit-panel-header {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0b3574;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.cert-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cert-edit-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #44566c;
+}
+
+.cert-edit-field input {
+  padding: 7px 11px;
+  border: 1px solid #ccd8e8;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.cert-edit-field input:focus {
+  border-color: #0b3574;
+  box-shadow: 0 0 0 2px rgba(11, 53, 116, 0.15);
+}
+
+/* Modal Body / Scrollable Area */
+.minnagam-cert-modal-body {
+  padding: 24px;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  background: #1a2538;
+}
+
+/* ==========================================================================
+   THE EXACT CERTIFICATE CANVAS (Pixel-Calibrated on the Official Template)
+   ========================================================================== */
+.minnagam-exact-cert-container {
+  position: relative;
+  width: 1024px;
+  min-width: 1024px;
+  height: 682px;
+  aspect-ratio: 2048 / 1364;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.exact-cert-template-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+}
+
+/* Base style for text overlays */
+.exact-cert-field {
+  position: absolute;
+  font-family: Arial, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  color: #0b3574;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* 1. Certificate Number on the top right underline */
+.cert-no-overlay {
+  top: 6.67%;
+  left: 88.6%;
+  transform: translateY(-88%);
+  font-family: Arial, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0b3574;
+  letter-spacing: 0.5px;
+}
+
+/* 2. Member Name on the underline */
+.name-overlay {
+  top: 52.35%;
+  left: 17.5%;
+  transform: translateY(-88%);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* 3. Date of Birth on the underline */
+.dob-overlay {
+  top: 56.67%;
+  left: 21.8%;
+  transform: translateY(-88%);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* 4. Employee ID / PPO No. on the underline */
+.empid-overlay {
+  top: 61.00%;
+  left: 27.8%;
+  transform: translateY(-88%);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* 5. Mobile No. on the underline */
+.mobile-overlay {
+  top: 65.47%;
+  left: 20.2%;
+  transform: translateY(-88%);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* 6. Units Purchased (seamlessly covers inside the box) */
+.units-patch-overlay {
+  position: absolute;
+  top: 54.73%;
+  left: 78.8%;
+  transform: translateY(-50%);
+  width: 125px;
+  height: 22px;
+  background: #faf7ee;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 6px;
+  font-family: Arial, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #0b3574;
+  line-height: 1;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* 7. Amount Received (seamlessly covers inside the box) */
+.amount-patch-overlay {
+  position: absolute;
+  top: 62.02%;
+  left: 78.8%;
+  transform: translateY(-50%);
+  width: 125px;
+  height: 22px;
+  background: #faf7ee;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 6px;
+  font-family: Arial, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #0b3574;
+  line-height: 1;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* 8. Amount in words (centered between golden ornaments) */
+.words-patch-overlay {
+  position: absolute;
+  top: 70.75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38%;
+  height: 24px;
+  background: #fdfaf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #1c1a17;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   PRINT MEDIA QUERY - ONLY THE CERTIFICATE CONTAINER PRINTS IN LANDSCAPE
+   ========================================================================== */
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .minnagam-cert-modal-overlay,
+  .minnagam-cert-modal-body,
+  .minnagam-exact-cert-container,
+  .minnagam-exact-cert-container * {
+    visibility: visible !important;
+  }
+
+  .minnagam-cert-modal-overlay {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  .minnagam-cert-modal-wrapper {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .minnagam-cert-modal-header,
+  .cert-edit-panel {
+    display: none !important;
+  }
+
+  .minnagam-cert-modal-body {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .minnagam-exact-cert-container {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

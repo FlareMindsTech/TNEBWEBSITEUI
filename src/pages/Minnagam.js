@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaHotel, FaBed, FaMapMarkerAlt, FaSnowflake, FaUsers, FaFileAlt, FaSpinner, FaCheckCircle, FaExclamationCircle, FaUpload } from 'react-icons/fa';
+import { FaHotel, FaBed, FaMapMarkerAlt, FaSnowflake, FaUsers, FaFileAlt, FaSpinner, FaCheckCircle, FaExclamationCircle, FaUpload, FaAward } from 'react-icons/fa';
 import './Minnagam.css';
 import building1 from '../assets/Proposed-building-1.jpeg';
 import building2 from '../assets/Proposed-building-2.jpeg';
 import building3 from '../assets/Proposed-building-3.jpeg';
-import { submitMinnagamForm, getMinnagams, isAuthenticated } from '../api';
+import { submitMinnagamForm, getMinnagams, isAuthenticated, getUserData, getUserProfile } from '../api';
+import MinnagamCertificateModal from '../components/MinnagamCertificateModal';
 
 const RoomCard = ({ room, index }) => {
   const ref = React.useRef(null);
@@ -62,6 +63,20 @@ const Minnagam = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   const isUserAuthenticated = isAuthenticated();
+  const userData = getUserData();
+
+  // Certificate Modal State
+  const [userProfile, setUserProfile] = useState(null);
+  const [showCertModal, setShowCertModal] = useState(false);
+  const [selectedCertData, setSelectedCertData] = useState(null);
+
+  useEffect(() => {
+    if (isUserAuthenticated) {
+      getUserProfile().then((prof) => {
+        if (prof) setUserProfile(prof);
+      });
+    }
+  }, [isUserAuthenticated]);
 
   const buildingImages = [
     { id: 1, src: building2, alt: 'Proposed Building - View 1' },
@@ -121,15 +136,30 @@ const Minnagam = () => {
       data.append('utrNumber', formData.utrNumber);
       data.append('document', formData.document);
 
-      await submitMinnagamForm(data);
+      const response = await submitMinnagamForm(data);
+
+      const newEntry = response?.data || {
+        units: Number(formData.units),
+        amount: calculateAmount(),
+        nomineeName: formData.nomineeName,
+        relation: formData.relation,
+        utrNumber: formData.utrNumber,
+        createdAt: new Date().toISOString()
+      };
+
+      // Set certificate data and immediately show certificate modal
+      setSelectedCertData({
+        ...newEntry,
+        units: Number(formData.units),
+        amount: calculateAmount(),
+        user: (typeof newEntry.user === 'object' && newEntry.user !== null ? newEntry.user : null) || userProfile || userData || newEntry.user
+      });
+      setShowCertModal(true);
+
       setSuccessMsg('Minnagam application submitted successfully!');
       setFormData({ nomineeName: '', relation: '', units: '', utrNumber: '', document: null });
       setStep(1);
-      setTimeout(() => {
-        setSuccessMsg('');
-        setActiveTab('submissions');
-        fetchSubmissions();
-      }, 2000);
+      fetchSubmissions();
     } catch (err) {
       setError(err.message || 'Failed to submit the form. Please try again.');
     } finally {
@@ -141,7 +171,29 @@ const Minnagam = () => {
     setLoading(true);
     try {
       const data = await getMinnagams();
-      setSubmissions(data);
+      const rawList = Array.isArray(data) ? data : [];
+
+      const populatedList = await Promise.all(
+        rawList.map(async (sub) => {
+          if (sub.user && typeof sub.user === 'object' && (sub.user.name || sub.user.phone_no)) {
+            return sub;
+          }
+          const targetUid = typeof sub.user === 'string' ? sub.user : sub.user?._id;
+          if (targetUid) {
+            try {
+              const uProfile = await getUserProfile(targetUid);
+              if (uProfile) {
+                return { ...sub, user: uProfile };
+              }
+            } catch (uErr) {
+              console.warn(`Could not resolve user for submission ${sub._id}:`, uErr);
+            }
+          }
+          return sub;
+        })
+      );
+
+      setSubmissions(populatedList);
     } catch (err) {
       console.error(err);
       setError('Failed to load submissions.');
@@ -316,12 +368,13 @@ const Minnagam = () => {
                       <th>UTR Number</th>
                       <th>Document</th>
                       <th>Status</th>
+                      <th>Certificate</th>
                     </tr>
                   </thead>
                   <tbody>
                     {submissions.length === 0 ? (
                       <tr>
-                        <td colSpan="8" className="no-data">No submissions found.</td>
+                        <td colSpan="9" className="no-data">No submissions found.</td>
                       </tr>
                     ) : (
                       submissions.map((sub) => (
@@ -333,12 +386,25 @@ const Minnagam = () => {
                           <td>₹{sub.amount.toLocaleString()}</td>
                           <td>{sub.utrNumber}</td>
                           <td>
-                            <a href={sub.document.url} target="_blank" rel="noreferrer" className="doc-link">View</a>
+                            <a href={sub.document?.url} target="_blank" rel="noreferrer" className="doc-link">View</a>
                           </td>
                           <td>
                             <span className={`status-badge status-${sub.status?.toLowerCase() || 'pending'}`}>
                               {sub.status || 'Pending'}
                             </span>
+                          </td>
+                          <td>
+                            <button 
+                              type="button" 
+                              className="btn-view-cert"
+                              onClick={() => {
+                                setSelectedCertData(sub);
+                                setShowCertModal(true);
+                              }}
+                              title="View & Download Certificate"
+                            >
+                              <FaAward className="cert-icon" /> Certificate
+                            </button>
                           </td>
                         </tr>
                       ))
@@ -350,6 +416,14 @@ const Minnagam = () => {
           </motion.div>
         )}
       </div>
+
+      {/* Minnagam Certificate Modal */}
+      <MinnagamCertificateModal
+        show={showCertModal}
+        onClose={() => setShowCertModal(false)}
+        submissionData={selectedCertData}
+        userData={selectedCertData?.user && typeof selectedCertData.user === 'object' ? selectedCertData.user : (userProfile || userData)}
+      />
     </div>
   );
 };

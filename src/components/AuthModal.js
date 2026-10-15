@@ -104,8 +104,13 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
     e.preventDefault();
     setAuthError('');
 
-    if (!registerForm.name || !registerForm.email || !registerForm.phone_no || !registerForm.password || !registerForm.confirmPassword) {
-      setAuthError('Name, email, phone number, and password are required');
+    if (
+      !registerForm.name || !registerForm.email || !registerForm.phone_no ||
+      !registerForm.city || !registerForm.lm_number || !registerForm.ppo_number ||
+      !registerForm.emp_id || !registerForm.date_of_birth ||
+      !registerForm.password || !registerForm.confirmPassword
+    ) {
+      setAuthError('All fields marked with * are required');
       return;
     }
 
@@ -366,48 +371,53 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>City (Optional)</Form.Label>
+                <Form.Label>City <span style={{ color: '#ef4444' }}>*</span></Form.Label>
                 {renderInput(<FaMapMarkerAlt />, {
                   type: 'text',
                   placeholder: 'Enter City',
                   value: registerForm.city,
-                  onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value })
+                  onChange: (e) => setRegisterForm({ ...registerForm, city: e.target.value }),
+                  required: true
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>LM Number (Optional)</Form.Label>
+                <Form.Label>LM Number <span style={{ color: '#ef4444' }}>*</span></Form.Label>
                 {renderInput(<FaIdCard />, {
                   type: 'text',
                   placeholder: 'Enter your LM number',
                   value: registerForm.lm_number,
-                  onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value })
+                  onChange: (e) => setRegisterForm({ ...registerForm, lm_number: e.target.value }),
+                  required: true
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>PPO Number (Optional)</Form.Label>
+                <Form.Label>PPO Number <span style={{ color: '#ef4444' }}>*</span></Form.Label>
                 {renderInput(<FaIdCard />, {
                   type: 'text',
                   placeholder: 'Enter PPO Number',
                   value: registerForm.ppo_number,
-                  onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value })
+                  onChange: (e) => setRegisterForm({ ...registerForm, ppo_number: e.target.value }),
+                  required: true
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Employee ID (Optional)</Form.Label>
+                <Form.Label>Employee ID <span style={{ color: '#ef4444' }}>*</span></Form.Label>
                 {renderInput(<FaUserTie />, {
                   type: 'text',
                   placeholder: 'Enter Employee ID',
                   value: registerForm.emp_id,
-                  onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value })
+                  onChange: (e) => setRegisterForm({ ...registerForm, emp_id: e.target.value }),
+                  required: true
                 })}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Date of Birth (Optional)</Form.Label>
+                <Form.Label>Date of Birth <span style={{ color: '#ef4444' }}>*</span></Form.Label>
                 {renderInput(<FaUser />, {
                   type: 'date',
                   placeholder: 'Select Date of Birth',
                   value: registerForm.date_of_birth,
-                  onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value })
+                  onChange: (e) => setRegisterForm({ ...registerForm, date_of_birth: e.target.value }),
+                  required: true
                 })}
               </Form.Group>
               <Form.Group className="mb-3">

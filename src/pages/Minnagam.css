@@ -933,7 +933,7 @@
 }
 
 /* Submissions Table */
-.submissions-container {
+.minnagam-container .submissions-container {
   max-width: 1000px;
   margin: 0 auto 50px;
   background: white;
@@ -1019,5 +1019,34 @@
   color: #1b5baf;
   font-size: 1.2rem;
   padding: 40px;
+}
+
+/* Certificate View Button in Submissions */
+.btn-view-cert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #0b3574 0%, #15458a 100%);
+  color: #ffffff;
+  border: 1px solid #c99b35;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(11, 53, 116, 0.2);
+}
+
+.btn-view-cert:hover {
+  background: linear-gradient(135deg, #15458a 0%, #1e5cb3 100%);
+  color: #ffd859;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(11, 53, 116, 0.3);
+}
+
+.btn-view-cert .cert-icon {
+  color: #ffcf40;
 }
 
