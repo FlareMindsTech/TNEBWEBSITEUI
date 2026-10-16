@@ -269,10 +269,20 @@ export default function AuthModal({ show, onClose, defaultTab = 'login' }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            style={{ textAlign: 'center', padding: '0.75rem 0.25rem' }}
+            style={{ textAlign: 'center', padding: '1rem 0.5rem' }}
           >
-            <h5 style={{ marginBottom: '0.5rem', color: '#15458a', fontWeight: 700 }}>Work Undergoing</h5>
-            <p style={{ marginBottom: 0, color: '#4b5f7a' }}>Grievance section is currently under development. Please check again later.</p>
+            <h5 style={{ marginBottom: '0.5rem', color: '#15458a', fontWeight: 700 }}>Grievance Redressal Portal</h5>
+            <p style={{ marginBottom: '1rem', color: '#4b5f7a' }}>The online Grievance Redressal Form is live for all TNEBEA members.</p>
+            <Button
+              variant="primary"
+              onClick={() => {
+                onClose();
+                navigate('/grievance');
+              }}
+              style={{ background: '#15458a', borderColor: '#15458a', padding: '8px 22px', borderRadius: '8px', fontWeight: 600 }}
+            >
+              Open Grievance Form &rarr;
+            </Button>
           </motion.div>
         ) : null}
         {tab === 'login' ? (

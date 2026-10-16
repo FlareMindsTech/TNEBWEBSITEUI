@@ -11,7 +11,8 @@ import {
   FaIdCard,
   FaMoneyBillWave,
   FaFileSignature,
-  FaChevronRight
+  FaChevronRight,
+  FaClipboardList
 } from 'react-icons/fa';
 import { getAllForms } from '../api';
 import './TnebeaForms.css';
@@ -354,21 +355,36 @@ const TnebeaForms = () => {
             )}
           </motion.div>
 
-          {/* 3D Navy Gold-Border Button */}
-          <motion.button 
-            className="forms-hero-cta-btn" 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.5 }}
-            whileHover={{ y: -3, scale: 1.03 }} 
-            whileTap={{ scale: 0.98 }} 
-            onClick={() => {
-              const el = document.getElementById('forms-content');
-              el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            Browse Documents <FaArrowRight className="ms-2" />
-          </motion.button>
+          {/* 3D Navy Gold-Border Buttons */}
+          <div className="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+            <motion.button 
+              className="forms-hero-cta-btn" 
+              initial={{ opacity: 0, y: 15 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.5 }}
+              whileHover={{ y: -3, scale: 1.03 }} 
+              whileTap={{ scale: 0.98 }} 
+              onClick={() => {
+                const el = document.getElementById('forms-content');
+                el && el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Browse Documents <FaArrowRight className="ms-2" />
+            </motion.button>
+
+            <motion.button 
+              className="forms-hero-cta-btn" 
+              initial={{ opacity: 0, y: 15 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.55 }}
+              whileHover={{ y: -3, scale: 1.03 }} 
+              whileTap={{ scale: 0.98 }} 
+              onClick={() => navigate('/grievance')}
+              style={{ background: 'linear-gradient(135deg, #ffca38 0%, #e09e07 100%)', color: '#061c3d', borderColor: '#ffd868' }}
+            >
+              Online Grievance Form <FaClipboardList className="ms-2" />
+            </motion.button>
+          </div>
         </div>
       </motion.div>
 

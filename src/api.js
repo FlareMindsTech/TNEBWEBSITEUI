@@ -889,5 +889,30 @@ export const getAllTechnicalBooks = async (params = {}) => {
   }
 };
 
+// ==================== GRIEVANCE APIs ====================
 
+/**
+ * Submit a new Grievance (Public / Member)
+ * @param {FormData|Object} payload - FormData instance with attachment or plain JSON object
+ * @returns {Promise<Object>} Created grievance response
+ */
+export const submitGrievance = async (payload) => {
+  try {
+    const isFormData = payload instanceof FormData;
+    const response = await fetch(`${API_BASE_URL}/api/grievances`, {
+      method: 'POST',
+      headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
+      body: isFormData ? payload : JSON.stringify(payload),
+    });
 
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || `Failed to submit grievance (Status ${response.status})`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error submitting grievance:', error);
+    throw error;
+  }
+};

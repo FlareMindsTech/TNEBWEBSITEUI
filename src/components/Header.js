@@ -78,15 +78,6 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              {/* Tier 1: SINCE 1946 Badge */}
-              <div className="header-since-badge">
-                <span className="gold-taper-line gold-taper-left"></span>
-                <span className="gold-bead"></span>
-                <span className="since-badge-text">SINCE 1946</span>
-                <span className="gold-bead"></span>
-                <span className="gold-taper-line gold-taper-right"></span>
-              </div>
-
               {/* Tier 2: Main Title */}
               <h1 className="header-brand-title">TAMILNADU ELECTRICITY BOARD</h1>
 
@@ -151,10 +142,8 @@ const Header = () => {
                           {/* Grievance */}
                           <Link 
                             className="user-dropdown-card" 
-                            to="#" 
-                            onClick={(e) => { 
-                              e.preventDefault(); 
-                              window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); 
+                            to="/grievance" 
+                            onClick={() => { 
                               setUserMenuOpen(false);
                             }} 
                           >
@@ -164,7 +153,7 @@ const Header = () => {
                             <div className="user-card-divider"></div>
                             <div className="user-card-text">
                               <span className="user-card-title">Grievance</span>
-                              <span className="user-card-subtitle">Feedback &amp; Complaints</span>
+                              <span className="user-card-subtitle">Redressal &amp; Feedback</span>
                             </div>
                             <div className="user-card-arrow-wedge">
                               <FaChevronRight />

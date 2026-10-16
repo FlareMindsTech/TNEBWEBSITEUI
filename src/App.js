@@ -38,6 +38,7 @@ import GalleryDetail from './pages/GalleryDetail';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Importantnotices from "./components/Importantnotices";
 import AuthPage from './pages/AuthPage';
+import Grievance from './pages/Grievance';
 
 function App() {
   // const [showIntro, setShowIntro] = useState(() => {
@@ -120,6 +121,8 @@ function App() {
               <Route path="/about-tnebea" element={<>< Header /><AboutTnebea /><Footer /></>} />
               <Route path="/about" element={<>< Header /><AboutTnebea /><Footer /></>} />
               <Route path="/login" element={<>< Header /><AuthPage /><Footer /></>} />
+              <Route path="/grievance" element={<>< Header /><Grievance /><Footer /></>} />
+              <Route path="/grievance-form" element={<>< Header /><Grievance /><Footer /></>} />
             </Routes>
           </div>
         

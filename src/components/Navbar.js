@@ -204,10 +204,8 @@ const Navbar = () => {
                     {/* Grievance */}
                     <Link 
                       className="user-dropdown-card" 
-                      to="#" 
-                      onClick={(e) => { 
-                        e.preventDefault(); 
-                        window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); 
+                      to="/grievance" 
+                      onClick={() => { 
                         setUserMenuOpen(false);
                       }} 
                     >
@@ -217,7 +215,7 @@ const Navbar = () => {
                       <div className="user-card-divider"></div>
                       <div className="user-card-text">
                         <span className="user-card-title">Grievance</span>
-                        <span className="user-card-subtitle">Feedback &amp; Complaints</span>
+                        <span className="user-card-subtitle">Redressal &amp; Feedback</span>
                       </div>
                       <div className="user-card-arrow-wedge">
                         <FaChevronRight />
@@ -545,7 +543,7 @@ const Navbar = () => {
                 <div className="sidebar-footer">
 
                   <motion.div className="sidebar-auth-button" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <button className="btn btn-light w-100" onClick={() => { window.open('https://docs.google.com/forms/d/e/1FAIpQLSfv3I080h3YlwL_8Fmxzf55dnmRhxNPdbfItQmjxoSYHYjoyA/viewform?usp=publish-editor', '_blank'); closeAllMenus(); }}>
+                    <button className="btn btn-light w-100" onClick={() => { navigate('/grievance'); closeAllMenus(); }}>
                       <FaClipboardList className="me-2" />
                       Grievance Form
                     </button>
